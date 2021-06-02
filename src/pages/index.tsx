@@ -19,7 +19,7 @@ const Li = styled.li`
   color: red;
 `;
 
-export const MainPage: NextPage<PageProp> = () => (
+export const MainPage: NextPage = () => (
   <Nav>
     <Ul>
       <Li>1dasdsa</Li>
