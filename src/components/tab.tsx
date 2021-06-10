@@ -30,7 +30,7 @@ const Ul = styled.ul`
 `;
 const Li = styled.li`
   cursor: pointer;
-  padding: 20px 40px;
+  padding: 10px 40px;
 
   border-radius: 16px;
   border: 1px solid ${

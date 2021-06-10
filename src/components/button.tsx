@@ -25,6 +25,7 @@ export const Button = styled.div`
   text-align: center;
   background: ${(props: Prop) => props.color};
   border-radius: 10px;
+  user-select: none;
   ${(props: Prop) => props.css}
 `;
 

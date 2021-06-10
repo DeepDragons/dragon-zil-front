@@ -5,6 +5,8 @@ import { NextPage } from 'next';
 import { Navbar } from 'components/nav-bar';
 import { Text } from 'components/text';
 import { Tab } from 'components/tab';
+import { IntInput } from 'components/int-input';
+import { Button } from 'components/button';
 
 import { Colors } from '@/config/colors';
 import { StyleFonts } from '@/config/fonts';
@@ -20,7 +22,7 @@ const Form = styled.form`
   background: ${Colors.Secondary};
   padding: 36px;
   border-radius: 16px;
-  max-width: 599px;
+  max-width: 900px;
   width: 100%;
 
   display: flex;
@@ -33,13 +35,17 @@ const TitleWrapper = styled.div`
 `;
 const Wrapper = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
 `;
 
 const tokens = ['ZIL', 'ZLP'];
 
 export const BuyPage: NextPage = () => {
   const [selected, setSelected] = React.useState(0);
+  const [eggs, setEggs] = React.useState(1);
 
   return (
     <Container>
@@ -66,6 +72,17 @@ export const BuyPage: NextPage = () => {
           >
             Choose token
           </Tab>
+          <IntInput
+            value={eggs}
+            onInput={setEggs}
+          >
+            Number of eggs
+          </IntInput>
+          <Button css="height: 55px;margin-top: 15px;">
+            <Text>
+              Buy for  {eggs * 10} ${tokens[selected]}
+            </Text>
+          </Button>
         </Wrapper>
       </Form>
     </Container>
