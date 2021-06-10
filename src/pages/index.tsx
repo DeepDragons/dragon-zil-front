@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { NextPage } from 'next';
+import { BrowserView, MobileView } from 'react-device-detect';
 
 const Nav = styled.nav`
   max-width: 56em;
@@ -8,32 +9,16 @@ const Nav = styled.nav`
   padding: 0.4em;
 `;
 
-const Ul = styled.ul`
-  display: flex;
-  padding: 0;
-`;
-
-const Li = styled.li`
-  display: block;
-  padding: 0.4em;
-  color: red;
-`;
-
 export const MainPage: NextPage = () => (
-  <Nav>
-    <Ul>
-      <Li>1dasdsa</Li>
-      <Li>1dasdsa</Li>
-      <Li>1dasdsa</Li>
-      <Li>1dasdsa</Li>
-      <Li>1dasdsa</Li>
-      <Li>1dasdsa</Li>
-      <Li>1dasdsa</Li>
-      <Li>1dasdsa</Li>
-      <Li>1dasdsa</Li>
-      <Li>1dasdsa</Li>
-    </Ul>
-  </Nav>
+  <>
+    <BrowserView>
+      <Nav />
+      <h1> This is rendered only in browser </h1>
+    </BrowserView>
+    <MobileView>
+      <h1> This is rendered only on mobile </h1>
+    </MobileView>
+  </>
 );
 
 export default MainPage;
