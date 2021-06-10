@@ -4,6 +4,7 @@ import { NextPage } from 'next';
 
 import { Navbar } from 'components/nav-bar';
 import { Text } from 'components/text';
+import { Tab } from 'components/tab';
 
 import { Colors } from '@/config/colors';
 import { StyleFonts } from '@/config/fonts';
@@ -30,26 +31,45 @@ const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
-export const BuyPage: NextPage = () => (
-  <Container>
-    <Navbar />
-    <Form>
-      <TitleWrapper>
-        <Text
-          fontVariant={StyleFonts.FiraSansSemiBold}
-          size="24px"
-          css="margin-right: 10px;"
-        >
-          Buy eggs
-        </Text>
-        <img
-          src="/icons/egg.svg"
-          alt="egg"
-        />
-      </TitleWrapper>
-    </Form>
-  </Container>
-);
+const tokens = ['ZIL', 'ZLP'];
+
+export const BuyPage: NextPage = () => {
+  const [selected, setSelected] = React.useState(0);
+
+  return (
+    <Container>
+      <Navbar />
+      <Form>
+        <TitleWrapper>
+          <Text
+            fontVariant={StyleFonts.FiraSansSemiBold}
+            size="24px"
+            css="margin-right: 10px;"
+          >
+            Buy eggs
+          </Text>
+          <img
+            src="/icons/egg.svg"
+            alt="egg"
+          />
+        </TitleWrapper>
+        <Wrapper>
+          <Tab
+            elements={tokens}
+            selected={selected}
+            onSelected={setSelected}
+          >
+            Choose token
+          </Tab>
+        </Wrapper>
+      </Form>
+    </Container>
+  );
+}
 
 export default BuyPage;
