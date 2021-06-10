@@ -1,22 +1,29 @@
-import styled from 'styled-components';
 import React from 'react';
+import styled from 'styled-components';
 import { NextPage } from 'next';
 import { BrowserView, MobileView } from 'react-device-detect';
 
-const Nav = styled.nav`
-  max-width: 56em;
-  margin: 0 auto;
-  padding: 0.4em;
+import { Navbar } from 'components/nav-bar';
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const MainPage: NextPage = () => (
   <>
     <BrowserView>
-      <Nav />
-      <h1> This is rendered only in browser </h1>
+      <Container>
+        <Navbar />
+        <h1> This is rendered only in browser </h1>
+      </Container>
     </BrowserView>
     <MobileView>
-      <h1> This is rendered only on mobile </h1>
+      <Container>
+        <Navbar />
+        <h1> This is rendered only in mobile </h1>
+      </Container>
     </MobileView>
   </>
 );
