@@ -72,15 +72,25 @@ export const Navbar: React.FC = () => {
     <Container>
       <Link href="/">
         <Logo>
-          <img src="/icons/logo.png" alt="Logo" height="40" />
-          <Text fontVariant={StyleFonts.FiraSansBold} css="margin-left: 5px;">
+          <img
+            src="/icons/logo.png"
+            alt="Logo"
+            height="40"
+          />
+          <Text
+            fontVariant={StyleFonts.FiraSansBold}
+            css="margin-left: 5px;"
+          >
             DragonZIL
           </Text>
         </Logo>
       </Link>
       <Ul>
         {links.map((link, index) => (
-          <Li key={index} selected={router.pathname === link.path}>
+          <Li
+            key={index}
+            selected={router.pathname === link.path}
+          >
             <Link href={link.path}>{link.name}</Link>
           </Li>
         ))}
