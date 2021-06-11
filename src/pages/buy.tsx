@@ -15,8 +15,11 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 40vh;
+  height: 90vh;
   justify-content: space-between;
+`;
+const Main = styled.div`
+  height: 70vh;
 `;
 const Form = styled.form`
   background: ${Colors.Secondary};
@@ -50,44 +53,46 @@ export const BuyPage: NextPage = () => {
   return (
     <Container>
       <Navbar />
-      <Form>
-        <TitleWrapper>
-          <Text
-            fontVariant={StyleFonts.FiraSansSemiBold}
-            size="24px"
-            css="margin-right: 10px;"
-          >
-            Buy eggs
-          </Text>
-          <img
-            src="/icons/egg.svg"
-            alt="egg"
-          />
-        </TitleWrapper>
-        <Wrapper>
-          <Tab
-            elements={tokens}
-            selected={selected}
-            onSelected={setSelected}
-          >
-            Choose token
-          </Tab>
-          <IntInput
-            value={eggs}
-            onInput={setEggs}
-          >
-            Number of eggs
-          </IntInput>
-          <Button css="margin-top: 15px;min-width: 235px;">
+      <Main>
+        <Form>
+          <TitleWrapper>
             <Text
-              fontVariant={StyleFonts.FiraSansBold}
-              size="1.43rem"
+              fontVariant={StyleFonts.FiraSansSemiBold}
+              size="24px"
+              css="margin-right: 10px;"
             >
-              Buy for  {eggs * 10} ${tokens[selected]}
+              Buy eggs
             </Text>
-          </Button>
-        </Wrapper>
-      </Form>
+            <img
+              src="/icons/egg.svg"
+              alt="egg"
+            />
+          </TitleWrapper>
+          <Wrapper>
+            <Tab
+              elements={tokens}
+              selected={selected}
+              onSelected={setSelected}
+            >
+              Choose token
+            </Tab>
+            <IntInput
+              value={eggs}
+              onInput={setEggs}
+            >
+              Number of eggs
+            </IntInput>
+            <Button css="margin-top: 15px;min-width: 235px;">
+              <Text
+                fontVariant={StyleFonts.FiraSansBold}
+                size="1.43rem"
+              >
+                Buy for  {eggs * 10} ${tokens[selected]}
+              </Text>
+            </Button>
+          </Wrapper>
+        </Form>
+      </Main>
     </Container>
   );
 }
