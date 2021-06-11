@@ -23,14 +23,17 @@ const Container = styled.div`
 const Ul = styled.ul`
   display: flex;
   align-items: center;
+  justify-content: inherit;
 
   background: ${Colors.Darker};
   border-radius: 16px;
   padding: 5px;
+  min-width: 250px;
 `;
 const Li = styled.li`
   cursor: pointer;
   padding: 10px 40px;
+  width: fit-content;
 
   border-radius: 16px;
   border: 1px solid ${

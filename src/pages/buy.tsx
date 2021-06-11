@@ -78,8 +78,11 @@ export const BuyPage: NextPage = () => {
           >
             Number of eggs
           </IntInput>
-          <Button css="height: 55px;margin-top: 15px;">
-            <Text>
+          <Button css="margin-top: 15px;min-width: 235px;">
+            <Text
+              fontVariant={StyleFonts.FiraSansBold}
+              size="1.43rem"
+            >
               Buy for  {eggs * 10} ${tokens[selected]}
             </Text>
           </Button>
