@@ -48,10 +48,14 @@ export const Footer: React.FC = () => {
             Ask a question
           </Li>
           <Li>
-            Privacy policy
+            <Link href="/privacy">
+              Privacy policy
+            </Link>
           </Li>
           <Li>
-            Terms of service
+            <Link href="/terms">
+              Terms of service
+            </Link>
           </Li>
         </ul>
       </Wrapper>
