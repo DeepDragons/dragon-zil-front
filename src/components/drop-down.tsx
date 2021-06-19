@@ -37,6 +37,7 @@ const Menu = styled.ul`
   position: absolute;
   display: ${(p: MenuProp) => p.open ? 'block' : 'none'};
   z-index: 20;
+  transform: translate(0, 88px);
 `;
 const Item = styled.li`
   cursor: pointer;
@@ -58,6 +59,7 @@ const Closer = styled.a`
   bottom: 0;
   right: 0;
   z-index: 0;
+  background: #00000052;
 `;
 
 export const DropDown: React.FC<Prop> = ({
