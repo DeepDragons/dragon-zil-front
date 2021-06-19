@@ -1,5 +1,4 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 
 import styled from 'styled-components';
 
@@ -8,7 +7,6 @@ import { DropDown } from 'components/drop-down';
 import { PopUpButton } from 'components/popup-btn';
 
 import { StyleFonts } from 'config/fonts';
-import { Colors } from 'config/colors';
 
 type Prop = {
   title: string;
