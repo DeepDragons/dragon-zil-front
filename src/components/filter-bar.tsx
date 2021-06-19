@@ -17,7 +17,7 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  max-width: 1200px;
+  max-width: 943px;
   width: 90%;
   margin-top: 40px;
 `;
@@ -54,6 +54,7 @@ export const FilterBar: React.FC<Prop> = ({
       <Text
         fontVariant={StyleFonts.FiraSansBold}
         size="30px"
+        css="margin-left: 40px;"
       >
         {title}
       </Text>
