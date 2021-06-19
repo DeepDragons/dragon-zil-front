@@ -4,11 +4,13 @@ import { NextPage } from 'next';
 import { BrowserView, MobileView } from 'react-device-detect';
 
 import { Navbar } from 'components/nav-bar';
+import { FilterBar } from 'components/filter-bar';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 90vh;
 `;
 
 export const MyDragons: NextPage = () => (
@@ -16,7 +18,9 @@ export const MyDragons: NextPage = () => (
     <BrowserView>
       <Container>
         <Navbar />
-        <h1> This is rendered only in browser </h1>
+        <FilterBar
+          title="My dragons"
+        />
       </Container>
     </BrowserView>
     <MobileView>

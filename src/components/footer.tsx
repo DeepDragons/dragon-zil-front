@@ -45,9 +45,6 @@ export const Footer: React.FC = () => {
         </Text>
         <ul>
           <Li>
-            Ask a question
-          </Li>
-          <Li>
             <Link href="/privacy">
               Privacy policy
             </Link>
