@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { NextPage } from 'next';
 import { BrowserView, MobileView } from 'react-device-detect';
+import Link from 'next/link';
 
 import { Navbar } from 'components/nav-bar';
 import { Card } from 'components/card';
@@ -64,10 +65,14 @@ export const MyDragons: NextPage = () => (
         />
         <Wrapper>
           {dragons.map((dragon, index) => (
-            <Card
+            <Link
               key={index}
-              dragon={dragon}
-            />
+              href={`/dragon/${dragon.id}`}
+            >
+              <div>
+                <Card dragon={dragon} />
+              </div>
+            </Link>
           ))}
         </Wrapper>
       </Container>
