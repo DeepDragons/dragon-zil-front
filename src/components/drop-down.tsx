@@ -37,7 +37,7 @@ const Menu = styled.ul`
   position: absolute;
   display: ${(p: MenuProp) => p.open ? 'block' : 'none'};
   z-index: 20;
-  transform: translate(0, 88px);
+  transform: translate(0,67%);
 `;
 const Item = styled.li`
   cursor: pointer;

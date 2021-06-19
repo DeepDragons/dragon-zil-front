@@ -32,7 +32,7 @@ const Wrapper = styled.div`
 
 const items = [
   'Rarity',
-  'Price'
+  'Strong'
 ];
 
 export const FilterBar: React.FC<Prop> = ({
