@@ -25,7 +25,6 @@ const Container = styled.div`
   cursor: pointer;
   
   background: ${Colors.Darker};
-  z-index: 20;
   padding: 5px 46px;
 
   min-width: 60px;
