@@ -4,6 +4,7 @@ import { NextPage } from 'next';
 import { BrowserView, MobileView } from 'react-device-detect';
 
 import { Navbar } from 'components/nav-bar';
+import { ActionBar } from 'components/dragon/action-bar';
 
 const Container = styled.div`
   display: flex;
@@ -13,12 +14,12 @@ const Container = styled.div`
 `;
 
 export const Dragon: NextPage = () => {
-
   return (
     <>
       <BrowserView>
         <Container>
           <Navbar />
+          <ActionBar id="2"/>
         </Container>
       </BrowserView>
       <MobileView>
