@@ -12,19 +12,22 @@ const Container = styled.div`
   min-height: 90vh;
 `;
 
-export const Dragon: NextPage = () => (
-  <>
-    <BrowserView>
-      <Container>
-        <Navbar />
-      </Container>
-    </BrowserView>
-    <MobileView>
-      <Container>
-        <h1> This is rendered only in mobile </h1>
-      </Container>
-    </MobileView>
-  </>
-);
+export const Dragon: NextPage = () => {
+
+  return (
+    <>
+      <BrowserView>
+        <Container>
+          <Navbar />
+        </Container>
+      </BrowserView>
+      <MobileView>
+        <Container>
+          <h1> This is rendered only in mobile </h1>
+        </Container>
+      </MobileView>
+    </>
+  );
+};
 
 export default Dragon;

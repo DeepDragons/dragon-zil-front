@@ -49,7 +49,7 @@ const Image = styled.img`
 // `;
 export const Empety = styled.div`
   border-radius: 100%;
-  background: ${Colors.Black};
+  background: ${Colors.Dark};
   height: 250px;
   width: 250px;
 
