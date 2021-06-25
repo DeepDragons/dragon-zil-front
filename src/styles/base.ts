@@ -39,4 +39,13 @@ export const BaseStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
+
+  @keyframes load {
+    from {
+        left: -150px;
+    }
+    to   {
+        left: 100%;
+    }
+  }
 `;

@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 import { Navbar } from 'components/nav-bar';
 import { Card } from 'components/card';
+import { SkeletCard } from 'components/skelet/card';
 import { FilterBar } from 'components/filter-bar';
 
 const Container = styled.div`
@@ -64,6 +65,10 @@ export const MyDragons: NextPage = () => (
           title="My dragons"
         />
         <Wrapper>
+          {/* <SkeletCard />
+          <SkeletCard />
+          <SkeletCard />
+          <SkeletCard /> */}
           {dragons.map((dragon, index) => (
             <Link
               key={index}

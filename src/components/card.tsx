@@ -14,7 +14,7 @@ type Prop = {
   }
 };
 
-const Container = styled.div`
+export const Container = styled.div`
   cursor: pointer;
 
   display: flex;
@@ -31,16 +31,20 @@ const Container = styled.div`
 const Image = styled.img`
   border-radius: 100%;
   background: ${Colors.Black};
+
+  animation: fadeInFromNone 0.5s ease-out;
 `;
 
 export const Card: React.FC<Prop> = ({
   dragon
 }) => {
+  const [loaded, setLoaded] = React.useState(true);
 
   return (
     <Container>
       <Image
         src={dragon.url}
+        onLoad={() => setLoaded(true)}
         height="250"
         width="250"
       />
