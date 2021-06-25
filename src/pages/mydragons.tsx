@@ -8,6 +8,7 @@ import { Navbar } from 'components/nav-bar';
 import { Card } from 'components/card';
 import { SkeletCard } from 'components/skelet/card';
 import { FilterBar } from 'components/filter-bar';
+import { Rarity } from 'config/rarity';
 
 const Container = styled.div`
   display: flex;
@@ -27,27 +28,32 @@ const dragons = [
   {
     url: 'https://res.cloudinary.com/dragonseth/image/upload/1_1.png',
     id: '1',
-    type: 0
+    type: 0,
+    rarity: Rarity.Common
   },
   {
     url: 'https://res.cloudinary.com/dragonseth/image/upload/1_2.png',
     id: '2',
-    type: 2
+    type: 2,
+    rarity: Rarity.Uncommon
   },
   {
     url: 'https://res.cloudinary.com/dragonseth/image/upload/1_3.png',
     id: '3',
-    type: 4
+    type: 4,
+    rarity: Rarity.Rare
   },
   {
     url: 'https://res.cloudinary.com/dragonseth/image/upload/1_4.png',
     id: '4',
-    type: 6
+    type: 6,
+    rarity: Rarity.Mythical
   },
   {
-    url: 'https://res.cloudinary.com/dragonseth/image/upload/1_5.png',
+    url: 'https://res.cloudinary.com/dragonseth/image/upload/sss1_5.png',
     id: '5',
-    type: 2
+    type: 2,
+    rarity: Rarity.Legendary
   },
   // {
   //   url: 'https://res.cloudinary.com/dragonseth/image/upload/1_6.png',
