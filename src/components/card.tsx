@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ProgressiveImage from 'react-progressive-graceful-image';
 
 import { Text } from 'components/text';
 
@@ -43,10 +44,6 @@ const Image = styled.img`
     box-shadow: inset 0 0 40px ${Colors.Primary};
   }
 `;
-// const RarityImage = styled.img`
-//   position: absolute;
-//   transform: translate(0, -15px);
-// `;
 export const Empety = styled.div`
   border-radius: 100%;
   background: ${Colors.Dark};
@@ -60,30 +57,6 @@ export const Empety = styled.div`
   }
 `;
 
-
-// const rarityImg = (rarity: Rarity) => {
-//     switch (rarity) {
-//       case Rarity.Common:
-//         return (<RarityImage src="/rarity/common.svg"/>);
-//       case Rarity.Uncommon:
-//         return (<RarityImage src="/rarity/uncommon.svg"/>);
-//       case Rarity.Rare:
-//         return (<RarityImage src="/rarity/rare.svg"/>);
-//       case Rarity.Mythical:
-//         return (<RarityImage src="/rarity/mythical.svg"/>);
-//       case Rarity.Legendary:
-//         return (<RarityImage src="/rarity/legendary.svg"/>);
-//       case Rarity.Immortal:
-//         return (<RarityImage src="/rarity/immortal.svg"/>);
-//       case Rarity.Arcana:
-//         return (<RarityImage src="/rarity/arcana.svg"/>);
-//       case Rarity.Ancient:
-//         return (<RarityImage src="/rarity/ancient.svg"/>);
-//       default:
-//         return null;
-//     }
-// }
-
 export const Card: React.FC<Prop> = ({
   dragon
 }) => {
@@ -94,12 +67,19 @@ export const Card: React.FC<Prop> = ({
       {loadError ? (
         <Empety />
       ) : (
-        <Image
+        <ProgressiveImage
           src={dragon.url}
-          onError={() => setLoadError(true)}
-          height="250"
-          width="250"
-        />
+          placeholder={dragon.url}
+        >
+          {(src: string) => (
+            <Image
+              src={src}
+              onError={() => setLoadError(true)}
+              height="250"
+              width="250"
+            />
+          )}
+        </ProgressiveImage>
       )}
       <Text
         fontVariant={StyleFonts.FiraSansBold}

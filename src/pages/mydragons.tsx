@@ -50,7 +50,7 @@ const dragons = [
     rarity: Rarity.Mythical
   },
   {
-    url: 'https://res.cloudinary.com/dragonseth/image/upload/sss1_5.png',
+    url: 'https://res.cloudinary.com/dragonseth/image/upload/1_5.png',
     id: '5',
     type: 2,
     rarity: Rarity.Legendary
