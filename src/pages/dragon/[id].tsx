@@ -5,6 +5,7 @@ import { BrowserView, MobileView } from 'react-device-detect';
 
 import { Navbar } from 'components/nav-bar';
 import { ActionBar } from 'components/dragon/action-bar';
+import { CombatGens } from 'components/dragon/combat-gens';
 
 const Container = styled.div`
   display: flex;
@@ -28,6 +29,7 @@ export const Dragon: NextPage = () => {
             breed={() => console.log('breed')}
             suicide={() => console.log('suicide')}
           />
+          <CombatGens gens={''}/>
         </Container>
       </BrowserView>
       <MobileView>

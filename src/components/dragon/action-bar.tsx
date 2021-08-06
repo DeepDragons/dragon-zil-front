@@ -11,7 +11,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  max-width: 1200px;
+  max-width: 1024px;
   width: 100%;
 `;
 const ActionsRow = styled.div`
@@ -28,6 +28,7 @@ const ActionButton = styled.button`
   background: ${Colors.Darker};
 
   border: 0;
+  border: solid 1px ${Colors.Darker};
   border-radius: 16px;
   min-width: 100px;
   min-height: 100px;
@@ -36,7 +37,7 @@ const ActionButton = styled.button`
   padding: 9px 16px 0 16px;
 
   :hover {
-    box-shadow: inset 9px 4px 5px #8945f3;
+    border: solid 1px #8945f3;
   }
 `;
 const TitleWrapper = styled.div`
@@ -77,7 +78,7 @@ export const ActionBar: React.FC<Prop> = ({
         <Text
           fontColors={Colors.Muted}
           fontVariant={StyleFonts.FiraSansRegular}
-          size="18px"
+          size="16px"
           css="display: flex;align-items: center;justify-content: space-evenly;"
         >
           owner:
@@ -94,7 +95,7 @@ export const ActionBar: React.FC<Prop> = ({
             src="/icons/transfer-icon.svg"
             alt="transfer"
           />
-          <Text size="18px">
+          <Text size="16px">
             Transfer
           </Text>
         </ActionButton>
@@ -104,7 +105,7 @@ export const ActionBar: React.FC<Prop> = ({
             height="36"
             alt="Sale"
           />
-          <Text size="18px">
+          <Text size="16px">
             On sale
           </Text>
         </ActionButton>
@@ -113,7 +114,7 @@ export const ActionBar: React.FC<Prop> = ({
             src="/icons/gen-lab.svg"
             alt="Sale"
           />
-          <Text size="18px">
+          <Text size="16px">
             Mutate
           </Text>
         </ActionButton>
@@ -122,7 +123,7 @@ export const ActionBar: React.FC<Prop> = ({
             src="/icons/arena.svg"
             alt="Sale"
           />
-          <Text size="18px">
+          <Text size="16px">
             To arena
           </Text>
         </ActionButton>
@@ -131,7 +132,7 @@ export const ActionBar: React.FC<Prop> = ({
             src="/icons/an-egg.svg"
             alt="Sale"
           />
-          <Text size="18px">
+          <Text size="16px">
             Breed
           </Text>
         </ActionButton>
@@ -140,7 +141,7 @@ export const ActionBar: React.FC<Prop> = ({
             src="/icons/suicide.svg"
             alt="Sale"
           />
-          <Text size="18px">
+          <Text size="16px">
             Suicide
           </Text>
         </ActionButton>
