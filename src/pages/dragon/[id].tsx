@@ -19,7 +19,15 @@ export const Dragon: NextPage = () => {
       <BrowserView>
         <Container>
           <Navbar />
-          <ActionBar id="2"/>
+          <ActionBar
+            id="2"
+            transfer={() => console.log('transfer')}
+            sale={() => console.log('sale')}
+            mutate={() => console.log('mutate')}
+            fight={() => console.log('fight')}
+            breed={() => console.log('breed')}
+            suicide={() => console.log('suicide')}
+          />
         </Container>
       </BrowserView>
       <MobileView>

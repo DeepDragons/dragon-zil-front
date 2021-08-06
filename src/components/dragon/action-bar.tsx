@@ -47,9 +47,23 @@ const TitleWrapper = styled.div`
 
 type Prop = {
   id: string;
+  transfer: () => void;
+  sale: () => void;
+  mutate: () => void;
+  fight: () => void;
+  breed: () => void;
+  suicide: () => void;
 };
 
-export const ActionBar: React.FC<Prop> = ({ id }) => {
+export const ActionBar: React.FC<Prop> = ({
+  id,
+  transfer,
+  sale,
+  mutate,
+  fight,
+  breed,
+  suicide
+}) => {
   return (
     <Container>
       <TitleWrapper>
@@ -75,7 +89,7 @@ export const ActionBar: React.FC<Prop> = ({ id }) => {
         </Text>
       </TitleWrapper>
       <ActionsRow>
-        <ActionButton>
+        <ActionButton onClick={transfer}>
           <img
             src="/icons/transfer-icon.svg"
             alt="transfer"
@@ -84,7 +98,7 @@ export const ActionBar: React.FC<Prop> = ({ id }) => {
             Transfer
           </Text>
         </ActionButton>
-        <ActionButton>
+        <ActionButton onClick={sale}>
           <img
             src="/icons/sale-icon.svg"
             height="36"
@@ -94,16 +108,16 @@ export const ActionBar: React.FC<Prop> = ({ id }) => {
             On sale
           </Text>
         </ActionButton>
-        <ActionButton>
+        <ActionButton onClick={mutate}>
           <img
             src="/icons/gen-lab.svg"
             alt="Sale"
           />
           <Text size="18px">
-            Genlab
+            Mutate
           </Text>
         </ActionButton>
-        <ActionButton>
+        <ActionButton onClick={fight}>
           <img
             src="/icons/arena.svg"
             alt="Sale"
@@ -112,7 +126,7 @@ export const ActionBar: React.FC<Prop> = ({ id }) => {
             To arena
           </Text>
         </ActionButton>
-        <ActionButton>
+        <ActionButton onClick={breed}>
           <img
             src="/icons/an-egg.svg"
             alt="Sale"
@@ -121,7 +135,7 @@ export const ActionBar: React.FC<Prop> = ({ id }) => {
             Breed
           </Text>
         </ActionButton>
-        <ActionButton>
+        <ActionButton onClick={suicide}>
           <img
             src="/icons/suicide.svg"
             alt="Sale"
