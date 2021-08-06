@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { isBrowser } from 'react-device-detect';
 
 import { Text } from 'components/text';
 
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
+import { Radar } from 'lib/radar';
 
 const Container = styled.div`
   background: ${Colors.Secondary};
@@ -38,7 +40,16 @@ type Prop = {
 export const CombatGens: React.FC<Prop> = ({
   gens
 }) => {
-  const [selected, setSelected] = React.useState(0);
+  const [selected, setSelected] = React.useState(isBrowser ? 0 : 1);
+
+
+  React.useEffect(() => {
+    const ctx = document.querySelector('#combat');
+
+    if (ctx && isBrowser) {
+      const r = new Radar(gens, ctx);
+    }
+  }, [gens, selected]);
 
   return (
     <Container>
@@ -62,16 +73,28 @@ export const CombatGens: React.FC<Prop> = ({
             alt="graph"
             onClick={() => setSelected(0)}
           />
-          <TabSelector
-            style={{
-              background: selected === 1 ? Colors.Darker : 'none'
-            }}
-            src="/icons/radar.svg"
-            alt="radar"
-            onClick={() => setSelected(1)}
-          />
+          {isBrowser ? (
+            <TabSelector
+              style={{
+                background: selected === 1 ? Colors.Darker : 'none'
+              }}
+              src="/icons/radar.svg"
+              alt="radar"
+              onClick={() => setSelected(1)}
+            />
+          ) : null}
         </TabRow>
       </TitleRow>
+      {selected === 1 ? (
+        <div className="radar">
+          <canvas
+            id="combat"
+            height="410"
+          />
+        </div>
+      ) : (
+        <div></div>
+      )}
     </Container>
   );
 };

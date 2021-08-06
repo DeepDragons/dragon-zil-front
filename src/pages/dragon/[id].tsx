@@ -16,28 +16,19 @@ const Container = styled.div`
 
 export const Dragon: NextPage = () => {
   return (
-    <>
-      <BrowserView>
-        <Container>
-          <Navbar />
-          <ActionBar
-            id="2"
-            transfer={() => console.log('transfer')}
-            sale={() => console.log('sale')}
-            mutate={() => console.log('mutate')}
-            fight={() => console.log('fight')}
-            breed={() => console.log('breed')}
-            suicide={() => console.log('suicide')}
-          />
-          <CombatGens gens={''}/>
-        </Container>
-      </BrowserView>
-      <MobileView>
-        <Container>
-          <h1> This is rendered only in mobile </h1>
-        </Container>
-      </MobileView>
-    </>
+    <Container>
+      <Navbar />
+      <ActionBar
+        id="2"
+        transfer={() => console.log('transfer')}
+        sale={() => console.log('sale')}
+        mutate={() => console.log('mutate')}
+        fight={() => console.log('fight')}
+        breed={() => console.log('breed')}
+        suicide={() => console.log('suicide')}
+      />
+      <CombatGens gens={'74882138062254890663586233748589148886184661958565938896961482050151828829597'}/>
+    </Container>
   );
 };
 
