@@ -42,7 +42,7 @@ export const Column: React.FC<Prop> = ({
 
   return (
     <Container style={{
-      transform: invert ? 'rotate(180deg);' : 'none'
+      transform: invert ? 'rotate(180deg)' : 'rotate(0deg)'
     }}>
       <Bar
         color={color}

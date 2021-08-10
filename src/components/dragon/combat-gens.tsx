@@ -19,6 +19,7 @@ const Container = styled.div`
   border-radius: 16px;
 
   padding: 41px;
+  margin-bottom: 30px;
 `;
 const TitleRow = styled.div`
   display: flex;
@@ -69,8 +70,12 @@ export const CombatGens: React.FC<Prop> = ({
   React.useEffect(() => {
     const ctx = document.querySelector('#combat');
 
-    if (ctx && isBrowser) {
-      const r = new Radar(gens, ctx);
+    try {
+      if (ctx && isBrowser) {
+        const r = new Radar(gens, ctx);
+      }
+    } catch {
+      setSelected(0);
     }
   }, [gens, selected]);
 
@@ -86,7 +91,7 @@ export const CombatGens: React.FC<Prop> = ({
           </Text>
           <img
             src="/icons/gens.svg"
-            alt="transfer"
+            alt="gens"
           />
         </TitleRow>
         <TabRow>

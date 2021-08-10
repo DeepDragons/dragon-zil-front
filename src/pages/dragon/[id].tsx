@@ -7,7 +7,7 @@ import { Navbar } from 'components/nav-bar';
 import { ActionBar } from 'components/dragon/action-bar';
 import { Image } from 'components/card';
 import { CombatGens } from 'components/dragon/combat-gens';
-import { Rarity } from '@/config/rarity';
+import { BodyParts } from 'components/dragon/body-parts';
 
 const Container = styled.div`
   display: flex;
@@ -42,7 +42,10 @@ export const Dragon: NextPage = () => {
           src="https://res.cloudinary.com/dragonseth/image/upload/1_3.png"
           height="300"
         />
-        <CombatGens gens={'74882138062254890663586233748589148886184661958565938896961482050151828829597'}/>
+        <div>
+          <CombatGens gens={'74882138062254890663586233748589148886184661958565938896961482050151828829597'}/>
+          <BodyParts />
+        </div>
       </Wrapper>
     </Container>
   );

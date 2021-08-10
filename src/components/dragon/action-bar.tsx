@@ -33,7 +33,7 @@ const ActionButton = styled.button`
   min-width: 100px;
   min-height: 100px;
 
-  margin: 16px;
+  margin: 0 0 0 16px;
   padding: 9px 16px 0 16px;
 
   :hover {
