@@ -94,6 +94,7 @@ export const ActionBar: React.FC<Prop> = ({
           <img
             src="/icons/transfer-icon.svg"
             alt="transfer"
+            height="38"
           />
           <Text size="16px">
             Transfer
@@ -102,7 +103,7 @@ export const ActionBar: React.FC<Prop> = ({
         <ActionButton onClick={sale}>
           <img
             src="/icons/sale-icon.svg"
-            height="36"
+            height="38"
             alt="Sale"
           />
           <Text size="16px">
@@ -112,6 +113,7 @@ export const ActionBar: React.FC<Prop> = ({
         <ActionButton onClick={mutate}>
           <img
             src="/icons/gen-lab.svg"
+            height="38"
             alt="Sale"
           />
           <Text size="16px">
@@ -121,6 +123,7 @@ export const ActionBar: React.FC<Prop> = ({
         <ActionButton onClick={fight}>
           <img
             src="/icons/arena.svg"
+            height="38"
             alt="Sale"
           />
           <Text size="16px">
@@ -130,6 +133,7 @@ export const ActionBar: React.FC<Prop> = ({
         <ActionButton onClick={breed}>
           <img
             src="/icons/an-egg.svg"
+            height="38"
             alt="Sale"
           />
           <Text size="16px">
@@ -139,6 +143,7 @@ export const ActionBar: React.FC<Prop> = ({
         <ActionButton onClick={suicide}>
           <img
             src="/icons/suicide.svg"
+            height="38"
             alt="Sale"
           />
           <Text size="16px">
