@@ -31,7 +31,7 @@ export const Container = styled.div`
   
   background: ${Colors.Darker};
 `;
-const Image = styled.img`
+export const Image = styled.img`
   border-radius: 100%;
   background: ${Colors.Black};
   // z-index: 2;

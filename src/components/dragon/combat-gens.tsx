@@ -58,7 +58,7 @@ type Prop = {
 export const CombatGens: React.FC<Prop> = ({
   gens
 }) => {
-  const [selected, setSelected] = React.useState(isBrowser ? 0 : 0);
+  const [selected, setSelected] = React.useState(isBrowser ? 1 : 0);
 
   const gensArray = React.useMemo(() => {
     const list = genParse(gens).splice(1);
