@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Link from 'next/link';
 
+import { ConnectZIlPay } from 'components/connect-zilpay';
+
 import { Text } from 'components/text';
 import { StyleFonts } from 'config/fonts';
 import { Colors } from 'config/colors';
@@ -95,7 +97,7 @@ export const Navbar: React.FC = () => {
           </Li>
         ))}
       </Ul>
-      <Connect>zil1fm...ew07pj</Connect>
+      <ConnectZIlPay />
     </Container>
   );
 };
