@@ -9,6 +9,7 @@ import { Image } from 'components/card';
 import { CombatGens } from 'components/dragon/combat-gens';
 import { BodyParts } from 'components/dragon/body-parts';
 import { BattlesSection } from 'components/dragon/battles';
+import { ParentsSection } from 'components/dragon/parents';
 
 const Container = styled.div`
   display: flex;
@@ -47,6 +48,7 @@ export const Dragon: NextPage = () => {
           <CombatGens gens={'74882138062254890663586233748589148886184661958565938896961482050151828829597'}/>
           <BodyParts />
           <BattlesSection win={250} lost={300}/>
+          <ParentsSection first="300" second="230"/>
         </div>
       </Wrapper>
     </Container>
