@@ -64,12 +64,6 @@ export const ParentsSection: React.FC<Prop> = ({
         </ImageWrapper>
         <Seporate />
         <ImageWrapper>
-          <Text
-            fontVariant={StyleFonts.FiraSansRegular}
-            css="margin: 0 10px;"
-          >
-            #{second}
-          </Text>
           <Link href={`/dragon/${first}`}>
             <div>
               <ParentImage
@@ -79,6 +73,12 @@ export const ParentsSection: React.FC<Prop> = ({
               />
             </div>
           </Link>
+          <Text
+            fontVariant={StyleFonts.FiraSansRegular}
+            css="margin: 0 10px;"
+          >
+            #{second}
+          </Text>
         </ImageWrapper>
       </Wrapper>
     </Container>

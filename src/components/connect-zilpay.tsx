@@ -1,5 +1,6 @@
 import React from 'react';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import { useStore } from 'effector-react';
 import styled from 'styled-components';
 
 import Loader from "react-loader-spinner";
@@ -9,6 +10,7 @@ import { StyleFonts } from 'config/fonts';
 import { Colors } from 'config/colors';
 import { ZilPayBase } from 'mixin/zilpay-base';
 import { trim } from 'lib/trim';
+import { $wallet, updateAddress } from 'store/wallet';
 
 const Container = styled.div`
   cursor: pointer;
@@ -17,7 +19,7 @@ const Container = styled.div`
 `;
 
 export const ConnectZIlPay: React.FC = () => {
-  const [address, setAddress] = React.useState<string | null>(null);
+  const address = useStore($wallet);
   const [loading, setLoading] = React.useState(false);
 
   const handleConnect = React.useCallback(async() => {
@@ -29,7 +31,7 @@ export const ConnectZIlPay: React.FC = () => {
       const connected = await zp.wallet.connect();
 
       if (connected) {
-        setAddress(zp.wallet.defaultAccount.bech32);
+        updateAddress(zp.wallet.defaultAccount.bech32);
       }
     } catch (err) {
       console.error(err);
@@ -40,12 +42,12 @@ export const ConnectZIlPay: React.FC = () => {
   React.useEffect(() => {
     try {
       const wallet = new ZilPayBase();
-      
+
       wallet
         .zilpay
         .then((zp) => {
           if (zp.wallet.defaultAccount) {
-            setAddress(zp.wallet.defaultAccount.bech32)
+            updateAddress(zp.wallet.defaultAccount.bech32)
           }
         });
     } catch (err) {
