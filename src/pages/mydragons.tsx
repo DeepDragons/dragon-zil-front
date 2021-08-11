@@ -38,7 +38,7 @@ export const MyDragons: NextPage = () => {
       fetch(url)
         .then((res) => res.json())
         .then(({ data }) => {
-          updateDragons(data.map((el) => ({
+          updateDragons(data.map((el: any) => ({
             type: 0,
             rarity: Rarity.Common,
             url: el.url,

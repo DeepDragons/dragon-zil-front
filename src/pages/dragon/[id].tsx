@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { BrowserView, MobileView } from 'react-device-detect';
 
 import { Navbar } from 'components/nav-bar';
@@ -33,11 +34,31 @@ const DragonImage = styled(Image)`
 `;
 
 export const Dragon: NextPage = () => {
+  const router = useRouter();
+
+  const [dragon, setDragon] = React.useState();
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    if (router.query.id) {
+      const url = `http://127.0.0.1:8083/api/v1/dragon/${router.query.id}`;
+
+      fetch(url)
+        .then((res) => res.json())
+        .then(({ data }) => {
+          setDragon(data[0]);
+        })
+        .catch(() => setLoading(false)); 
+    }
+  }, [router.query.id]);
+
+  console.log(dragon);
+
   return (
     <Container>
       <Navbar />
       <ActionBar
-        id="2"
+        id={dragon && dragon['id'] || ''}
         transfer={() => console.log('transfer')}
         sale={() => console.log('sale')}
         mutate={() => console.log('mutate')}
@@ -45,15 +66,19 @@ export const Dragon: NextPage = () => {
         breed={() => console.log('breed')}
         suicide={() => console.log('suicide')}
       />
-      <Wrapper>
-        <DragonImage src="https://res.cloudinary.com/dragonseth/image/upload/1_3.png" />
-        <div>
-          <CombatGens gens={'74882138062254890663586233748589148886184661958565938896961482050151828829597'}/>
-          <BodyParts />
-          <BattlesSection win={250} lost={300}/>
-          <ParentsSection first="300" second="230"/>
-        </div>
-      </Wrapper>
+      {dragon ? (
+        <Wrapper>
+          <DragonImage src={dragon['url']} />
+          <div>
+            <CombatGens gens={dragon['gen_fight']}/>
+            <BodyParts />
+            <BattlesSection win={dragon['fight_win']} lost={dragon['fight_lose']}/>
+            {Array(dragon['parents']).length > 1 ? (
+              <ParentsSection first="300" second="230"/>
+            ) : null}
+          </div>
+        </Wrapper>
+      ) : null}
     </Container>
   );
 };
