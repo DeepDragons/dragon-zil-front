@@ -10,6 +10,7 @@ import { CombatGens } from 'components/dragon/combat-gens';
 import { BodyParts } from 'components/dragon/body-parts';
 import { BattlesSection } from 'components/dragon/battles';
 import { ParentsSection } from 'components/dragon/parents';
+import { Colors } from '@/config/colors';
 
 const Container = styled.div`
   display: flex;
@@ -21,9 +22,14 @@ const Wrapper = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  flex-wrap: wrap;
 
   max-width: 1024px;
   width: 100%;
+`;
+const DragonImage = styled(Image)`
+  height: 300px;
+  background: ${Colors.Secondary};
 `;
 
 export const Dragon: NextPage = () => {
@@ -40,10 +46,7 @@ export const Dragon: NextPage = () => {
         suicide={() => console.log('suicide')}
       />
       <Wrapper>
-        <Image
-          src="https://res.cloudinary.com/dragonseth/image/upload/1_3.png"
-          height="300"
-        />
+        <DragonImage src="https://res.cloudinary.com/dragonseth/image/upload/1_3.png" />
         <div>
           <CombatGens gens={'74882138062254890663586233748589148886184661958565938896961482050151828829597'}/>
           <BodyParts />
