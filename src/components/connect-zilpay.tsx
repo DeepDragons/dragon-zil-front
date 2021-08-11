@@ -31,7 +31,7 @@ export const ConnectZIlPay: React.FC = () => {
       const connected = await zp.wallet.connect();
 
       if (connected) {
-        updateAddress(zp.wallet.defaultAccount.bech32);
+        updateAddress(zp.wallet.defaultAccount);
       }
     } catch (err) {
       console.error(err);
@@ -47,7 +47,7 @@ export const ConnectZIlPay: React.FC = () => {
         .zilpay
         .then((zp) => {
           if (zp.wallet.defaultAccount) {
-            updateAddress(zp.wallet.defaultAccount.bech32)
+            updateAddress(zp.wallet.defaultAccount)
           }
         });
     } catch (err) {
@@ -58,7 +58,7 @@ export const ConnectZIlPay: React.FC = () => {
   if (address) {
     return (
       <Container>
-        {trim(address)}
+        {trim(address.bech32)}
       </Container>
     );
   }

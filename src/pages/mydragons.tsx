@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { NextPage } from 'next';
 import { BrowserView, MobileView } from 'react-device-detect';
+import { useStore } from 'effector-react';
 import Link from 'next/link';
 
 import { Navbar } from 'components/nav-bar';
@@ -9,6 +10,8 @@ import { Card } from 'components/card';
 import { SkeletCard } from 'components/skelet/card';
 import { FilterBar } from 'components/filter-bar';
 import { Rarity } from 'config/rarity';
+import { $wallet } from 'store/wallet';
+import { $myDragons, updateDragons } from 'store/my-dragons';
 
 const Container = styled.div`
   display: flex;
@@ -23,77 +26,71 @@ const Wrapper = styled.div`
   align-items: center;
   max-width: 943px;
 `;
+export const MyDragons: NextPage = () => {
+  const address = useStore($wallet);
+  const dragons = useStore($myDragons);
+  const [loading, setLoading] = React.useState(true);
 
-const dragons = [
-  {
-    url: 'https://res.cloudinary.com/dragonseth/image/upload/1_1.png',
-    id: '1',
-    type: 0,
-    rarity: Rarity.Common
-  },
-  {
-    url: 'https://res.cloudinary.com/dragonseth/image/upload/1_2.png',
-    id: '2',
-    type: 2,
-    rarity: Rarity.Uncommon
-  },
-  {
-    url: 'https://res.cloudinary.com/dragonseth/image/upload/1_3.png',
-    id: '3',
-    type: 4,
-    rarity: Rarity.Rare
-  },
-  {
-    url: 'https://res.cloudinary.com/dragonseth/image/upload/1_4.png',
-    id: '4',
-    type: 6,
-    rarity: Rarity.Mythical
-  },
-  {
-    url: 'https://res.cloudinary.com/dragonseth/image/upload/1_5.png',
-    id: '5',
-    type: 2,
-    rarity: Rarity.Legendary
-  },
-  // {
-  //   url: 'https://res.cloudinary.com/dragonseth/image/upload/1_6.png',
-  //   id: '6',
-  //   type: 3
-  // }
-];
+  React.useEffect(() => {
+    if (address) {
+      const url = `http://127.0.0.1:8083/api/v1/dragons?owner=${String(address?.base16).toLowerCase()}`;
 
-export const MyDragons: NextPage = () => (
-  <>
-    <BrowserView>
-      <Container>
-        <Navbar />
-        <FilterBar
-          title="My dragons"
-        />
-        <Wrapper>
-          {/* <SkeletCard />
-          <SkeletCard />
-          <SkeletCard />
-          <SkeletCard /> */}
-          {dragons.map((dragon, index) => (
-            <Link
-              key={index}
-              href={`/dragon/${dragon.id}`}
-            >
-              <div>
-                <Card dragon={dragon} />
-              </div>
-            </Link>
-          ))}
-        </Wrapper>
-      </Container>
-    </BrowserView>
-    <MobileView>
-      <Container>
-        <h1> This is rendered only in mobile </h1>
-      </Container>
-    </MobileView>
-  </>
-);
+      fetch(url)
+        .then((res) => res.json())
+        .then(({ data }) => {
+          updateDragons(data.map((el) => ({
+            type: 0,
+            rarity: Rarity.Common,
+            url: el.url,
+            id: String(el.id),
+            stage: el.stage
+          })));
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
+    }
+  }, [address]);
+
+  return (
+    <>
+      <BrowserView>
+        <Container>
+          <Navbar />
+          <FilterBar
+            title="My dragons"
+          />
+          <Wrapper>
+            {loading ? (
+              <>
+              <SkeletCard />
+              <SkeletCard />
+              <SkeletCard />
+              <SkeletCard />
+              </>
+            ) : (
+              <>
+                {dragons.map((dragon, index) => (
+                  <Link
+                    key={index}
+                    href={`/dragon/${dragon.id}`}
+                  >
+                    <div>
+                      <Card dragon={dragon} />
+                    </div>
+                  </Link>
+                ))}
+              </>
+            )}
+          </Wrapper>
+        </Container>
+      </BrowserView>
+      <MobileView>
+        <Container>
+          <h1> This is rendered only in mobile </h1>
+        </Container>
+      </MobileView>
+    </>
+  );
+}
 
 export default MyDragons;
