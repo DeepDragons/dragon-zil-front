@@ -14,7 +14,6 @@ const Container = styled.div`
   z-index: 1;
   height: 100%;
   min-height: 65px;
-  width: 32px;
   margin: 0 5px;
 `;
 const Bar = styled.div`
@@ -26,6 +25,7 @@ const Bar = styled.div`
 type Prop = {
   max: number;
   value: number;
+  width: number;
   color: string | Colors;
   invert?: boolean;
 };
@@ -34,6 +34,7 @@ export const Column: React.FC<Prop> = ({
   color,
   max,
   value,
+  width,
   invert
 }) => {
   const length = React.useMemo(() => {
@@ -42,6 +43,7 @@ export const Column: React.FC<Prop> = ({
 
   return (
     <Container style={{
+      width: `${width}px`,
       transform: invert ? 'rotate(180deg)' : 'rotate(0deg)'
     }}>
       <Bar

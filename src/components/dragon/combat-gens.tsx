@@ -11,16 +11,8 @@ import { Radar } from 'lib/radar';
 import { genParse } from 'lib/gen-parse';
 import { chunkArray } from 'lib/chunks';
 
-const Container = styled.div`
-  background: ${Colors.Secondary};
+import { Container, Seporate } from './styles';
 
-  border: 1px solid #FFB411;
-  box-sizing: border-box;
-  border-radius: 16px;
-
-  padding: 41px;
-  margin-bottom: 30px;
-`;
 const TitleRow = styled.div`
   display: flex;
   align-items: center;
@@ -47,9 +39,6 @@ const GensWrapper = styled.div`
 `;
 const SeporateContainer = styled.div`
   width: 30px;
-`;
-const Seporate = styled.hr`
-  border: 1px solid ${Colors.Muted};
 `;
 
 type Prop = {
@@ -138,6 +127,7 @@ export const CombatGens: React.FC<Prop> = ({
               {gensArray[0].map((gen, index) => (
                 <Column
                   key={`deffence-${index}`}
+                  width={25}
                   color={'#06C190'}
                   max={99}
                   value={gen}
@@ -161,6 +151,7 @@ export const CombatGens: React.FC<Prop> = ({
               {gensArray[1].map((gen, index) => (
                 <Column
                   key={`attack-${index}`}
+                  width={25}
                   color={'#E8313E'}
                   max={99}
                   value={gen}

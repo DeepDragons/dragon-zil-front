@@ -8,24 +8,8 @@ import { Column } from 'components/column';
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
 
-const Container = styled.div`
-  background: ${Colors.Secondary};
+import { Container, TitleRow } from './styles';
 
-  border: 1px solid #FFB411;
-  box-sizing: border-box;
-  border-radius: 16px;
-
-  padding: 41px;
-  margin-bottom: 30px;
-`;
-const TitleRow = styled.div`
-  display: flex;
-  align-items: center;
-
-  img {
-    margin-left: 10px;
-  }
-`;
 const GensContainer = styled.div`
   display: flex;
   align-items: center;
@@ -102,6 +86,7 @@ export const BodyParts: React.FC<Prop> = () => {
             <Column
               key={`body-${index}`}
               color={Colors.White}
+              width={32}
               max={gen.max}
               value={gen.value}
               invert={true}
