@@ -7,7 +7,7 @@ import { Column } from 'components/column';
 
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
-import { Radar } from 'lib/radar';
+import { radar } from 'lib/radar';
 import { genParse } from 'lib/gen-parse';
 import { chunkArray } from 'lib/chunks';
 
@@ -61,12 +61,12 @@ export const CombatGens: React.FC<Prop> = ({
 
     try {
       if (ctx && isBrowser) {
-        const r = new Radar(gens, ctx);
+        radar(gensArray, ctx);
       }
     } catch {
       setSelected(0);
     }
-  }, [gens, selected]);
+  }, [gensArray, selected]);
 
   return (
     <Container>

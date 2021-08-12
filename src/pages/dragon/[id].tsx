@@ -12,6 +12,7 @@ import { BodyParts } from 'components/dragon/body-parts';
 import { BattlesSection } from 'components/dragon/battles';
 import { ParentsSection } from 'components/dragon/parents';
 import { Colors } from '@/config/colors';
+import { DragonAPI, DragonObject } from 'lib/api';
 
 const Container = styled.div`
   display: flex;
@@ -33,26 +34,25 @@ const DragonImage = styled(Image)`
   background: ${Colors.Secondary};
 `;
 
+const backend = new DragonAPI();
+
 export const Dragon: NextPage = () => {
   const router = useRouter();
 
-  const [dragon, setDragon] = React.useState();
+  const [dragon, setDragon] = React.useState<DragonObject | null>(null);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     if (router.query.id) {
-      const url = `http://127.0.0.1:8083/api/v1/dragon/${router.query.id}`;
-
-      fetch(url)
-        .then((res) => res.json())
-        .then(({ data }) => {
-          setDragon(data[0]);
+      backend
+        .getDragon(String(router.query.id))
+        .then((dragon) => {
+          setDragon(dragon);
+          setLoading(false);
         })
-        .catch(() => setLoading(false)); 
+        .catch(() => setLoading(false));
     }
   }, [router.query.id]);
-
-  console.log(dragon);
 
   return (
     <Container>
@@ -68,12 +68,12 @@ export const Dragon: NextPage = () => {
       />
       {dragon ? (
         <Wrapper>
-          <DragonImage src={dragon['url']} />
+          <DragonImage src={dragon.url} />
           <div>
-            <CombatGens gens={dragon['gen_fight']}/>
+            <CombatGens gens={dragon.gen_fight}/>
             <BodyParts />
-            <BattlesSection win={dragon['fight_win']} lost={dragon['fight_lose']}/>
-            {Array(dragon['parents']).length > 1 ? (
+            <BattlesSection win={dragon.fight_win} lost={dragon.fight_lose}/>
+            {Array(dragon.parents).length > 1 ? (
               <ParentsSection first="300" second="230"/>
             ) : null}
           </div>
