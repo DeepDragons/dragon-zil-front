@@ -32,7 +32,6 @@ const ConnectButton = styled.div`
 export const ConnectZIlPay: React.FC = () => {
   const address = useStore($wallet);
   const [loading, setLoading] = React.useState(true);
-  const [isOpen, setIsOpen] = React.useState(true);
 
   const handleConnect = React.useCallback(async() => {
     setLoading(true);
