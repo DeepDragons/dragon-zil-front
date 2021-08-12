@@ -6,6 +6,7 @@
       [
         "styled-components",
         { "ssr": true }
-      ]
+      ],
+      "babel-plugin-macros"
     ]
 }
