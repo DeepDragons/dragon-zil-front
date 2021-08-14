@@ -4,6 +4,8 @@ import { useStore } from 'effector-react';
 import { BrowserView, MobileView } from 'react-device-detect';
 
 import { Text } from 'components/text';
+import { Modal } from 'components/modal';
+import { ModalItem } from 'components/mobile/modal-item';
 
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
@@ -62,6 +64,31 @@ const TitleWrapper = styled.div`
 
   margin-left: 16px;
 `;
+const MobileButton = styled.button`
+  position: fixed;
+  bottom: 16px;
+  left: 10%;
+  right: 10%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 20;
+  width: 80vw;
+  border: 0;
+  cursor: pointer;
+  padding: 16px 16px 16px 10px;
+  background: ${Colors.Darker};
+  box-shadow: 0px 0px 24px ${Colors.Black};
+  border-radius: 16px;
+
+  user-select: none;
+
+  :hover {
+    border: 1px solid ${Colors.Muted};
+  }
+`;
 
 type Prop = {
   dragon: DragonObject;
@@ -85,10 +112,55 @@ export const ActionBar: React.FC<Prop> = ({
   suicide
 }) => {
   const address = useStore($wallet);
+  const [modalShow, setModalShow] = React.useState(false);
 
   const isOwner = React.useMemo(() => {
     return dragon.owner.toLowerCase() === address?.base16.toLowerCase();
   }, [address, dragon]);
+
+  const actionList = [
+    {
+      icon: 'transfer-icon.svg',
+      name: 'Transfer',
+      disabled: !isOwner,
+      method: transfer
+    },
+    {
+      icon: 'sale-icon.svg',
+      name: 'On sale',
+      disabled: !isOwner,
+      method: sale
+    },
+    {
+      icon: 'gen-lab.svg',
+      name: 'Mutate',
+      disabled: !isOwner,
+      method: mutate
+    },
+    {
+      icon: 'arena.svg',
+      name: 'To arena',
+      disabled: !isOwner,
+      method: fight
+    },
+    {
+      icon: 'an-egg.svg',
+      name: 'Breed',
+      disabled: !isOwner,
+      method: breed
+    },
+    {
+      icon: 'suicide.svg',
+      name: 'Suicide',
+      disabled: !isOwner,
+      method: suicide
+    },
+  ];
+
+  const handleMobileActino = React.useCallback((action) => {
+    action.method();
+    setModalShow(false);
+  }, []);
 
   return (
     <Container>
@@ -122,92 +194,64 @@ export const ActionBar: React.FC<Prop> = ({
       </TitleWrapper>
       <BrowserView>
         <ActionsRow>
-          <ActionButton
-            disabled={!isOwner}
-            color={color}
-            onClick={transfer}
-          >
-            <img
-              src="/icons/transfer-icon.svg"
-              alt="transfer"
-              height="38"
-            />
-            <Text size="16px">
-              Transfer
-            </Text>
-          </ActionButton>
-          <ActionButton
-            disabled={!isOwner}
-            color={color}
-            onClick={sale}
-          >
-            <img
-              src="/icons/sale-icon.svg"
-              height="38"
-              alt="Sale"
-            />
-            <Text size="16px">
-              On sale
-            </Text>
-          </ActionButton>
-          <ActionButton
-            disabled={!isOwner}
-            color={color}
-            onClick={mutate}
-          >
-            <img
-              src="/icons/gen-lab.svg"
-              height="38"
-              alt="Sale"
-            />
-            <Text size="16px">
-              Mutate
-            </Text>
-          </ActionButton>
-          <ActionButton
-            disabled={!isOwner}
-            color={color}
-            onClick={fight}
-          >
-            <img
-              src="/icons/arena.svg"
-              height="38"
-              alt="Sale"
-            />
-            <Text size="16px">
-              To arena
-            </Text>
-          </ActionButton>
-          <ActionButton
-            disabled={!isOwner}
-            color={color}
-            onClick={breed}
-          >
-            <img
-              src="/icons/an-egg.svg"
-              height="38"
-              alt="Sale"
-            />
-            <Text size="16px">
-              Breed
-            </Text>
-          </ActionButton>
-          <ActionButton
-            disabled={!isOwner}
-            color={color}
-            onClick={suicide}
-          >
-            <img
-              src="/icons/suicide.svg"
-              height="38"
-              alt="Sale"
-            />
-            <Text size="16px">
-              Suicide
-            </Text>
-          </ActionButton>
+          {actionList.map((action) => (
+            <ActionButton
+              key={action.name}
+              disabled={action.disabled}
+              color={color}
+              onClick={action.method}
+            >
+              <img
+                src={`/icons/${action.icon}`}
+                alt="action-icon"
+                height="38"
+              />
+              <Text size="16px">
+                {action.name}
+              </Text>
+            </ActionButton>
+          ))}
         </ActionsRow>
       </BrowserView>
+      <MobileView>
+        <MobileButton onClick={() => setModalShow(true)}>
+          <svg width="33" height="32" viewBox="0 0 33 32" fill="none">
+            <path
+              d="M16.5 5L19.9914 11.1944L26.9616 12.6008L22.1493 17.8356L22.9656 24.8992L16.5 21.94L10.0344 24.8992L10.8507 17.8356L6.03838 12.6008L13.0086 11.1944L16.5 5Z"
+              fill={Colors.White}
+            />
+          </svg>
+          <Text>Actions</Text>
+        </MobileButton>
+        <Modal
+          show={modalShow}
+          onClose={() => setModalShow(false)}
+        >
+          <ul>
+            {actionList.map((action, index) => (
+              <ModalItem
+                key={index}
+                onClick={() => handleMobileActino(action)}
+              >
+                <img
+                  src={`/icons/${action.icon}`}
+                  alt="action-icon"
+                  height="25"
+                />
+                <Text css="margin-left: 10px;">
+                  {action.name}
+                </Text>
+              </ModalItem>
+            ))}
+            <ModalItem
+              last
+              onClick={() => setModalShow(false)}
+            >
+              Cancel
+            </ModalItem>
+          </ul>
+        </Modal>
+      </MobileView>
     </Container>
   );
 };

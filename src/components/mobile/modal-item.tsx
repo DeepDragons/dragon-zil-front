@@ -12,6 +12,10 @@ type Prop = {
 };
 
 export const ModalItem = styled.li`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   cursor: pointer;
   padding: 20px;
 

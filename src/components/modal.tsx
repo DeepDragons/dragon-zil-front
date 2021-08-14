@@ -13,10 +13,6 @@ const Container = styled.div`
   left: 0;
   z-index: 50;
 
-  @media (max-width: 500px) {
-    padding-top: 40%;
-  }
-
   &.show-dialog {
     display: block;
     background: rgb(0 0 0 / 59%);
