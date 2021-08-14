@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Link from 'next/link';
 
 import { ConnectZIlPay } from 'components/connect-zilpay';
+import { Modal } from 'components/modal';
 
 import { Text } from 'components/text';
 import { StyleFonts } from 'config/fonts';
@@ -80,6 +81,8 @@ const links = [
 export const Navbar: React.FC = () => {
   const router = useRouter();
 
+  const [modalShow, setModalShow] = React.useState(true);
+
   return (
     <Container>
       <Link href="/">
@@ -109,7 +112,10 @@ export const Navbar: React.FC = () => {
           ))}
         </Ul>
       </BrowserView>
-      <ConnectZIlPay />
+      <ConnectZIlPay onModal={() => setModalShow(true)}/>
+      <Modal show={modalShow} onClose={() => setModalShow(false)}>
+        dasdasdsaddasdas
+      </Modal>
     </Container>
   );
 };

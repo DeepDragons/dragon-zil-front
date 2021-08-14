@@ -30,7 +30,11 @@ const ConnectZIlPayButton = styled.button`
   }
 `;
 
-export const ConnectZIlPay: React.FC = () => {
+type Prop = {
+  onModal: () => void;
+}
+
+export const ConnectZIlPay: React.FC<Prop> = ({ onModal }) => {
   const address = useStore($wallet);
   const [loading, setLoading] = React.useState(true);
 
@@ -77,6 +81,7 @@ export const ConnectZIlPay: React.FC = () => {
         height="26"
         viewBox="0 0 32 26"
         fill="none"
+        onClick={onModal}
       >
         <path
           d="M0 1H32M0 13H32M0 25H32"

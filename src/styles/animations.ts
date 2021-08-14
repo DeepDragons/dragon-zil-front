@@ -22,4 +22,15 @@ export const AnimationStyles = createGlobalStyle`
         opacity: 1;
     }
   }
+  @keyframes dialog-scale-start {
+    0% {
+      opacity: .5;
+      transform: scale(1.15);
+    }
+  
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 `;
