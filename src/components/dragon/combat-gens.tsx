@@ -41,7 +41,7 @@ const SeporateContainer = styled.div`
   width: 30px;
 `;
 const GenNumber = styled(Text)`
-  width: 32px;
+  width: 25px;
   text-align: center;
   margin: 2px 5px;
 
