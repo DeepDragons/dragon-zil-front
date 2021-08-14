@@ -10,6 +10,8 @@ import { StyleFonts } from 'config/fonts';
 
 type Prop = {
   title: string;
+  price?: boolean;
+  rarity?: boolean;
 }
 
 const Container = styled.div`
@@ -25,7 +27,6 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-width: 320px;
 `;
 
 const items = [
@@ -34,7 +35,9 @@ const items = [
 ];
 
 export const FilterBar: React.FC<Prop> = ({
-  title
+  title,
+  price = false,
+  rarity = false
 }) => {
   const [filterBy, setFilterBy] = React.useState(0);
   const [filterbyFrom, setFilterbyFrom] = React.useState(0);
@@ -54,24 +57,27 @@ export const FilterBar: React.FC<Prop> = ({
       <Text
         fontVariant={StyleFonts.FiraSansBold}
         size="30px"
-        css="margin-left: 40px;"
       >
         {title}
       </Text>
       <Wrapper>
-        <DropDown
-          items={items}
-          selected={filterBy}
-          onSelected={setFilterBy}
-        />
-        <PopUpButton
-          from={filterbyFrom}
-          to={filterbyTo}
-          onApply={() => console.log(filterbyFrom, filterbyTo)}
-          onChange={hanldeChangePriceFilter}
-        >
-          Price
-        </PopUpButton>
+        {rarity ? (
+          <DropDown
+            items={items}
+            selected={filterBy}
+            onSelected={setFilterBy}
+          />
+        ) : null}
+        {price ? (
+          <PopUpButton
+            from={filterbyFrom}
+            to={filterbyTo}
+            onApply={() => console.log(filterbyFrom, filterbyTo)}
+            onChange={hanldeChangePriceFilter}
+          >
+            Price
+          </PopUpButton>
+        ) : null}
       </Wrapper>
     </Container>
   );

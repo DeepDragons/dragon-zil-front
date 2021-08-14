@@ -14,6 +14,7 @@ import { ParentsSection } from 'components/dragon/parents';
 import { Colors } from '@/config/colors';
 import { DragonAPI, DragonObject } from 'lib/api';
 import { getRarity } from 'lib/rarity';
+import { EMPTY } from 'config/emty';
 
 type DragonImageProp = {
   color: string;
@@ -36,6 +37,7 @@ const Wrapper = styled.div`
 `;
 const DragonImage = styled(Image)`
   width: 500px;
+  height: 500px;
   background: ${Colors.Secondary};
 
   :hover {
@@ -88,6 +90,7 @@ export const Dragon: NextPage = () => {
       {dragon && rarity ? (
         <Wrapper>
           <DragonImage
+            onError={(e) => e.currentTarget.src = EMPTY}
             src={dragon.url}
             color={rarity.color}
           />

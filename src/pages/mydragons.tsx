@@ -30,7 +30,7 @@ const Wrapper = styled.div`
   max-width: 943px;
 `;
 const backend = new DragonAPI();
-const limit = 8;
+const limit = 10;
 let page = 0;
 let maxPage = 1;
 export const MyDragons: NextPage = () => {
@@ -40,11 +40,13 @@ export const MyDragons: NextPage = () => {
   const [loading, setLoading] = React.useState(false);
 
   const fetchData = async () => {
-    if (maxPage <= page) {
+    const addr = $wallet.getState();
+
+    if (maxPage <= page || !addr) {
       return null;
     }
 
-    const owner = String(address?.base16).toLowerCase();
+    const owner = String(addr.base16).toLowerCase();
 		const result = await backend.getDragons(owner, limit, page);
 
     maxPage = result.pagination.pages;
@@ -84,13 +86,16 @@ export const MyDragons: NextPage = () => {
       fetchData()
         .then(() => setSkelet(false))
         .catch(() => setSkelet(false));
-        window.addEventListener('scroll', handleScroll);
     }
+  }, [address]);
+
+  React.useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
       window.removeEventListener('scroll', () => null);
     }
-  }, [address]);
+  }, []);
 
   return (
     <>
@@ -99,6 +104,7 @@ export const MyDragons: NextPage = () => {
           <Navbar />
           <FilterBar
             title="My dragons"
+            rarity
           />
           <Wrapper>
             {skelet ? (
@@ -127,7 +133,7 @@ export const MyDragons: NextPage = () => {
             <Loader
               type="ThreeDots"
               color="#fff"
-              height={10}
+              height={30}
               width={100}
             />
           ) : null}

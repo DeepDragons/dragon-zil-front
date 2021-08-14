@@ -33,6 +33,7 @@ const Container = styled.div`
   text-align: center;
 
   border-radius: 16px;
+  margin: 5px;
 `;
 const Menu = styled.div`
   display: flex;
