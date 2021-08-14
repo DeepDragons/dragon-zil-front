@@ -1,10 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useStore } from 'effector-react';
 
 import { Text } from 'components/text';
 
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
+import { DragonObject } from 'lib/api';
+import { trim } from 'lib/trim';
+import { viewAddress } from 'lib/viewblock';
+import { $wallet } from 'store/wallet';
+
+type ActionButtonProp = {
+  color: string;
+}
 
 const Container = styled.div`
   display: flex;
@@ -36,8 +45,12 @@ const ActionButton = styled.button`
   margin: 0 0 0 16px;
   padding: 9px 16px 0 16px;
 
-  :hover {
-    border: solid 1px #8945f3;
+  :hover :enabled {
+    border: solid 1px ${(p: ActionButtonProp) => p.color};
+  }
+
+  :disabled {
+    opacity: 0.3;
   }
 `;
 const TitleWrapper = styled.div`
@@ -47,7 +60,8 @@ const TitleWrapper = styled.div`
 `;
 
 type Prop = {
-  id: string;
+  dragon: DragonObject;
+  color: string;
   transfer: () => void;
   sale: () => void;
   mutate: () => void;
@@ -57,7 +71,8 @@ type Prop = {
 };
 
 export const ActionBar: React.FC<Prop> = ({
-  id,
+  dragon,
+  color,
   transfer,
   sale,
   mutate,
@@ -65,6 +80,12 @@ export const ActionBar: React.FC<Prop> = ({
   breed,
   suicide
 }) => {
+  const address = useStore($wallet);
+
+  const isOwner = React.useMemo(() => {
+    return dragon.owner.toLowerCase() === address?.base16.toLowerCase();
+  }, [address, dragon]);
+
   return (
     <Container>
       <TitleWrapper>
@@ -73,7 +94,7 @@ export const ActionBar: React.FC<Prop> = ({
           size="50px"
           css="margin: 0;"
         >
-          Dragon #{id}
+          Dragon #{dragon.id}
         </Text>
         <Text
           fontColors={Colors.Muted}
@@ -81,16 +102,26 @@ export const ActionBar: React.FC<Prop> = ({
           size="16px"
           css="display: flex;align-items: center;justify-content: space-evenly;"
         >
-          owner:
-          <a href="">
-            <Text fontColors={Colors.White}>
-              You
+          Owner:
+          <a
+            href={viewAddress(dragon.owner)}
+            target='_blank'
+          >
+            <Text
+              fontColors={Colors.White}
+              css="text-indent: 6px;"
+            >
+              {isOwner ? 'You' : trim(dragon.owner)}
             </Text>
           </a>
         </Text>
       </TitleWrapper>
       <ActionsRow>
-        <ActionButton onClick={transfer}>
+        <ActionButton
+          disabled={!isOwner}
+          color={color}
+          onClick={transfer}
+        >
           <img
             src="/icons/transfer-icon.svg"
             alt="transfer"
@@ -100,7 +131,11 @@ export const ActionBar: React.FC<Prop> = ({
             Transfer
           </Text>
         </ActionButton>
-        <ActionButton onClick={sale}>
+        <ActionButton
+          disabled={!isOwner}
+          color={color}
+          onClick={sale}
+        >
           <img
             src="/icons/sale-icon.svg"
             height="38"
@@ -110,7 +145,11 @@ export const ActionBar: React.FC<Prop> = ({
             On sale
           </Text>
         </ActionButton>
-        <ActionButton onClick={mutate}>
+        <ActionButton
+          disabled={!isOwner}
+          color={color}
+          onClick={mutate}
+        >
           <img
             src="/icons/gen-lab.svg"
             height="38"
@@ -120,7 +159,11 @@ export const ActionBar: React.FC<Prop> = ({
             Mutate
           </Text>
         </ActionButton>
-        <ActionButton onClick={fight}>
+        <ActionButton
+          disabled={!isOwner}
+          color={color}
+          onClick={fight}
+        >
           <img
             src="/icons/arena.svg"
             height="38"
@@ -130,7 +173,11 @@ export const ActionBar: React.FC<Prop> = ({
             To arena
           </Text>
         </ActionButton>
-        <ActionButton onClick={breed}>
+        <ActionButton
+          disabled={!isOwner}
+          color={color}
+          onClick={breed}
+        >
           <img
             src="/icons/an-egg.svg"
             height="38"
@@ -140,7 +187,11 @@ export const ActionBar: React.FC<Prop> = ({
             Breed
           </Text>
         </ActionButton>
-        <ActionButton onClick={suicide}>
+        <ActionButton
+          disabled={!isOwner}
+          color={color}
+          onClick={suicide}
+        >
           <img
             src="/icons/suicide.svg"
             height="38"

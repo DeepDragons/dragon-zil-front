@@ -6,6 +6,7 @@ export enum Methods {
 export interface DragonObject {
   children: string[];
   parents: string[];
+  actions: Array<string[]>;
   fight_lose: number;
   fight_win: number;
   gen_fight: string;

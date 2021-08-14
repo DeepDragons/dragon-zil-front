@@ -24,14 +24,16 @@ const ImageWrapper = styled.div`
 type Prop = {
   first: string;
   second: string;
+  color: string;
 };
 
 export const ParentsSection: React.FC<Prop> = ({
   first,
-  second
+  second,
+  color
 }) => {
   return (
-    <Container>
+    <Container color={color}>
       <TitleRow>
         <Text
           fontVariant={StyleFonts.FiraSansSemiBold}

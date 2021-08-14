@@ -13,6 +13,11 @@ import { BattlesSection } from 'components/dragon/battles';
 import { ParentsSection } from 'components/dragon/parents';
 import { Colors } from '@/config/colors';
 import { DragonAPI, DragonObject } from 'lib/api';
+import { getRarity } from 'lib/rarity';
+
+type DragonImageProp = {
+  color: string;
+}
 
 const Container = styled.div`
   display: flex;
@@ -30,8 +35,12 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 const DragonImage = styled(Image)`
-  height: 300px;
+  width: 500px;
   background: ${Colors.Secondary};
+
+  :hover {
+    box-shadow: inset 0 0 40px ${(p: DragonImageProp) => p.color};
+  }
 `;
 
 const backend = new DragonAPI();
@@ -41,6 +50,13 @@ export const Dragon: NextPage = () => {
 
   const [dragon, setDragon] = React.useState<DragonObject | null>(null);
   const [loading, setLoading] = React.useState(true);
+
+  const rarity = React.useMemo(() => {
+    if (!dragon) {
+      return null;
+    }
+    return getRarity(dragon.rarity, dragon.gen_image);
+  }, [dragon]);
 
   React.useEffect(() => {
     if (router.query.id) {
@@ -57,24 +73,44 @@ export const Dragon: NextPage = () => {
   return (
     <Container>
       <Navbar />
-      <ActionBar
-        id={dragon && dragon['id'] || ''}
-        transfer={() => console.log('transfer')}
-        sale={() => console.log('sale')}
-        mutate={() => console.log('mutate')}
-        fight={() => console.log('fight')}
-        breed={() => console.log('breed')}
-        suicide={() => console.log('suicide')}
-      />
-      {dragon ? (
+      {dragon && rarity ? (
+        <ActionBar
+          dragon={dragon}
+          color={rarity.color}
+          transfer={() => console.log('transfer')}
+          sale={() => console.log('sale')}
+          mutate={() => console.log('mutate')}
+          fight={() => console.log('fight')}
+          breed={() => console.log('breed')}
+          suicide={() => console.log('suicide')}
+        />
+      ) : null}
+      {dragon && rarity ? (
         <Wrapper>
-          <DragonImage src={dragon.url} />
+          <DragonImage
+            src={dragon.url}
+            color={rarity.color}
+          />
           <div>
-            <CombatGens gens={dragon.gen_fight}/>
-            <BodyParts />
-            <BattlesSection win={dragon.fight_win} lost={dragon.fight_lose}/>
+            <CombatGens
+              gens={dragon.gen_fight}
+              color={rarity.color}
+            />
+            <BodyParts
+              gens={rarity.gensImage}
+              color={rarity.color}
+            />
+            <BattlesSection
+              color={rarity.color}
+              win={dragon.fight_win}
+              lost={dragon.fight_lose}
+            />
             {Array(dragon.parents).length > 1 ? (
-              <ParentsSection first="300" second="230"/>
+              <ParentsSection
+                color={rarity.color}
+                first="300"
+                second="230"
+              />
             ) : null}
           </div>
         </Wrapper>

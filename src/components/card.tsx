@@ -34,7 +34,6 @@ export const Container = styled.div`
 export const Image = styled.img`
   border-radius: 100%;
   background: ${Colors.Black};
-  // z-index: 2;
 
   animation: fadeInFromNone 0.5s ease-out;
 

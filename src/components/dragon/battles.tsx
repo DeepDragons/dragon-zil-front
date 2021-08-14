@@ -19,14 +19,16 @@ const ValueWrapper = styled.div`
 type Prop = {
   win: number;
   lost: number;
+  color: string;
 };
 
 export const BattlesSection: React.FC<Prop> = ({
   win,
-  lost
+  lost,
+  color
 }) => {
   return (
-    <Container>
+    <Container color={color}>
       <TitleRow>
         <Text
           fontVariant={StyleFonts.FiraSansSemiBold}

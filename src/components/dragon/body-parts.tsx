@@ -25,49 +25,16 @@ const GensWrapper = styled.div`
 `;
 
 type Prop = {
+  gens: {
+    max: number;
+    value: string;
+  }[];
+  color: string;
 };
 
-export const BodyParts: React.FC<Prop> = () => {
-  const gens = [
-    {
-      max: 9,
-      value: 2
-    },
-    {
-      max: 3,
-      value: 0
-    },
-    {
-      max: 2,
-      value: 1
-    },
-    {
-      max: 12,
-      value: 4
-    },
-    {
-      max: 6,
-      value: 2
-    },
-    {
-      max: 7,
-      value: 3
-    },
-    {
-      max: 8,
-      value: 4
-    },
-    {
-      max: 9,
-      value: 3
-    },
-    {
-      max: 5,
-      value: 1
-    },
-  ];
+export const BodyParts: React.FC<Prop> = ({ color, gens }) => {
   return (
-    <Container>
+    <Container color={color}>
       <TitleRow>
         <Text
           fontVariant={StyleFonts.FiraSansSemiBold}
@@ -87,8 +54,8 @@ export const BodyParts: React.FC<Prop> = () => {
               key={`body-${index}`}
               color={Colors.White}
               width={32}
-              max={gen.max}
-              value={gen.value}
+              max={Number(gen.max)}
+              value={Number(gen.value)}
               invert={true}
             />
           ))}

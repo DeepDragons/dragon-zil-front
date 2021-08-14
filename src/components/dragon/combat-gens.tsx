@@ -43,10 +43,12 @@ const SeporateContainer = styled.div`
 
 type Prop = {
   gens: string;
+  color: string;
 };
 
 export const CombatGens: React.FC<Prop> = ({
-  gens
+  gens,
+  color
 }) => {
   const [selected, setSelected] = React.useState(isBrowser ? 1 : 0);
 
@@ -69,7 +71,7 @@ export const CombatGens: React.FC<Prop> = ({
   }, [gensArray, selected]);
 
   return (
-    <Container>
+    <Container color={color}>
       <TitleRow>
         <TitleRow>
           <Text

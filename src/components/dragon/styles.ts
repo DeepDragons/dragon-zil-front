@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 import { Colors } from 'config/colors';
 
+type ContainerProp = {
+  color: string;
+}
+
 export const Container = styled.div`
   background: ${Colors.Secondary};
 
-  border: 1px solid #FFB411;
+  border: 1px solid ${(p: ContainerProp) => p.color};
   box-sizing: border-box;
   border-radius: 16px;
 
