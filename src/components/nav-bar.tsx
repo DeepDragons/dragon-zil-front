@@ -37,11 +37,16 @@ const Li = styled.li`
   border-bottom: 2px solid
     ${(props: { selected: boolean }) =>
       props.selected ? Colors.Info : Colors.Black};
-`;
-const Connect = styled.div`
-  cursor: pointer;
-  color: ${Colors.White};
-  font-family: ${StyleFonts.FiraSansSemiBold};
+
+  @media (max-width: 1056px) {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  @media (max-width: 835px) {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 `;
 
 const links = [

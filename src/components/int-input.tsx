@@ -18,6 +18,7 @@ const Container = styled.div`
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
+  margin: 10px;
 `;
 const Wrapper = styled.div`
   display: flex;

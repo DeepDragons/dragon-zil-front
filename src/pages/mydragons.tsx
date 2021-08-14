@@ -10,7 +10,6 @@ import { Navbar } from 'components/nav-bar';
 import { Card } from 'components/card';
 import { SkeletCard } from 'components/skelet/card';
 import { FilterBar } from 'components/filter-bar';
-import { Rarity } from 'config/rarity';
 import { $wallet } from 'store/wallet';
 import { $myDragons, contctDragons } from 'store/my-dragons';
 import { DragonAPI } from 'lib/api';
@@ -30,7 +29,7 @@ const Wrapper = styled.div`
   max-width: 943px;
 `;
 const backend = new DragonAPI();
-const limit = 10;
+const limit = 9;
 let page = 0;
 let maxPage = 1;
 export const MyDragons: NextPage = () => {

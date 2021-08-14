@@ -26,7 +26,7 @@ const Form = styled.form`
   padding: 36px;
   border-radius: 16px;
   max-width: 900px;
-  width: 100%;
+  width: auto;
 
   display: flex;
   flex-direction: column;
@@ -82,7 +82,7 @@ export const BuyPage: NextPage = () => {
             >
               Number of eggs
             </IntInput>
-            <Button css="margin-top: 15px;min-width: 235px;">
+            <Button css="margin: 10px;min-width: 235px;">
               <Text
                 fontVariant={StyleFonts.FiraSansBold}
                 size="1.43rem"
