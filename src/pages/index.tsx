@@ -24,41 +24,32 @@ const Preview = styled.img`
 `;
 
 export const MainPage: NextPage = () => (
-  <>
-    <BrowserView>
-      <Container>
-        <Navbar />
-        <Preview
-          src="/imgs/dragons.png"
-          alt="Preview"
-        />
-        <Text
-          color={Colors.White}
-          fontVariant={StyleFonts.FiraSansBold}
-          size="8rem"
-          css="margin-top: 350px;"
-        >
-          DragonZIL
-        </Text>
-        <Text
-          fontVariant={StyleFonts.FiraSansRegular}
-          css="text-align: center;max-width: 400px;"
-        >
-          Here, you can buy Dragons for ZIL, and they will mate, fight, mutаte and die. Because Dragons are no Kitties.
-        </Text>
-        <Link href="/buy">
-          <Button>
-            Buy
-          </Button>
-        </Link>
-      </Container>
-    </BrowserView>
-    <MobileView>
-      <Container>
-        <h1> This is rendered only in mobile </h1>
-      </Container>
-    </MobileView>
-  </>
+  <Container>
+    <Navbar />
+    <Preview
+      src="/imgs/dragons.png"
+      alt="Preview"
+    />
+    <Text
+      color={Colors.White}
+      fontVariant={StyleFonts.FiraSansBold}
+      size="8rem"
+      css="margin-top: 350px;"
+    >
+      DragonZIL
+    </Text>
+    <Text
+      fontVariant={StyleFonts.FiraSansRegular}
+      css="text-align: center;max-width: 400px;"
+    >
+      Here, you can buy Dragons for ZIL, and they will mate, fight, mutаte and die. Because Dragons are no Kitties.
+    </Text>
+    <Link href="/buy">
+      <Button>
+        Buy
+      </Button>
+    </Link>
+  </Container>
 );
 
 export default MainPage;

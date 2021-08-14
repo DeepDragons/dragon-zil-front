@@ -2,6 +2,7 @@ import React from 'react';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { useStore } from 'effector-react';
 import styled from 'styled-components';
+import { isMobile } from 'react-device-detect';
 
 import Loader from "react-loader-spinner";
 
@@ -11,7 +12,7 @@ import { ZilPayBase } from 'mixin/zilpay-base';
 import { trim } from 'lib/trim';
 import { $wallet, updateAddress } from 'store/wallet';
 
-const ConnectButton = styled.div`
+const ConnectZIlPayButton = styled.button`
   cursor: pointer;
   color: ${Colors.White};
   font-family: ${StyleFonts.FiraSansSemiBold};
@@ -38,7 +39,6 @@ export const ConnectZIlPay: React.FC = () => {
     try {
       const wallet = new ZilPayBase();
       const zp = await wallet.zilpay;
-
       const connected = await zp.wallet.connect();
 
       if (connected) {
@@ -59,8 +59,9 @@ export const ConnectZIlPay: React.FC = () => {
         .then((zp) => {
           if (zp.wallet.defaultAccount) {
             updateAddress(zp.wallet.defaultAccount);
-            setLoading(false);
           }
+
+          setLoading(false);
         })
         .catch(() => setLoading(false));
     } catch (err) {
@@ -69,17 +70,34 @@ export const ConnectZIlPay: React.FC = () => {
     }
   }, []);
 
+  if (address && isMobile) {
+    return (
+      <svg
+        width="32"
+        height="26"
+        viewBox="0 0 32 26"
+        fill="none"
+      >
+        <path
+          d="M0 1H32M0 13H32M0 25H32"
+          stroke={Colors.White}
+          strokeWidth="2"
+        />
+      </svg>
+    );
+  }
+
   if (address) {
     return (
-      <ConnectButton>
+      <ConnectZIlPayButton>
         {trim(address.bech32)}
-      </ConnectButton>
+      </ConnectZIlPayButton>
     );
   }
 
   return (
     <>
-      <ConnectButton onClick={handleConnect}>
+      <ConnectZIlPayButton onClick={handleConnect}>
         {loading ? (
           <Loader
             type="ThreeDots"
@@ -88,7 +106,7 @@ export const ConnectZIlPay: React.FC = () => {
             width={20}
           />
         ) : 'Connect'}
-      </ConnectButton>
+      </ConnectZIlPayButton>
     </>
   );
 };

@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NextPage } from 'next';
-import { BrowserView, MobileView } from 'react-device-detect';
 import { useStore } from 'effector-react';
 import Link from 'next/link';
 import Loader from "react-loader-spinner";
@@ -73,19 +72,18 @@ export const MyDragons: NextPage = () => {
 
     try {
       await fetchData();
-    } catch {
-      //
+    } catch (err) {
+      console.error(err);
     }
 
     setLoading(false);
   }
 
   React.useEffect(() => {
-    if (address) {
-      fetchData()
-        .then(() => setSkelet(false))
-        .catch(() => setSkelet(false));
-    }
+    setSkelet(true);
+    fetchData()
+      .then(() => setSkelet(false))
+      .catch(() => setSkelet(false));
   }, [address]);
 
   React.useEffect(() => {
@@ -97,53 +95,44 @@ export const MyDragons: NextPage = () => {
   }, []);
 
   return (
-    <>
-      <BrowserView>
-        <Container>
-          <Navbar />
-          <FilterBar
-            title="My dragons"
-            rarity
-          />
-          <Wrapper>
-            {skelet ? (
-              <>
-              <SkeletCard />
-              <SkeletCard />
-              <SkeletCard />
-              <SkeletCard />
-              </>
-            ) : (
-              <>
-                {dragons.map((dragon, index) => (
-                  <Link
-                    key={index}
-                    href={`/dragon/${dragon.id}`}
-                  >
-                    <div>
-                      <Card dragon={dragon} />
-                    </div>
-                  </Link>
-                ))}
-              </>
-            )}
-          </Wrapper>
-          {loading ? (
-            <Loader
-              type="ThreeDots"
-              color="#fff"
-              height={30}
-              width={100}
-            />
-          ) : null}
-        </Container>
-      </BrowserView>
-      <MobileView>
-        <Container>
-          <h1> This is rendered only in mobile </h1>
-        </Container>
-      </MobileView>
-    </>
+    <Container>
+      <Navbar />
+      <FilterBar
+        title="My dragons"
+        rarity
+      />
+      <Wrapper>
+        {skelet ? (
+          <>
+          <SkeletCard />
+          <SkeletCard />
+          <SkeletCard />
+          <SkeletCard />
+          </>
+        ) : (
+          <>
+            {dragons.map((dragon, index) => (
+              <Link
+                key={index}
+                href={`/dragon/${dragon.id}`}
+              >
+                <div>
+                  <Card dragon={dragon} />
+                </div>
+              </Link>
+            ))}
+          </>
+        )}
+      </Wrapper>
+      {loading ? (
+        <Loader
+          type="ThreeDots"
+          color="#fff"
+          height={30}
+          width={100}
+        />
+      ) : null}
+    </Container>
   );
 }
 

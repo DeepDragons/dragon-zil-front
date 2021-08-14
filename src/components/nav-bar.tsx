@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { BrowserView } from 'react-device-detect';
 
 import styled from 'styled-components';
 import Link from 'next/link';
@@ -23,6 +24,10 @@ const Logo = styled.div`
   display: flex;
   margin-left: 40px;
   cursor: pointer;
+
+  @media (max-width: 835px) {
+    margin: 0;
+  }
 `;
 const Ul = styled.ul`
   display: flex;
@@ -92,16 +97,18 @@ export const Navbar: React.FC = () => {
           </Text>
         </Logo>
       </Link>
-      <Ul>
-        {links.map((link, index) => (
-          <Li
-            key={index}
-            selected={router.pathname === link.path}
-          >
-            <Link href={link.path}>{link.name}</Link>
-          </Li>
-        ))}
-      </Ul>
+      <BrowserView>
+        <Ul>
+          {links.map((link, index) => (
+            <Li
+              key={index}
+              selected={router.pathname === link.path}
+            >
+              <Link href={link.path}>{link.name}</Link>
+            </Li>
+          ))}
+        </Ul>
+      </BrowserView>
       <ConnectZIlPay />
     </Container>
   );

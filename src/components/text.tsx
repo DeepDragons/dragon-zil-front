@@ -24,6 +24,11 @@ export const Text = styled.div`
   text-overflow: ellipsis;
   margin-block-start: 0.6em;
   margin-block-end: 0.6em;
+
+  @media (max-width: 500px) {
+    font-size: ${(props: Prop) => Number(String(props.size).split('px')[0]) / 1.5}px;
+  }
+
   ${(props: Prop) => props.css}
 `;
 

@@ -1,11 +1,6 @@
 import React from 'react';
-
 import styled from 'styled-components';
-import Link from 'next/link';
-
 import { Text } from 'components/text';
-
-import { StyleFonts } from 'config/fonts';
 import { Colors } from 'config/colors';
 
 type Prop = {
