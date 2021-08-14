@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { isBrowser } from 'react-device-detect';
+import { isBrowser, isMobile } from 'react-device-detect';
 
 import { Text } from 'components/text';
 import { Column } from 'components/column';
@@ -39,6 +39,23 @@ const GensWrapper = styled.div`
 `;
 const SeporateContainer = styled.div`
   width: 30px;
+`;
+const GenNumber = styled(Text)`
+  width: 32px;
+  text-align: center;
+  margin: 2px 5px;
+
+  @media (max-width: 450px) {
+    width: 18px;
+  }
+
+  @media (max-width: 350px) {
+    width: 15px;
+  }
+
+  @media (max-width: 250px) {
+    width: 10px;
+  }
 `;
 
 type Prop = {
@@ -129,7 +146,6 @@ export const CombatGens: React.FC<Prop> = ({
               {gensArray[0].map((gen, index) => (
                 <Column
                   key={`deffence-${index}`}
-                  width={25}
                   color={'#06C190'}
                   max={99}
                   value={gen}
@@ -139,21 +155,19 @@ export const CombatGens: React.FC<Prop> = ({
             </GensContainer>
             <GensContainer>
               {Array(10).fill('').map((_, index) => (
-                <Text
+                <GenNumber
                   key={`id-${index}`}
                   fontColors={Colors.Muted}
                   size="18px"
-                  css="width: 32px;text-align: center;margin: 2px 5px;"
                 >
                   {index + 1}
-                </Text>
+                </GenNumber>
               ))}
             </GensContainer>
             <GensContainer>
               {gensArray[1].map((gen, index) => (
                 <Column
                   key={`attack-${index}`}
-                  width={25}
                   color={'#E8313E'}
                   max={99}
                   value={gen}

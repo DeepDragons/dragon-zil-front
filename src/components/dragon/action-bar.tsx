@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useStore } from 'effector-react';
+import { BrowserView, MobileView } from 'react-device-detect';
 
 import { Text } from 'components/text';
 
@@ -19,6 +20,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 
   max-width: 1024px;
   width: 100%;
@@ -57,6 +59,8 @@ const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: baseline;
+
+  margin-left: 16px;
 `;
 
 type Prop = {
@@ -116,92 +120,94 @@ export const ActionBar: React.FC<Prop> = ({
           </a>
         </Text>
       </TitleWrapper>
-      <ActionsRow>
-        <ActionButton
-          disabled={!isOwner}
-          color={color}
-          onClick={transfer}
-        >
-          <img
-            src="/icons/transfer-icon.svg"
-            alt="transfer"
-            height="38"
-          />
-          <Text size="16px">
-            Transfer
-          </Text>
-        </ActionButton>
-        <ActionButton
-          disabled={!isOwner}
-          color={color}
-          onClick={sale}
-        >
-          <img
-            src="/icons/sale-icon.svg"
-            height="38"
-            alt="Sale"
-          />
-          <Text size="16px">
-            On sale
-          </Text>
-        </ActionButton>
-        <ActionButton
-          disabled={!isOwner}
-          color={color}
-          onClick={mutate}
-        >
-          <img
-            src="/icons/gen-lab.svg"
-            height="38"
-            alt="Sale"
-          />
-          <Text size="16px">
-            Mutate
-          </Text>
-        </ActionButton>
-        <ActionButton
-          disabled={!isOwner}
-          color={color}
-          onClick={fight}
-        >
-          <img
-            src="/icons/arena.svg"
-            height="38"
-            alt="Sale"
-          />
-          <Text size="16px">
-            To arena
-          </Text>
-        </ActionButton>
-        <ActionButton
-          disabled={!isOwner}
-          color={color}
-          onClick={breed}
-        >
-          <img
-            src="/icons/an-egg.svg"
-            height="38"
-            alt="Sale"
-          />
-          <Text size="16px">
-            Breed
-          </Text>
-        </ActionButton>
-        <ActionButton
-          disabled={!isOwner}
-          color={color}
-          onClick={suicide}
-        >
-          <img
-            src="/icons/suicide.svg"
-            height="38"
-            alt="Sale"
-          />
-          <Text size="16px">
-            Suicide
-          </Text>
-        </ActionButton>
-      </ActionsRow>
+      <BrowserView>
+        <ActionsRow>
+          <ActionButton
+            disabled={!isOwner}
+            color={color}
+            onClick={transfer}
+          >
+            <img
+              src="/icons/transfer-icon.svg"
+              alt="transfer"
+              height="38"
+            />
+            <Text size="16px">
+              Transfer
+            </Text>
+          </ActionButton>
+          <ActionButton
+            disabled={!isOwner}
+            color={color}
+            onClick={sale}
+          >
+            <img
+              src="/icons/sale-icon.svg"
+              height="38"
+              alt="Sale"
+            />
+            <Text size="16px">
+              On sale
+            </Text>
+          </ActionButton>
+          <ActionButton
+            disabled={!isOwner}
+            color={color}
+            onClick={mutate}
+          >
+            <img
+              src="/icons/gen-lab.svg"
+              height="38"
+              alt="Sale"
+            />
+            <Text size="16px">
+              Mutate
+            </Text>
+          </ActionButton>
+          <ActionButton
+            disabled={!isOwner}
+            color={color}
+            onClick={fight}
+          >
+            <img
+              src="/icons/arena.svg"
+              height="38"
+              alt="Sale"
+            />
+            <Text size="16px">
+              To arena
+            </Text>
+          </ActionButton>
+          <ActionButton
+            disabled={!isOwner}
+            color={color}
+            onClick={breed}
+          >
+            <img
+              src="/icons/an-egg.svg"
+              height="38"
+              alt="Sale"
+            />
+            <Text size="16px">
+              Breed
+            </Text>
+          </ActionButton>
+          <ActionButton
+            disabled={!isOwner}
+            color={color}
+            onClick={suicide}
+          >
+            <img
+              src="/icons/suicide.svg"
+              height="38"
+              alt="Sale"
+            />
+            <Text size="16px">
+              Suicide
+            </Text>
+          </ActionButton>
+        </ActionsRow>
+      </BrowserView>
     </Container>
   );
 };

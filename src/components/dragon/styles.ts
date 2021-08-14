@@ -13,7 +13,24 @@ export const Container = styled.div`
   border-radius: 16px;
 
   padding: 25px;
-  margin-bottom: 30px;
+  margin: 15px;
+
+  @media (max-width: 550px) {
+    padding: 10px;
+    width: 530px;
+  }
+
+  @media (max-width: 450px) {
+    width: 400px;
+  }
+
+  @media (max-width: 350px) {
+    width: 300px;
+  }
+
+  @media (max-width: 250px) {
+    width: 200px;
+  }
 `;
 
 export const TitleRow = styled.div`

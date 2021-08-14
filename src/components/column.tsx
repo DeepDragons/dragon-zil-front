@@ -13,8 +13,23 @@ const Container = styled.div`
   background: #2A3F5A;
   z-index: 1;
   height: 100%;
-  min-height: 65px;
-  margin: 0 5px;
+  height: 65px;
+  width: 28px;
+
+  @media (max-width: 450px) {
+    width: 18px;
+    height: 45px;
+  }
+
+  @media (max-width: 350px) {
+    width: 15px;
+    height: 35px;
+  }
+
+  @media (max-width: 250px) {
+    width: 10px;
+    height: 25px;
+  }
 `;
 const Bar = styled.div`
   background: ${(p: BarProp) => p.color};
@@ -25,7 +40,6 @@ const Bar = styled.div`
 type Prop = {
   max: number;
   value: number;
-  width: number;
   color: string | Colors;
   invert?: boolean;
 };
@@ -34,7 +48,6 @@ export const Column: React.FC<Prop> = ({
   color,
   max,
   value,
-  width,
   invert
 }) => {
   const length = React.useMemo(() => {
@@ -43,7 +56,6 @@ export const Column: React.FC<Prop> = ({
 
   return (
     <Container style={{
-      width: `${width}px`,
       transform: invert ? 'rotate(180deg)' : 'rotate(0deg)'
     }}>
       <Bar
