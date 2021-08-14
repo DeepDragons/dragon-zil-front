@@ -12,7 +12,7 @@ import { ZilPayBase } from 'mixin/zilpay-base';
 import { trim } from 'lib/trim';
 import { $wallet, updateAddress } from 'store/wallet';
 
-const ConnectZIlPayButton = styled.button`
+export const ConnectZIlPayButton = styled.button`
   cursor: pointer;
   color: ${Colors.White};
   font-family: ${StyleFonts.FiraSansSemiBold};

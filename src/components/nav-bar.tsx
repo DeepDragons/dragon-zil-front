@@ -1,16 +1,20 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { BrowserView } from 'react-device-detect';
+import { BrowserView, MobileView } from 'react-device-detect';
+import { useStore } from 'effector-react';
 
 import styled from 'styled-components';
 import Link from 'next/link';
 
 import { ConnectZIlPay } from 'components/connect-zilpay';
 import { Modal } from 'components/modal';
+import { ModalItem } from 'components/mobile/modal-item';
 
 import { Text } from 'components/text';
 import { StyleFonts } from 'config/fonts';
 import { Colors } from 'config/colors';
+import { trim } from 'lib/trim';
+import { $wallet } from 'store/wallet';
 
 const Container = styled.div`
   display: flex;
@@ -20,6 +24,10 @@ const Container = styled.div`
   max-width: 1200px;
   width: 90%;
   margin-top: 40px;
+
+  @media (max-width: 500px) {
+    margin-top: 10px;
+  }
 `;
 const Logo = styled.div`
   display: flex;
@@ -80,8 +88,9 @@ const links = [
 
 export const Navbar: React.FC = () => {
   const router = useRouter();
+  const address = useStore($wallet);
 
-  const [modalShow, setModalShow] = React.useState(true);
+  const [modalShow, setModalShow] = React.useState(false);
 
   return (
     <Container>
@@ -113,9 +122,41 @@ export const Navbar: React.FC = () => {
         </Ul>
       </BrowserView>
       <ConnectZIlPay onModal={() => setModalShow(true)}/>
-      <Modal show={modalShow} onClose={() => setModalShow(false)}>
-        dasdasdsaddasdas
-      </Modal>
+      <MobileView style={{
+        display: 'contents'
+      }}>
+        <Modal
+          show={modalShow}
+          title={
+            <ModalItem
+              fontVariant={StyleFonts.FiraSansBold}
+              last
+            >
+              {trim(address?.bech32 || '')}
+            </ModalItem>
+          }
+          onClose={() => setModalShow(false)}
+        >
+          <ul>
+            {links.map((link, index) => (
+              <Link
+                key={index}
+                href={link.path}
+              >
+                <ModalItem>
+                  {link.name}
+                </ModalItem>
+              </Link>
+            ))}
+            <ModalItem
+              last
+              onClick={() => setModalShow(false)}
+            >
+              Cancel
+            </ModalItem>
+          </ul>
+        </Modal>
+      </MobileView>
     </Container>
   );
 };

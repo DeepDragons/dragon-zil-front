@@ -13,53 +13,40 @@ const Container = styled.div`
   left: 0;
   z-index: 50;
 
+  @media (max-width: 500px) {
+    padding-top: 40%;
+  }
+
   &.show-dialog {
     display: block;
-    background: rgba(#132639, .9);
+    background: rgb(0 0 0 / 59%);
 
     .modal-md {
       right: 0;
       left: 0;
       margin: 10% auto 50px;
       max-width: 635px;
-      width: 100%;
-      background: white;
+      width: 95%;
+      background: ${Colors.Darker};
       padding: 0;
       z-index: 100;
-      border-radius: 3px;
+      border-radius: 16px;
       box-shadow: 0 0 8px rgba(black, .3);
       animation: dialog-scale-start .3s ease-in-out forwards;
     }
   }
 `;
-const Title = styled.h1`
-  padding: 30px;
-  color: #336699;
-  background: #ecf2f9;
-  border-radius: 3px 3px 0 0;
-  font-size: 24px;
-  margin: 0;
-  position: relative;
-
-  .close {
-    position: absolute;
-    right: 20px;
-    top: 15px;
-    cursor: pointer;
-    font-size: 20px;
-  }
-`;
-const ModalContent = styled.div`
-  padding: 30px;
-`;
+const ModalContent = styled.div``;
 
 type Prop = {
+  title?: React.ReactNode;
   show: boolean;
   onClose: () => void;
 };
 
 export const Modal: React.FC<Prop> = ({
   children,
+  title,
   show,
   onClose
 }) => {
@@ -78,13 +65,9 @@ export const Modal: React.FC<Prop> = ({
       onClick={onToggle}
     >
       <div className="modal-md">
-        <Title>
-          React Dialog
-          <span className="close" onClick={onClose}>×</span>
-        </Title>
+        {title}
         <ModalContent>
           {children}
-          <button className="btn" onClick={onClose}>Close</button>
         </ModalContent>
       </div>
     </Container>
