@@ -12,7 +12,6 @@ type Prop = {
   dragon: {
     url: string;
     id: string;
-    type: number;
     rarity: Rarity;
   }
 };

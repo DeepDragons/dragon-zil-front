@@ -49,7 +49,7 @@ export const Dragon: NextPage = () => {
   const router = useRouter();
 
   const [dragon, setDragon] = React.useState<DragonObject | null>(null);
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
 
   const rarity = React.useMemo(() => {
     if (!dragon) {

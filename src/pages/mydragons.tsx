@@ -4,6 +4,7 @@ import { NextPage } from 'next';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { useStore } from 'effector-react';
 import Link from 'next/link';
+import Loader from "react-loader-spinner";
 
 import { Navbar } from 'components/nav-bar';
 import { Card } from 'components/card';
@@ -11,13 +12,15 @@ import { SkeletCard } from 'components/skelet/card';
 import { FilterBar } from 'components/filter-bar';
 import { Rarity } from 'config/rarity';
 import { $wallet } from 'store/wallet';
-import { $myDragons, updateDragons } from 'store/my-dragons';
+import { $myDragons, contctDragons } from 'store/my-dragons';
+import { DragonAPI } from 'lib/api';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 90vh;
+  margin-bottom: 30px;
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -26,28 +29,66 @@ const Wrapper = styled.div`
   align-items: center;
   max-width: 943px;
 `;
+const backend = new DragonAPI();
+const limit = 8;
+let page = 0;
+let maxPage = 1;
 export const MyDragons: NextPage = () => {
   const address = useStore($wallet);
   const dragons = useStore($myDragons);
-  const [loading, setLoading] = React.useState(true);
+  const [skelet, setSkelet] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
+
+  const fetchData = async () => {
+    if (maxPage <= page) {
+      return null;
+    }
+
+    const owner = String(address?.base16).toLowerCase();
+		const result = await backend.getDragons(owner, limit, page);
+
+    maxPage = result.pagination.pages;
+
+    contctDragons(result.list.map((el) => ({
+      action: el.actions.length > 0 ? Number(el.actions[0][0]) : 0,
+      rarity: el.rarity,
+      url: el.url,
+      id: String(el.id),
+      stage: el.stage
+    })));
+
+    page += 1;
+	};
+
+  const handleScroll = async () => {
+    const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop);
+    const second = document.documentElement.offsetHeight;
+
+    if (first !== second || loading) {
+      return null;
+    }
+
+		setLoading(true);
+
+    try {
+      await fetchData();
+    } catch {
+      //
+    }
+
+    setLoading(false);
+  }
 
   React.useEffect(() => {
     if (address) {
-      const url = `http://127.0.0.1:8083/api/v1/dragons?owner=${String(address?.base16).toLowerCase()}`;
+      fetchData()
+        .then(() => setSkelet(false))
+        .catch(() => setSkelet(false));
+        window.addEventListener('scroll', handleScroll);
+    }
 
-      fetch(url)
-        .then((res) => res.json())
-        .then(({ data }) => {
-          updateDragons(data.map((el: any) => ({
-            type: 0,
-            rarity: Rarity.Common,
-            url: el.url,
-            id: String(el.id),
-            stage: el.stage
-          })));
-          setLoading(false);
-        })
-        .catch(() => setLoading(false));
+    return () => {
+      window.removeEventListener('scroll', () => null);
     }
   }, [address]);
 
@@ -60,7 +101,7 @@ export const MyDragons: NextPage = () => {
             title="My dragons"
           />
           <Wrapper>
-            {loading ? (
+            {skelet ? (
               <>
               <SkeletCard />
               <SkeletCard />
@@ -82,6 +123,14 @@ export const MyDragons: NextPage = () => {
               </>
             )}
           </Wrapper>
+          {loading ? (
+            <Loader
+              type="ThreeDots"
+              color="#fff"
+              height={10}
+              width={100}
+            />
+          ) : null}
         </Container>
       </BrowserView>
       <MobileView>
