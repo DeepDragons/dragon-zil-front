@@ -26,6 +26,10 @@ const Wrapper = styled.div`
   justify-content: end;
   align-items: center;
   max-width: 943px;
+
+  @media (max-width: 400px) {
+    justify-content: center;
+  }
 `;
 const backend = new DragonAPI();
 const limit = 9;
