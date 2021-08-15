@@ -20,7 +20,9 @@ import { EMPTY } from 'config/emty';
 const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  max-width: 943px;
+  max-width: 1039px;
+  justify-content: space-between;
+  width: 100%;
   padding-top: 30px;
 
   @media (max-width: 947px) {
