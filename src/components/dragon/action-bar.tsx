@@ -6,12 +6,10 @@ import { BrowserView, MobileView } from 'react-device-detect';
 import { Text } from 'components/text';
 import { Modal } from 'components/modal';
 import { ModalItem } from 'components/mobile/modal-item';
+import { ActionBarTitle } from './action-bar-title';
 
 import { Colors } from 'config/colors';
-import { StyleFonts } from '@/config/fonts';
 import { DragonObject } from 'lib/api';
-import { trim } from 'lib/trim';
-import { viewAddress } from 'lib/viewblock';
 import { $wallet } from 'store/wallet';
 
 type ActionButtonProp = {
@@ -61,20 +59,13 @@ const ActionButton = styled.button`
     opacity: 0.3;
   }
 `;
-const TitleWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: baseline;
-
-  margin-left: 16px;
-`;
 const MobileButton = styled.button`
   position: fixed;
   bottom: 16px;
   left: 10%;
   right: 10%;
 
-  display: flex;
+  display: ${(p: ActionsRowProp) => p.show ? 'flex' : 'none' };
   align-items: center;
   justify-content: center;
 
@@ -168,34 +159,10 @@ export const ActionBar: React.FC<Prop> = ({
 
   return (
     <Container>
-      <TitleWrapper>
-        <Text
-          fontVariant={StyleFonts.FiraSansBold}
-          size="50px"
-          css="margin: 0;"
-        >
-          Dragon #{dragon.id}
-        </Text>
-        <Text
-          fontColors={Colors.Muted}
-          fontVariant={StyleFonts.FiraSansRegular}
-          size="16px"
-          css="display: flex;align-items: center;justify-content: space-evenly;"
-        >
-          Owner:
-          <a
-            href={viewAddress(dragon.owner)}
-            target='_blank'
-          >
-            <Text
-              fontColors={Colors.White}
-              css="text-indent: 6px;"
-            >
-              {isOwner ? 'You' : trim(dragon.owner)}
-            </Text>
-          </a>
-        </Text>
-      </TitleWrapper>
+      <ActionBarTitle
+        isOwner={isOwner}
+        dragon={dragon}
+      />
       <BrowserView>
         <ActionsRow show={isOwner}>
           {actionList.map((action) => (
@@ -218,7 +185,10 @@ export const ActionBar: React.FC<Prop> = ({
         </ActionsRow>
       </BrowserView>
       <MobileView>
-        <MobileButton onClick={() => setModalShow(true)}>
+        <MobileButton
+          show={isOwner}
+          onClick={() => setModalShow(true)}
+        >
           <svg width="33" height="32" viewBox="0 0 33 32" fill="none">
             <path
               d="M16.5 5L19.9914 11.1944L26.9616 12.6008L22.1493 17.8356L22.9656 24.8992L16.5 21.94L10.0344 24.8992L10.8507 17.8356L6.03838 12.6008L13.0086 11.1944L16.5 5Z"

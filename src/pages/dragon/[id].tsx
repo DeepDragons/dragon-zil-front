@@ -1,71 +1,31 @@
 import React from 'react';
-import styled from 'styled-components';
 import { NextPage } from 'next';
+import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 import { Navbar } from 'components/nav-bar';
 import { ActionBar } from 'components/dragon/action-bar';
-import { Image } from 'components/card';
 import { CombatGens } from 'components/dragon/combat-gens';
 import { BodyParts } from 'components/dragon/body-parts';
 import { BattlesSection } from 'components/dragon/battles';
 import { ParentsSection } from 'components/dragon/parents';
-import { Colors } from '@/config/colors';
+import { DragonImage } from 'components/dragon/dragon-image';
+import { Container } from 'components/pages/container';
+
 import { DragonAPI, DragonObject } from 'lib/api';
 import { getRarity } from 'lib/rarity';
+import { updateCache } from 'store/cache-dragon';
 import { EMPTY } from 'config/emty';
 
-type DragonImageProp = {
-  color: string;
-}
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 90vh;
-`;
 const Wrapper = styled.div`
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
   flex-wrap: wrap;
+  max-width: 943px;
+  padding-top: 30px;
 
-  margin-top: 30px;
-  max-width: 1024px;
-  width: 100%;
-
-  @media (max-width: 930px) {
+  @media (max-width: 947px) {
+    align-items: center;
     justify-content: center;
-  }
-`;
-const DragonImage = styled(Image)`
-  width: 500px;
-  height: 500px;
-  background: ${Colors.Secondary};
-
-  @media (max-width: 530px) {
-    width: 450px;
-    height: 450px;
-  }
-
-  @media (max-width: 450px) {
-    width: 350px;
-    height: 350px;
-  }
-
-  @media (max-width: 350px) {
-    width: 250px;
-    height: 250px;
-  }
-
-  @media (max-width: 250px) {
-    width: 150px;
-    height: 150px;
-  }
-
-  :hover {
-    box-shadow: inset 0 0 40px ${(p: DragonImageProp) => p.color};
   }
 `;
 const backend = new DragonAPI();
@@ -81,6 +41,13 @@ export const Dragon: NextPage = () => {
       return null;
     }
     return getRarity(dragon.rarity, dragon.gen_image);
+  }, [dragon]);
+
+  const hanldeMutate = React.useCallback(() => {
+    if (dragon) {
+      updateCache(dragon);
+      router.push(`/mutate/${dragon.id}`);
+    }
   }, [dragon]);
 
   React.useEffect(() => {
@@ -104,7 +71,7 @@ export const Dragon: NextPage = () => {
           color={rarity.color}
           transfer={() => console.log('transfer')}
           sale={() => console.log('sale')}
-          mutate={() => router.push(`/mutate/${dragon.id}`)}
+          mutate={hanldeMutate}
           fight={() => console.log('fight')}
           breed={() => console.log('breed')}
           suicide={() => console.log('suicide')}
