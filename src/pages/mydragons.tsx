@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { NextPage } from 'next';
 import { useStore } from 'effector-react';
 import Link from 'next/link';
@@ -9,28 +8,13 @@ import { Navbar } from 'components/nav-bar';
 import { Card } from 'components/card';
 import { SkeletCard } from 'components/skelet/card';
 import { FilterBar } from 'components/filter-bar';
+import { Container } from 'components/pages/container';
+import { Wrapper } from 'components/pages/wrapper';
+
 import { $wallet } from 'store/wallet';
-import { $myDragons, contctDragons } from 'store/my-dragons';
+import { $myDragons, contctDragons, resetDragons } from 'store/my-dragons';
 import { DragonAPI } from 'lib/api';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 90vh;
-  margin-bottom: 30px;
-`;
-const Wrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: end;
-  align-items: center;
-  max-width: 943px;
-
-  @media (max-width: 400px) {
-    justify-content: center;
-  }
-`;
 const backend = new DragonAPI();
 const limit = 9;
 let page = 0;
@@ -85,6 +69,8 @@ export const MyDragons: NextPage = () => {
 
   React.useEffect(() => {
     setSkelet(true);
+    resetDragons();
+    page = 0;
     fetchData()
       .then(() => setSkelet(false))
       .catch(() => setSkelet(false));

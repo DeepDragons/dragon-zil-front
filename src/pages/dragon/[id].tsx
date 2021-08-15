@@ -68,7 +68,6 @@ const DragonImage = styled(Image)`
     box-shadow: inset 0 0 40px ${(p: DragonImageProp) => p.color};
   }
 `;
-
 const backend = new DragonAPI();
 
 export const Dragon: NextPage = () => {

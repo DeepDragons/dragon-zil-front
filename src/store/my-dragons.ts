@@ -10,10 +10,12 @@ export interface Dragon {
 
 const dragonsDomain = createDomain();
 export const updateDragons = dragonsDomain.createEvent<Dragon[]>();
+export const resetDragons = dragonsDomain.createEvent();
 export const contctDragons = dragonsDomain.createEvent<Dragon[]>();
 export const contactDragons = dragonsDomain.createEvent<Dragon[]>();
 export const $myDragons = dragonsDomain
   .createStore<Dragon[]>([])
+  .on(resetDragons, () => [])
   .on(updateDragons, (_, payload) => payload)
   .on(contactDragons, (state, payload) => [...state, ...payload])
   .on(contctDragons, (state, list) => {

@@ -33,7 +33,7 @@ export const ConnectZIlPayButton = styled.button`
 type Prop = {
   onModal: () => void;
 }
-
+let observer: any = null;
 export const ConnectZIlPay: React.FC<Prop> = ({ onModal }) => {
   const address = useStore($wallet);
   const [loading, setLoading] = React.useState(true);
@@ -61,6 +61,17 @@ export const ConnectZIlPay: React.FC<Prop> = ({ onModal }) => {
       wallet
         .zilpay
         .then((zp) => {
+          observer = zp
+            .wallet
+            .observableAccount()
+            .subscribe((acc: any) => {
+              const address = $wallet.getState();
+
+              if (address?.base16 !== acc.base16) {
+                updateAddress(acc);
+              }
+            });
+
           if (zp.wallet.defaultAccount) {
             updateAddress(zp.wallet.defaultAccount);
           }
@@ -71,6 +82,12 @@ export const ConnectZIlPay: React.FC<Prop> = ({ onModal }) => {
     } catch (err) {
       setLoading(false);
       console.error(err);
+    }
+
+    return () => {
+      if (observer) {
+        observer.unsubscribe();
+      }
     }
   }, []);
 

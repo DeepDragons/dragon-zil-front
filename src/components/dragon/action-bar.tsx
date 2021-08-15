@@ -18,6 +18,10 @@ type ActionButtonProp = {
   color: string;
 }
 
+type ActionsRowProp = {
+  show: boolean;
+}
+
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -28,7 +32,7 @@ const Container = styled.div`
   width: 100%;
 `;
 const ActionsRow = styled.div`
-  display: flex;
+  display: ${(p: ActionsRowProp) => p.show ? 'flex' : 'none' };
   align-items: center;
 `;
 const ActionButton = styled.button`
@@ -193,7 +197,7 @@ export const ActionBar: React.FC<Prop> = ({
         </Text>
       </TitleWrapper>
       <BrowserView>
-        <ActionsRow>
+        <ActionsRow show={isOwner}>
           {actionList.map((action) => (
             <ActionButton
               key={action.name}
