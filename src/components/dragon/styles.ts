@@ -17,19 +17,7 @@ export const Container = styled.div`
 
   @media (max-width: 550px) {
     padding: 10px;
-    width: 530px;
-  }
-
-  @media (max-width: 450px) {
-    width: 400px;
-  }
-
-  @media (max-width: 350px) {
-    width: 300px;
-  }
-
-  @media (max-width: 250px) {
-    width: 200px;
+    width: calc(100vw - 20px);
   }
 `;
 

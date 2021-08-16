@@ -211,18 +211,33 @@ export const ActionBar: React.FC<Prop> = ({
         ) : null}
       </BrowserView>
       <MobileView>
-        <MobileButton
-          show={isOwner}
-          onClick={() => setModalShow(true)}
-        >
-          <svg width="33" height="32" viewBox="0 0 33 32" fill="none">
-            <path
-              d="M16.5 5L19.9914 11.1944L26.9616 12.6008L22.1493 17.8356L22.9656 24.8992L16.5 21.94L10.0344 24.8992L10.8507 17.8356L6.03838 12.6008L13.0086 11.1944L16.5 5Z"
-              fill={Colors.White}
+        {dragon.actions.length === 0 ? (
+          <MobileButton
+            show={isOwner}
+            onClick={() => setModalShow(true)}
+          >
+            <svg width="33" height="32" viewBox="0 0 33 32" fill="none">
+              <path
+                d="M16.5 5L19.9914 11.1944L26.9616 12.6008L22.1493 17.8356L22.9656 24.8992L16.5 21.94L10.0344 24.8992L10.8507 17.8356L6.03838 12.6008L13.0086 11.1944L16.5 5Z"
+                fill={Colors.White}
+              />
+            </svg>
+            <Text>Actions</Text>
+          </MobileButton>
+        ) : null}
+        {currentAction === 3 ? (
+          <MobileButton
+            show={isOwner}
+            onClick={RemoveSale}
+          >
+            <img
+              src={`/icons/sale-icon.svg`}
+              alt="action-icon"
+              height="38"
             />
-          </svg>
-          <Text>Actions</Text>
-        </MobileButton>
+            <Text>Remove from Sale</Text>
+          </MobileButton>
+        ) : null}
         <Modal
           show={modalShow}
           onClose={() => setModalShow(false)}
