@@ -48,7 +48,6 @@ export const TradePage: NextPage = () => {
       return null;
     }
 
-    const owner = String(addr.base16).toLowerCase();
 		const result = await backend.getDragonsFromMarket(limit, page);
 
     maxPage = result.pagination.pages;

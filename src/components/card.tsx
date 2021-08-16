@@ -6,16 +6,20 @@ import { Text } from 'components/text';
 
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
-import { Rarity } from 'config/rarity';
+import { RARITY } from 'lib/rarity';
 
 type Prop = {
   dragon: {
     url: string;
     id: string;
-    rarity: Rarity;
+    rarity: number;
   };
   onSelect?: () => void;
 };
+
+type ImageProp = {
+  color: string | Colors;
+}
 
 export const Container = styled.div`
   cursor: pointer;
@@ -40,7 +44,7 @@ export const Image = styled.img`
   transition: .3s;
 
   :hover {
-    box-shadow: inset 0 0 40px ${Colors.Primary};
+    box-shadow: inset 0 0 40px ${(p: ImageProp) => p.color};
   }
 `;
 export const Empety = styled.div`
@@ -52,7 +56,7 @@ export const Empety = styled.div`
   transition: .3s;
 
   :hover {
-    box-shadow: inset 0 0 40px ${Colors.Primary};
+    box-shadow: inset 0 0 40px ${(p: ImageProp) => p.color};
   }
 `;
 
@@ -66,7 +70,7 @@ export const Card: React.FC<Prop> = ({
   return (
     <Container>
       {loadError ? (
-        <Empety />
+        <Empety color={RARITY[dragon.rarity].color} />
       ) : (
         <ProgressiveImage
           src={dragon.url}
@@ -75,6 +79,7 @@ export const Card: React.FC<Prop> = ({
           {(src: string) => (
             <Image
               src={src}
+              color={RARITY[dragon.rarity].color}
               onError={() => setLoadError(true)}
               height="250"
               width="250"

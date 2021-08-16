@@ -20,7 +20,7 @@ export const RARITY = [
     name: 'Legendary'
   },
   {
-    color: '#b28a33',
+    color: '#ffd700',
     name: 'Immortal'
   },
   {
