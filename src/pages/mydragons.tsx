@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { NextPage } from 'next';
 import { useStore } from 'effector-react';
 import Link from 'next/link';
@@ -18,6 +19,13 @@ import { DragonAPI } from 'lib/api';
 import { Button } from '@/components/button';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
+import { RARITY } from '@/lib/rarity';
+import { ACTINO } from 'config/action';
+
+const CardContainer = styled.div`
+  width: 100%;
+  text-align: left;
+`;
 
 const backend = new DragonAPI();
 const limit = 9;
@@ -127,9 +135,15 @@ export const MyDragons: NextPage = () => {
               >
                 <div>
                   <Card dragon={dragon}>
-                    <Text fontVariant={StyleFonts.FiraSansSemiBold}>
-                      #{dragon.id}
-                    </Text>
+                    <CardContainer>
+                      <Text
+                        fontVariant={StyleFonts.FiraSansSemiBold}
+                        fontColors={RARITY[dragon.rarity].color}
+                        size="16px"
+                      >
+                        #{dragon.id}, {RARITY[dragon.rarity].name} {ACTINO[dragon.action] ? `, ${ACTINO[dragon.action]}` : ''}
+                      </Text>
+                    </CardContainer>
                   </Card>
                 </div>
               </Link>

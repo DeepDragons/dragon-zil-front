@@ -90,6 +90,7 @@ type Prop = {
   color: string;
   transfer: () => void;
   sale: () => void;
+  RemoveSale: () => void;
   mutate: () => void;
   fight: () => void;
   breed: () => void;
@@ -101,6 +102,7 @@ export const ActionBar: React.FC<Prop> = ({
   color,
   transfer,
   sale,
+  RemoveSale,
   mutate,
   fight,
   breed,
@@ -112,6 +114,13 @@ export const ActionBar: React.FC<Prop> = ({
   const isOwner = React.useMemo(() => {
     return dragon.owner.toLowerCase() === address?.base16.toLowerCase();
   }, [address, dragon]);
+  const currentAction = React.useMemo(() => {
+    if (dragon.actions && dragon.actions[0] && dragon.actions[0][0]) {
+      return Number(dragon.actions[0][0]);
+    }
+
+    return 0;
+  }, [dragon]);
 
   const actionList = [
     {
@@ -164,25 +173,42 @@ export const ActionBar: React.FC<Prop> = ({
         dragon={dragon}
       />
       <BrowserView>
-        <ActionsRow show={isOwner}>
-          {actionList.map((action) => (
-            <ActionButton
-              key={action.name}
-              disabled={action.disabled}
-              color={color}
-              onClick={action.method}
-            >
-              <img
-                src={`/icons/${action.icon}`}
-                alt="action-icon"
-                height="38"
-              />
-              <Text size="16px">
-                {action.name}
-              </Text>
-            </ActionButton>
-          ))}
-        </ActionsRow>
+        {dragon.actions.length === 0 ? (
+          <ActionsRow show={isOwner}>
+            {actionList.map((action) => (
+              <ActionButton
+                key={action.name}
+                disabled={action.disabled}
+                color={color}
+                onClick={action.method}
+              >
+                <img
+                  src={`/icons/${action.icon}`}
+                  alt="action-icon"
+                  height="38"
+                />
+                <Text size="16px">
+                  {action.name}
+                </Text>
+              </ActionButton>
+            ))}
+          </ActionsRow>
+        ) : null}
+        {currentAction === 3 ? (
+          <ActionButton
+            color={color}
+            onClick={RemoveSale}
+          >
+            <img
+              src={`/icons/sale-icon.svg`}
+              alt="action-icon"
+              height="38"
+            />
+            <Text size="16px">
+              Remove from Sale
+            </Text>
+          </ActionButton>
+        ) : null}
       </BrowserView>
       <MobileView>
         <MobileButton

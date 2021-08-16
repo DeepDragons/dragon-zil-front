@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
-import { BrowserView, MobileView } from 'react-device-detect';
 import { useStore } from 'effector-react';
 
 import { Navbar } from 'components/nav-bar';
@@ -134,9 +133,15 @@ export const TradePage: NextPage = () => {
                   >
                     {(Number(dragon.actions[0][1]) / 10**12).toLocaleString()} $ZIL
                   </Text>
-                  <Button color={Colors.LightBlue}>
-                    Buy
-                  </Button>
+                  {dragon.owner.toLowerCase() !== String(address?.base16).toLowerCase() ? (
+                    <Button color={Colors.LightBlue}>
+                      Buy
+                    </Button>
+                  ) : (
+                    <Button color={Colors.Info}>
+                      Get back
+                    </Button>
+                  )}
                 </CardContainer>
               </Card>
             ))}

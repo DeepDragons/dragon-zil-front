@@ -73,6 +73,7 @@ export const Dragon: NextPage = () => {
           color={rarity.color}
           transfer={() => console.log('transfer')}
           sale={() => console.log('sale')}
+          RemoveSale={() => console.log('remove sale')}
           mutate={hanldeMutate}
           fight={() => console.log('fight')}
           breed={() => console.log('breed')}
