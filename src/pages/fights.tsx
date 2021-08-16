@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
 import { useStore } from 'effector-react';
@@ -11,9 +10,9 @@ import { Wrapper } from 'components/pages/wrapper';
 import { FilterBar } from '@/components/filter-bar';
 import { Card } from '@/components/card';
 import { Text } from '@/components/text';
-import { Button } from 'components/button';
 import Loader from 'react-loader-spinner';
 
+import { CardContainer } from 'components/dragon/styles';
 import { $wallet } from 'store/wallet';
 import {
   $marketDragons,
@@ -24,11 +23,6 @@ import { RARITY } from 'lib/rarity';
 import { DragonAPI } from '@/lib/api';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
-
-const CardContainer = styled.div`
-  width: 100%;
-  text-align: left;
-`;
 
 const limit = 9;
 let page = 0;
@@ -126,7 +120,7 @@ export const FightPage: NextPage = () => {
                     fontColors={Colors.Blue}
                     size="18px"
                   >
-                    {(Number(dragon.actions[0][1]) / 10**18).toLocaleString()} $ZIL
+                    {(Number(dragon.actions[0][1]) / 10**18).toLocaleString()} $ZLP
                   </Text>
                 </CardContainer>
               </Card>

@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { NextPage } from 'next';
 import { useStore } from 'effector-react';
 import Link from 'next/link';
@@ -14,6 +13,7 @@ import { Container } from 'components/pages/container';
 import { Wrapper } from 'components/pages/wrapper';
 
 import { $wallet } from 'store/wallet';
+import { CardContainer } from 'components/dragon/styles';
 import { $myDragons, contctDragons, resetDragons } from 'store/my-dragons';
 import { DragonAPI } from 'lib/api';
 import { Button } from '@/components/button';
@@ -21,11 +21,6 @@ import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
 import { RARITY } from '@/lib/rarity';
 import { ACTINO } from 'config/action';
-
-const CardContainer = styled.div`
-  width: 100%;
-  text-align: left;
-`;
 
 const backend = new DragonAPI();
 const limit = 9;
@@ -103,21 +98,6 @@ export const MyDragons: NextPage = () => {
         title="My dragons"
         rarity={dragons.length !== 0}
       />
-      {!skelet && dragons.length === 0 ? (
-        <>
-          <Text
-            fontVariant={StyleFonts.FiraSansRegular}
-            css="text-align: center;max-width: 400px;"
-          >
-            You have no dragons, you can buy it on market-palce or buy eggs.
-          </Text>
-          <Link href="/buy">
-            <Button>
-              Buy
-            </Button>
-          </Link>
-        </>
-      ) : null}
       <Wrapper>
         {skelet ? (
           <>
@@ -151,6 +131,21 @@ export const MyDragons: NextPage = () => {
           </>
         )}
       </Wrapper>
+      {!loading && !skelet && dragons.length === 0 ? (
+        <>
+          <Text
+            fontVariant={StyleFonts.FiraSansRegular}
+            css="text-align: center;max-width: 400px;"
+          >
+            You have no dragons, you can buy it on market-palce or buy eggs.
+          </Text>
+          <Link href="/buy">
+            <Button>
+              Buy
+            </Button>
+          </Link>
+        </>
+      ) : null}
       {loading ? (
         <Loader
           type="ThreeDots"

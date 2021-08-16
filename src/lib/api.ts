@@ -1,7 +1,8 @@
 export enum Methods {
   Dragons = 'dragons',
   Market = 'market',
-  Battle = 'battle'
+  Battle = 'battle',
+  Breed = 'breed'
 }
 
 export interface DragonObject {
@@ -97,6 +98,31 @@ export class DragonAPI {
   public async getDragonsFromFight(limit = 6, offset = 0) {
     const params = `limit=${limit}&offset=${offset}`;
     const url = `${this._host}/${this._api}/${Methods.Battle}?${params}`;
+    const res = await fetch(url);
+
+    if (res.status === 404) {
+      return {
+        list: [] as DragonObject[],
+        pagination: {
+          limit,
+          current_page: 0,
+          pages: offset,
+          records: 0
+        } as PaginationObject
+      };
+    }
+
+    const result = await res.json();
+
+    return {
+      list: result.data as DragonObject[],
+      pagination: result.pagination as PaginationObject
+    };
+  }
+
+  public async getDragonsFromBreed(limit = 6, offset = 0) {
+    const params = `limit=${limit}&offset=${offset}`;
+    const url = `${this._host}/${this._api}/${Methods.Breed}?${params}`;
     const res = await fetch(url);
 
     if (res.status === 404) {

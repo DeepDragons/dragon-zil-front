@@ -32,3 +32,8 @@ export const TitleRow = styled.div`
 export const Seporate = styled.hr`
   border: 1px solid #2A3F5A;
 `;
+
+export const CardContainer = styled.div`
+  width: 100%;
+  text-align: left;
+`;
