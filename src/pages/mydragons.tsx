@@ -6,6 +6,7 @@ import Loader from "react-loader-spinner";
 
 import { Navbar } from 'components/nav-bar';
 import { Card } from 'components/card';
+import { Text } from 'components/text';
 import { SkeletCard } from 'components/skelet/card';
 import { FilterBar } from 'components/filter-bar';
 import { Container } from 'components/pages/container';
@@ -14,6 +15,8 @@ import { Wrapper } from 'components/pages/wrapper';
 import { $wallet } from 'store/wallet';
 import { $myDragons, contctDragons, resetDragons } from 'store/my-dragons';
 import { DragonAPI } from 'lib/api';
+import { Button } from '@/components/button';
+import { StyleFonts } from '@/config/fonts';
 
 const backend = new DragonAPI();
 const limit = 9;
@@ -89,8 +92,23 @@ export const MyDragons: NextPage = () => {
       <Navbar />
       <FilterBar
         title="My dragons"
-        rarity
+        rarity={dragons.length !== 0}
       />
+      {!skelet && dragons.length === 0 ? (
+        <>
+          <Text
+            fontVariant={StyleFonts.FiraSansRegular}
+            css="text-align: center;max-width: 400px;"
+          >
+            You have no dragons, you can buy it on market-palce or buy eggs.
+          </Text>
+          <Link href="/buy">
+            <Button>
+              Buy
+            </Button>
+          </Link>
+        </>
+      ) : null}
       <Wrapper>
         {skelet ? (
           <>
