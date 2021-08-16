@@ -52,6 +52,10 @@ const Menu = styled.div`
   transform: translate(0, 74px);
 
   background: ${Colors.Darker};
+
+  @media (max-width: 500px) {
+    min-width: 280px;
+  }
 `;
 const Apply = styled.div`
   cursor: pointer;

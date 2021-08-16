@@ -23,6 +23,12 @@ const Container = styled.div`
   max-width: 943px;
   width: 90%;
   margin-top: 40px;
+
+  @media (max-width: 500px) {
+    width: 98%;
+    justify-content: center;
+    flex-direction: column;
+  }
 `;
 const Wrapper = styled.div`
   display: flex;

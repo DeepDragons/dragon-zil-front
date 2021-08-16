@@ -90,7 +90,11 @@ export const BreedPage: NextPage = () => {
   return (
     <Container>
       <Navbar />
-      <FilterBar title="Fight arena" />
+      <FilterBar
+        title="Dragon breeding"
+        price
+        rarity
+      />
       <Wrapper>
         {skelet ? (
           <>
