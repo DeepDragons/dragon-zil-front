@@ -18,6 +18,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 
   max-width: 943px;
   width: 90%;

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 import { NextPage } from 'next';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { useStore } from 'effector-react';
@@ -10,6 +11,8 @@ import { Container } from 'components/pages/container';
 import { Wrapper } from 'components/pages/wrapper';
 import { FilterBar } from '@/components/filter-bar';
 import { Card } from '@/components/card';
+import { Text } from '@/components/text';
+import { Button } from 'components/button';
 import Loader from 'react-loader-spinner';
 
 import { $wallet } from 'store/wallet';
@@ -18,14 +21,22 @@ import {
   contactMarketDragons,
   resetMarketDragons
 } from 'store/market';
-import Link from 'next/link';
+import { RARITY } from 'lib/rarity';
 import { DragonAPI } from '@/lib/api';
+import { StyleFonts } from '@/config/fonts';
+import { Colors } from '@/config/colors';
+
+const CardContainer = styled.div`
+  width: 100%;
+  text-align: left;
+`;
 
 const limit = 9;
 let page = 0;
 let maxPage = 1;
 const backend = new DragonAPI();
 export const TradePage: NextPage = () => {
+  const router = useRouter();
   const address = useStore($wallet);
   const dragons = useStore($marketDragons);
   const [skelet, setSkelet] = React.useState(true);
@@ -103,14 +114,31 @@ export const TradePage: NextPage = () => {
         ) : (
           <>
             {dragons.map((dragon, index) => (
-              <Link
+              <Card
                 key={index}
-                href={`/dragon/${dragon.id}`}
+                dragon={dragon}
+                onSelect={() => router.push(`/dragon/${dragon.id}`)}
               >
-                <div>
-                  <Card dragon={dragon} />
-                </div>
-              </Link>
+                <CardContainer>
+                  <Text
+                    fontVariant={StyleFonts.FiraSansSemiBold}
+                    fontColors={RARITY[dragon.rarity].color}
+                    size="16px"
+                  >
+                    #{dragon.id}, {RARITY[dragon.rarity].name}
+                  </Text>
+                  <Text
+                    fontVariant={StyleFonts.FiraSansSemiBold}
+                    fontColors={Colors.Blue}
+                    size="18px"
+                  >
+                    {(Number(dragon.actions[0][1]) / 10**12).toLocaleString()} $ZIL
+                  </Text>
+                  <Button color={Colors.LightBlue}>
+                    Buy
+                  </Button>
+                </CardContainer>
+              </Card>
             ))}
           </>
         )}
@@ -118,7 +146,7 @@ export const TradePage: NextPage = () => {
       {loading ? (
         <Loader
           type="ThreeDots"
-          color="#fff"
+          color={Colors.Primary}
           height={30}
           width={100}
         />

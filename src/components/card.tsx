@@ -13,7 +13,8 @@ type Prop = {
     url: string;
     id: string;
     rarity: Rarity;
-  }
+  };
+  onSelect?: () => void;
 };
 
 export const Container = styled.div`
@@ -56,7 +57,9 @@ export const Empety = styled.div`
 `;
 
 export const Card: React.FC<Prop> = ({
-  dragon
+  dragon,
+  children,
+  onSelect = () => null
 }) => {
   const [loadError, setLoadError] = React.useState(false);
 
@@ -75,15 +78,12 @@ export const Card: React.FC<Prop> = ({
               onError={() => setLoadError(true)}
               height="250"
               width="250"
+              onClick={onSelect}
             />
           )}
         </ProgressiveImage>
       )}
-      <Text
-        fontVariant={StyleFonts.FiraSansBold}
-      >
-        #{dragon.id}
-      </Text>
+      {children}
     </Container>
   );
 };

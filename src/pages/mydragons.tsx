@@ -17,6 +17,7 @@ import { $myDragons, contctDragons, resetDragons } from 'store/my-dragons';
 import { DragonAPI } from 'lib/api';
 import { Button } from '@/components/button';
 import { StyleFonts } from '@/config/fonts';
+import { Colors } from '@/config/colors';
 
 const backend = new DragonAPI();
 const limit = 9;
@@ -125,7 +126,11 @@ export const MyDragons: NextPage = () => {
                 href={`/dragon/${dragon.id}`}
               >
                 <div>
-                  <Card dragon={dragon} />
+                  <Card dragon={dragon}>
+                    <Text fontVariant={StyleFonts.FiraSansSemiBold}>
+                      #{dragon.id}
+                    </Text>
+                  </Card>
                 </div>
               </Link>
             ))}
@@ -135,7 +140,7 @@ export const MyDragons: NextPage = () => {
       {loading ? (
         <Loader
           type="ThreeDots"
-          color="#fff"
+          color={Colors.White}
           height={30}
           width={100}
         />

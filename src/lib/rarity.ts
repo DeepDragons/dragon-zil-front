@@ -1,4 +1,4 @@
-const RARITY = [
+export const RARITY = [
   {
     color: '#b0c3d9',
     name: 'Common'
