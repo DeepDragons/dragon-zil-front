@@ -2,10 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import ProgressiveImage from 'react-progressive-graceful-image';
 
-import { Text } from 'components/text';
+import { RarityImage } from './rarity-image';
 
 import { Colors } from 'config/colors';
-import { StyleFonts } from '@/config/fonts';
 import { RARITY } from 'lib/rarity';
 
 type Prop = {
@@ -35,7 +34,7 @@ export const Container = styled.div`
   
   background: ${Colors.Darker};
 `;
-export const Image = styled.img`
+export const Image = styled.image`
   border-radius: 100%;
   background: ${Colors.Black};
 
@@ -65,29 +64,15 @@ export const Card: React.FC<Prop> = ({
   children,
   onSelect = () => null
 }) => {
-  const [loadError, setLoadError] = React.useState(false);
 
   return (
     <Container>
-      {loadError ? (
-        <Empety color={RARITY[dragon.rarity].color} />
-      ) : (
-        <ProgressiveImage
-          src={dragon.url}
-          placeholder={dragon.url}
-        >
-          {(src: string) => (
-            <Image
-              src={src}
-              color={RARITY[dragon.rarity].color}
-              onError={() => setLoadError(true)}
-              height="250"
-              width="250"
-              onClick={onSelect}
-            />
-          )}
-        </ProgressiveImage>
-      )}
+      <RarityImage
+        id={dragon.id}
+        rarity={dragon.rarity}
+        url={dragon.url}
+        onClick={onSelect}
+      />
       {children}
     </Container>
   );

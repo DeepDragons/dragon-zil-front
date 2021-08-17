@@ -53,7 +53,6 @@ export const BodyParts: React.FC<Prop> = ({ color, gens }) => {
             <Column
               key={`body-${index}`}
               color={Colors.White}
-              width={32}
               max={Number(gen.max)}
               value={Number(gen.value)}
               invert={true}

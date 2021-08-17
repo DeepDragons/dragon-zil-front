@@ -9,6 +9,7 @@ import { Container } from 'components/pages/container';
 import { DragonImage } from 'components/dragon/dragon-image';
 import { Navbar } from 'components/nav-bar';
 import { ActionBarTitle } from 'components/dragon/action-bar-title';
+import { UpgradeGens } from 'components/dragon/upgrade-gens';
 
 import { EMPTY } from 'config/emty';
 import { $dragonCache } from 'store/cache-dragon';
@@ -80,6 +81,10 @@ export const GenLabPage: NextPage = () => {
             onError={(e) => e.currentTarget.src = EMPTY}
             src={dragon.url}
             color={rarity.color}
+          />
+          <UpgradeGens
+            color={rarity.color}
+            gens={dragon.gen_fight}
           />
         </Wrapper>
       ) : null}
