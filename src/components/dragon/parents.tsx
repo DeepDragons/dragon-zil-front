@@ -8,6 +8,7 @@ import { Image } from 'components/card';
 import { StyleFonts } from '@/config/fonts';
 
 import { Container, TitleRow, Seporate } from './styles';
+import { Colors } from '@/config/colors';
 
 const Wrapper = styled.div`
   display: flex;
@@ -57,7 +58,8 @@ export const ParentsSection: React.FC<Prop> = ({
           <Link href={`/dragon/${first}`}>
             <div>
               <ParentImage
-                src={'https://res.cloudinary.com/dragonseth/image/upload/1_6.png'}
+                src="https://res.cloudinary.com/dragonseth/image/upload/1_6.png"
+                color={Colors.Blue}
                 height="80"
                 role="first-parrent"
               />
@@ -69,7 +71,8 @@ export const ParentsSection: React.FC<Prop> = ({
           <Link href={`/dragon/${first}`}>
             <div>
               <ParentImage
-                src={'https://res.cloudinary.com/dragonseth/image/upload/1_23.png'}
+                src="https://res.cloudinary.com/dragonseth/image/upload/1_23.png"
+                color={Colors.Blue}
                 height="80"
                 role="first-parrent"
               />

@@ -17,7 +17,7 @@ type Prop = {
 };
 
 type ImageProp = {
-  color: string | Colors;
+  color?: string | Colors;
 }
 
 export const Container = styled.div`
@@ -34,7 +34,7 @@ export const Container = styled.div`
   
   background: ${Colors.Darker};
 `;
-export const Image = styled.image`
+export const Image = styled.img`
   border-radius: 100%;
   background: ${Colors.Black};
 

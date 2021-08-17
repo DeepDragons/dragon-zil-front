@@ -78,7 +78,7 @@ export const CombatGens: React.FC<Prop> = ({
   }, [gens]);
 
   React.useEffect(() => {
-    const ctx = document.querySelector('#combat');
+    const ctx = document.querySelector('#combat') as HTMLCanvasElement;
 
     try {
       if (ctx && isBrowser) {

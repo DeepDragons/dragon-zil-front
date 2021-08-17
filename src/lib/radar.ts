@@ -1,6 +1,6 @@
 import { Chart, registerables } from 'chart.js';
 
-export function radar(gens: Array<number[]>, ctx: Element) {
+export function radar(gens: Array<number[]>, ctx: HTMLCanvasElement) {
   Chart.register(...registerables);
   return new Chart(ctx, {
     type: 'radar',

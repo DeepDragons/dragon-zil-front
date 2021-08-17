@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Text } from 'components/text';
-
 import { Colors } from 'config/colors';
 import { Container, Empety } from 'components/card';
 
