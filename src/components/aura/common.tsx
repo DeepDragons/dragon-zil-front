@@ -27,7 +27,7 @@ export const CommonAura: React.FC<Prop> = ({
     <svg
       width={width}
       height={height}
-      viewBox="0 0 319 319"
+      viewBox="25 25 275 265"
       fill="none"
     >
       <circle

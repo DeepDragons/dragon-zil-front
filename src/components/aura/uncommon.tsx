@@ -27,7 +27,7 @@ export const UncommonAura: React.FC<Prop> = ({
     <svg
       width={width}
       height={height}
-      viewBox="0 0 274 267"
+      viewBox="0 0 275 265"
       fill="none"
     >
       <path

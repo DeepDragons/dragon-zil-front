@@ -27,7 +27,7 @@ export const MythicalAura: React.FC<Prop> = ({
     <svg
       width={width}
       height={height}
-      viewBox="0 0 282 282"
+      viewBox="0 0 275 265"
       fill="none"
     >
       <path

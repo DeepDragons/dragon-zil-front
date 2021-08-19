@@ -27,7 +27,7 @@ export const ImmortalAura: React.FC<Prop> = ({
     <svg
       width={width}
       height={height}
-      viewBox="0 0 341 361"
+      viewBox="50 50 240 275"
       fill="none"
     >
       <path
