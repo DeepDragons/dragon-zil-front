@@ -94,6 +94,7 @@ type Prop = {
   mutate: () => void;
   fight: () => void;
   breed: () => void;
+  breedWith: () => void;
   suicide: () => void;
 };
 
@@ -106,6 +107,7 @@ export const ActionBar: React.FC<Prop> = ({
   mutate,
   fight,
   breed,
+  breedWith,
   suicide
 }) => {
   const address = useStore($wallet);
@@ -194,7 +196,22 @@ export const ActionBar: React.FC<Prop> = ({
             ))}
           </ActionsRow>
         ) : null}
-        {isOwner && currentAction === 3 ? (
+        {currentAction === 2 ? (
+          <ActionButton
+            color={color}
+            onClick={breedWith}
+          >
+            <img
+              src={`/icons/an-egg.svg`}
+              alt="action-icon"
+              height="38"
+            />
+            <Text size="16px">
+              Breed with
+            </Text>
+          </ActionButton>
+        ) : null}
+        {currentAction === 3 ? (
           <ActionButton
             color={color}
             onClick={RemoveSale}
@@ -205,7 +222,7 @@ export const ActionBar: React.FC<Prop> = ({
               height="38"
             />
             <Text size="16px">
-              Remove from Sale
+              {isOwner ? 'Remove from Sale' : 'Buy'}
             </Text>
           </ActionButton>
         ) : null}
