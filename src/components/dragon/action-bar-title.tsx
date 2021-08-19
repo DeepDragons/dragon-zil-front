@@ -8,6 +8,7 @@ import { StyleFonts } from '@/config/fonts';
 import { DragonObject } from 'lib/api';
 import { trim } from 'lib/trim';
 import { viewAddress } from 'lib/viewblock';
+import { RARITY } from 'lib/rarity';
 
 const TitleWrapper = styled.div`
   display: flex;
@@ -20,6 +21,15 @@ const InfoText = styled(Text)`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  font-size: 16px;
+
+  margin: 0;
+  line-height: 28px;
+`;
+const LinkText = styled(Text)`
+  text-indent: 6px;
+  margin: 0;
+  color: ${Colors.White};
 `;
 
 type Prop = {
@@ -43,20 +53,24 @@ export const ActionBarTitle: React.FC<Prop> = ({
       <InfoText
         fontColors={Colors.Muted}
         fontVariant={StyleFonts.FiraSansRegular}
-        size="16px"
       >
         Owner:
         <a
           href={viewAddress(dragon.owner)}
           target='_blank'
         >
-          <Text
-            fontColors={Colors.White}
-            css="text-indent: 6px;"
-          >
+          <LinkText>
             {isOwner ? 'You' : trim(dragon.owner)}
-          </Text>
+          </LinkText>
         </a>
+      </InfoText>
+      <InfoText
+        fontColors={Colors.Muted}
+        fontVariant={StyleFonts.FiraSansRegular}
+      >
+        Rarity:&#160;<Text>
+          {RARITY[dragon.rarity].name}
+        </Text>
       </InfoText>
     </TitleWrapper>
   );
