@@ -194,7 +194,7 @@ export const ActionBar: React.FC<Prop> = ({
             ))}
           </ActionsRow>
         ) : null}
-        {currentAction === 3 ? (
+        {isOwner && currentAction === 3 ? (
           <ActionButton
             color={color}
             onClick={RemoveSale}
