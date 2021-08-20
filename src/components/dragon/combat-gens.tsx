@@ -166,7 +166,7 @@ export const CombatGens: React.FC<Prop> = ({
               {gensArray[1].map((gen, index) => (
                 <Column
                   key={`attack-${index}`}
-                  color={'#E8313E'}
+                  color={Colors.Danger}
                   max={99}
                   value={gen}
                 />

@@ -145,7 +145,7 @@ export const UpgradeGens: React.FC<Prop> = ({
                 <LinePercent
                   max={99}
                   value={el.atteck}
-                  color={'#E8313E'}
+                  color={Colors.Danger}
                 />
                 <NumberOfGen>
                   <Text css="margin: 0;">

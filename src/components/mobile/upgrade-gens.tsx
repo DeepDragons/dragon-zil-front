@@ -18,17 +18,6 @@ import { genParse } from 'lib/gen-parse';
 import { Container } from 'components/dragon/styles';
 import { chunkArray } from '@/lib/chunks';
 
-const GensContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-const Row = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-`;
 const Column = styled.div`
   display: flex;
   align-items: center;
@@ -52,18 +41,23 @@ export const MobileUpgradeGens: React.FC<Prop> = ({
   const [selected, setSelected] = React.useState(0);
   const [gen, setGen] = React.useState(1);
 
+  const gensChain = React.useMemo(() => {
+    return genParse(gens).splice(1);
+  }, [gens]);
+
   React.useEffect(() => {
     const ctx = document.querySelector('#combat') as HTMLCanvasElement;
 
     try {
       if (ctx) {
-        const list = genParse(gens).splice(1);
-        const chunk = chunkArray(list, 10);
+        const chunk = chunkArray(gensChain, 10);
         radar(chunk, ctx);
       }
     } catch {
     }
-  }, [gens]);
+  }, [gensChain]);
+
+  console.log(gensChain[selected === 0 ? gen : gen + 9]);
 
   return (
     <Container color={color}>
@@ -84,6 +78,14 @@ export const MobileUpgradeGens: React.FC<Prop> = ({
         >
           Choose a gen
         </Tab>
+        <div>
+          <LinePercent
+            max={99}
+            width={250}
+            value={gensChain[selected === 0 ? gen - 1 : gen + 9]}
+            color={selected === 0 ? Colors.Success : Colors.Danger}
+          />
+        </div>
         <IntInput
           value={gen}
           max={10}

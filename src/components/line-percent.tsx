@@ -21,6 +21,7 @@ const Container = styled.div`
 const Bar = styled.div`
   background: ${(p: BarProp) => p.color};
   height: 10px;
+  border-radius: 10px;
   z-index: 2;
   width: ${(p: BarProp) => p.length}%;
 `;
@@ -29,6 +30,7 @@ type Prop = {
   max: number;
   value: number;
   color: string | Colors;
+  width?: number;
   invert?: boolean;
 };
 
@@ -36,7 +38,8 @@ export const LinePercent: React.FC<Prop> = ({
   color,
   max,
   value,
-  invert
+  invert,
+  width = 100
 }) => {
   const length = React.useMemo(() => {
     return Math.round(value * 100 / max);
@@ -44,6 +47,7 @@ export const LinePercent: React.FC<Prop> = ({
 
   return (
     <Container style={{
+      width: `${width}px`,
       transform: invert ? 'rotate(180deg)' : 'rotate(0deg)'
     }}>
       <Bar
