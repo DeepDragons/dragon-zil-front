@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { isBrowser, BrowserView } from 'react-device-detect';
 
 import { Text } from 'components/text';
 import { AttackIcon } from 'components/icons/attack';
@@ -12,7 +11,7 @@ import { StyleFonts } from '@/config/fonts';
 import { radar } from 'lib/radar';
 import { genParse } from 'lib/gen-parse';
 
-import { Container, Seporate } from './styles';
+import { Container } from './styles';
 import { chunkArray } from '@/lib/chunks';
 
 const TitleRow = styled.div`
@@ -95,13 +94,12 @@ export const UpgradeGens: React.FC<Prop> = ({
     const ctx = document.querySelector('#combat') as HTMLCanvasElement;
 
     try {
-      if (ctx && isBrowser) {
+      if (ctx) {
         const list = genParse(gens).splice(1);
         const chunk = chunkArray(list, 10);
         radar(chunk, ctx);
       }
     } catch {
-      // setSelected(0);
     }
   }, [gensArray]);
 
@@ -123,13 +121,13 @@ export const UpgradeGens: React.FC<Prop> = ({
         </TitleRow>
       </TitleRow>
       <GensContainer>
-        <BrowserView>
+        <div>
           <canvas
             id="combat"
             height="410"
           />
-        </BrowserView>
-        <div>
+        </div>
+        <div style={{ marginLeft: '16px' }}>
           <Row>
             <GenNameContainer>
               <DefenceIcon />
