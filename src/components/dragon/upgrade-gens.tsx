@@ -3,15 +3,14 @@ import styled from 'styled-components';
 import { isBrowser } from 'react-device-detect';
 
 import { Text } from 'components/text';
-import { Column } from 'components/column';
 import { AttackIcon } from 'components/icons/attack';
 import { DefenceIcon } from 'components/icons/defence';
+import { LinePercent } from 'components/line-percent';
 
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
 import { radar } from 'lib/radar';
 import { genParse } from 'lib/gen-parse';
-import { chunkArray } from 'lib/chunks';
 
 import { Container, Seporate } from './styles';
 
@@ -20,20 +19,11 @@ const TitleRow = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
-const TabRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-left: 34px;
-`;
-const TabSelector = styled.img`
-  cursor: pointer;
-  border-radius: 8px;
-`;
 const GensContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-direction: column;
 `;
 const Row = styled.div`
   display: flex;
@@ -46,6 +36,32 @@ const GenNameContainer = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+const GensWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  margin-top: 16px;
+  width: 300px;
+
+  @media (max-width: 500px) {
+    width: 250px;
+  }
+`;
+const Gens = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+const NumberOfGen = styled.a`
+  cursor: pointer;
+  background: ${Colors.Darker};
+  border-radius: 7px;
+  padding-left: 10px;
+  padding-right: 10px;
+  user-select: none;
+`;
 
 type Prop = {
   gens: string;
@@ -56,12 +72,22 @@ export const UpgradeGens: React.FC<Prop> = ({
   gens,
   color
 }) => {
-  const [selected, setSelected] = React.useState(isBrowser ? 1 : 0);
-
   const gensArray = React.useMemo(() => {
     const list = genParse(gens).splice(1);
+    const gensList = [];
 
-    return chunkArray(list, 10);
+
+    for (let index = 0; index < list.length / 2; index++) {
+      const def = list[index];
+      const atteck = list[index + 10];
+
+      gensList.push({
+        def,
+        atteck
+      })
+    }
+
+    return gensList;
   }, [gens]);
 
   return (
@@ -71,6 +97,7 @@ export const UpgradeGens: React.FC<Prop> = ({
           <Text
             fontVariant={StyleFonts.FiraSansSemiBold}
             size="24px"
+            css="margin-right: 10px;"
           >
             Upgrade gens
           </Text>
@@ -79,26 +106,6 @@ export const UpgradeGens: React.FC<Prop> = ({
             alt="gens"
           />
         </TitleRow>
-        <TabRow>
-          <TabSelector
-            style={{
-              background: selected === 0 ? Colors.Darker : 'none'
-            }}
-            src="/icons/graph.svg"
-            alt="graph"
-            onClick={() => setSelected(0)}
-          />
-          {isBrowser ? (
-            <TabSelector
-              style={{
-                background: selected === 1 ? Colors.Darker : 'none'
-              }}
-              src="/icons/radar.svg"
-              alt="radar"
-              onClick={() => setSelected(1)}
-            />
-          ) : null}
-        </TabRow>
       </TitleRow>
       <GensContainer>
         <Row>
@@ -115,6 +122,36 @@ export const UpgradeGens: React.FC<Prop> = ({
             <AttackIcon />
           </GenNameContainer>
         </Row>
+        <GensWrapper>
+          {gensArray.map((el, index) => (
+            <Gens key={index}>
+              <NumberOfGen>
+                <Text css="margin: 0;">
+                  {index + 1}
+                </Text>
+              </NumberOfGen>
+              <LinePercent
+                max={99}
+                value={el.def}
+                color={'#06C190'}
+                invert
+              />
+              <Text fontColors={Colors.Muted}>
+                {index + 1}
+              </Text>
+              <LinePercent
+                max={99}
+                value={el.atteck}
+                color={'#E8313E'}
+              />
+              <NumberOfGen>
+                <Text css="margin: 0;">
+                  {index + 11}
+                </Text>
+              </NumberOfGen>
+            </Gens>
+          ))}
+        </GensWrapper>
       </GensContainer>
     </Container>
   );

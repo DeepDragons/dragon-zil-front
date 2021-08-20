@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { useStore } from 'effector-react';
 import { NextPage } from 'next';
-import { BrowserView, MobileView } from 'react-device-detect';
 
 import { Container } from 'components/pages/container';
 import { DragonImage } from 'components/dragon/dragon-image';
@@ -19,14 +18,24 @@ import { $wallet } from '@/store/wallet';
 
 const Wrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
-  max-width: 943px;
   padding-top: 30px;
+
+  width: 100%;
+  max-width: 1024px;
 
   @media (max-width: 947px) {
     align-items: center;
     justify-content: center;
   }
+`;
+const TitleWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 943px;
+  align-items: self-start;
+  width: 100%;
 `;
 
 const backend = new DragonAPI();
@@ -70,10 +79,12 @@ export const GenLabPage: NextPage = () => {
     <Container>
       <Navbar />
       {dragon ? (
-        <ActionBarTitle
-          dragon={dragon}
-          isOwner={isOwner}
-        />
+        <TitleWrapper>
+          <ActionBarTitle
+            dragon={dragon}
+            isOwner={isOwner}
+          />
+        </TitleWrapper>
       ) : null}
       {rarity && dragon ? (
         <Wrapper>
