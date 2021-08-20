@@ -149,7 +149,7 @@ export const UpgradeGens: React.FC<Prop> = ({
                 />
                 <NumberOfGen>
                   <Text css="margin: 0;">
-                    {index + 11}
+                    {index + 1}
                   </Text>
                 </NumberOfGen>
               </Gens>
