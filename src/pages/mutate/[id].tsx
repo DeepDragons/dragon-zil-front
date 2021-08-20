@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   padding-top: 30px;
 
   width: 100%;
-  max-width: 1024px;
+  max-width: 1224px;
 
   @media (max-width: 947px) {
     align-items: center;
