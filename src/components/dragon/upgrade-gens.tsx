@@ -53,6 +53,7 @@ const Gens = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 330px;
 `;
 const NumberOfGen = styled.a`
   cursor: pointer;

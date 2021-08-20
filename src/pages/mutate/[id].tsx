@@ -18,7 +18,7 @@ import { $wallet } from '@/store/wallet';
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
   padding-top: 30px;
 
