@@ -57,8 +57,6 @@ export const MobileUpgradeGens: React.FC<Prop> = ({
     }
   }, [gensChain]);
 
-  console.log(gensChain[selected === 0 ? gen : gen + 9]);
-
   return (
     <Container color={color}>
       <TitleUpgradeGens>
