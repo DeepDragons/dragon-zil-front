@@ -144,7 +144,7 @@ export const CombatGens: React.FC<Prop> = ({
               {gensArray[0].map((gen, index) => (
                 <Column
                   key={`deffence-${index}`}
-                  color={'#06C190'}
+                  color={Colors.Success}
                   max={99}
                   value={gen}
                   invert={true}

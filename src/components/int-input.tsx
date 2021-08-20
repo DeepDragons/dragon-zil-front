@@ -5,6 +5,7 @@ import { Colors } from 'config/colors';
 
 type Prop = {
   value: number;
+  max?: number;
   onInput: (value: number) => void
 }
 
@@ -46,15 +47,20 @@ const Incr = styled.div`
 export const IntInput: React.FC<Prop> = ({
   children,
   value,
+  max,
   onInput
 }) => {
   const onInputNumber = React.useCallback((e: React.FormEvent<HTMLInputElement>) => {
     const n = Number(e.currentTarget.value);
 
+    if (max && max < n) {
+      return null;
+    }
+
     if (!isNaN(n)) {
       onInput(n);
     }
-  }, []);
+  }, [max]);
 
   const decrease = React.useCallback(() => {
     if (value <= 1) {
@@ -63,6 +69,16 @@ export const IntInput: React.FC<Prop> = ({
 
     onInput(value - 1);
   }, [value]);
+
+  const increase = React.useCallback(() => {
+    const newValue = value + 1;
+
+    if (max && max < newValue) {
+      return null;
+    }
+
+    onInput(newValue);
+  }, [value, max]);
 
   return (
     <Container>
@@ -82,9 +98,10 @@ export const IntInput: React.FC<Prop> = ({
         </Incr>
         <Input
           value={value}
+          max={max}
           onInput={onInputNumber}
         />
-        <Incr onClick={() => onInput(value + 1)}>
+        <Incr onClick={increase}>
           <svg
             width="36"
             height="36"

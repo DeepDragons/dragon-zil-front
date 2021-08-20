@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { isBrowser } from 'react-device-detect';
 
 import { Text } from 'components/text';
 import { Column } from 'components/column';

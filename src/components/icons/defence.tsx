@@ -8,7 +8,7 @@ type Prop = {
 };
 
 export const DefenceIcon: React.FC<Prop> = ({
-  color = '#06C190',
+  color = Colors.Success,
   width = 32,
   height = 32
 }) => {

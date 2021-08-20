@@ -1,3 +1,4 @@
+import { Colors } from '@/config/colors';
 import { Chart, registerables } from 'chart.js';
 
 export function radar(gens: Array<number[]>, ctx: HTMLCanvasElement) {
@@ -29,9 +30,9 @@ export function radar(gens: Array<number[]>, ctx: HTMLCanvasElement) {
         label: 'Defence',
         data: gens[0],
         fill: false,
-        backgroundColor: '#06c19070',
-        borderColor: '#06C190',
-        pointHoverBorderColor: '#06C190'
+        backgroundColor: Colors.Success + '70',
+        borderColor: Colors.Success,
+        pointHoverBorderColor: Colors.Success
       }]
     },
     options: {

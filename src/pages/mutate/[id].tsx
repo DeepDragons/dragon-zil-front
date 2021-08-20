@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { useStore } from 'effector-react';
+import { BrowserView, MobileView } from 'react-device-detect';
 import { NextPage } from 'next';
 
 import { Container } from 'components/pages/container';
@@ -9,6 +10,7 @@ import { DragonImage } from 'components/dragon/dragon-image';
 import { Navbar } from 'components/nav-bar';
 import { ActionBarTitle } from 'components/dragon/action-bar-title';
 import { UpgradeGens } from 'components/dragon/upgrade-gens';
+import { MobileUpgradeGens } from 'components/mobile/upgrade-gens';
 
 import { EMPTY } from 'config/emty';
 import { $dragonCache } from 'store/cache-dragon';
@@ -93,10 +95,18 @@ export const GenLabPage: NextPage = () => {
             src={dragon.url}
             color={rarity.color}
           />
-          <UpgradeGens
-            color={rarity.color}
-            gens={dragon.gen_fight}
-          />
+          <BrowserView>
+            <UpgradeGens
+              color={rarity.color}
+              gens={dragon.gen_fight}
+            />
+          </BrowserView>
+          <MobileView>
+            <MobileUpgradeGens
+              color={rarity.color}
+              gens={dragon.gen_fight}
+            />
+          </MobileView>
         </Wrapper>
       ) : null}
     </Container>

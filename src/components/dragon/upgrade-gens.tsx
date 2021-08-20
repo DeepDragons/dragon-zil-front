@@ -5,20 +5,15 @@ import { Text } from 'components/text';
 import { AttackIcon } from 'components/icons/attack';
 import { DefenceIcon } from 'components/icons/defence';
 import { LinePercent } from 'components/line-percent';
+import { TitleUpgradeGens } from './upgrade-gens-title';
 
 import { Colors } from 'config/colors';
-import { StyleFonts } from '@/config/fonts';
 import { radar } from 'lib/radar';
 import { genParse } from 'lib/gen-parse';
 
 import { Container } from './styles';
 import { chunkArray } from '@/lib/chunks';
 
-const TitleRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
 const GensContainer = styled.div`
   display: flex;
   align-items: center;
@@ -101,25 +96,13 @@ export const UpgradeGens: React.FC<Prop> = ({
       }
     } catch {
     }
-  }, [gensArray]);
+  }, [gens]);
 
   return (
     <Container color={color}>
-      <TitleRow>
-        <TitleRow>
-          <Text
-            fontVariant={StyleFonts.FiraSansSemiBold}
-            size="24px"
-            css="margin-right: 10px;"
-          >
-            Upgrade gens
-          </Text>
-          <img
-            src="/icons/body.svg"
-            alt="gens"
-          />
-        </TitleRow>
-      </TitleRow>
+      <TitleUpgradeGens>
+        Upgrade gens
+      </TitleUpgradeGens>
       <GensContainer>
         <div>
           <canvas
@@ -153,7 +136,7 @@ export const UpgradeGens: React.FC<Prop> = ({
                 <LinePercent
                   max={99}
                   value={el.def}
-                  color={'#06C190'}
+                  color={Colors.Success}
                   invert
                 />
                 <Text fontColors={Colors.Muted}>

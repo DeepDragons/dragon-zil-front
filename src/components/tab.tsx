@@ -9,7 +9,7 @@ import { StyleFonts } from 'config/fonts';
 import { Colors } from 'config/colors';
 
 type Prop = {
-  elements: string[];
+  elements: JSX.Element[];
   selected: number;
   onSelected: (index: number) => void
 }
@@ -59,11 +59,7 @@ export const Tab: React.FC<Prop> = ({
             selected={index === selected}
             onClick={() => onSelected(index)}
           >
-            <Text
-              fontVariant={StyleFonts.FiraSansSemiBold}
-            >
-              {el}
-            </Text>
+            {el}
           </Li>
         ))}
       </Ul>

@@ -44,7 +44,14 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const tokens = ['ZIL', 'ZLP'];
+const tokens = [
+  <Text fontVariant={StyleFonts.FiraSansSemiBold}>
+    ZIL
+  </Text>,
+  <Text fontVariant={StyleFonts.FiraSansSemiBold}>
+    ZLP
+  </Text>
+];
 
 export const BuyPage: NextPage = () => {
   const [selected, setSelected] = React.useState(0);
