@@ -43,6 +43,14 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   width: 100%;
 `;
+const BuyButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  min-width: 235px;
+  padding: 16px;
+`;
 
 const tokens = [
   <Text fontVariant={StyleFonts.FiraSansSemiBold}>
@@ -89,14 +97,9 @@ export const BuyPage: NextPage = () => {
             >
               Number of eggs
             </IntInput>
-            <Button css="margin: 10px;min-width: 235px;">
-              <Text
-                fontVariant={StyleFonts.FiraSansBold}
-                size="1.43rem"
-              >
-                Buy for  {eggs * 10} ${tokens[selected]}
-              </Text>
-            </Button>
+            <BuyButton>
+              Buy for  {eggs * 10} ${tokens[selected]}
+            </BuyButton>
           </Wrapper>
         </Form>
       </Main>
