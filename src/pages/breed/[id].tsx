@@ -77,7 +77,10 @@ export const Dragon: NextPage = () => {
           <ChoiceWith
             dragon={dragon}
             color={Colors.Primary}
-          />
+            onSelect={() => null}
+          >
+            Start breeding
+          </ChoiceWith>
         </Wrapper>
       ) : null}
     </Container>
