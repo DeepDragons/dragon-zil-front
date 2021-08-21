@@ -35,10 +35,12 @@ const LinkText = styled(Text)`
 type Prop = {
   dragon: DragonObject;
   isOwner: boolean;
+  color: string | Colors;
 };
 
 export const ActionBarTitle: React.FC<Prop> = ({
   dragon,
+  color,
   isOwner
 }) => {
   return (
@@ -68,7 +70,7 @@ export const ActionBarTitle: React.FC<Prop> = ({
         fontColors={Colors.Muted}
         fontVariant={StyleFonts.FiraSansRegular}
       >
-        Rarity:&#160;<Text>
+        Rarity:&#160;<Text fontColors={color}>
           {RARITY[dragon.rarity].name}
         </Text>
       </InfoText>

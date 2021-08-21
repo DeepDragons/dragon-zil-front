@@ -183,6 +183,7 @@ export const ActionBar: React.FC<Prop> = ({
       <ActionBarTitle
         isOwner={isOwner}
         dragon={dragon}
+        color={color}
       />
       <BrowserView>
         {dragon.actions.length === 0 ? (
