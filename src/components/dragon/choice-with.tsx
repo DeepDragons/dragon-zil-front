@@ -95,9 +95,11 @@ export const ChoiceWith: React.FC<Prop> = ({
           </Text>
         </DragonImageWrapper>
       </Row>
-      <Button>
-        {children}
-      </Button>
+      {myDragon ? (
+        <Button>
+          {children}
+        </Button>
+      ) : null}
     </MainContainer>
   );
 };
