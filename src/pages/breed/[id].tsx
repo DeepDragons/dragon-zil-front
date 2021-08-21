@@ -5,10 +5,14 @@ import { useRouter } from 'next/router';
 
 import { Navbar } from 'components/nav-bar';
 import { Container } from 'components/pages/container';
+import { Text } from 'components/text';
+import { ChoiceWith } from 'components/dragon/choice-with';
 
 import { DragonAPI, DragonObject } from 'lib/api';
 import { getRarity } from 'lib/rarity';
 import { $dragonCache } from 'store/cache-dragon';
+import { StyleFonts } from '@/config/fonts';
+import { Colors } from '@/config/colors';
 
 const Wrapper = styled.div`
   display: flex;
@@ -59,6 +63,23 @@ export const Dragon: NextPage = () => {
   return (
     <Container>
       <Navbar />
+      <Wrapper>
+        <Text
+          fontVariant={StyleFonts.FiraSansBold}
+          size="56px"
+          css="margin: 0;"
+        >
+          Bread with #{router.query.id}
+        </Text>
+      </Wrapper>
+      {dragon && rarity ? (
+        <Wrapper>
+          <ChoiceWith
+            dragon={dragon}
+            color={Colors.Primary}
+          />
+        </Wrapper>
+      ) : null}
     </Container>
   );
 };
