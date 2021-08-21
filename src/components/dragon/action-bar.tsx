@@ -89,6 +89,7 @@ type Prop = {
   dragon: DragonObject;
   color: string;
   transfer: () => void;
+  hatchEgg: () => void;
   sale: () => void;
   RemoveSale: () => void;
   mutate: () => void;
@@ -102,6 +103,7 @@ export const ActionBar: React.FC<Prop> = ({
   dragon,
   color,
   transfer,
+  hatchEgg,
   sale,
   RemoveSale,
   mutate,
@@ -124,44 +126,52 @@ export const ActionBar: React.FC<Prop> = ({
     return 0;
   }, [dragon]);
 
-  const actionList = [
-    {
-      icon: 'transfer-icon.svg',
-      name: 'Transfer',
-      disabled: !isOwner,
-      method: transfer
-    },
-    {
-      icon: 'sale-icon.svg',
-      name: 'On sale',
-      disabled: !isOwner,
-      method: sale
-    },
-    {
-      icon: 'gen-lab.svg',
-      name: 'Mutate',
-      disabled: !isOwner,
-      method: mutate
-    },
-    {
-      icon: 'arena.svg',
-      name: 'To arena',
-      disabled: !isOwner,
-      method: fight
-    },
-    {
-      icon: 'an-egg.svg',
-      name: 'Breed',
-      disabled: !isOwner,
-      method: breed
-    },
-    {
-      icon: 'suicide.svg',
-      name: 'Suicide',
-      disabled: !isOwner,
-      method: suicide
-    },
-  ];
+  const actionList = React.useMemo(() => {
+    return [
+      {
+        icon: 'an-egg.svg',
+        name: 'hatch egg',
+        method: hatchEgg,
+        show: dragon.stage == 0
+      },
+      {
+        icon: 'transfer-icon.svg',
+        name: 'Transfer',
+        method: transfer,
+        show: true
+      },
+      {
+        icon: 'sale-icon.svg',
+        name: 'On sale',
+        method: sale,
+        show: true
+      },
+      {
+        icon: 'gen-lab.svg',
+        name: 'Mutate',
+        method: mutate,
+        show: dragon.stage > 0
+      },
+      {
+        icon: 'arena.svg',
+        name: 'To arena',
+        method: fight,
+        show: dragon.stage > 0
+      },
+      {
+        icon: 'an-egg.svg',
+        name: 'Breed',
+        method: breed,
+        show: dragon.stage > 0
+      },
+      {
+        icon: 'suicide.svg',
+        name: 'Suicide',
+        method: suicide,
+        show: true
+      },
+    ].filter((el) => el.show);
+  }, [dragon]);
 
   const handleMobileActino = React.useCallback((action) => {
     action.method();
@@ -180,7 +190,6 @@ export const ActionBar: React.FC<Prop> = ({
             {actionList.map((action) => (
               <ActionButton
                 key={action.name}
-                disabled={action.disabled}
                 color={color}
                 onClick={action.method}
               >

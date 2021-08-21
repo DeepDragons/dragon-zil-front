@@ -72,6 +72,7 @@ export const Dragon: NextPage = () => {
           dragon={dragon}
           color={rarity.color}
           transfer={() => console.log('transfer')}
+          hatchEgg={() => console.log('hatchEgg')}
           sale={() => console.log('sale')}
           RemoveSale={() => console.log('remove sale')}
           mutate={hanldeMutate}

@@ -2,21 +2,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Text } from 'components/text';
-import { Column } from 'components/column';
 import { RarityImage } from 'components/rarity-image';
 import { SelectPalce } from 'components/select-palce';
 
 import { Colors } from 'config/colors';
-import { StyleFonts } from '@/config/fonts';
-
 import { Container } from './styles';
 import { DragonObject } from '@/lib/api';
 
 const MainContainer = styled(Container)`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
 
   div {
