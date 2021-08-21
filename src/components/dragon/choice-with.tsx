@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { RarityImage } from 'components/rarity-image';
 import { SelectPalce } from 'components/select-palce';
+import { Text } from 'components/text';
 
 import { Colors } from 'config/colors';
 import { Container } from './styles';
@@ -18,8 +19,15 @@ const MainContainer = styled(Container)`
   div {
     margin: 10px;
   }
+
+  @media (max-width: 704px) {
+    flex-direction: column;
+  }
 `;
 const DragonImageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 type Prop = {
@@ -28,6 +36,8 @@ type Prop = {
 };
 
 export const ChoiceWith: React.FC<Prop> = ({ dragon, color }) => {
+  const [myDragon, setMyDragon] = React.useState<DragonObject | null>(null);
+
   return (
     <MainContainer color={color}>
       <DragonImageWrapper>
@@ -36,6 +46,9 @@ export const ChoiceWith: React.FC<Prop> = ({ dragon, color }) => {
           url={dragon.url}
           rarity={dragon.rarity}
         />
+        <Text>
+          #{dragon.id}
+        </Text>
       </DragonImageWrapper>
       <div>
         <svg
@@ -50,7 +63,20 @@ export const ChoiceWith: React.FC<Prop> = ({ dragon, color }) => {
           />
         </svg>
       </div>
-      <SelectPalce color={color}/>
+      <DragonImageWrapper>
+        {myDragon ? (
+          <RarityImage
+            id={myDragon.id}
+            url={myDragon.url}
+            rarity={myDragon.rarity}
+          />
+        ) : (
+          <SelectPalce color={color}/>
+        )}
+        <Text>
+          #{myDragon?.id || ''}
+        </Text>
+      </DragonImageWrapper>
     </MainContainer>
   );
 };
