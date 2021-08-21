@@ -23,6 +23,7 @@ import { RARITY } from 'lib/rarity';
 import { DragonAPI } from '@/lib/api';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
+import { updateCache } from 'store/cache-dragon';
 
 const limit = 9;
 let page = 0;
@@ -70,6 +71,11 @@ export const BreedPage: NextPage = () => {
     setLoading(false);
   }
 
+  const hanldeSelect = React.useCallback((dragon) => {
+    updateCache(dragon);
+    router.push(`/breed/${dragon.id}`);
+  }, []);
+
   React.useEffect(() => {
     setSkelet(true);
     resetMarketDragons();
@@ -106,28 +112,29 @@ export const BreedPage: NextPage = () => {
         ) : (
           <>
             {dragons.map((dragon, index) => (
-              <Card
+              <div
                 key={index}
-                dragon={dragon}
-                onSelect={() => router.push(`/dragon/${dragon.id}`)}
+                onClick={() => hanldeSelect(dragon)}
               >
-                <CardContainer>
-                  <Text
-                    fontVariant={StyleFonts.FiraSansSemiBold}
-                    fontColors={RARITY[dragon.rarity].color}
-                    size="16px"
-                  >
-                    #{dragon.id}, {RARITY[dragon.rarity].name}
-                  </Text>
-                  <Text
-                    fontVariant={StyleFonts.FiraSansSemiBold}
-                    fontColors={Colors.Blue}
-                    size="18px"
-                  >
-                    {(Number(dragon.actions[0][1]) / 10**18).toLocaleString()} $ZLP
-                  </Text>
-                </CardContainer>
-              </Card>
+                <Card dragon={dragon}>
+                  <CardContainer>
+                    <Text
+                      fontVariant={StyleFonts.FiraSansSemiBold}
+                      fontColors={RARITY[dragon.rarity].color}
+                      size="16px"
+                    >
+                      #{dragon.id}, {RARITY[dragon.rarity].name}
+                    </Text>
+                    <Text
+                      fontVariant={StyleFonts.FiraSansSemiBold}
+                      fontColors={Colors.Blue}
+                      size="18px"
+                    >
+                      {(Number(dragon.actions[0][1]) / 10**18).toLocaleString()} $ZLP
+                    </Text>
+                  </CardContainer>
+                </Card>
+              </div>
             ))}
           </>
         )}
