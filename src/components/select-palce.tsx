@@ -2,6 +2,10 @@ import { Colors } from '@/config/colors';
 import React from 'react';
 import styled from 'styled-components';
 
+type ContainerProp = {
+  color: string | Colors;
+}
+
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -12,10 +16,10 @@ const Container = styled.div`
   cursor: copy;
 
   :hover {
-    border-color: ${Colors.Primary};
+    border-color: ${(p:ContainerProp) => p.color};
 
     svg > path {
-      fill: ${Colors.Primary};
+      fill: ${(p:ContainerProp) => p.color};
     }
   }
 `;
@@ -23,10 +27,12 @@ const Container = styled.div`
 type Prop = {
   width?: string | number;
   height?: string | number;
+  color: string | Colors;
   onClick?: () => void;
 };
 
 export const SelectPalce: React.FC<Prop> = ({
+  color,
   width = 250,
   height = 250,
   onClick = () => null
@@ -37,6 +43,7 @@ export const SelectPalce: React.FC<Prop> = ({
         width: `${width}px`,
         height: `${height}px`
       }}
+      color={color}
       onClick={onClick}
     >
       <svg
@@ -57,7 +64,7 @@ export const SelectPalce: React.FC<Prop> = ({
         </mask>
         <path
           d="M20 0V-2H18V0H20ZM40 0H42V-2H40V0ZM20 20V22H22V20H20ZM0 20V18H-2V20H0ZM0 40H-2V42H0V40ZM20 40H22V38H20V40ZM20 60H18V62H20V60ZM40 60V62H42V60H40ZM40 40V38H38V40H40ZM60 40V42H62V40H60ZM60 20H62V18H60V20ZM40 20H38V22H40V20ZM20 2H40V-2H20V2ZM22 20V0H18V20H22ZM0 22H20V18H0V22ZM2 40V20H-2V40H2ZM20 38H0V42H20V38ZM22 60V40H18V60H22ZM40 58H20V62H40V58ZM38 40V60H42V40H38ZM60 38H40V42H60V38ZM58 20V40H62V20H58ZM40 22H60V18H40V22ZM38 0V20H42V0H38Z"
-          fill="#7777A3"
+          fill={Colors.Muted}
           mask="url(#path-1-inside-1)"
         />
       </svg>
