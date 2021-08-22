@@ -37,16 +37,8 @@ export class DragonAPI {
     const url = `${this._host}/${this._api}/${Methods.Dragons}?${params}`;
     const res = await fetch(url);
 
-    if (res.status === 404) {
-      return {
-        list: [] as DragonObject[],
-        pagination: {
-          limit,
-          current_page: 0,
-          pages: offset,
-          records: 0
-        } as PaginationObject
-      };
+    if (res.status !== 200) {
+      throw new Error(String(res.status));
     }
 
     const result = await res.json();
@@ -100,16 +92,8 @@ export class DragonAPI {
     const url = `${this._host}/${this._api}/${Methods.Battle}?${params}`;
     const res = await fetch(url);
 
-    if (res.status === 404) {
-      return {
-        list: [] as DragonObject[],
-        pagination: {
-          limit,
-          current_page: 0,
-          pages: offset,
-          records: 0
-        } as PaginationObject
-      };
+    if (res.status !== 200) {
+      throw new Error(String(res.status));
     }
 
     const result = await res.json();
@@ -125,16 +109,8 @@ export class DragonAPI {
     const url = `${this._host}/${this._api}/${Methods.Breed}?${params}`;
     const res = await fetch(url);
 
-    if (res.status === 404) {
-      return {
-        list: [] as DragonObject[],
-        pagination: {
-          limit,
-          current_page: 0,
-          pages: offset,
-          records: 0
-        } as PaginationObject
-      };
+    if (res.status !== 200) {
+      throw new Error(String(res.status));
     }
 
     const result = await res.json();

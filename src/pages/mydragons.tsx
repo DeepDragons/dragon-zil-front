@@ -11,6 +11,7 @@ import { SkeletCard } from 'components/skelet/card';
 import { FilterBar } from 'components/filter-bar';
 import { Container } from 'components/pages/container';
 import { Wrapper } from 'components/pages/wrapper';
+import { ErrorModal } from 'components/modals/error';
 
 import { $wallet } from 'store/wallet';
 import { CardContainer } from 'components/dragon/styles';
@@ -30,6 +31,7 @@ export const MyDragons: NextPage = () => {
   const address = useStore($wallet);
   const dragons = useStore($myDragons);
   const [skelet, setSkelet] = React.useState(true);
+  const [errorCode, setErrorCode] = React.useState<number | string | null>(null);
   const [loading, setLoading] = React.useState(false);
 
   const fetchData = async () => {
@@ -80,7 +82,10 @@ export const MyDragons: NextPage = () => {
     page = 0;
     fetchData()
       .then(() => setSkelet(false))
-      .catch(() => setSkelet(false));
+      .catch((err) => {
+        setErrorCode(err.message);
+        setSkelet(false);
+      });
   }, [address]);
 
   React.useEffect(() => {
@@ -154,6 +159,10 @@ export const MyDragons: NextPage = () => {
           width={100}
         />
       ) : null}
+      <ErrorModal
+        show={Boolean(errorCode)}
+        code={errorCode}
+      />
     </Container>
   );
 }
