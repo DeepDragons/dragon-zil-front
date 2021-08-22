@@ -14,6 +14,7 @@ import { Container } from 'components/pages/container';
 import { TransferModal } from 'components/modals/transfer';
 import { SaleModal } from 'components/modals/sale';
 import { FightsModal } from 'components/modals/fight';
+import { BreedModal } from 'components/modals/breed';
 
 import { DragonAPI, DragonObject } from 'lib/api';
 import { getRarity } from 'lib/rarity';
@@ -43,6 +44,7 @@ export const Dragon: NextPage = () => {
   const [transfer, setTransfer] = React.useState(false);
   const [sale, setSale] = React.useState(false);
   const [arena, setArena] = React.useState(false);
+  const [breed, setBreed] = React.useState(false);
 
   const rarity = React.useMemo(() => {
     if (!dragon) {
@@ -83,7 +85,7 @@ export const Dragon: NextPage = () => {
           RemoveSale={() => console.log('remove sale')}
           mutate={hanldeMutate}
           fight={() => setArena(true)}
-          breed={() => console.log('breed')}
+          breed={() => setBreed(true)}
           suicide={() => console.log('suicide')}
         />
       ) : null}
@@ -134,6 +136,11 @@ export const Dragon: NextPage = () => {
         show={arena}
         id={dragon?.id || ''}
         onClose={() => setArena(false)}
+      />
+      <BreedModal
+        show={breed}
+        id={dragon?.id || ''}
+        onClose={() => setBreed(false)}
       />
     </Container>
   );

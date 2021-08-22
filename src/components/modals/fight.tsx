@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import { Modal } from 'components/modal';
 import { Text } from 'components/text';
@@ -7,15 +6,12 @@ import { IntInput } from 'components/int-input';
 
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
-import { ModalTitle, ButtonsWrapper, ModalButton } from './style';
-
-const Container = styled.div`
-  padding: 24px;
-
-  .int-input {
-    width: 100%;
-  }
-`;
+import {
+  ModalTitle,
+  ButtonsWrapper,
+  ModalButton,
+  Container
+} from './style';
 
 type Prop = {
   show: boolean;

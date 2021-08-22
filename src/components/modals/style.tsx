@@ -20,3 +20,11 @@ export const ButtonsWrapper = styled.div`
 
   padding: 24px;
 `;
+
+export const Container = styled.div`
+  padding: 24px;
+
+  .int-input {
+    width: 100%;
+  }
+`;
