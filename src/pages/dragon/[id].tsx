@@ -11,6 +11,7 @@ import { BattlesSection } from 'components/dragon/battles';
 import { ParentsSection } from 'components/dragon/parents';
 import { DragonImage } from 'components/dragon/dragon-image';
 import { Container } from 'components/pages/container';
+import { TransferModal } from 'components/modals/transfer';
 
 import { DragonAPI, DragonObject } from 'lib/api';
 import { getRarity } from 'lib/rarity';
@@ -37,6 +38,7 @@ export const Dragon: NextPage = () => {
 
   const [dragon, setDragon] = React.useState<DragonObject | null>(null);
   const [loading, setLoading] = React.useState(false);
+  const [transfer, setTransfer] = React.useState(false);
 
   const rarity = React.useMemo(() => {
     if (!dragon) {
@@ -71,7 +73,7 @@ export const Dragon: NextPage = () => {
         <ActionBar
           dragon={dragon}
           color={rarity.color}
-          transfer={() => console.log('transfer')}
+          transfer={() => setTransfer(true)}
           hatchEgg={() => console.log('hatchEgg')}
           sale={() => console.log('sale')}
           RemoveSale={() => console.log('remove sale')}
@@ -113,6 +115,12 @@ export const Dragon: NextPage = () => {
           </div>
         </Wrapper>
       ) : null}
+      <TransferModal
+        show={transfer}
+        id={dragon?.id || ''}
+        stage={dragon?.stage || 0}
+        onClose={() => setTransfer(false)}
+      />
     </Container>
   );
 };

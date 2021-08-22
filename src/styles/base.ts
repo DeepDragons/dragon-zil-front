@@ -40,6 +40,13 @@ export const BaseStyles = createGlobalStyle`
     padding: 0;
   }
 
+  html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
   @keyframes load {
     from {
         left: -150px;

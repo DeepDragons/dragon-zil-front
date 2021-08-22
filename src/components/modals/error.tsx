@@ -6,10 +6,8 @@ import { Text } from 'components/text';
 
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
+import { ModalTitle } from './style';
 
-const ModalTitle = styled(Text)`
-  padding: 10px;
-`;
 const Container = styled.div`
   adding-left: 30px;
   padding-right: 30px;
