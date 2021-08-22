@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useStore } from 'effector-react';
 import { BrowserView, MobileView } from 'react-device-detect';
+import { useRouter } from 'next/router';
 
 import { Text } from 'components/text';
 import { Modal } from 'components/modal';
@@ -95,7 +96,6 @@ type Prop = {
   mutate: () => void;
   fight: () => void;
   breed: () => void;
-  breedWith: () => void;
   suicide: () => void;
 };
 
@@ -109,9 +109,9 @@ export const ActionBar: React.FC<Prop> = ({
   mutate,
   fight,
   breed,
-  breedWith,
   suicide
 }) => {
+  const router = useRouter();
   const address = useStore($wallet);
   const [modalShow, setModalShow] = React.useState(false);
 
@@ -209,7 +209,7 @@ export const ActionBar: React.FC<Prop> = ({
         {currentAction === 2 ? (
           <ActionButton
             color={color}
-            onClick={breedWith}
+            onClick={() => router.push(`/breed/${dragon.id}`)}
           >
             <img
               src={`/icons/an-egg.svg`}

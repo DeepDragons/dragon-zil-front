@@ -82,7 +82,6 @@ export const Dragon: NextPage = () => {
           mutate={hanldeMutate}
           fight={() => console.log('fight')}
           breed={() => console.log('breed')}
-          breedWith={() => console.log('breed-with')}
           suicide={() => console.log('suicide')}
         />
       ) : null}
