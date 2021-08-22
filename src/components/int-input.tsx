@@ -6,7 +6,12 @@ import { Colors } from 'config/colors';
 type Prop = {
   value: number;
   max?: number;
+  bg?: string | Colors;
   onInput: (value: number) => void
+}
+
+type WrapperProp = {
+  color: Colors | string;
 }
 
 const Container = styled.div`
@@ -20,7 +25,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: ${Colors.Darker};
+  background: ${(p: WrapperProp) => p.color};
   border-radius: 16px;
 `;
 const Input = styled.input`
@@ -48,7 +53,8 @@ export const IntInput: React.FC<Prop> = ({
   children,
   value,
   max,
-  onInput
+  onInput,
+  bg = Colors.Darker
 }) => {
   const onInputNumber = React.useCallback((e: React.FormEvent<HTMLInputElement>) => {
     const n = Number(e.currentTarget.value);
@@ -85,7 +91,10 @@ export const IntInput: React.FC<Prop> = ({
       <Text>
         {children}
       </Text>
-      <Wrapper>
+      <Wrapper
+        color={bg}
+        className="int-input"
+      >
         <Incr onClick={decrease}>
           <svg
             width="36"

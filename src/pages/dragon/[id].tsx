@@ -12,6 +12,7 @@ import { ParentsSection } from 'components/dragon/parents';
 import { DragonImage } from 'components/dragon/dragon-image';
 import { Container } from 'components/pages/container';
 import { TransferModal } from 'components/modals/transfer';
+import { SaleModal } from 'components/modals/sale';
 
 import { DragonAPI, DragonObject } from 'lib/api';
 import { getRarity } from 'lib/rarity';
@@ -39,6 +40,7 @@ export const Dragon: NextPage = () => {
   const [dragon, setDragon] = React.useState<DragonObject | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [transfer, setTransfer] = React.useState(false);
+  const [sale, setSale] = React.useState(false);
 
   const rarity = React.useMemo(() => {
     if (!dragon) {
@@ -75,7 +77,7 @@ export const Dragon: NextPage = () => {
           color={rarity.color}
           transfer={() => setTransfer(true)}
           hatchEgg={() => console.log('hatchEgg')}
-          sale={() => console.log('sale')}
+          sale={() => setSale(true)}
           RemoveSale={() => console.log('remove sale')}
           mutate={hanldeMutate}
           fight={() => console.log('fight')}
@@ -120,6 +122,12 @@ export const Dragon: NextPage = () => {
         id={dragon?.id || ''}
         stage={dragon?.stage || 0}
         onClose={() => setTransfer(false)}
+      />
+      <SaleModal
+        show={sale}
+        id={dragon?.id || ''}
+        stage={dragon?.stage || 0}
+        onClose={() => setSale(false)}
       />
     </Container>
   );
