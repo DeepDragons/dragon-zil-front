@@ -3,13 +3,11 @@ import styled from 'styled-components';
 
 import { Modal } from 'components/modal';
 import { Text } from 'components/text';
-import { Input } from 'components/input';
 import { IntInput } from 'components/int-input';
-import { Button } from 'components/button';
 
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
-import { ModalTitle, ButtonsWrapper } from './style';
+import { ModalTitle, ButtonsWrapper, ModalButton } from './style';
 
 const Container = styled.div`
   padding: 24px;
@@ -68,16 +66,15 @@ export const SaleModal: React.FC<Prop> = ({
           Set a price
         </IntInput>
         <ButtonsWrapper>
-          <Button css="min-width: 200px;margin: 8px;padding: 22px;">
+          <ModalButton>
             Sale
-          </Button>
-          <Button
+          </ModalButton>
+          <ModalButton
             color={Colors.Dark}
-            css="min-width: 200px;margin: 8px;padding: 22px;"
             onClick={onClose}
           >
             Cancel
-          </Button>
+          </ModalButton>
         </ButtonsWrapper>
       </Container>
     </Modal>

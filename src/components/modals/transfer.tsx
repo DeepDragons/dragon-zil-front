@@ -8,7 +8,7 @@ import { Button } from 'components/button';
 
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
-import { ModalTitle, ButtonsWrapper } from './style';
+import { ModalTitle, ButtonsWrapper, ModalButton } from './style';
 
 const Container = styled.div`
   padding: 24px;
@@ -60,16 +60,15 @@ export const TransferModal: React.FC<Prop> = ({
           css="text-align: center;"
         />
         <ButtonsWrapper>
-          <Button css="min-width: 200px;margin: 8px;">
+          <ModalButton>
             Transfer
-          </Button>
-          <Button
+          </ModalButton>
+          <ModalButton
             color={Colors.Dark}
-            css="min-width: 200px;margin: 8px;"
             onClick={onClose}
           >
             Cancel
-          </Button>
+          </ModalButton>
         </ButtonsWrapper>
       </Container>
     </Modal>
