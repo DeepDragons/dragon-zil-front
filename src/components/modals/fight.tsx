@@ -19,23 +19,16 @@ const Container = styled.div`
 
 type Prop = {
   show: boolean;
-  stage: number;
   id: string;
   onClose: () => void;
 };
 
-export const SaleModal: React.FC<Prop> = ({
+export const FightsModal: React.FC<Prop> = ({
   show,
-  stage,
   id,
   onClose
 }) => {
-  const [zils, setZils] = React.useState(1000);
-
-  const dragonStage = React.useMemo(
-    () => stage === 0 ? 'eggs' : 'dragons',
-    [stage]
-  );
+  const [zlp, setZLP] = React.useState(500);
 
   return (
     <Modal
@@ -44,7 +37,7 @@ export const SaleModal: React.FC<Prop> = ({
           fontVariant={StyleFonts.FiraSansBold}
           size="32px"
         >
-          To sale #{id}
+          To arena #{id}
         </ModalTitle>
       )}
       show={show}
@@ -56,18 +49,18 @@ export const SaleModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          Earn money on your {dragonStage} by trading them on the market!
+          Test the strength of your dragon by putting it on the arena.
         </Text>
         <IntInput
-          value={zils}
+          value={zlp}
           bg={Colors.Dark}
-          onInput={setZils}
+          onInput={setZLP}
         >
-          Set a price in ZILs
+          Set a bet in ZLP
         </IntInput>
         <ButtonsWrapper>
-          <ModalButton>
-            Sale
+          <ModalButton color={Colors.Danger}>
+            Start fight
           </ModalButton>
           <ModalButton
             color={Colors.Dark}
