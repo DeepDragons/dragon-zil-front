@@ -89,8 +89,10 @@ export const Dragon: NextPage = () => {
           >
             Start breeding
           </ChoiceWith>
-          {rarityMyDragon && rarityLover ? (
+          {myDragon && rarityMyDragon && rarityLover ? (
             <BreadGensForm
+              loverId={dragon.id}
+              myDragonId={myDragon.id}
               myDragon={rarityMyDragon}
               lover={rarityLover}
             />

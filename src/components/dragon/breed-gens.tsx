@@ -11,13 +11,14 @@ import { Colors } from 'config/colors';
 import { radar } from 'lib/radar';
 import { genParse } from 'lib/gen-parse';
 
-import { Container } from './styles';
+import { Container, Seporate } from './styles';
 import { chunkArray } from '@/lib/chunks';
 
 const GensContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-direction: column;
 `;
 const Row = styled.div`
   display: flex;
@@ -32,30 +33,10 @@ const GenNameContainer = styled.div`
 `;
 const GensWrapper = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
-  margin-top: 16px;
-  width: 300px;
-
-  @media (max-width: 500px) {
-    width: 250px;
-  }
 `;
-const Gens = styled.div`
-  width: 100%;
+const Columns = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 330px;
-`;
-const NumberOfGen = styled.a`
-  cursor: pointer;
-  background: ${Colors.Darker};
-  border-radius: 7px;
-  padding-left: 10px;
-  padding-right: 10px;
-  user-select: none;
+  flex-direction: column;
 `;
 
 type ARarity = {
@@ -68,11 +49,15 @@ type ARarity = {
 }
 
 type Prop = {
+  loverId: string;
+  myDragonId: string;
   lover: ARarity;
   myDragon: ARarity;
 };
 
 export const BreadGensForm: React.FC<Prop> = ({
+  loverId,
+  myDragonId,
   lover,
   myDragon
 }) => {
@@ -87,16 +72,35 @@ export const BreadGensForm: React.FC<Prop> = ({
       <Row>
         <GenNameContainer>
           <Text fontColors={lover.color}>
-            Lover #918
+            #{loverId}
           </Text>
         </GenNameContainer>
         <GenNameContainer>
           <Text fontColors={myDragon.color}>
-            You dragon #25
+            #{myDragonId}
           </Text>
         </GenNameContainer>
       </Row>
       <GensWrapper>
+        <Columns>
+          {lover.gensImage.map((g) => (
+            <LinePercent
+              max={g.max}
+              value={Number(g.value)}
+              color={lover.color}
+            />
+          ))}
+        </Columns>
+        <Seporate />
+        <Columns>
+          {myDragon.gensImage.map((g) => (
+            <LinePercent
+              max={g.max}
+              value={Number(g.value)}
+              color={myDragon.color}
+            />
+          ))}
+        </Columns>
       </GensWrapper>
       </GensContainer>
     </Container>
