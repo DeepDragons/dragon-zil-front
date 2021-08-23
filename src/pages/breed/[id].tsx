@@ -84,7 +84,7 @@ export const Dragon: NextPage = () => {
           <ChoiceWith
             dragon={dragon}
             myDragon={myDragon}
-            color={Colors.Primary}
+            color={Colors.Muted}
             setDragon={setMyDragon}
           >
             Start breeding
