@@ -6,6 +6,7 @@ import { RarityImage } from 'components/rarity-image';
 import { SelectPalce } from 'components/select-palce';
 import { Text } from 'components/text';
 import { Button } from 'components/button';
+import { DragonsSelectModal } from 'components/modals/dragons-select';
 
 import { Colors } from 'config/colors';
 import { Container } from './styles';
@@ -40,15 +41,14 @@ const DragonImageWrapper = styled.div`
 type Prop = {
   dragon: DragonObject;
   color: Colors | string;
-  onSelect: (id: string) => void;
 };
 
 export const ChoiceWith: React.FC<Prop> = ({
   dragon,
   color,
-  onSelect,
   children
 }) => {
+  const [isShow, setIsShow] = React.useState(false);
   const [myDragon, setMyDragon] = React.useState<DragonObject | null>(null);
 
   return (
@@ -86,7 +86,7 @@ export const ChoiceWith: React.FC<Prop> = ({
             />
           ) : (
             <SelectPalce
-              onClick={() => onSelect('1894')}
+              onClick={() => setIsShow(true)}
               color={color}
             />
           )}
@@ -100,6 +100,11 @@ export const ChoiceWith: React.FC<Prop> = ({
           {children}
         </Button>
       ) : null}
+      <DragonsSelectModal
+        show={isShow}
+        onSelect={setMyDragon}
+        onClose={() => setIsShow(false)}
+      />
     </MainContainer>
   );
 };

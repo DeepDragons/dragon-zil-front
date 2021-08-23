@@ -1,4 +1,4 @@
-export const ACTINO = [
+export const ACTION = [
   '',
   'Battle',
   'Breed',

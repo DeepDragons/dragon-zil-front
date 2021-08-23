@@ -27,12 +27,11 @@ const Container = styled.div`
       padding: 0;
       z-index: 100;
       border-radius: 16px;
-      box-shadow: 0 0 8px rgba(black, .3);
+      box-shadow: 0 0 8px ${Colors.Black};
       animation: dialog-scale-start .3s ease-in-out forwards;
     }
   }
 `;
-const ModalContent = styled.div``;
 
 type Prop = {
   title?: React.ReactNode;
@@ -62,9 +61,9 @@ export const Modal: React.FC<Prop> = ({
     >
       <div className="modal-md">
         {title}
-        <ModalContent>
+        <div>
           {children}
-        </ModalContent>
+        </div>
       </div>
     </Container>
   );

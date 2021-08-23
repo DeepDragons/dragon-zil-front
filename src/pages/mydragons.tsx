@@ -21,7 +21,7 @@ import { Button } from '@/components/button';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
 import { RARITY } from '@/lib/rarity';
-import { ACTINO } from 'config/action';
+import { getAction } from '@/lib/get-action';
 
 const backend = new DragonAPI();
 const limit = 9;
@@ -46,13 +46,7 @@ export const MyDragons: NextPage = () => {
 
     maxPage = result.pagination.pages;
 
-    contctDragons(result.list.map((el) => ({
-      action: el.actions.length > 0 ? Number(el.actions[0][0]) : 0,
-      rarity: el.rarity,
-      url: el.url,
-      id: String(el.id),
-      stage: el.stage
-    })));
+    contctDragons(result.list);
 
     page += 1;
 	};
@@ -126,7 +120,7 @@ export const MyDragons: NextPage = () => {
                         fontColors={RARITY[dragon.rarity].color}
                         size="16px"
                       >
-                        #{dragon.id}, {RARITY[dragon.rarity].name} {ACTINO[dragon.action] ? `, ${ACTINO[dragon.action]}` : ''}
+                        #{dragon.id}, {RARITY[dragon.rarity].name} {getAction(dragon.actions)}
                       </Text>
                     </CardContainer>
                   </Card>

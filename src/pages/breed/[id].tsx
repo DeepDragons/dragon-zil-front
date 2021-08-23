@@ -28,7 +28,6 @@ const Wrapper = styled.div`
   }
 `;
 const backend = new DragonAPI();
-
 export const Dragon: NextPage = () => {
   const router = useRouter();
 
@@ -77,7 +76,6 @@ export const Dragon: NextPage = () => {
           <ChoiceWith
             dragon={dragon}
             color={Colors.Primary}
-            onSelect={() => null}
           >
             Start breeding
           </ChoiceWith>
