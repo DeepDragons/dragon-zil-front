@@ -24,6 +24,7 @@ import { RARITY } from 'lib/rarity';
 import { DragonAPI } from '@/lib/api';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
+import { useScrollEvent } from '@/mixin/scroll';
 
 const CardContainer = styled.div`
   width: 100%;
@@ -57,7 +58,16 @@ export const TradePage: NextPage = () => {
     page += 1;
 	};
 
-  const handleScroll = async () => {
+  React.useEffect(() => {
+    setSkelet(true);
+    resetMarketDragons();
+    page = 0;
+    fetchData()
+      .then(() => setSkelet(false))
+      .catch(() => setSkelet(false));
+  }, [address]);
+
+  useScrollEvent(async () => {
     const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop);
     const second = document.documentElement.offsetHeight;
 
@@ -74,24 +84,7 @@ export const TradePage: NextPage = () => {
     }
 
     setLoading(false);
-  }
-
-  React.useEffect(() => {
-    setSkelet(true);
-    resetMarketDragons();
-    page = 0;
-    fetchData()
-      .then(() => setSkelet(false))
-      .catch(() => setSkelet(false));
-  }, [address]);
-
-  React.useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', () => null);
-    }
-  }, []);
+  });
 
   return (
     <Container>

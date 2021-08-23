@@ -22,6 +22,7 @@ import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
 import { RARITY } from '@/lib/rarity';
 import { getAction } from '@/lib/get-action';
+import { useScrollEvent } from 'mixin/scroll';
 
 const backend = new DragonAPI();
 const limit = 9;
@@ -51,7 +52,19 @@ export const MyDragons: NextPage = () => {
     page += 1;
 	};
 
-  const handleScroll = async () => {
+  React.useEffect(() => {
+    setSkelet(true);
+    resetDragons();
+    page = 0;
+    fetchData()
+      .then(() => setSkelet(false))
+      .catch((err) => {
+        setErrorCode(err.message);
+        setSkelet(false);
+      });
+  }, [address]);
+
+  useScrollEvent(async () => {
     const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop);
     const second = document.documentElement.offsetHeight;
 
@@ -68,27 +81,7 @@ export const MyDragons: NextPage = () => {
     }
 
     setLoading(false);
-  }
-
-  React.useEffect(() => {
-    setSkelet(true);
-    resetDragons();
-    page = 0;
-    fetchData()
-      .then(() => setSkelet(false))
-      .catch((err) => {
-        setErrorCode(err.message);
-        setSkelet(false);
-      });
-  }, [address]);
-
-  React.useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', () => null);
-    }
-  }, []);
+  });
 
   return (
     <Container>

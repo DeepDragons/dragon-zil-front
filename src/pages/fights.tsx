@@ -23,6 +23,7 @@ import { RARITY } from 'lib/rarity';
 import { DragonAPI } from '@/lib/api';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
+import { useScrollEvent } from '@/mixin/scroll';
 
 const limit = 9;
 let page = 0;
@@ -51,7 +52,16 @@ export const FightPage: NextPage = () => {
     page += 1;
 	};
 
-  const handleScroll = async () => {
+  React.useEffect(() => {
+    setSkelet(true);
+    resetMarketDragons();
+    page = 0;
+    fetchData()
+      .then(() => setSkelet(false))
+      .catch(() => setSkelet(false));
+  }, [address]);
+
+  useScrollEvent(async () => {
     const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop);
     const second = document.documentElement.offsetHeight;
 
@@ -68,24 +78,7 @@ export const FightPage: NextPage = () => {
     }
 
     setLoading(false);
-  }
-
-  React.useEffect(() => {
-    setSkelet(true);
-    resetMarketDragons();
-    page = 0;
-    fetchData()
-      .then(() => setSkelet(false))
-      .catch(() => setSkelet(false));
-  }, [address]);
-
-  React.useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', () => null);
-    }
-  }, []);
+  });
 
   return (
     <Container>

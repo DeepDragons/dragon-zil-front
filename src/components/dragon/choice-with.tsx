@@ -40,16 +40,19 @@ const DragonImageWrapper = styled.div`
 
 type Prop = {
   dragon: DragonObject;
+  myDragon: null | DragonObject;
   color: Colors | string;
+  setDragon: (dragon: DragonObject) => void;
 };
 
 export const ChoiceWith: React.FC<Prop> = ({
   dragon,
   color,
+  myDragon,
+  setDragon,
   children
 }) => {
   const [isShow, setIsShow] = React.useState(false);
-  const [myDragon, setMyDragon] = React.useState<DragonObject | null>(null);
 
   return (
     <MainContainer color={color}>
@@ -83,6 +86,7 @@ export const ChoiceWith: React.FC<Prop> = ({
               id={myDragon.id}
               url={myDragon.url}
               rarity={myDragon.rarity}
+              onClick={() => setIsShow(true)}
             />
           ) : (
             <SelectPalce
@@ -102,7 +106,7 @@ export const ChoiceWith: React.FC<Prop> = ({
       ) : null}
       <DragonsSelectModal
         show={isShow}
-        onSelect={setMyDragon}
+        onSelect={setDragon}
         onClose={() => setIsShow(false)}
       />
     </MainContainer>

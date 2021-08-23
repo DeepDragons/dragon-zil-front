@@ -32,6 +32,7 @@ export const Dragon: NextPage = () => {
   const router = useRouter();
 
   const [dragon, setDragon] = React.useState<DragonObject | null>(null);
+  const [myDragon, setMyDragon] = React.useState<DragonObject | null>(null);
   const [loading, setLoading] = React.useState(false);
 
   const rarity = React.useMemo(() => {
@@ -75,7 +76,9 @@ export const Dragon: NextPage = () => {
         <Wrapper>
           <ChoiceWith
             dragon={dragon}
+            myDragon={myDragon}
             color={Colors.Primary}
+            setDragon={setMyDragon}
           >
             Start breeding
           </ChoiceWith>

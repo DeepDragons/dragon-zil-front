@@ -83,6 +83,7 @@ export const DragonsSelectModal: React.FC<Prop> = ({
 }) => {
   const address = useStore($wallet);
   const dragons = useStore($myDragons);
+  const node = React.useRef<HTMLDivElement | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [skelet, setSkelet] = React.useState(true);
   const [onlyDragons, setOnlyDragons] = React.useState<DragonObject[]>($myDragons.getState());
@@ -138,6 +139,12 @@ export const DragonsSelectModal: React.FC<Prop> = ({
     onSelect(dragon);
   }, []);
 
+  const onToggle = React.useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (e.target == node.current) {
+      onClose();
+    }
+  }, [node]);
+
   React.useEffect(() => {
     if (dragons.length === 0 && show) {
       setSkelet(true);
@@ -151,7 +158,11 @@ export const DragonsSelectModal: React.FC<Prop> = ({
   }, [address, show]);
 
   return (
-    <Container className={show ? 'show-dialog' : ''} >
+    <Container
+      ref={(n) => node.current = n}
+      className={show ? 'show-dialog' : ''}
+      onClick={onToggle}
+    >
       <div className="modal-content">
         <FilterBar
           title="Select a dragon"

@@ -26,7 +26,7 @@ const Container = styled.div`
   z-index: 20;
   padding: 5px 46px;
 
-  min-width: 60px;
+  min-width: 151px;
 
   user-select: none;
   text-align: center;
