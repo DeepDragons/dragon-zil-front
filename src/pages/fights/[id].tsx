@@ -10,10 +10,10 @@ import { ChoiceWith } from 'components/dragon/choice-with';
 import { CompareCombatGens } from 'components/dragon/compare-combat-gens'; 
 
 import { DragonAPI, DragonObject } from 'lib/api';
-import { getRarity } from 'lib/rarity';
 import { $dragonCache } from 'store/cache-dragon';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
+import { getPrice } from 'lib/get-price';
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,26 +29,27 @@ const Wrapper = styled.div`
     justify-content: center;
   }
 `;
+const PageTitle = styled(Text)`
+  margin: 0;
+  text-align: left;
+  width: 100%;
+  max-width: 1224px;
+
+  span {
+    color: ${Colors.Info};
+  }
+`;
 const backend = new DragonAPI();
 export const FightStart: NextPage = () => {
   const router = useRouter();
 
-  const [dragon, setDragon] = React.useState<DragonObject | null>(null);
-  const [myDragon, setMyDragon] = React.useState<DragonObject | null>(null);
+  const [defended, setDefended] = React.useState<DragonObject | null>(null);
+  const [attacked, setAttacked] = React.useState<DragonObject | null>(null);
   const [loading, setLoading] = React.useState(false);
 
-  const rarityLover = React.useMemo(() => {
-    if (!dragon) {
-      return null;
-    }
-    return getRarity(dragon.rarity, dragon.gen_image);
-  }, [dragon]);
-  const rarityMyDragon = React.useMemo(() => {
-    if (!myDragon) {
-      return null;
-    }
-    return getRarity(myDragon.rarity, myDragon.gen_image);
-  }, [myDragon]);
+  const amount = React.useMemo(() => {
+    return getPrice(defended?.actions);
+  }, [defended]);
 
   React.useEffect(() => {
     const cache = $dragonCache.getState();
@@ -57,14 +58,14 @@ export const FightStart: NextPage = () => {
       backend
         .getDragon(String(router.query.id))
         .then((dragon) => {
-          setDragon(dragon);
+          setDefended(dragon);
           setLoading(false);
         })
         .catch(() => setLoading(false));
     }
 
     if (cache) {
-      setDragon(cache);
+      setDefended(cache);
     }
   }, [router.query.id]);
 
@@ -72,30 +73,35 @@ export const FightStart: NextPage = () => {
     <Container>
       <Navbar />
       <Wrapper>
-        <Text
+        <PageTitle
           fontVariant={StyleFonts.FiraSansBold}
           size="56px"
-          css="margin: 0;text-align: left;width: 100%;max-width: 1224px;"
         >
-          Bread with #{router.query.id}
-        </Text>
+          Battle with #{router.query.id}
+        </PageTitle>
+        <PageTitle
+          fontVariant={StyleFonts.FiraSansMedium}
+          size="21px"
+        >
+          Price <span>{Number(amount) / 10**18} $ZLP</span>
+        </PageTitle>
       </Wrapper>
-      {dragon && rarityLover ? (
+      {defended ? (
         <Wrapper>
           <ChoiceWith
-            dragon={dragon}
-            myDragon={myDragon}
+            dragon={defended}
+            myDragon={attacked}
             color={Colors.Danger}
             btnColor={Colors.Info}
             icon="arena.svg"
-            setDragon={setMyDragon}
+            setDragon={setAttacked}
           >
-            Start breeding
+            Start Battle
           </ChoiceWith>
-          {myDragon && rarityMyDragon && rarityLover ? (
+          {attacked ? (
             <CompareCombatGens
-              loverDragon={dragon}
-              myDragon={myDragon}
+              loverDragon={defended}
+              myDragon={attacked}
               color={Colors.Danger}
             />
           ) : null}
