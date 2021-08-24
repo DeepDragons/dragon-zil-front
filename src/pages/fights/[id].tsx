@@ -8,6 +8,7 @@ import { Container } from 'components/pages/container';
 import { Text } from 'components/text';
 import { ChoiceWith } from 'components/dragon/choice-with';
 import { CompareCombatGens } from 'components/dragon/compare-combat-gens'; 
+import { Wrapper, PageTitle } from 'components/dragon/styles';
 
 import { DragonAPI, DragonObject } from 'lib/api';
 import { $dragonCache } from 'store/cache-dragon';
@@ -15,30 +16,6 @@ import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
 import { getPrice } from 'lib/get-price';
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  max-width: 1400px;
-  justify-content: space-evenly;
-  width: 100%;
-  padding-top: 30px;
-  align-items: end;
-
-  @media (max-width: 947px) {
-    align-items: center;
-    justify-content: center;
-  }
-`;
-const PageTitle = styled(Text)`
-  margin: 0;
-  text-align: left;
-  width: 100%;
-  max-width: 1224px;
-
-  span {
-    color: ${Colors.Info};
-  }
-`;
 const backend = new DragonAPI();
 export const FightStart: NextPage = () => {
   const router = useRouter();

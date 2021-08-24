@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 
 import { Navbar } from 'components/nav-bar';
 import { Container } from 'components/pages/container';
-import { Text } from 'components/text';
 import { ChoiceWith } from 'components/dragon/choice-with';
 import { BreadGensForm } from 'components/dragon/breed-gens';
 import { CompareCombatGens } from 'components/dragon/compare-combat-gens'; 
@@ -15,21 +14,9 @@ import { getRarity } from 'lib/rarity';
 import { $dragonCache } from 'store/cache-dragon';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
+import { Wrapper, PageTitle } from 'components/dragon/styles';
+import { getPrice } from '@/lib/get-price';
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  max-width: 1400px;
-  justify-content: space-evenly;
-  width: 100%;
-  padding-top: 30px;
-  align-items: end;
-
-  @media (max-width: 947px) {
-    align-items: center;
-    justify-content: center;
-  }
-`;
 const Column = styled.div`
   display: flex;
   flex-direction: column;
@@ -54,6 +41,9 @@ export const BreedStart: NextPage = () => {
     }
     return getRarity(myDragon.rarity, myDragon.gen_image);
   }, [myDragon]);
+  const amount = React.useMemo(() => {
+    return getPrice(dragon?.actions);
+  }, [dragon]);
 
   React.useEffect(() => {
     const cache = $dragonCache.getState();
@@ -77,13 +67,18 @@ export const BreedStart: NextPage = () => {
     <Container>
       <Navbar />
       <Wrapper>
-        <Text
+        <PageTitle
           fontVariant={StyleFonts.FiraSansBold}
           size="56px"
-          css="margin: 0;text-align: left;width: 100%;max-width: 1224px;"
         >
           Bread with #{router.query.id}
-        </Text>
+        </PageTitle>
+        <PageTitle
+          fontVariant={StyleFonts.FiraSansMedium}
+          size="21px"
+        >
+          Price <span>{Number(amount) / 10**18} $ZLP</span>
+        </PageTitle>
       </Wrapper>
       {dragon && rarityLover ? (
         <Wrapper>
