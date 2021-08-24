@@ -1,25 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
-
-import { Text } from 'components/text';
-import { AttackIcon } from 'components/icons/attack';
-import { DefenceIcon } from 'components/icons/defence';
-import { LinePercent } from 'components/line-percent';
 import { TitleUpgradeGens } from './upgrade-gens-title';
-
-import { Colors } from 'config/colors';
 import { compareRadar } from 'lib/radar';
-import { genParse } from 'lib/gen-parse';
-
 import { Container } from './styles';
-import { chunkArray } from '@/lib/chunks';
 import { DragonObject } from '@/lib/api';
-
-const GensContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
 
 type Prop = {
   loverDragon: DragonObject;
