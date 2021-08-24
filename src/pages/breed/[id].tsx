@@ -8,6 +8,7 @@ import { Container } from 'components/pages/container';
 import { Text } from 'components/text';
 import { ChoiceWith } from 'components/dragon/choice-with';
 import { BreadGensForm } from 'components/dragon/breed-gens';
+import { CompareCombatGens } from 'components/dragon/compare-combat-gens'; 
 
 import { DragonAPI, DragonObject } from 'lib/api';
 import { getRarity } from 'lib/rarity';
@@ -22,11 +23,16 @@ const Wrapper = styled.div`
   justify-content: space-evenly;
   width: 100%;
   padding-top: 30px;
+  align-items: end;
 
   @media (max-width: 947px) {
     align-items: center;
     justify-content: center;
   }
+`;
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 const backend = new DragonAPI();
 export const Dragon: NextPage = () => {
@@ -74,7 +80,7 @@ export const Dragon: NextPage = () => {
         <Text
           fontVariant={StyleFonts.FiraSansBold}
           size="56px"
-          css="margin: 0;text-align: left;width: 100%;"
+          css="margin: 0;text-align: left;width: 100%;max-width: 1224px;"
         >
           Bread with #{router.query.id}
         </Text>
@@ -90,12 +96,19 @@ export const Dragon: NextPage = () => {
             Start breeding
           </ChoiceWith>
           {myDragon && rarityMyDragon && rarityLover ? (
-            <BreadGensForm
-              loverId={dragon.id}
-              myDragonId={myDragon.id}
-              myDragon={rarityMyDragon}
-              lover={rarityLover}
-            />
+            <Column>
+              <CompareCombatGens
+                loverDragon={dragon}
+                myDragon={myDragon}
+                color={Colors.Muted}
+              />
+              <BreadGensForm
+                loverId={dragon.id}
+                myDragonId={myDragon.id}
+                myDragon={rarityMyDragon}
+                lover={rarityLover}
+              />
+            </Column>
           ) : null}
         </Wrapper>
       ) : null}
