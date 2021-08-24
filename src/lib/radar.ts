@@ -2,7 +2,10 @@ import { Colors } from '@/config/colors';
 import { Chart, registerables } from 'chart.js';
 import { DragonObject } from './api';
 import { genParse } from './gen-parse';
+import { RARITY } from './rarity';
 
+
+let char:  Chart<"radar", number[], string> | null = null;
 export function radar(gens: Array<number[]>, ctx: HTMLCanvasElement) {
   Chart.register(...registerables);
   return new Chart(ctx, {
@@ -50,29 +53,41 @@ export function radar(gens: Array<number[]>, ctx: HTMLCanvasElement) {
 export function compareRadar(first: DragonObject, second: DragonObject, ctx: HTMLCanvasElement) {
   const firstGens = genParse(first.gen_fight).splice(1);
   const secondGens = genParse(second.gen_fight).splice(1);
-
+  const firstColor = RARITY[first.rarity].color;
+  const secondColor = first.rarity === second.rarity
+    ? RARITY[second.rarity].color + '50' : RARITY[second.rarity].color;
+  const data = {
+    labels: Array.from({length: 20}, (e, i)=> String(i + 1)),
+    datasets: [{
+      label: `#${first.id}`,
+      data: firstGens,
+      fill: false,
+      backgroundColor: firstColor + '87',
+      borderColor: firstColor,
+      pointBackgroundColor: firstColor,
+      pointHoverBorderColor: firstColor
+    }, {
+      label: `#${second.id}`,
+      data: secondGens,
+      fill: false,
+      backgroundColor: secondColor + '70',
+      borderColor: secondColor,
+      pointBackgroundColor: secondColor,
+      pointHoverBorderColor: secondColor
+    }]
+  };
   Chart.register(...registerables);
-  return new Chart(ctx, {
+
+  if (char) {
+    char.data = data;
+    char.update();
+
+    return char;
+  }
+
+  char = new Chart(ctx, {
+    data,
     type: 'radar',
-    data: {
-      labels: Array.from({length: 20}, (e, i)=> String(i + 1)),
-      datasets: [{
-        label: `#${first.id}`,
-        data: firstGens,
-        fill: false,
-        backgroundColor: Colors.Primary + '87',
-        borderColor: Colors.Primary,
-        pointBackgroundColor: Colors.Primary,
-        pointHoverBorderColor: Colors.Primary
-      }, {
-        label: `#${second.id}`,
-        data: secondGens,
-        fill: false,
-        backgroundColor: Colors.Success + '70',
-        borderColor: Colors.Success,
-        pointHoverBorderColor: Colors.Success
-      }]
-    },
     options: {
       elements: {
         line: {
@@ -81,4 +96,6 @@ export function compareRadar(first: DragonObject, second: DragonObject, ctx: HTM
       }
     }
   });
+
+  return char;
 }

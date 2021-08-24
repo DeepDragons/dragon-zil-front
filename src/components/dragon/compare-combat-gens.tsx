@@ -15,8 +15,6 @@ export const CompareCombatGens: React.FC<Prop> = ({
   myDragon,
   color
 }) => {
-  const canvos = React.useRef<HTMLCanvasElement | null>(null);
-
   React.useEffect(() => {
     const ctx = document.querySelector('#combat') as HTMLCanvasElement;
 
@@ -31,7 +29,7 @@ export const CompareCombatGens: React.FC<Prop> = ({
     } catch {
       //
     }
-  }, [loverDragon, myDragon, canvos]);
+  }, [loverDragon, myDragon]);
 
   return (
     <Container color={color}>
@@ -41,7 +39,6 @@ export const CompareCombatGens: React.FC<Prop> = ({
       <div>
         <canvas
           id="combat"
-          ref={(n) => canvos.current = n}
           height="410"
         />
       </div>
