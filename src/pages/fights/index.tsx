@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
+import Link from 'next/link';
 import { useStore } from 'effector-react';
 
 import { Navbar } from 'components/nav-bar';
@@ -95,28 +96,31 @@ export const FightPage: NextPage = () => {
         ) : (
           <>
             {dragons.map((dragon, index) => (
-              <Card
+              <Link
                 key={index}
-                dragon={dragon}
-                onSelect={() => router.push(`/dragon/${dragon.id}`)}
+                href={`/fights/${dragon.id}`}
               >
-                <CardContainer>
-                  <Text
-                    fontVariant={StyleFonts.FiraSansSemiBold}
-                    fontColors={RARITY[dragon.rarity].color}
-                    size="16px"
-                  >
-                    #{dragon.id}
-                  </Text>
-                  <Text
-                    fontVariant={StyleFonts.FiraSansSemiBold}
-                    fontColors={Colors.Blue}
-                    size="18px"
-                  >
-                    {(Number(dragon.actions[0][1]) / 10**18).toLocaleString()} $ZLP
-                  </Text>
-                </CardContainer>
-              </Card>
+                <div>
+                  <Card dragon={dragon}>
+                    <CardContainer>
+                      <Text
+                        fontVariant={StyleFonts.FiraSansSemiBold}
+                        fontColors={RARITY[dragon.rarity].color}
+                        size="16px"
+                      >
+                        #{dragon.id}
+                      </Text>
+                      <Text
+                        fontVariant={StyleFonts.FiraSansSemiBold}
+                        fontColors={Colors.Blue}
+                        size="18px"
+                      >
+                        {(Number(dragon.actions[0][1]) / 10**18).toLocaleString()} $ZLP
+                      </Text>
+                    </CardContainer>
+                  </Card>
+                </div>
+              </Link>
             ))}
           </>
         )}

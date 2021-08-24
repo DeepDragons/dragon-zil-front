@@ -42,12 +42,16 @@ type Prop = {
   dragon: DragonObject;
   myDragon: null | DragonObject;
   color: Colors | string;
+  btnColor: Colors | string;
+  icon: string;
   setDragon: (dragon: DragonObject) => void;
 };
 
 export const ChoiceWith: React.FC<Prop> = ({
   dragon,
   color,
+  btnColor,
+  icon,
   myDragon,
   setDragon,
   children
@@ -67,19 +71,10 @@ export const ChoiceWith: React.FC<Prop> = ({
             #{dragon.id}
           </Text>
         </DragonImageWrapper>
-        <div>
-          <svg
-            width="53"
-            height="45"
-            viewBox="0 0 53 45"
-            fill="none"
-          >
-            <path
-              d="M20.9975 3.6933C16.1941 -1.2311 8.40608 -1.2311 3.60261 3.6933C-1.20087 8.61771 -1.20087 16.6017 3.60261 21.5261L26.5 45L49.3974 21.5261C54.2009 16.6017 54.2009 8.61771 49.3974 3.6933C44.5939 -1.2311 36.8059 -1.2311 32.0025 3.6933L26.5 9.3343L20.9975 3.6933Z"
-              fill={Colors.Primary}
-            />
-          </svg>
-        </div>
+        <img
+          src={`/icons/${icon}`}
+          alt="action"
+        />
         <DragonImageWrapper>
           {myDragon ? (
             <RarityImage
@@ -100,7 +95,7 @@ export const ChoiceWith: React.FC<Prop> = ({
         </DragonImageWrapper>
       </Row>
       {myDragon ? (
-        <Button>
+        <Button color={btnColor}>
           {children}
         </Button>
       ) : null}

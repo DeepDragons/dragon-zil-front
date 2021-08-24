@@ -7,7 +7,6 @@ import { Navbar } from 'components/nav-bar';
 import { Container } from 'components/pages/container';
 import { Text } from 'components/text';
 import { ChoiceWith } from 'components/dragon/choice-with';
-import { BreadGensForm } from 'components/dragon/breed-gens';
 import { CompareCombatGens } from 'components/dragon/compare-combat-gens'; 
 
 import { DragonAPI, DragonObject } from 'lib/api';
@@ -30,12 +29,8 @@ const Wrapper = styled.div`
     justify-content: center;
   }
 `;
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
 const backend = new DragonAPI();
-export const BreedStart: NextPage = () => {
+export const FightStart: NextPage = () => {
   const router = useRouter();
 
   const [dragon, setDragon] = React.useState<DragonObject | null>(null);
@@ -90,27 +85,19 @@ export const BreedStart: NextPage = () => {
           <ChoiceWith
             dragon={dragon}
             myDragon={myDragon}
-            color={Colors.Muted}
-            btnColor={Colors.Primary}
-            icon="heart.svg"
+            color={Colors.Danger}
+            btnColor={Colors.Info}
+            icon="arena.svg"
             setDragon={setMyDragon}
           >
             Start breeding
           </ChoiceWith>
           {myDragon && rarityMyDragon && rarityLover ? (
-            <Column>
-              <CompareCombatGens
-                loverDragon={dragon}
-                myDragon={myDragon}
-                color={Colors.Muted}
-              />
-              <BreadGensForm
-                loverId={dragon.id}
-                myDragonId={myDragon.id}
-                myDragon={rarityMyDragon}
-                lover={rarityLover}
-              />
-            </Column>
+            <CompareCombatGens
+              loverDragon={dragon}
+              myDragon={myDragon}
+              color={Colors.Danger}
+            />
           ) : null}
         </Wrapper>
       ) : null}
@@ -118,4 +105,4 @@ export const BreedStart: NextPage = () => {
   );
 };
 
-export default BreedStart;
+export default FightStart;
