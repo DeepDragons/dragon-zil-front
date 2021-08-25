@@ -27,6 +27,12 @@ export const Button = styled.button`
   background: ${(props: Prop) => props.color};
   border-radius: 10px;
   user-select: none;
+
+  :disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
   ${(props: Prop) => props.css}
 `;
 

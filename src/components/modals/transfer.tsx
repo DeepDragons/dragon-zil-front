@@ -1,14 +1,15 @@
 import React from 'react';
+import Loader from "react-loader-spinner";
 import styled from 'styled-components';
 
 import { Modal } from 'components/modal';
 import { Text } from 'components/text';
 import { Input } from 'components/input';
-import { Button } from 'components/button';
+import { ModalTitle, ButtonsWrapper, ModalButton } from './style';
 
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
-import { ModalTitle, ButtonsWrapper, ModalButton } from './style';
+import { DragonZIL } from 'mixin/dragon-zil';
 
 const Container = styled.div`
   padding: 24px;
@@ -21,16 +22,36 @@ type Prop = {
   onClose: () => void;
 };
 
+const dragonZIL = new DragonZIL();
 export const TransferModal: React.FC<Prop> = ({
   show,
   stage,
   id,
   onClose
 }) => {
+  const [bech32, setBech32] = React.useState('');
+  const [error, setError] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
   const dragonStage = React.useMemo(
     () => stage === 0 ? 'egg' : 'dragon',
     [stage]
   );
+
+  const hanldeInputAddress = React.useCallback((event: React.FormEvent<HTMLInputElement>) => {
+    setError('');
+    setBech32(event.currentTarget.value);
+  }, []);
+
+  const hanldeTransfer = React.useCallback(async() => {
+    setLoading(true);
+    try {
+      await dragonZIL.transfer(bech32, id);
+      onClose();
+    } catch (err) {
+      setError((err as Error).message);
+    }
+    setLoading(false);
+  }, [bech32, id]);
 
   return (
     <Modal
@@ -54,14 +75,25 @@ export const TransferModal: React.FC<Prop> = ({
           You can transfer your {dragonStage} to your friends.
         </Text>
         <Input
-          fontColors={Colors.LightBlue}
+          fontColors={error ? Colors.Danger : Colors.LightBlue}
           placeholder="zil1wl38cwww2u3g8wzgutxlxtxwwc0rf7jf27zace"
           border="2"
           css="text-align: center;"
+          onInput={hanldeInputAddress}
         />
         <ButtonsWrapper>
-          <ModalButton>
-            Transfer
+          <ModalButton
+            disabled={Boolean(loading || !bech32 || error)}
+            onClick={hanldeTransfer}
+          >
+            {loading ? (
+                <Loader
+                  type="ThreeDots"
+                  color={Colors.White}
+                  height={10}
+                  width={40}
+                />
+              ) : 'Transfer'}
           </ModalButton>
           <ModalButton
             color={Colors.Dark}
