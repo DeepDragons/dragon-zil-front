@@ -43,7 +43,7 @@ export const SaleModal: React.FC<Prop> = ({
 
   const buttonName = React.useMemo(
     () => approved ? 'Sale' : 'Approve',
-    [approved]
+    [approved, id]
   );
 
   const hanldeUpdateApprovals = React.useCallback(async() => {

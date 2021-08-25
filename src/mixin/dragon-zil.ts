@@ -58,14 +58,14 @@ export class DragonZIL {
   }
 
   public async getTokenApprovals(tokenId: string, contract: Contracts) {
-      const field = 'token_approvals'
-      const result = await this.zilpay.getSubState(
-        Contracts.Main,
-        field,
-        [tokenId]
-      );
+    const field = 'token_approvals';
+    const result = await this.zilpay.getSubState(
+      Contracts.Main,
+      field,
+      [tokenId]
+    );
 
-      return result === contract;
+    return result === contract;
   }
 
   public async hatchEgg(tokenId: string) {

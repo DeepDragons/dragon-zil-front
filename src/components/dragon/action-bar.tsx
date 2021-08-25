@@ -27,7 +27,7 @@ const Container = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
 
-  max-width: 1024px;
+  max-width: 1224px;
   width: 100%;
 `;
 const ActionsRow = styled.div`
