@@ -32,4 +32,39 @@ export class DragonZIL {
 
     return String(res.ID);
   }
+
+  public async setApprove(tokenId: string, to: Contracts) {
+    const params = [
+      {
+        vname: 'to',
+        type: 'ByStr20',
+        value: to
+      },
+      {
+        vname: 'token_id',
+        type: 'Uint256',
+        value: tokenId
+      }
+    ];
+    const transition = 'SetApprove';
+    const res = await this.zilpay.call({
+      transition,
+      params,
+      amount: '0',
+      contractAddress: Contracts.Main
+    });
+
+    return String(res.ID);
+  }
+
+  public async getTokenApprovals(tokenId: string, contract: Contracts) {
+      const field = 'token_approvals'
+      const result = await this.zilpay.getSubState(
+        Contracts.Main,
+        field,
+        [tokenId]
+      );
+
+      return result === contract;
+  }
 }

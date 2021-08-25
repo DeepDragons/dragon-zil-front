@@ -85,11 +85,17 @@ export const BuyPage: NextPage = () => {
   }, [crowdSaleStore, selected]);
 
   const handleBuyEggs = React.useCallback(async() => {
-    if (selected === 0) {
-      await crowdSale.buyForZIL(eggs);
-    } else {
-      await crowdSale.buyForZLP(eggs);
+    setLoading(true);
+    try {
+      if (selected === 0) {
+        await crowdSale.buyForZIL(eggs);
+      } else {
+        await crowdSale.buyForZLP(eggs);
+      }
+    } catch {
+      ///
     }
+    setLoading(false);
   }, [eggs, selected]);
 
   React.useEffect(() => {
