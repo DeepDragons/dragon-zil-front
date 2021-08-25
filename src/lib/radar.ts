@@ -24,6 +24,13 @@ export function radar(gens: Array<number[]>, ctx: HTMLCanvasElement) {
         '10'
       ],
       datasets: [{
+        label: 'Defence',
+        data: gens[0],
+        fill: false,
+        backgroundColor: Colors.Success + '70',
+        borderColor: Colors.Success,
+        pointHoverBorderColor: Colors.Success
+      }, {
         label: 'Attack',
         data: gens[1],
         fill: false,
@@ -31,13 +38,6 @@ export function radar(gens: Array<number[]>, ctx: HTMLCanvasElement) {
         borderColor: '#E8313E',
         pointBackgroundColor: '#E8313E',
         pointHoverBorderColor: '#E8313E'
-      }, {
-        label: 'Defence',
-        data: gens[0],
-        fill: false,
-        backgroundColor: Colors.Success + '70',
-        borderColor: Colors.Success,
-        pointHoverBorderColor: Colors.Success
       }]
     },
     options: {

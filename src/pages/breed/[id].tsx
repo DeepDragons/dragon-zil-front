@@ -85,7 +85,7 @@ export const BreedStart: NextPage = () => {
           <ChoiceWith
             dragon={dragon}
             myDragon={myDragon}
-            color={Colors.Muted}
+            color={Colors.Primary}
             btnColor={Colors.Primary}
             icon="heart.svg"
             setDragon={setMyDragon}
