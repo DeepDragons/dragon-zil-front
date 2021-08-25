@@ -7,6 +7,8 @@ import { Text } from 'components/text';
 
 import { StyleFonts } from 'config/fonts';
 import { Colors } from 'config/colors';
+import { viewAddress } from 'lib/viewblock';
+import { Contracts } from 'config/contracts';
 
 const Container = styled.div`
   display: flex;
@@ -31,8 +33,14 @@ const Li = styled.li`
   font-family: ${StyleFonts.FiraSansRegular};
 
   margin-left: 5px;
+
+  :hover {
+    color: ${Colors.White};
+  }
 `;
 
+const keys = Object.keys(Contracts);
+const values = Object.values(Contracts);
 export const Footer: React.FC = () => {
   return (
     <Container>
@@ -64,30 +72,17 @@ export const Footer: React.FC = () => {
           Contracts
         </Text>
         <ul>
-          <Li>
-            CrowdSale
-          </Li>
-          <Li>
-            Fight
-          </Li>
-          <Li>
-            NFT market
-          </Li>
-          <Li>
-            DragonZIL
-          </Li>
-          <Li>
-            GenLab
-          </Li>
-          <Li>
-            StoreZLP
-          </Li>
-          <Li>
-            ZLP
-          </Li>
-          <Li>
-            Breed place
-          </Li>
+          {keys.map((keyName, index) => (
+            <a
+              key={keyName}
+              href={viewAddress(values[index])}
+              target="_blank"
+            >
+              <Li>
+                {keyName}
+              </Li>
+            </a>
+          ))}
         </ul>
       </Wrapper>
       <Wrapper>

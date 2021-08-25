@@ -12,8 +12,9 @@ type Prop = {
   css?: string;
 };
 
-export const Button = styled.div`
+export const Button = styled.button`
   cursor: pointer;
+  border: 0;
   font-family: ${(props: Prop) => props.fontVariant};
   font-size: ${(props: Prop) => props.size};
   color: ${(props: Prop) => props.fontColors};

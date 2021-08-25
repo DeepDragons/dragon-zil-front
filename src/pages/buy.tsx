@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useStore } from 'effector-react';
 import { NextPage } from 'next';
 
 import { Navbar } from 'components/nav-bar';
+import Loader from "react-loader-spinner";
 import { Text } from 'components/text';
 import { Tab } from 'components/tab';
 import { IntInput } from 'components/int-input';
@@ -10,6 +12,7 @@ import { Button } from 'components/button';
 
 import { Colors } from '@/config/colors';
 import { StyleFonts } from '@/config/fonts';
+import { CrowdSale } from 'mixin/crowd-sale';
 
 const Container = styled.div`
   display: flex;
@@ -50,6 +53,11 @@ const BuyButton = styled(Button)`
   margin: 10px;
   min-width: 235px;
   padding: 16px;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const tokens = [
@@ -61,9 +69,35 @@ const tokens = [
   </Text>
 ];
 
+const crowdSale = new CrowdSale();
 export const BuyPage: NextPage = () => {
+  const crowdSaleStore = useStore(crowdSale.store);
   const [selected, setSelected] = React.useState(0);
   const [eggs, setEggs] = React.useState(1);
+  const [loading, setLoading] = React.useState(true);
+
+  const amount = React.useMemo(() => {
+    if (selected === 0) {
+      return Number(crowdSaleStore.zilPrice) / 10**12;
+    }
+
+    return Number(crowdSaleStore.zlpPrice) / 10**18;
+  }, [crowdSaleStore, selected]);
+
+  const handleBuyEggs = React.useCallback(async() => {
+    if (selected === 0) {
+      await crowdSale.buyForZIL(eggs);
+    } else {
+      await crowdSale.buyForZLP(eggs);
+    }
+  }, [eggs, selected]);
+
+  React.useEffect(() => {
+    setLoading(true);
+    crowdSale
+      .update()
+      .finally(() => setLoading(false))
+  }, []);
 
   return (
     <Container>
@@ -97,8 +131,22 @@ export const BuyPage: NextPage = () => {
             >
               Number of eggs
             </IntInput>
-            <BuyButton>
-              Buy for  {eggs * 10} ${tokens[selected]}
+            <BuyButton
+              disabled={loading}
+              onClick={handleBuyEggs}
+            >
+              {loading ? (
+                <Loader
+                  type="ThreeDots"
+                  color={Colors.White}
+                  height={48}
+                  width={40}
+                />
+              ) : (
+                <div>
+                  Buy for  {Math.round(amount * eggs)} ${tokens[selected]}
+                </div>
+              )}
             </BuyButton>
           </Wrapper>
         </Form>

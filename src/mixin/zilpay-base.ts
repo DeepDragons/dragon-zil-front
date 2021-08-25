@@ -17,6 +17,10 @@ export class ZilPayBase {
 
   constructor() {
     this.zilpay = new Promise((resolve, reject) => {
+      if (!process.browser) {
+        reject('server has no ZIlPay');
+        return null;
+      }
       let k = 0;
       const i = setInterval(() => {
         if (k >= 10) {
@@ -64,6 +68,21 @@ export class ZilPayBase {
     return null;
   }
 
+  async getState(contract: string) {
+    const zilPay = await this.zilpay;
+    const res = await zilPay
+      .blockchain
+      .getSmartContractState(
+        contract
+      );
+
+    if (res.error) {
+      throw new Error(res.error.message);
+    }
+
+    return res.result;
+  }
+
   async getBlockchainInfo() {
     const zilPay = await this.zilpay;
     const { error, result } = await zilPay
@@ -71,7 +90,7 @@ export class ZilPayBase {
       .getBlockChainInfo();
 
     if (error) {
-      throw new Error(error);
+      throw new Error(error.message);
     }
 
     return result;
