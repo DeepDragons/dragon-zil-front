@@ -29,6 +29,10 @@ import { useScrollEvent } from '@/mixin/scroll';
 const CardContainer = styled.div`
   width: 100%;
   text-align: left;
+
+  button {
+    width: 100%;
+  }
 `;
 
 const limit = 9;

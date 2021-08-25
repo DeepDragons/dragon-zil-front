@@ -16,6 +16,7 @@ import { SaleModal } from 'components/modals/sale';
 import { FightsModal } from 'components/modals/fight';
 import { BreedModal } from 'components/modals/breed';
 import { SuicideModal } from 'components/modals/suicide';
+import { HatchEggModal } from 'components/modals/hatch-egg';
 
 import { DragonAPI, DragonObject } from 'lib/api';
 import { getRarity } from 'lib/rarity';
@@ -47,6 +48,7 @@ export const Dragon: NextPage = () => {
   const [arena, setArena] = React.useState(false);
   const [breed, setBreed] = React.useState(false);
   const [suicide, setSuicide] = React.useState(false);
+  const [hatchEgg, setHatchEgg] = React.useState(false);
 
   const rarity = React.useMemo(() => {
     if (!dragon) {
@@ -82,7 +84,7 @@ export const Dragon: NextPage = () => {
           dragon={dragon}
           color={rarity.color}
           transfer={() => setTransfer(true)}
-          hatchEgg={() => console.log('hatchEgg')}
+          hatchEgg={() => setHatchEgg(true)}
           sale={() => setSale(true)}
           RemoveSale={() => console.log('remove sale')}
           mutate={hanldeMutate}
@@ -150,6 +152,13 @@ export const Dragon: NextPage = () => {
         stage={dragon?.stage || 0}
         onClose={() => setSuicide(false)}
       />
+      {dragon?.stage == 0 ? (
+        <HatchEggModal
+          show={hatchEgg}
+          id={dragon?.id || ''}
+          onClose={() => setHatchEgg(false)}
+        />
+      ) : null}
     </Container>
   );
 };

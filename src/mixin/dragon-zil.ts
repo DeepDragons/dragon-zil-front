@@ -67,4 +67,23 @@ export class DragonZIL {
 
       return result === contract;
   }
+
+  public async hatchEgg(tokenId: string) {
+    const params = [
+      {
+        vname: 'token_id',
+        type: 'Uint256',
+        value: tokenId
+      }
+    ];
+    const transition = 'UpStage';
+    const res = await this.zilpay.call({
+      transition,
+      params,
+      amount: '0',
+      contractAddress: Contracts.Main
+    });
+
+    return String(res.ID);
+  }
 }

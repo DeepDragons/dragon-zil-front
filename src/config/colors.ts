@@ -11,5 +11,6 @@ export enum Colors {
   Darker = '#2D3647',
   Success = '#06C190',
   Danger = '#E8313E',
-  Warning = '#ffd700'
+  Warning = '#ffd700',
+  Pink = '#E112CD'
 }
