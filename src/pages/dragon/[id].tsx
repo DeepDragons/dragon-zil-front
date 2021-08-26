@@ -24,6 +24,7 @@ import { getRarity } from 'lib/rarity';
 import { updateCache } from 'store/cache-dragon';
 import { EMPTY } from 'config/emty';
 import { BreedPlace } from 'mixin/breed';
+import { MarketPlace } from 'mixin/market-place';
 import { StyleFonts } from '@/config/fonts';
 
 const Wrapper = styled.div`
@@ -41,6 +42,7 @@ const Wrapper = styled.div`
 `;
 const backend = new DragonAPI();
 const breedPlace = new BreedPlace();
+const marketPlace = new MarketPlace();
 export const Dragon: NextPage = () => {
   const router = useRouter();
 
@@ -90,7 +92,7 @@ export const Dragon: NextPage = () => {
           hatchEgg={() => setHatchEgg(true)}
           sale={() => setSale(true)}
           RemoveBreed={() => breedPlace.cancelBreed(String(router.query.id))}
-          RemoveSale={() => console.log('remove sale')}
+          RemoveSale={() => marketPlace.cancel(String(router.query.id))}
           mutate={hanldeMutate}
           fight={() => setArena(true)}
           breed={() => setBreed(true)}

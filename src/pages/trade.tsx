@@ -25,11 +25,13 @@ import { StyleFonts } from '@/config/fonts';
 import { CardContainer } from 'components/dragon/styles';
 import { Colors } from '@/config/colors';
 import { useScrollEvent } from '@/mixin/scroll';
+import { MarketPlace } from 'mixin/market-place';
 
 const limit = 9;
 let page = 0;
 let maxPage = 1;
 const backend = new DragonAPI();
+const marketPlace = new MarketPlace();
 export const TradePage: NextPage = () => {
   const router = useRouter();
   const address = useStore($wallet);
@@ -125,7 +127,10 @@ export const TradePage: NextPage = () => {
                       Buy
                     </Button>
                   ) : (
-                    <Button color={Colors.Info}>
+                    <Button
+                      color={Colors.Info}
+                      onClick={() => marketPlace.cancel(dragon.id)}
+                    >
                       Get back
                     </Button>
                   )}
