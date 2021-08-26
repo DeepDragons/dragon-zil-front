@@ -86,4 +86,23 @@ export class DragonZIL {
 
     return String(res.ID);
   }
+
+  public async burn(tokenId: string) {
+    const params = [
+      {
+        vname: 'token_id',
+        type: 'Uint256',
+        value: tokenId
+      }
+    ];
+    const transition = 'Burn';
+    const res = await this.zilpay.call({
+      transition,
+      params,
+      amount: '0',
+      contractAddress: Contracts.Main
+    });
+
+    return String(res.ID);
+  }
 }
