@@ -21,6 +21,7 @@ import {
 } from 'store/market';
 import { RARITY } from 'lib/rarity';
 import { DragonAPI } from '@/lib/api';
+import { getMarketOrder } from 'lib/get-action';
 import { StyleFonts } from '@/config/fonts';
 import { CardContainer } from 'components/dragon/styles';
 import { Colors } from '@/config/colors';
@@ -129,7 +130,7 @@ export const TradePage: NextPage = () => {
                   ) : (
                     <Button
                       color={Colors.Info}
-                      onClick={() => marketPlace.cancel(dragon.id)}
+                      onClick={() => marketPlace.cancel(getMarketOrder(dragon.actions))}
                     >
                       Get back
                     </Button>

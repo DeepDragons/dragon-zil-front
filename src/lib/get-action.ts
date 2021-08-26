@@ -7,3 +7,11 @@ export function getAction(actinos?: Array<string[]>) {
 
   return '';
 }
+
+export function getMarketOrder(actinos?: Array<string[]>) {
+  if (actinos && actinos.length > 1 && actinos[1][1]) {
+    return String(actinos[1][1]);
+  }
+
+  return 'incorect order';
+}
