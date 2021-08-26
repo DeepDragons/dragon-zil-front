@@ -45,7 +45,7 @@ export const ConnectZIlPay: React.FC<Prop> = ({ onModal }) => {
       const zp = await wallet.zilpay;
       const connected = await zp.wallet.connect();
 
-      if (connected) {
+      if (connected && zp.wallet.defaultAccount) {
         updateAddress(zp.wallet.defaultAccount);
       }
     } catch (err) {
