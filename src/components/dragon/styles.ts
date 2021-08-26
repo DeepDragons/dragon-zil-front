@@ -37,6 +37,10 @@ export const Seporate = styled.hr`
 export const CardContainer = styled.div`
   width: 100%;
   text-align: left;
+
+  button {
+    width: 100%;
+  }
 `;
 
 export const Wrapper = styled.div`

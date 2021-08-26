@@ -25,17 +25,27 @@ import { DragonAPI } from '@/lib/api';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
 import { useScrollEvent } from '@/mixin/scroll';
+import { Button } from '@/components/button';
+import { FigthPlace } from 'mixin/fight-place';
 
 const limit = 9;
 let page = 0;
 let maxPage = 1;
 const backend = new DragonAPI();
+const figthPlace = new FigthPlace();
 export const FightPage: NextPage = () => {
   const router = useRouter();
   const address = useStore($wallet);
   const dragons = useStore($marketDragons);
   const [skelet, setSkelet] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
+
+  const handleSelect = React.useCallback((dragon) => {
+    router.push(`/fights/${dragon.id}`);
+  }, []);
+  const handleCancel = React.useCallback(async(dragon) => {
+    await figthPlace.place(dragon.id, 0);
+  }, []);
 
   const fetchData = async () => {
     const addr = $wallet.getState();
@@ -96,31 +106,43 @@ export const FightPage: NextPage = () => {
         ) : (
           <>
             {dragons.map((dragon, index) => (
-              <Link
+              <Card
                 key={index}
-                href={`/fights/${dragon.id}`}
+                dragon={dragon}
+                onSelect={() => handleSelect(dragon)}
               >
-                <div>
-                  <Card dragon={dragon}>
-                    <CardContainer>
-                      <Text
-                        fontVariant={StyleFonts.FiraSansSemiBold}
-                        fontColors={RARITY[dragon.rarity].color}
-                        size="16px"
-                      >
-                        #{dragon.id}
-                      </Text>
-                      <Text
-                        fontVariant={StyleFonts.FiraSansSemiBold}
-                        fontColors={Colors.Blue}
-                        size="18px"
-                      >
-                        {(Number(dragon.actions[0][1]) / 10**18).toLocaleString()} $ZLP
-                      </Text>
-                    </CardContainer>
-                  </Card>
-                </div>
-              </Link>
+                <CardContainer>
+                  <Text
+                    fontVariant={StyleFonts.FiraSansSemiBold}
+                    fontColors={RARITY[dragon.rarity].color}
+                    size="16px"
+                  >
+                    #{dragon.id}
+                  </Text>
+                  <Text
+                    fontVariant={StyleFonts.FiraSansSemiBold}
+                    fontColors={Colors.Blue}
+                    size="18px"
+                  >
+                    {(Number(dragon.actions[0][1]) / 10**18).toLocaleString()} $ZLP
+                  </Text>
+                  {dragon.owner.toLowerCase() !== String(address?.base16).toLowerCase() ? (
+                    <Button
+                      color={Colors.Dark}
+                      onClick={() => handleSelect(dragon)}
+                    >
+                      Fight
+                    </Button>
+                  ) : (
+                    <Button
+                      color={Colors.Primary}
+                      onClick={() => handleCancel(dragon)}
+                    >
+                      Get back
+                    </Button>
+                  )}
+                </CardContainer>
+              </Card>
             ))}
           </>
         )}

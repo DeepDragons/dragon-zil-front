@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
 import { useStore } from 'effector-react';
@@ -23,17 +22,9 @@ import {
 import { RARITY } from 'lib/rarity';
 import { DragonAPI } from '@/lib/api';
 import { StyleFonts } from '@/config/fonts';
+import { CardContainer } from 'components/dragon/styles';
 import { Colors } from '@/config/colors';
 import { useScrollEvent } from '@/mixin/scroll';
-
-const CardContainer = styled.div`
-  width: 100%;
-  text-align: left;
-
-  button {
-    width: 100%;
-  }
-`;
 
 const limit = 9;
 let page = 0;
