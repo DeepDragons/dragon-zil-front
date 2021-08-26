@@ -11,6 +11,7 @@ import { Navbar } from 'components/nav-bar';
 import { ActionBarTitle } from 'components/dragon/action-bar-title';
 import { UpgradeGens } from 'components/dragon/upgrade-gens';
 import { MobileUpgradeGens } from 'components/mobile/upgrade-gens';
+import { UpgradeGenModal } from 'components/modals/upgrade-gen';
 
 import { EMPTY } from 'config/emty';
 import { $dragonCache } from 'store/cache-dragon';
@@ -46,6 +47,12 @@ export const GenLabPage: NextPage = () => {
   const address = useStore($wallet);
   const [loading, setLoading] = React.useState(false);
   const [dragon, setDragon] = React.useState<DragonObject | null>(null);
+  const [showModal, setShowModal] = React.useState(false);
+  const [genToUpgrade, setGenToUpgrade] = React.useState({
+    gen: 0,
+    value: 0,
+    name: ''
+  });
 
   const rarity = React.useMemo(() => {
     if (!dragon) {
@@ -58,6 +65,15 @@ export const GenLabPage: NextPage = () => {
     if (!dragon) return false; 
     return dragon.owner.toLowerCase() === address?.base16.toLowerCase();
   }, [address, dragon]);
+
+  const handleUpgrade = React.useCallback((gen: number, value: number, name: string) => {
+    setGenToUpgrade({
+      gen,
+      value,
+      name
+    });
+    setShowModal(true);
+  }, []);
 
   React.useEffect(() => {
     const cache = $dragonCache.getState();
@@ -80,11 +96,12 @@ export const GenLabPage: NextPage = () => {
   return (
     <Container>
       <Navbar />
-      {dragon ? (
+      {dragon && rarity ? (
         <TitleWrapper>
           <ActionBarTitle
             dragon={dragon}
             isOwner={isOwner}
+            color={rarity.color}
           />
         </TitleWrapper>
       ) : null}
@@ -99,6 +116,7 @@ export const GenLabPage: NextPage = () => {
             <UpgradeGens
               color={rarity.color}
               gens={dragon.gen_fight}
+              onSelect={handleUpgrade}
             />
           </BrowserView>
           <MobileView>
@@ -109,6 +127,13 @@ export const GenLabPage: NextPage = () => {
           </MobileView>
         </Wrapper>
       ) : null}
+      <UpgradeGenModal
+        gen={genToUpgrade}
+        show={showModal}
+        id={dragon?.id || ''}
+        price={100}
+        onClose={() => setShowModal(false)}
+      />
     </Container>
   );
 }

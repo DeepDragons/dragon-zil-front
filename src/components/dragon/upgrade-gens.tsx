@@ -61,11 +61,13 @@ const NumberOfGen = styled.a`
 type Prop = {
   gens: string;
   color: string;
+  onSelect: (gen: number, value: number, name: string) => void;
 };
 
 export const UpgradeGens: React.FC<Prop> = ({
   gens,
-  color
+  color,
+  onSelect
 }) => {
   const gensArray = React.useMemo(() => {
     const list = genParse(gens).splice(1);
@@ -128,7 +130,7 @@ export const UpgradeGens: React.FC<Prop> = ({
           <GensWrapper>
             {gensArray.map((el, index) => (
               <Gens key={index}>
-                <NumberOfGen>
+                <NumberOfGen onClick={() => onSelect(index, el.def, 'Defence')}>
                   <Text css="margin: 0;">
                     {index + 1}
                   </Text>
@@ -147,7 +149,7 @@ export const UpgradeGens: React.FC<Prop> = ({
                   value={el.atteck}
                   color={Colors.Danger}
                 />
-                <NumberOfGen>
+                <NumberOfGen onClick={() => onSelect(index + 9, el.atteck, 'Attack')}>
                   <Text css="margin: 0;">
                     {index + 1}
                   </Text>
