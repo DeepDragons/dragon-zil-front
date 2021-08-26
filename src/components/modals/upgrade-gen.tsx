@@ -27,7 +27,7 @@ type Prop = {
     value: number;
     name: string;
   };
-  price: number;
+  price: number | string;
   onClose: () => void;
 };
 

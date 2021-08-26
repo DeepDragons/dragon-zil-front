@@ -36,12 +36,14 @@ type Prop = {
   dragon: DragonObject;
   isOwner: boolean;
   color: string | Colors;
+  price?: string | number;
 };
 
 export const ActionBarTitle: React.FC<Prop> = ({
   dragon,
   color,
-  isOwner
+  isOwner,
+  price
 }) => {
   return (
     <TitleWrapper>
@@ -74,6 +76,16 @@ export const ActionBarTitle: React.FC<Prop> = ({
           {RARITY[dragon.rarity].name}
         </Text>
       </InfoText>
+      {price ? (
+        <InfoText
+          fontColors={Colors.Muted}
+          fontVariant={StyleFonts.FiraSansRegular}
+        >
+          Price:&#160;<Text fontColors={color}>
+            {price}
+          </Text>
+        </InfoText>
+      ) : null}
     </TitleWrapper>
   );
 };

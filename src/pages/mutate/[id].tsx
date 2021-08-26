@@ -18,6 +18,8 @@ import { $dragonCache } from 'store/cache-dragon';
 import { DragonAPI, DragonObject } from '@/lib/api';
 import { getRarity } from '@/lib/rarity';
 import { $wallet } from '@/store/wallet';
+import { GenLab } from 'mixin/gen-lab';
+import { ZIlPayToken } from 'mixin/zilpay-token';
 
 const Wrapper = styled.div`
   display: flex;
@@ -42,11 +44,13 @@ const TitleWrapper = styled.div`
 `;
 
 const backend = new DragonAPI();
+const genLab = new GenLab();
 export const GenLabPage: NextPage = () => {
   const router = useRouter();
   const address = useStore($wallet);
   const [loading, setLoading] = React.useState(false);
   const [dragon, setDragon] = React.useState<DragonObject | null>(null);
+  const [price, setPrice] = React.useState<string | null>('0');
   const [showModal, setShowModal] = React.useState(false);
   const [genToUpgrade, setGenToUpgrade] = React.useState({
     gen: 0,
@@ -76,6 +80,10 @@ export const GenLabPage: NextPage = () => {
   }, []);
 
   React.useEffect(() => {
+    genLab
+      .getPrice(String(router.query.id))
+      .then(([price]) => setPrice(price))
+      .catch(console.error);
     const cache = $dragonCache.getState();
 
     if (router.query.id && !cache) {
@@ -93,6 +101,12 @@ export const GenLabPage: NextPage = () => {
     }
   }, [router.query.id]);
 
+  React.useEffect(() => {
+    if (dragon && address &&  dragon.owner.toLowerCase() !== address.base16.toLowerCase()) {
+      router.push(`/dragon/${router.query.id}`);
+    }
+  }, [dragon, address]);
+
   return (
     <Container>
       <Navbar />
@@ -102,6 +116,7 @@ export const GenLabPage: NextPage = () => {
             dragon={dragon}
             isOwner={isOwner}
             color={rarity.color}
+            price={`${price} ZLP`}
           />
         </TitleWrapper>
       ) : null}
@@ -131,7 +146,7 @@ export const GenLabPage: NextPage = () => {
         gen={genToUpgrade}
         show={showModal}
         id={dragon?.id || ''}
-        price={100}
+        price={price ? price : 0}
         onClose={() => setShowModal(false)}
       />
     </Container>
