@@ -51,7 +51,7 @@ export class CrowdSale {
     return String(res.ID);
   }
 
-  public async buyForZLP(numberOf: number, ref = '0x0000000000000000000000000000000000000000'): Promise<string> {
+  public async buyForZLP(numberOf: number): Promise<string> {
     const state = this.store.getState();
     const zilpay = await this.zilpay.zilpay;
     const BN = zilpay.utils.BN;

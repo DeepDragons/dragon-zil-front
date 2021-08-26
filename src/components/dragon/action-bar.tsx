@@ -93,6 +93,7 @@ type Prop = {
   hatchEgg: () => void;
   sale: () => void;
   RemoveSale: () => void;
+  RemoveBreed: () => void;
   mutate: () => void;
   fight: () => void;
   breed: () => void;
@@ -106,6 +107,7 @@ export const ActionBar: React.FC<Prop> = ({
   hatchEgg,
   sale,
   RemoveSale,
+  RemoveBreed,
   mutate,
   fight,
   breed,
@@ -209,7 +211,7 @@ export const ActionBar: React.FC<Prop> = ({
         {currentAction === 2 ? (
           <ActionButton
             color={color}
-            onClick={() => router.push(`/breed/${dragon.id}`)}
+            onClick={RemoveBreed}
           >
             <img
               src={`/icons/an-egg.svg`}
@@ -217,7 +219,7 @@ export const ActionBar: React.FC<Prop> = ({
               height="38"
             />
             <Text size="16px">
-              Breed with
+              Remove from breed.
             </Text>
           </ActionButton>
         ) : null}

@@ -24,11 +24,15 @@ import { DragonAPI } from '@/lib/api';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
 import { updateCache } from 'store/cache-dragon';
+import { useScrollEvent } from 'mixin/scroll';
+import { BreedPlace } from 'mixin/breed';
+import { Button } from '@/components/button';
 
 const limit = 9;
 let page = 0;
 let maxPage = 1;
 const backend = new DragonAPI();
+const breedPlace = new BreedPlace();
 export const BreedPage: NextPage = () => {
   const router = useRouter();
   const address = useStore($wallet);
@@ -52,7 +56,24 @@ export const BreedPage: NextPage = () => {
     page += 1;
 	};
 
-  const handleScroll = async () => {
+  const handleSelect = React.useCallback((dragon) => {
+    updateCache(dragon);
+    router.push(`/breed/${dragon.id}`);
+  }, []);
+  const handleCancel = React.useCallback(async(dragon) => {
+    await breedPlace.cancelBreed(dragon.id);
+  }, []);
+
+  React.useEffect(() => {
+    setSkelet(true);
+    resetMarketDragons();
+    page = 0;
+    fetchData()
+      .then(() => setSkelet(false))
+      .catch(() => setSkelet(false));
+  }, [address]);
+
+  useScrollEvent(async () => {
     const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop);
     const second = document.documentElement.offsetHeight;
 
@@ -69,29 +90,7 @@ export const BreedPage: NextPage = () => {
     }
 
     setLoading(false);
-  }
-
-  const hanldeSelect = React.useCallback((dragon) => {
-    updateCache(dragon);
-    router.push(`/breed/${dragon.id}`);
-  }, []);
-
-  React.useEffect(() => {
-    setSkelet(true);
-    resetMarketDragons();
-    page = 0;
-    fetchData()
-      .then(() => setSkelet(false))
-      .catch(() => setSkelet(false));
-  }, [address]);
-
-  React.useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', () => null);
-    }
-  }, []);
+  });
 
   return (
     <Container>
@@ -112,29 +111,43 @@ export const BreedPage: NextPage = () => {
         ) : (
           <>
             {dragons.map((dragon, index) => (
-              <div
+              <Card
                 key={index}
-                onClick={() => hanldeSelect(dragon)}
+                dragon={dragon}
+                onSelect={() => handleSelect(dragon)}
               >
-                <Card dragon={dragon}>
-                  <CardContainer>
-                    <Text
-                      fontVariant={StyleFonts.FiraSansSemiBold}
-                      fontColors={RARITY[dragon.rarity].color}
-                      size="16px"
+                <CardContainer>
+                  <Text
+                    fontVariant={StyleFonts.FiraSansSemiBold}
+                    fontColors={RARITY[dragon.rarity].color}
+                    size="16px"
+                  >
+                    #{dragon.id}, {RARITY[dragon.rarity].name}
+                  </Text>
+                  <Text
+                    fontVariant={StyleFonts.FiraSansSemiBold}
+                    fontColors={Colors.Blue}
+                    size="18px"
+                  >
+                    {(Number(dragon.actions[0][1]) / 10**18).toLocaleString()} $ZLP
+                  </Text>
+                  {dragon.owner.toLowerCase() !== String(address?.base16).toLowerCase() ? (
+                    <Button
+                      color={Colors.Dark}
+                      onClick={() => handleSelect(dragon)}
                     >
-                      #{dragon.id}, {RARITY[dragon.rarity].name}
-                    </Text>
-                    <Text
-                      fontVariant={StyleFonts.FiraSansSemiBold}
-                      fontColors={Colors.Blue}
-                      size="18px"
+                      Start breed
+                    </Button>
+                  ) : (
+                    <Button
+                      color={Colors.Primary}
+                      onClick={() => handleCancel(dragon)}
                     >
-                      {(Number(dragon.actions[0][1]) / 10**18).toLocaleString()} $ZLP
-                    </Text>
-                  </CardContainer>
-                </Card>
-              </div>
+                      Get back
+                    </Button>
+                  )}
+                </CardContainer>
+              </Card>
             ))}
           </>
         )}

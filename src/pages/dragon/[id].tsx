@@ -22,6 +22,7 @@ import { DragonAPI, DragonObject } from 'lib/api';
 import { getRarity } from 'lib/rarity';
 import { updateCache } from 'store/cache-dragon';
 import { EMPTY } from 'config/emty';
+import { BreedPlace } from 'mixin/breed';
 
 const Wrapper = styled.div`
   display: flex;
@@ -37,7 +38,7 @@ const Wrapper = styled.div`
   }
 `;
 const backend = new DragonAPI();
-
+const breedPlace = new BreedPlace();
 export const Dragon: NextPage = () => {
   const router = useRouter();
 
@@ -86,6 +87,7 @@ export const Dragon: NextPage = () => {
           transfer={() => setTransfer(true)}
           hatchEgg={() => setHatchEgg(true)}
           sale={() => setSale(true)}
+          RemoveBreed={() => breedPlace.cancelBreed(String(router.query.id))}
           RemoveSale={() => console.log('remove sale')}
           mutate={hanldeMutate}
           fight={() => setArena(true)}
