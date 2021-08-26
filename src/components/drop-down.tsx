@@ -42,7 +42,6 @@ const Item = styled.li`
   background: ${Colors.Darker};
   z-index: 20;
   padding: 5px 46px;
-  min-width: 60px;
   text-align: center;
 
   user-select: none;
@@ -99,7 +98,7 @@ export const DropDown: React.FC<Prop> = ({
             last={index === items.length - 1}
             onClick={() => hanldeSelect(index)}
           >
-            <Text>
+            <Text size="17px">
               {el}
             </Text>
           </Item>
