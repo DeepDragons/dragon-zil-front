@@ -70,7 +70,7 @@ export const UpgradeGens: React.FC<Prop> = ({
   onSelect
 }) => {
   const gensArray = React.useMemo(() => {
-    const list = genParse(gens).splice(1);
+    const list = genParse(gens);
     const gensList = [];
 
 
@@ -92,7 +92,7 @@ export const UpgradeGens: React.FC<Prop> = ({
 
     try {
       if (ctx) {
-        const list = genParse(gens).splice(1);
+        const list = genParse(gens);
         const chunk = chunkArray(list, 10);
         radar(chunk, ctx);
       }

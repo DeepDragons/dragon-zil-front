@@ -72,7 +72,7 @@ export const CombatGens: React.FC<Prop> = ({
   const [selected, setSelected] = React.useState(isBrowser ? 1 : 0);
 
   const gensArray = React.useMemo(() => {
-    const list = genParse(gens).splice(1);
+    const list = genParse(gens);
 
     return chunkArray(list, 10);
   }, [gens]);
@@ -141,7 +141,7 @@ export const CombatGens: React.FC<Prop> = ({
           </SeporateContainer>
           <GensWrapper>
             <GensContainer>
-              {gensArray[0].map((gen, index) => (
+              {gensArray[1].map((gen, index) => (
                 <Column
                   key={`deffence-${index}`}
                   color={Colors.Success}
@@ -163,7 +163,7 @@ export const CombatGens: React.FC<Prop> = ({
               ))}
             </GensContainer>
             <GensContainer>
-              {gensArray[1].map((gen, index) => (
+              {gensArray[0].map((gen, index) => (
                 <Column
                   key={`attack-${index}`}
                   color={Colors.Danger}

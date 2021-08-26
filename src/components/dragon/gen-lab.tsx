@@ -54,7 +54,7 @@ export const GenLabUpgrade: React.FC<Prop> = ({
   const [selected, setSelected] = React.useState(0);
 
   const gensArray = React.useMemo(() => {
-    const list = genParse(gens).splice(1);
+    const list = genParse(gens);
 
     return chunkArray(list, 10);
   }, [gens]);

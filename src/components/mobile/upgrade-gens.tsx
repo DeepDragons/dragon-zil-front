@@ -40,7 +40,7 @@ export const MobileUpgradeGens: React.FC<Prop> = ({
   const [gen, setGen] = React.useState(1);
 
   const gensChain = React.useMemo(() => {
-    return genParse(gens).splice(1);
+    return genParse(gens);
   }, [gens]);
 
   React.useEffect(() => {

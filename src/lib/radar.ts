@@ -24,20 +24,20 @@ export function radar(gens: Array<number[]>, ctx: HTMLCanvasElement) {
         '10'
       ],
       datasets: [{
-        label: 'Defence',
-        data: gens[0],
-        fill: false,
-        backgroundColor: Colors.Success + '70',
-        borderColor: Colors.Success,
-        pointHoverBorderColor: Colors.Success
-      }, {
         label: 'Attack',
-        data: gens[1],
+        data: gens[0],
         fill: false,
         backgroundColor: '#e8313e87',
         borderColor: '#E8313E',
         pointBackgroundColor: '#E8313E',
         pointHoverBorderColor: '#E8313E'
+      }, {
+        label: 'Defence',
+        data: gens[1],
+        fill: false,
+        backgroundColor: Colors.Success + '70',
+        borderColor: Colors.Success,
+        pointHoverBorderColor: Colors.Success
       }]
     },
     options: {
@@ -51,8 +51,8 @@ export function radar(gens: Array<number[]>, ctx: HTMLCanvasElement) {
 }
 
 export function compareRadar(first: DragonObject, second: DragonObject, ctx: HTMLCanvasElement) {
-  const firstGens = genParse(first.gen_fight).splice(1);
-  const secondGens = genParse(second.gen_fight).splice(1);
+  const firstGens = genParse(first.gen_fight);
+  const secondGens = genParse(second.gen_fight);
   const firstColor = RARITY[first.rarity].color;
   const secondColor = first.rarity === second.rarity
     ? RARITY[second.rarity].color + '50' : RARITY[second.rarity].color;
