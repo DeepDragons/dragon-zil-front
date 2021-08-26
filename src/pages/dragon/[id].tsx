@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 import { Navbar } from 'components/nav-bar';
+import { Text } from 'components/text';
 import { ActionBar } from 'components/dragon/action-bar';
 import { CombatGens } from 'components/dragon/combat-gens';
 import { BodyParts } from 'components/dragon/body-parts';
@@ -23,6 +24,7 @@ import { getRarity } from 'lib/rarity';
 import { updateCache } from 'store/cache-dragon';
 import { EMPTY } from 'config/emty';
 import { BreedPlace } from 'mixin/breed';
+import { StyleFonts } from '@/config/fonts';
 
 const Wrapper = styled.div`
   display: flex;
@@ -124,6 +126,16 @@ export const Dragon: NextPage = () => {
               />
             ) : null}
           </div>
+        </Wrapper>
+      ) : null}
+      {!dragon && !loading ? (
+        <Wrapper>
+          <Text
+            fontVariant={StyleFonts.FiraSansBold}
+            size="50px"
+          >
+            Not found a dragon #{router.query.id}
+          </Text>
         </Wrapper>
       ) : null}
       <TransferModal
