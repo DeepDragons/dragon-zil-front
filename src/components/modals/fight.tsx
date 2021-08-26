@@ -1,3 +1,4 @@
+import Loader from "react-loader-spinner";
 import React from 'react';
 
 import { Modal } from 'components/modal';
@@ -14,6 +15,7 @@ import {
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
 import { ZIlPayToken } from 'mixin/zilpay-token';
+import { FigthPlace } from 'mixin/fight-place';
 import { Contracts } from '@/config/contracts';
 import { $wallet } from 'store/wallet';
 
@@ -24,28 +26,42 @@ type Prop = {
 };
 
 const zilPayToken = new ZIlPayToken();
+const figthPlace = new FigthPlace();
 export const FightsModal: React.FC<Prop> = ({
   show,
   id,
   onClose
 }) => {
   const address = useStore($wallet);
+  const [loading, setLoading] = React.useState(true);
   const [zlp, setZLP] = React.useState(500);
-  const [allowances, setAllowances] = React.useState('0');
-  const [balance, setBalance] = React.useState('0');
+  const [needApprove, setNeedApprove] = React.useState(true);
+
+  const btnText = React.useMemo(() => {
+    return needApprove ? 'Approve ZLP' : 'Start fight.';
+  }, [needApprove]);
 
   const hanldeUpdate = React.useCallback(async() => {
+    setLoading(true);
     try {
       const allow = await zilPayToken.getAllowances(Contracts.FightPlace);
-      const bl = await zilPayToken.getBalance();
-      
-
-      setBalance(bl);
-      setAllowances(allow);
+      setNeedApprove(await zilPayToken.calcAllowances(zlp, allow));
     } catch {
       ///
     }
-  }, []);
+    setLoading(false);
+  }, [zlp]);
+
+  const hanldeSubmit = React.useCallback(async() => {
+    setLoading(true);
+    if (needApprove) {
+      await zilPayToken.increaseAllowance(Contracts.FightPlace);
+    } else {
+      await figthPlace.place(id, zlp);
+      onClose();
+    }
+    setLoading(false);
+  }, [needApprove, id, zlp]);
 
   React.useEffect(() => {
     if (address) {
@@ -82,8 +98,19 @@ export const FightsModal: React.FC<Prop> = ({
           Set a bet in ZLP
         </IntInput>
         <ButtonsWrapper>
-          <ModalButton color={Colors.Danger}>
-            Start fight
+          <ModalButton
+            color={needApprove ? Colors.Warning : Colors.Info}
+            fontColors={needApprove ? Colors.Dark : Colors.White}
+            onClick={hanldeSubmit}
+          >
+            {loading ? (
+              <Loader
+                type="ThreeDots"
+                color={needApprove ? Colors.Dark : Colors.White}
+                height={10}
+                width={40}
+              />
+            ) : btnText}
           </ModalButton>
           <ModalButton
             color={Colors.Dark}

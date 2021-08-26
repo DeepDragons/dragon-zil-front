@@ -2,8 +2,8 @@ import { ZilPayBase } from 'mixin/zilpay-base';
 import { Contracts } from 'config/contracts';
 
 export class ZIlPayToken {
+  public static decimal = '1000000000000000000';
   public zilpay = new ZilPayBase();
-  public decimal = '1000000000000000000';
 
   public async getBalance() {
     const field = 'balances';
@@ -20,38 +20,37 @@ export class ZIlPayToken {
     return '0';
   }
 
-  public async calcAllowances(value: number, allowances: string) {
+  public async calcAllowances(value: number, allowances: string): Promise<boolean> {
     const zilpay = await this.zilpay.zilpay;
     const BN = zilpay.utils.BN;
-    const decimalBN = new BN(this.decimal);
+    const decimalBN = new BN(ZIlPayToken.decimal);
     const valueBN = new BN(String(value));
     const zlpBN = decimalBN.mul(valueBN);
-    const allowancesBN = new BN(allowances); 
+    const allowancesBN = new BN(allowances);
 
     return allowancesBN.lt(zlpBN);
   }
 
-  public async getAllowances(contract: Contracts) {
-    const field = 'token_approvals';
+  public async getAllowances(contract: Contracts): Promise<string> {
+    const field = 'allowances';
     const zilpay = await this.zilpay.zilpay;
-    const owner = String(zilpay.wallet.defaultAccount?.base16);
+    const owner = String(zilpay.wallet.defaultAccount?.base16).toLowerCase();
+    const address = contract.toLowerCase();
     const result = await this.zilpay.getSubState(
       Contracts.ZIlPay,
       field,
-      [owner, contract.toLowerCase()]
+      [owner, address]
     );
 
-    console.log(result);
-
-    if (result) {
-      return result;
+    if (result && result[owner] && result[owner][address]) {
+      return result[owner][address];
     }
 
     return '0';
   }
 
   public async increaseAllowance(contract: Contracts) {
-    const balance = '0';
+    const balance = await this.getBalance();
     const params = [
       {
         vname: 'spender',
