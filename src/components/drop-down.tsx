@@ -26,8 +26,6 @@ const Container = styled.div`
   z-index: 20;
   padding: 5px 46px;
 
-  min-width: 151px;
-
   user-select: none;
   text-align: center;
 
@@ -67,6 +65,7 @@ export const DropDown: React.FC<Prop> = ({
   selected,
   onSelected
 }) => {
+  const refContainer = React.useRef<HTMLDivElement | null>();
   const [opned, SetOpened] = React.useState(false);
   
   const hanldeSelect = React.useCallback((index: number) => {
@@ -81,13 +80,19 @@ export const DropDown: React.FC<Prop> = ({
       ) : null}
       <Container
         open={opned}
+        ref={(n) => refContainer.current = n}
         onClick={() => SetOpened(true)}
       >
         <Text>
           {items[selected]}
         </Text>
       </Container>
-      <Menu open={opned}>
+      <Menu
+        open={opned}
+        style={{
+          width: refContainer.current?.clientWidth
+        }}
+      >
         {items.map((el, index) => (
           <Item
             key={index}
