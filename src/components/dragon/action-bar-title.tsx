@@ -24,7 +24,6 @@ const InfoText = styled(Text)`
   font-size: 16px;
 
   margin: 0;
-  line-height: 28px;
 `;
 const LinkText = styled(Text)`
   text-indent: 6px;
@@ -72,7 +71,10 @@ export const ActionBarTitle: React.FC<Prop> = ({
         fontColors={Colors.Muted}
         fontVariant={StyleFonts.FiraSansRegular}
       >
-        Rarity:&#160;<Text fontColors={color}>
+        Rarity:&#160;<Text
+          fontColors={color}
+          css="margin: 0;"
+        >
           {RARITY[dragon.rarity].name}
         </Text>
       </InfoText>
@@ -81,7 +83,10 @@ export const ActionBarTitle: React.FC<Prop> = ({
           fontColors={Colors.Muted}
           fontVariant={StyleFonts.FiraSansRegular}
         >
-          Price:&#160;<Text fontColors={color}>
+          Price:&#160;<Text
+            fontColors={color}
+            css="margin: 0;"
+          >
             {price}
           </Text>
         </InfoText>
