@@ -26,6 +26,7 @@ const Column = styled.div`
 type Prop = {
   gens: string;
   color: string;
+  onSelect: (gen: number, value: number, name: string) => void;
 };
 
 const tabElements = [
@@ -34,7 +35,8 @@ const tabElements = [
 ];
 export const MobileUpgradeGens: React.FC<Prop> = ({
   gens,
-  color
+  color,
+  onSelect
 }) => {
   const [selected, setSelected] = React.useState(0);
   const [gen, setGen] = React.useState(1);
@@ -42,6 +44,10 @@ export const MobileUpgradeGens: React.FC<Prop> = ({
   const gensChain = React.useMemo(() => {
     return genParse(gens);
   }, [gens]);
+
+  const genName = React.useMemo(() => {
+    return selected === 0 ? 'Defence' : 'Attack';
+  }, [selected]);
 
   React.useEffect(() => {
     const ctx = document.querySelector('#combat') as HTMLCanvasElement;
@@ -92,6 +98,7 @@ export const MobileUpgradeGens: React.FC<Prop> = ({
         <Button
           color={Colors.Success}
           css="padding: 20px 45px 20px 45px;"
+          onClick={() => onSelect(gen, gensChain[selected === 0 ? gen - 1 : gen + 9], genName)}
         >
           Upgrade for 10 $ZLP
         </Button>

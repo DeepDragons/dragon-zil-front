@@ -138,6 +138,7 @@ export const GenLabPage: NextPage = () => {
             <MobileUpgradeGens
               color={rarity.color}
               gens={dragon.gen_fight}
+              onSelect={handleUpgrade}
             />
           </MobileView>
         </Wrapper>

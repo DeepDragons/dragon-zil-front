@@ -31,7 +31,6 @@ const Container = styled.div`
 `;
 const Logo = styled.div`
   display: flex;
-  margin-left: 40px;
   cursor: pointer;
 
   @media (max-width: 835px) {
