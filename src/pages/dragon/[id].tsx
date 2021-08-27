@@ -26,7 +26,7 @@ import { EMPTY } from 'config/emty';
 import { BreedPlace } from 'mixin/breed';
 import { MarketPlace } from 'mixin/market-place';
 import { StyleFonts } from '@/config/fonts';
-import { getMarketOrder } from 'lib/get-action';
+import { getMarketOrder, getMarketPrice } from 'lib/get-action';
 
 const Wrapper = styled.div`
   display: flex;
@@ -94,6 +94,7 @@ export const Dragon: NextPage = () => {
           sale={() => setSale(true)}
           RemoveBreed={() => breedPlace.cancelBreed(String(router.query.id))}
           RemoveSale={() => marketPlace.cancel(getMarketOrder(dragon.actions))}
+          buy={() => marketPlace.purchase(dragon.id, getMarketPrice(dragon.actions))}
           mutate={hanldeMutate}
           fight={() => setArena(true)}
           breed={() => setBreed(true)}

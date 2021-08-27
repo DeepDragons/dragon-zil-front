@@ -21,7 +21,7 @@ import {
 } from 'store/market';
 import { RARITY } from 'lib/rarity';
 import { DragonAPI } from '@/lib/api';
-import { getMarketOrder } from 'lib/get-action';
+import { getMarketOrder, getMarketPrice } from 'lib/get-action';
 import { StyleFonts } from '@/config/fonts';
 import { CardContainer } from 'components/dragon/styles';
 import { Colors } from '@/config/colors';
@@ -124,7 +124,10 @@ export const TradePage: NextPage = () => {
                     {(Number(dragon.actions[0][1]) / 10**12).toLocaleString()} $ZIL
                   </Text>
                   {dragon.owner.toLowerCase() !== String(address?.base16).toLowerCase() ? (
-                    <Button color={Colors.LightBlue}>
+                    <Button
+                      color={Colors.LightBlue}
+                      onClick={() => marketPlace.purchase(dragon.id, getMarketPrice(dragon.actions))}
+                    >
                       Buy
                     </Button>
                   ) : (

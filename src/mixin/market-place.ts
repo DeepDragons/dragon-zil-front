@@ -53,4 +53,23 @@ export class MarketPlace {
 
     return String(res.ID);
   }
+
+  public async purchase(tokenId: string, amount: string) {
+    const params = [
+      {
+        vname: 'purchase_order_id',
+        type: 'Uint256',
+        value: tokenId
+      }
+    ];
+    const transition = 'Sell';
+    const res = await this.zilpay.call({
+      transition,
+      params,
+      amount,
+      contractAddress: Contracts.MarketPlace
+    });
+
+    return String(res.ID);
+  }
 }

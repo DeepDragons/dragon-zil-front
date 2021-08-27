@@ -15,3 +15,11 @@ export function getMarketOrder(actinos?: Array<string[]>) {
 
   return 'incorect order';
 }
+
+export function getMarketPrice(actinos?: Array<string[]>) {
+  if (actinos && actinos.length > 0 && actinos[0][1]) {
+    return String(actinos[0][1]);
+  }
+
+  return '0';
+}

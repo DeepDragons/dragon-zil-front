@@ -92,6 +92,7 @@ type Prop = {
   transfer: () => void;
   hatchEgg: () => void;
   sale: () => void;
+  buy: () => void;
   RemoveSale: () => void;
   RemoveBreed: () => void;
   mutate: () => void;
@@ -106,6 +107,7 @@ export const ActionBar: React.FC<Prop> = ({
   transfer,
   hatchEgg,
   sale,
+  buy,
   RemoveSale,
   RemoveBreed,
   mutate,
@@ -226,7 +228,7 @@ export const ActionBar: React.FC<Prop> = ({
         {currentAction === 3 ? (
           <ActionButton
             color={color}
-            onClick={RemoveSale}
+            onClick={() => isOwner ? RemoveSale() : buy()}
           >
             <img
               src={`/icons/sale-icon.svg`}
