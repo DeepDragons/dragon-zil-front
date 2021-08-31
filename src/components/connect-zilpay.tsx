@@ -5,9 +5,8 @@ import styled from 'styled-components';
 import { isMobile } from 'react-device-detect';
 
 import Loader from "react-loader-spinner";
-import { ScreenModal } from 'components/screen-modal';
 import { MobileNavigate } from 'components/mobile/navigate';
-import { Text } from 'components/text';
+import { Modal } from 'components/modal';
 
 import { StyleFonts } from 'config/fonts';
 import { Colors } from 'config/colors';
@@ -16,7 +15,6 @@ import { trim } from 'lib/trim';
 import { $wallet, updateAddress } from 'store/wallet';
 import { updateNet } from 'store/wallet-netwrok';
 import { Net } from '@/types/zil-pay';
-import Link from 'next/link';
 
 const ConnectZIlPayButton = styled.button`
   cursor: pointer;
@@ -135,26 +133,29 @@ export const ConnectZIlPay: React.FC = () => {
     );
   }
 
-  if (address) {
-    return (
-      <ConnectZIlPayButton>
-        {trim(address.bech32)}
-      </ConnectZIlPayButton>
-    );
-  }
-
   return (
     <>
-      <ConnectZIlPayButton onClick={handleConnect}>
-        {loading ? (
-          <Loader
-            type="ThreeDots"
-            color="#fff"
-            height={10}
-            width={20}
-          />
-        ) : 'Connect'}
-      </ConnectZIlPayButton>
+      {address ? (
+        <ConnectZIlPayButton onClick={() => setShowModal(true)}>
+          {trim(address.bech32)}
+        </ConnectZIlPayButton>
+      ) : (
+        <ConnectZIlPayButton onClick={handleConnect}>
+          {loading ? (
+            <Loader
+              type="ThreeDots"
+              color="#fff"
+              height={10}
+              width={20}
+            />
+          ) : 'Connect'}
+        </ConnectZIlPayButton>
+      )}
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+      >
+      </Modal>
     </>
   );
 };
