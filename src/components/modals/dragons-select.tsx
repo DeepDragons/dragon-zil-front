@@ -8,12 +8,13 @@ import { Card } from 'components/card';
 import { SkeletCard } from 'components/skelet/card';
 import { FilterBar } from 'components/filter-bar';
 import { CardContainer } from 'components/dragon/styles';
+import { ScreenModal } from 'components/screen-modal';
 
 import { $wallet } from 'store/wallet';
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
 import { DragonObject, DragonAPI } from '@/lib/api';
-import { $myDragons, contctDragons, resetDragons } from 'store/my-dragons';
+import { $myDragons, contctDragons } from 'store/my-dragons';
 import { RARITY } from '@/lib/rarity';
 
 type Prop = {
@@ -22,43 +23,8 @@ type Prop = {
   onClose: () => void;
 };
 
-const Container = styled.div`
-  position: fixed;
-  display: none;
-  overflow: auto;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 50;
-
-  &.show-dialog {
-    display: block;
-    background: rgb(0 0 0 / 59%);
-
-    .modal-content {
-      right: 0;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      position: fixed;
-
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      left: 10%;
-      right: 10%;
-
-      background: ${Colors.Black};
-      z-index: 100;
-
-      @media (max-width: 500px) {
-        left: 0;
-        right: 0;
-      }
-    }
-  }
+const Content = styled.div`
+  background: ${Colors.Black};
 `;
 const Wrapper = styled.div`
   width: 100%;
@@ -83,7 +49,6 @@ export const DragonsSelectModal: React.FC<Prop> = ({
 }) => {
   const address = useStore($wallet);
   const dragons = useStore($myDragons);
-  const node = React.useRef<HTMLDivElement | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [skelet, setSkelet] = React.useState(true);
   const [onlyDragons, setOnlyDragons] = React.useState<DragonObject[]>($myDragons.getState());
@@ -139,12 +104,6 @@ export const DragonsSelectModal: React.FC<Prop> = ({
     onSelect(dragon);
   }, []);
 
-  const onToggle = React.useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (e.target == node.current) {
-      onClose();
-    }
-  }, [node]);
-
   React.useEffect(() => {
     if (dragons.length === 0 && show) {
       setSkelet(true);
@@ -158,12 +117,11 @@ export const DragonsSelectModal: React.FC<Prop> = ({
   }, [address, show]);
 
   return (
-    <Container
-      ref={(n) => node.current = n}
-      className={show ? 'show-dialog' : ''}
-      onClick={onToggle}
+    <ScreenModal
+      onClose={onClose}
+      show={show}
     >
-      <div className="modal-content">
+      <Content className="modal-content">
         <FilterBar
           title="Select a dragon"
           rarity
@@ -207,7 +165,7 @@ export const DragonsSelectModal: React.FC<Prop> = ({
             width={100}
           />
         ) : null}
-      </div>
-    </Container>
+      </Content>
+    </ScreenModal>
   );
 };

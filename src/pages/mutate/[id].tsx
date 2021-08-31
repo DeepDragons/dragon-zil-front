@@ -6,7 +6,6 @@ import { BrowserView, MobileView } from 'react-device-detect';
 import { NextPage } from 'next';
 
 import { Container } from 'components/pages/container';
-import { DragonImage } from 'components/dragon/dragon-image';
 import { Navbar } from 'components/nav-bar';
 import { ActionBarTitle } from 'components/dragon/action-bar-title';
 import { UpgradeGens } from 'components/dragon/upgrade-gens';

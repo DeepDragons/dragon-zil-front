@@ -33,7 +33,7 @@ const Container = styled.div`
 const ModalContainer = styled.div`
   padding: 30px;
 `;
-const Logo = styled.div`
+export const Logo = styled.div`
   display: flex;
   cursor: pointer;
 
@@ -41,10 +41,10 @@ const Logo = styled.div`
     margin: 0;
   }
 `;
-const Ul = styled.ul`
+export const Ul = styled.ul`
   display: flex;
 `;
-const Li = styled.li`
+export const Li = styled.li`
   margin-left: 40px;
   margin-right: 40px;
   color: ${Colors.White};
@@ -66,7 +66,7 @@ const Li = styled.li`
   }
 `;
 
-const links = [
+export const links = [
   {
     path: '/buy',
     name: 'Store',
@@ -94,7 +94,6 @@ export const Navbar: React.FC = () => {
   const address = useStore($wallet);
   const netwrok = useStore($net);
 
-  const [modalShow, setModalShow] = React.useState(false);
   const [zIlPayModal, setZIlPayModal] = React.useState(false);
 
   return (
@@ -126,42 +125,7 @@ export const Navbar: React.FC = () => {
           ))}
         </Ul>
       </BrowserView>
-      <ConnectZIlPay onModal={() => setModalShow(true)}/>
-      <MobileView style={{
-        display: 'contents'
-      }}>
-        <Modal
-          show={modalShow}
-          title={
-            <ModalItem
-              fontVariant={StyleFonts.FiraSansBold}
-              last
-            >
-              {trim(address?.bech32 || '')}
-            </ModalItem>
-          }
-          onClose={() => setModalShow(false)}
-        >
-          <ul>
-            {links.map((link, index) => (
-              <Link
-                key={index}
-                href={link.path}
-              >
-                <ModalItem>
-                  {link.name}
-                </ModalItem>
-              </Link>
-            ))}
-            <ModalItem
-              last
-              onClick={() => setModalShow(false)}
-            >
-              Cancel
-            </ModalItem>
-          </ul>
-        </Modal>
-      </MobileView>
+      <ConnectZIlPay/>
       <Modal
         show={zIlPayModal}
         title={

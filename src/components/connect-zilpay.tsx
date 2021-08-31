@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import { isMobile } from 'react-device-detect';
 
 import Loader from "react-loader-spinner";
+import { ScreenModal } from 'components/screen-modal';
+import { MobileNavigate } from 'components/mobile/navigate';
+import { Text } from 'components/text';
 
 import { StyleFonts } from 'config/fonts';
 import { Colors } from 'config/colors';
@@ -13,8 +16,9 @@ import { trim } from 'lib/trim';
 import { $wallet, updateAddress } from 'store/wallet';
 import { updateNet } from 'store/wallet-netwrok';
 import { Net } from '@/types/zil-pay';
+import Link from 'next/link';
 
-export const ConnectZIlPayButton = styled.button`
+const ConnectZIlPayButton = styled.button`
   cursor: pointer;
   color: ${Colors.White};
   font-family: ${StyleFonts.FiraSansSemiBold};
@@ -32,14 +36,12 @@ export const ConnectZIlPayButton = styled.button`
   }
 `;
 
-type Prop = {
-  onModal: () => void;
-}
 let observer: any = null;
 let observerNet: any = null;
-export const ConnectZIlPay: React.FC<Prop> = ({ onModal }) => {
+export const ConnectZIlPay: React.FC = () => {
   const address = useStore($wallet);
   const [loading, setLoading] = React.useState(true);
+  const [showModal, setShowModal] = React.useState(false);
 
   const handleConnect = React.useCallback(async() => {
     setLoading(true);
@@ -107,19 +109,29 @@ export const ConnectZIlPay: React.FC<Prop> = ({ onModal }) => {
 
   if (address && isMobile) {
     return (
-      <svg
-        width="32"
-        height="26"
-        viewBox="0 0 32 26"
-        fill="none"
-        onClick={onModal}
-      >
-        <path
-          d="M0 1H32M0 13H32M0 25H32"
-          stroke={Colors.White}
-          strokeWidth="2"
+      <>
+        <div onClick={() => setShowModal(true)}>
+          <svg
+            width="32"
+            height="26"
+            viewBox="0 0 32 26"
+            fill="none"
+          >
+            <path
+              d="M0 1H32M0 13H32M0 25H32"
+              stroke={Colors.White}
+              strokeWidth="2"
+            />
+          </svg>
+        </div>
+        <MobileNavigate
+          show={showModal}
+          loading={loading}
+          address={address.bech32}
+          onConnect={handleConnect}
+          onClose={() => setShowModal(false)}
         />
-      </svg>
+      </>
     );
   }
 

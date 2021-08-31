@@ -34,6 +34,10 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 500px) {
+    padding: 10px;
+  }
 `;
 const TitleWrapper = styled.div`
   display: flex;
