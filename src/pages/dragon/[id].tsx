@@ -3,6 +3,7 @@ import { NextPage } from 'next';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
+import { RarityImage } from 'components/rarity-image';
 import { Navbar } from 'components/nav-bar';
 import { Text } from 'components/text';
 import { ActionBar } from 'components/dragon/action-bar';
@@ -10,7 +11,6 @@ import { CombatGens } from 'components/dragon/combat-gens';
 import { BodyParts } from 'components/dragon/body-parts';
 import { BattlesSection } from 'components/dragon/battles';
 import { ParentsSection } from 'components/dragon/parents';
-import { DragonImage } from 'components/dragon/dragon-image';
 import { Container } from 'components/pages/container';
 import { TransferModal } from 'components/modals/transfer';
 import { SaleModal } from 'components/modals/sale';
@@ -22,7 +22,6 @@ import { HatchEggModal } from 'components/modals/hatch-egg';
 import { DragonAPI, DragonObject } from 'lib/api';
 import { getRarity } from 'lib/rarity';
 import { updateCache } from 'store/cache-dragon';
-import { EMPTY } from 'config/emty';
 import { BreedPlace } from 'mixin/breed';
 import { MarketPlace } from 'mixin/market-place';
 import { StyleFonts } from '@/config/fonts';
@@ -103,10 +102,12 @@ export const Dragon: NextPage = () => {
       ) : null}
       {dragon && rarity ? (
         <Wrapper>
-          <DragonImage
-            onError={(e) => e.currentTarget.src = EMPTY}
-            src={dragon.url}
-            color={rarity.color}
+          <RarityImage
+            width={500}
+            height={500}
+            id={dragon.id}
+            rarity={dragon.rarity}
+            url={dragon.url}
           />
           <div>
             <CombatGens

@@ -19,6 +19,8 @@ type Prop = {
   id: string;
   url: string;
   rarity: number;
+  width?: number;
+  height?: number;
   onClick?: () => void;
 };
 
@@ -26,6 +28,8 @@ export const RarityImage: React.FC<Prop> = ({
   id,
   rarity,
   url,
+  width,
+  height,
   onClick = () => null
 }) => {
   const rarityInfo = React.useMemo(() => {
@@ -36,48 +40,64 @@ export const RarityImage: React.FC<Prop> = ({
     <CommonAura
       id={id}
       url={url}
+      width={width}
+      height={height}
       color={rarityInfo.color}
       onClick={onClick}
     />,
     <UncommonAura
       id={id}
       url={url}
+      width={width}
+      height={height}
       color={rarityInfo.color}
       onClick={onClick}
     />,
     <RareAura
       id={id}
       url={url}
+      width={width}
+      height={height}
       color={rarityInfo.color}
       onClick={onClick}
     />,
     <MythicalAura
       id={id}
       url={url}
+      width={width}
+      height={height}
       color={rarityInfo.color}
       onClick={onClick}
     />,
     <LegendaryAura
       id={id}
       url={url}
+      width={width}
+      height={height}
       color={rarityInfo.color}
       onClick={onClick}
     />,
     <ImmortalAura
       id={id}
       url={url}
+      width={width}
+      height={height}
       color={rarityInfo.color}
       onClick={onClick}
     />,
     <ArcanaAura
       id={id}
       url={url}
+      width={width}
+      height={height}
       color={rarityInfo.color}
       onClick={onClick}
     />,
     <AncientAura
       id={id}
       url={url}
+      width={width}
+      height={height}
       color={rarityInfo.color}
       onClick={onClick}
     />

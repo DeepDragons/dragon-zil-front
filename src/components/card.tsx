@@ -1,11 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import ProgressiveImage from 'react-progressive-graceful-image';
 
 import { RarityImage } from './rarity-image';
 
 import { Colors } from 'config/colors';
-import { RARITY } from 'lib/rarity';
 
 type Prop = {
   dragon: {

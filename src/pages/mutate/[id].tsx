@@ -12,14 +12,13 @@ import { ActionBarTitle } from 'components/dragon/action-bar-title';
 import { UpgradeGens } from 'components/dragon/upgrade-gens';
 import { MobileUpgradeGens } from 'components/mobile/upgrade-gens';
 import { UpgradeGenModal } from 'components/modals/upgrade-gen';
+import { RarityImage } from '@/components/rarity-image';
 
-import { EMPTY } from 'config/emty';
 import { $dragonCache } from 'store/cache-dragon';
 import { DragonAPI, DragonObject } from '@/lib/api';
 import { getRarity } from '@/lib/rarity';
 import { $wallet } from '@/store/wallet';
 import { GenLab } from 'mixin/gen-lab';
-import { ZIlPayToken } from 'mixin/zilpay-token';
 
 const Wrapper = styled.div`
   display: flex;
@@ -122,10 +121,12 @@ export const GenLabPage: NextPage = () => {
       ) : null}
       {rarity && dragon ? (
         <Wrapper>
-          <DragonImage
-            onError={(e) => e.currentTarget.src = EMPTY}
-            src={dragon.url}
-            color={rarity.color}
+          <RarityImage
+            width={500}
+            height={500}
+            id={dragon.id}
+            rarity={dragon.rarity}
+            url={dragon.url}
           />
           <BrowserView>
             <UpgradeGens
