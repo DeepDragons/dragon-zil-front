@@ -11,6 +11,8 @@ import { Colors } from 'config/colors';
 import { ZilPayBase } from 'mixin/zilpay-base';
 import { trim } from 'lib/trim';
 import { $wallet, updateAddress } from 'store/wallet';
+import { updateNet } from 'store/wallet-netwrok';
+import { Net } from '@/types/zil-pay';
 
 export const ConnectZIlPayButton = styled.button`
   cursor: pointer;
@@ -34,6 +36,7 @@ type Prop = {
   onModal: () => void;
 }
 let observer: any = null;
+let observerNet: any = null;
 export const ConnectZIlPay: React.FC<Prop> = ({ onModal }) => {
   const address = useStore($wallet);
   const [loading, setLoading] = React.useState(true);
@@ -48,6 +51,8 @@ export const ConnectZIlPay: React.FC<Prop> = ({ onModal }) => {
       if (connected && zp.wallet.defaultAccount) {
         updateAddress(zp.wallet.defaultAccount);
       }
+
+      updateNet(zp.wallet.net);
     } catch (err) {
       console.error(err);
     }
@@ -61,6 +66,13 @@ export const ConnectZIlPay: React.FC<Prop> = ({ onModal }) => {
       wallet
         .zilpay
         .then((zp) => {
+          observerNet = zp
+            .wallet
+            .observableNetwork()
+            .subscribe((net: Net) => {
+              updateNet(net);
+            });
+
           observer = zp
             .wallet
             .observableAccount()
@@ -78,15 +90,17 @@ export const ConnectZIlPay: React.FC<Prop> = ({ onModal }) => {
 
           setLoading(false);
         })
-        .catch(() => setLoading(false));
+        .catch((err) => setLoading(false));
     } catch (err) {
       setLoading(false);
-      console.error(err);
     }
 
     return () => {
       if (observer) {
         observer.unsubscribe();
+      }
+      if (observerNet) {
+        observerNet.unsubscribe();
       }
     }
   }, []);

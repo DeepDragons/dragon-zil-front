@@ -15,6 +15,7 @@ import { StyleFonts } from 'config/fonts';
 import { Colors } from 'config/colors';
 import { trim } from 'lib/trim';
 import { $wallet } from 'store/wallet';
+import { $net } from '@/store/wallet-netwrok';
 
 const Container = styled.div`
   display: flex;
@@ -28,6 +29,9 @@ const Container = styled.div`
   @media (max-width: 500px) {
     margin-top: 10px;
   }
+`;
+const ModalContainer = styled.div`
+  padding: 30px;
 `;
 const Logo = styled.div`
   display: flex;
@@ -88,8 +92,10 @@ const links = [
 export const Navbar: React.FC = () => {
   const router = useRouter();
   const address = useStore($wallet);
+  const netwrok = useStore($net);
 
   const [modalShow, setModalShow] = React.useState(false);
+  const [zIlPayModal, setZIlPayModal] = React.useState(false);
 
   return (
     <Container>
@@ -156,6 +162,31 @@ export const Navbar: React.FC = () => {
           </ul>
         </Modal>
       </MobileView>
+      <Modal
+        show={zIlPayModal}
+        title={
+          <Text
+            fontColors={Colors.Warning}
+            css="padding: 16px;"
+          >
+            ZilPay wallet error.
+          </Text>
+        }
+        onClose={() => setZIlPayModal(false)}
+      >
+        <ModalContainer>
+          {!address ? (
+            <Text>
+              Please unlock ZilPay wallet.
+            </Text>
+          ) : null}
+          {netwrok !== 'mainnet' ? (
+            <Text>
+              Please choice the mainnet netwrok.
+            </Text>
+          ) : null}
+        </ModalContainer>
+      </Modal>
     </Container>
   );
 };

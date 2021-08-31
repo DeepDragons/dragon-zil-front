@@ -35,6 +35,8 @@ export interface ZIlpayResponse<T> {
   }
 }
 
+export type Net = 'mainnet' | 'testnet' | 'private';
+
 export interface ZIlPayBlockchain {
   getBalance: (address: string) => Promise<ZIlpayResponse<{
     balance: string;
@@ -74,6 +76,7 @@ export interface ZIlPayBlockchain {
 }
 
 export interface ZIlPayInject {
+  observableNetwork();
   ERRORS: {
     CONNECT: string;
     CONTRACT_HASN_TDEPLOYED: string;
@@ -116,7 +119,7 @@ export interface ZIlPayInject {
     };
     isConnect: boolean;
     isEnable: boolean;
-    net: boolean;
+    net: Net;
     addTransactionsQueue: (...hashs: string[]) => void;
     connect: () => Promise<boolean>;
     observableAccount: () => any;
