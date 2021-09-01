@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "chart.js": "3.5.0",
+    "clipboard-copy": "4.0.1",
     "effector": "21.8.12",
     "effector-react": "21.3.3",
     "next": "10.2.3",

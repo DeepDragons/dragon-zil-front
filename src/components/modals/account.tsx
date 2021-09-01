@@ -1,5 +1,6 @@
 import React from 'react';
 import Loader from "react-loader-spinner";
+import copy from 'clipboard-copy';
 import styled from 'styled-components';
 
 import { Modal } from 'components/modal';
@@ -94,7 +95,7 @@ export const AccountModal: React.FC<Prop> = ({
           {address ? trim(address, 8) : ''}
         </Text>
         <Row>
-          <CopyContainer>
+          <CopyContainer onClick={() => copy(address)}>
             <CopyIcon />
             <Text
               fontColors={Colors.Muted}
