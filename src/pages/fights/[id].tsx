@@ -1,32 +1,47 @@
 import React from 'react';
 import { NextPage } from 'next';
-import styled from 'styled-components';
+import Loader from "react-loader-spinner";
 import { useRouter } from 'next/router';
 
 import { Navbar } from 'components/nav-bar';
 import { Container } from 'components/pages/container';
-import { Text } from 'components/text';
 import { ChoiceWith } from 'components/dragon/choice-with';
 import { CompareCombatGens } from 'components/dragon/compare-combat-gens'; 
 import { Wrapper, PageTitle } from 'components/dragon/styles';
 
 import { DragonAPI, DragonObject } from 'lib/api';
+import { FigthPlace } from 'mixin/fight-place';
 import { $dragonCache } from 'store/cache-dragon';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
 import { getPrice } from 'lib/get-price';
 
 const backend = new DragonAPI();
+const figthPlace = new FigthPlace();
 export const FightStart: NextPage = () => {
   const router = useRouter();
 
   const [defended, setDefended] = React.useState<DragonObject | null>(null);
   const [attacked, setAttacked] = React.useState<DragonObject | null>(null);
   const [loading, setLoading] = React.useState(false);
+  const [skelet, setSkelet] = React.useState(true);
 
   const amount = React.useMemo(() => {
     return getPrice(defended?.actions);
   }, [defended]);
+
+  const handleStartFight = React.useCallback(async() => {
+    if (!attacked || !defended) {
+      return null;
+    }
+    setLoading(true);
+    try {
+      await figthPlace.startFight(defended.id, attacked.id);
+    } catch {
+      //
+    }
+    setLoading(false);
+  }, [defended, attacked]);
 
   React.useEffect(() => {
     const cache = $dragonCache.getState();
@@ -36,9 +51,9 @@ export const FightStart: NextPage = () => {
         .getDragon(String(router.query.id))
         .then((dragon) => {
           setDefended(dragon);
-          setLoading(false);
+          setSkelet(false);
         })
-        .catch(() => setLoading(false));
+        .catch(() => setSkelet(false));
     }
 
     if (cache) {
@@ -72,8 +87,16 @@ export const FightStart: NextPage = () => {
             btnColor={Colors.Info}
             icon="arena.svg"
             setDragon={setAttacked}
+            onStart={handleStartFight}
           >
-            Start Battle
+            {loading ? (
+              <Loader
+                type="ThreeDots"
+                color={Colors.White}
+                height={10}
+                width={40}
+              />
+            ) : 'Start Battle'}
           </ChoiceWith>
           {attacked ? (
             <CompareCombatGens

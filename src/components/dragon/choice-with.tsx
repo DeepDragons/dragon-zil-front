@@ -45,16 +45,18 @@ type Prop = {
   btnColor: Colors | string;
   icon: string;
   setDragon: (dragon: DragonObject) => void;
+  onStart: () => void;
 };
 
 export const ChoiceWith: React.FC<Prop> = ({
   dragon,
   color,
+  children,
   btnColor,
   icon,
   myDragon,
   setDragon,
-  children
+  onStart
 }) => {
   const [isShow, setIsShow] = React.useState(false);
 
@@ -95,7 +97,10 @@ export const ChoiceWith: React.FC<Prop> = ({
         </DragonImageWrapper>
       </Row>
       {myDragon ? (
-        <Button color={btnColor}>
+        <Button
+          color={btnColor}
+          onClick={onStart}
+        >
           {children}
         </Button>
       ) : null}

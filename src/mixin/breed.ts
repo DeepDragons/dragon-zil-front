@@ -69,4 +69,36 @@ export class BreedPlace {
 
     return String(res.ID);
   }
+
+  public async startBreeding(id0: string, id1: string) {
+    const params = [
+      {
+        vname: 'who_id',
+        type: 'Uint256',
+        value: String(id0)
+      },
+      {
+        vname: 'with_id',
+        type: 'Uint256',
+        value: String(id1)
+      }
+    ];
+    const transition = 'BreedStart';
+    const res = await this.zilpay.call({
+      transition,
+      params,
+      amount: '0',
+      contractAddress: Contracts.Breed
+    });
+
+    pushToList({
+      timestamp: new Date().getTime(),
+      name: `Start breeding #${id0} with #${id1}`,
+      confirmed: false,
+      hash: res.ID,
+      from: res.from
+    });
+
+    return String(res.ID);
+  }
 }

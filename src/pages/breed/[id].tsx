@@ -1,6 +1,7 @@
 import React from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
+import Loader from "react-loader-spinner";
 import { useRouter } from 'next/router';
 
 import { Navbar } from 'components/nav-bar';
@@ -10,6 +11,7 @@ import { BreadGensForm } from 'components/dragon/breed-gens';
 import { CompareCombatGens } from 'components/dragon/compare-combat-gens'; 
 
 import { DragonAPI, DragonObject } from 'lib/api';
+import { BreedPlace } from 'mixin/breed';
 import { getRarity } from 'lib/rarity';
 import { $dragonCache } from 'store/cache-dragon';
 import { StyleFonts } from '@/config/fonts';
@@ -22,12 +24,26 @@ const Column = styled.div`
   flex-direction: column;
 `;
 const backend = new DragonAPI();
+const breedPlace = new BreedPlace();
 export const BreedStart: NextPage = () => {
   const router = useRouter();
 
   const [dragon, setDragon] = React.useState<DragonObject | null>(null);
   const [myDragon, setMyDragon] = React.useState<DragonObject | null>(null);
   const [loading, setLoading] = React.useState(false);
+
+  const handleStartBreed = React.useCallback(async() => {
+    if (!dragon || !myDragon) {
+      return null;
+    }
+    setLoading(true);
+    try {
+      await breedPlace.startBreeding(dragon.id, myDragon.id);
+    } catch {
+      //
+    }
+    setLoading(false);
+  }, [dragon, myDragon]);
 
   const rarityLover = React.useMemo(() => {
     if (!dragon) {
@@ -89,8 +105,16 @@ export const BreedStart: NextPage = () => {
             btnColor={Colors.Primary}
             icon="heart.svg"
             setDragon={setMyDragon}
+            onStart={handleStartBreed}
           >
-            Start breeding
+            {loading ? (
+              <Loader
+                type="ThreeDots"
+                color={Colors.White}
+                height={10}
+                width={40}
+              />
+            ) : 'Start Breeding'}
           </ChoiceWith>
           {myDragon && rarityMyDragon && rarityLover ? (
             <Column>
