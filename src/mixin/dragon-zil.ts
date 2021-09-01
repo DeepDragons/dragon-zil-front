@@ -2,6 +2,7 @@ import { ZilPayBase } from 'mixin/zilpay-base';
 import { Contracts } from 'config/contracts';
 import { pushToList } from '@/store/transactions';
 import { getKeyByValue } from '@/lib/key-by-value';
+import { trim } from 'lib/trim';
 
 export class DragonZIL {
   public zilpay = new ZilPayBase();
@@ -30,6 +31,14 @@ export class DragonZIL {
       params,
       amount: '0',
       contractAddress: Contracts.Main
+    });
+
+    pushToList({
+      timestamp: new Date().getTime(),
+      name: `Transfer a dragon #${tokenId} to ${trim(to)}`,
+      confirmed: false,
+      hash: res.ID,
+      from: res.from
     });
 
     return String(res.ID);

@@ -66,8 +66,16 @@ const TxContainer = styled.div`
   background: ${Colors.Black};
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
+
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
 `;
-const BetweenContainer = styled(Row)`
+const Between = styled.div`
+  display: flex;
+  align-items: flex-start;
   justify-content: space-between;
 
   span {
@@ -93,14 +101,14 @@ export const AccountModal: React.FC<Prop> = ({
     <Modal
       show={show}
       title={(
-        <BetweenContainer>
+        <Between>
           <Text css="padding: 0 16px;">
             Account
           </Text>
           <span onClick={onClose}>
             <CloseIcon />
           </span>
-        </BetweenContainer>
+        </Between>
       )}
       width="450px"
       onClose={onClose}
@@ -159,8 +167,8 @@ export const AccountModal: React.FC<Prop> = ({
             Your transactions will appear here...
           </Text>
         ) : (
-          <>
-            <BetweenContainer>
+          <div>
+            <div className="header">
               <Text
                 fontVariant={StyleFonts.FiraSansRegular}
                 size="16px"
@@ -177,14 +185,14 @@ export const AccountModal: React.FC<Prop> = ({
               >
                 (clear all)
               </Text>
-            </BetweenContainer>
+            </div>
             {txList.map((tx) => (
               <TxCard
                 key={tx.hash}
                 tx={tx}
               />
             ))}
-          </>
+          </div>
         )}
       </TxContainer>
     </Modal>
