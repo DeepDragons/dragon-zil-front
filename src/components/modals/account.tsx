@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Modal } from 'components/modal';
 import { Text } from 'components/text';
 import { CopyIcon } from 'components/icons/copy';
+import { CloseIcon } from 'components/icons/close';
 import { ViewIcon } from 'components/icons/view';
 
 import { Colors } from 'config/colors';
@@ -57,9 +58,24 @@ const TxContainer = styled.div`
   flex-direction: column;
 
   height: 80px;
+  padding: 16px;
   background: ${Colors.Black};
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
+`;
+const BetweenContainer = styled(Row)`
+  justify-content: space-between;
+
+  span {
+    cursor: pointer;
+    padding:16px;
+
+    :hover {
+      svg > path {
+        stroke: ${Colors.Muted};
+      }
+    }
+  }
 `;
 
 export const AccountModal: React.FC<Prop> = ({
@@ -68,13 +84,22 @@ export const AccountModal: React.FC<Prop> = ({
   address = ''
 }) => {
 
+  const list = [{
+    dsad: ''
+  }];
+
   return (
     <Modal
       show={show}
       title={(
-        <Text css="padding: 16px;">
-          Account
-        </Text>
+        <BetweenContainer>
+          <Text css="padding: 0 16px;">
+            Account
+          </Text>
+          <span onClick={onClose}>
+            <CloseIcon />
+          </span>
+        </BetweenContainer>
       )}
       width="450px"
       onClose={onClose}
@@ -124,13 +149,33 @@ export const AccountModal: React.FC<Prop> = ({
         </Row>
       </AccountContainer>
       <TxContainer>
-        <Text
-          fontVariant={StyleFonts.FiraSansRegular}
-          size="16px"
-          css="text-align: center;margin-top: 27px;"
-        >
-          Your transactions will appear here...
-        </Text>
+        {list.length === 0 ? (
+          <Text
+            fontVariant={StyleFonts.FiraSansRegular}
+            size="16px"
+            css="text-align: center;margin-top: 27px;"
+          >
+            Your transactions will appear here...
+          </Text>
+        ) : (
+          <BetweenContainer>
+            <Text
+              fontVariant={StyleFonts.FiraSansRegular}
+              size="16px"
+              css=""
+            >
+              Recent Transactions
+            </Text>
+            <Text
+              fontVariant={StyleFonts.FiraSansRegular}
+              fontColors={Colors.Info}
+              size="16px"
+              css="cursor: pointer;user-select: none;"
+            >
+              (clear all)
+            </Text>
+          </BetweenContainer>
+        )}
       </TxContainer>
     </Modal>
   );

@@ -5,7 +5,8 @@ import styled from 'styled-components';
 
 import { Text } from 'components/text';
 import { ScreenModal } from '../screen-modal';
-import { Logo, Li, links } from 'components/nav-bar';
+import { Logo, links } from 'components/nav-bar';
+import { CloseIcon } from 'components/icons/close';
 
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
@@ -95,23 +96,7 @@ export const MobileNavigate: React.FC<Prop> = ({
             </Logo>
           </Link>
           <div onClick={onClose}>
-            <svg
-              width="26"
-              height="26"
-              viewBox="0 0 26 26"
-              fill="none"
-            >
-              <path
-                d="M1.68555 1.68652L24.313 24.3139"
-                stroke={Colors.White}
-                strokeWidth="2"
-              />
-              <path
-                d="M1.6875 24.3135L24.3149 1.68606"
-                stroke={Colors.White}
-                strokeWidth="2"
-              />
-            </svg>
+            <CloseIcon />
           </div>
         </Wrapper>
         <ul>
