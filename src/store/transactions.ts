@@ -12,22 +12,17 @@ export interface Tx {
 let initState: Tx[] = [];
 const txDomain = createDomain();
 
-export const storageKey = 'transaction-listener';
+export const updateTxList = txDomain.createEvent<Tx[]>();
 export const pushToList = txDomain.createEvent<Tx>();
-export const resetTxList = txDomain.createEvent();
-
-if (process.browser) {
-  const catche = window.localStorage.getItem(storageKey);
-
-  if (catche) {
-    initState = JSON.parse(catche);
-  }
-}
+export const resetTxList = txDomain.createEvent<string>();
+export const clearTxList = txDomain.createEvent();
 
 export const $transactions = txDomain
   .createStore<Tx[]>(initState)
-  .on(resetTxList, (_) => {
-    window.localStorage.removeItem(storageKey);
+  .on(clearTxList, () => [])
+  .on(updateTxList, (_, payload) => payload)
+  .on(resetTxList, (_, address) => {
+    window.localStorage.removeItem(address);
 
     return [];
   })
@@ -38,7 +33,7 @@ export const $transactions = txDomain
 
     const newState = [tx, ...state];
 
-    window.localStorage.setItem(storageKey, JSON.stringify(newState));
+    window.localStorage.setItem(tx.from, JSON.stringify(newState));
 
     return newState;
   });

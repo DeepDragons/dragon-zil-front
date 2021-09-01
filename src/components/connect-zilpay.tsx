@@ -14,7 +14,7 @@ import { Colors } from 'config/colors';
 import { ZilPayBase } from 'mixin/zilpay-base';
 import { trim } from 'lib/trim';
 import { $wallet, updateAddress } from 'store/wallet';
-import { $transactions } from 'store/transactions';
+import { $transactions, updateTxList, clearTxList } from 'store/transactions';
 import { updateNet } from 'store/wallet-netwrok';
 import { Net } from '@/types/zil-pay';
 
@@ -58,6 +58,12 @@ export const ConnectZIlPay: React.FC = () => {
       }
 
       updateNet(zp.wallet.net);
+
+      const cache = window.localStorage.getItem(String(zp.wallet.defaultAccount?.base16));
+
+      if (cache) {
+        updateTxList(JSON.parse(cache));
+      }
     } catch (err) {
       console.error(err);
     }
@@ -87,10 +93,24 @@ export const ConnectZIlPay: React.FC = () => {
               if (address?.base16 !== acc.base16) {
                 updateAddress(acc);
               }
+
+              clearTxList();
+
+              const cache = window.localStorage.getItem(String(zp.wallet.defaultAccount?.base16));
+
+              if (cache) {
+                updateTxList(JSON.parse(cache));
+              }
             });
 
           if (zp.wallet.defaultAccount) {
             updateAddress(zp.wallet.defaultAccount);
+          }
+
+          const cache = window.localStorage.getItem(String(zp.wallet.defaultAccount?.base16));
+
+          if (cache) {
+            updateTxList(JSON.parse(cache));
           }
 
           setLoading(false);

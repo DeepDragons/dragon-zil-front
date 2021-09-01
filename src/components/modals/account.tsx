@@ -181,7 +181,7 @@ export const AccountModal: React.FC<Prop> = ({
                 fontColors={Colors.Info}
                 size="16px"
                 css="cursor: pointer;user-select: none;"
-                onClick={() => resetTxList()}
+                onClick={() => resetTxList(address)}
               >
                 (clear all)
               </Text>
