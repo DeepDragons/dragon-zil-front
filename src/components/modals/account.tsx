@@ -9,12 +9,13 @@ import { Text } from 'components/text';
 import { CopyIcon } from 'components/icons/copy';
 import { CloseIcon } from 'components/icons/close';
 import { ViewIcon } from 'components/icons/view';
+import { TxCard } from 'components/tx-card';
 
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
 import { trim } from '@/lib/trim';
 import { viewAddress } from '@/lib/viewblock';
-import { $transactions } from 'store/transactions';
+import { $transactions, resetTxList } from 'store/transactions';
 
 type Prop = {
   show: boolean;
@@ -59,7 +60,8 @@ const TxContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  height: 80px;
+  min-height: 80px;
+  height: fit-content;
   padding: 16px;
   background: ${Colors.Black};
   border-bottom-left-radius: 16px;
@@ -157,23 +159,32 @@ export const AccountModal: React.FC<Prop> = ({
             Your transactions will appear here...
           </Text>
         ) : (
-          <BetweenContainer>
-            <Text
-              fontVariant={StyleFonts.FiraSansRegular}
-              size="16px"
-              css=""
-            >
-              Recent Transactions
-            </Text>
-            <Text
-              fontVariant={StyleFonts.FiraSansRegular}
-              fontColors={Colors.Info}
-              size="16px"
-              css="cursor: pointer;user-select: none;"
-            >
-              (clear all)
-            </Text>
-          </BetweenContainer>
+          <>
+            <BetweenContainer>
+              <Text
+                fontVariant={StyleFonts.FiraSansRegular}
+                size="16px"
+                css=""
+              >
+                Recent Transactions
+              </Text>
+              <Text
+                fontVariant={StyleFonts.FiraSansRegular}
+                fontColors={Colors.Info}
+                size="16px"
+                css="cursor: pointer;user-select: none;"
+                onClick={() => resetTxList()}
+              >
+                (clear all)
+              </Text>
+            </BetweenContainer>
+            {txList.map((tx) => (
+              <TxCard
+                key={tx.hash}
+                tx={tx}
+              />
+            ))}
+          </>
         )}
       </TxContainer>
     </Modal>
