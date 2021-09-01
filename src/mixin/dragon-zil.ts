@@ -67,7 +67,7 @@ export class DragonZIL {
 
     pushToList({
       timestamp: new Date().getTime(),
-      name: `Approve a dragon for ${getKeyByValue(Contracts, to)}`,
+      name: `Approve a dragon #${tokenId} for ${getKeyByValue(Contracts, to)}`,
       confirmed: false,
       hash: res.ID,
       from: res.from

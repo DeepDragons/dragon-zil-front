@@ -13,10 +13,10 @@ import { StyleFonts } from 'config/fonts';
 import { Colors } from 'config/colors';
 import { ZilPayBase } from 'mixin/zilpay-base';
 import { trim } from 'lib/trim';
-import { $wallet, updateAddress } from 'store/wallet';
-import { $transactions, updateTxList, clearTxList } from 'store/transactions';
+import { $wallet, updateAddress, Wallet } from 'store/wallet';
+import { $transactions, updateTxList, clearTxList, writeNewList } from 'store/transactions';
 import { updateNet } from 'store/wallet-netwrok';
-import { Net } from '@/types/zil-pay';
+import { Block, Net } from '@/types/zil-pay';
 
 const ConnectZIlPayButton = styled.button`
   cursor: pointer;
@@ -40,12 +40,94 @@ const ConnectZIlPayButton = styled.button`
 
 let observer: any = null;
 let observerNet: any = null;
+let observerBlock: any = null;
 export const ConnectZIlPay: React.FC = () => {
   const address = useStore($wallet);
   const transactions = useStore($transactions);
   const [loading, setLoading] = React.useState(true);
   const [showModal, setShowModal] = React.useState(false);
 
+  const hanldeObserverState = React.useCallback((zp) => {
+    if (observerNet) {
+      observerNet.unsubscribe();
+    }
+    if (observer) {
+      observer.unsubscribe();
+    }
+    if (observerBlock) {
+      observerBlock.unsubscribe();
+    }
+
+    observerNet = zp.wallet.observableNetwork().subscribe((net: Net) => {
+      updateNet(net);
+    });
+
+    observer = zp.wallet.observableAccount().subscribe((acc: Wallet) => {
+      const address = $wallet.getState();
+
+      if (address?.base16 !== acc.base16) {
+        updateAddress(acc);
+      }
+
+      clearTxList();
+
+      const cache = window.localStorage.getItem(String(zp.wallet.defaultAccount?.base16));
+
+      if (cache) {
+        updateTxList(JSON.parse(cache));
+      }
+    });
+
+    observerBlock = zp.wallet.observableBlock().subscribe(async(block: Block) => {
+      let list = $transactions.getState();
+      for (let index = 0; index < block.TxHashes.length; index++) {
+        const element = block.TxHashes[index];
+
+        for (let i = 0; i < list.length; i++) {
+          const tx = list[i];
+
+          if (tx.confirmed) {
+            continue;
+          }
+
+          if (element.includes(tx.hash)) {
+            list[i].confirmed = true;
+          }
+        }
+      }
+      const listOrPromises = list.map(async(tx) => {
+        if (tx.confirmed) {
+          return tx;
+        }
+
+        try {
+          const res = await zp.blockchain.getTransaction(tx.hash);
+          
+          if (res && res.receipt && res.receipt.errors) {
+            tx.error = true;
+          }
+
+          tx.confirmed = true;
+          return tx;
+        } catch {
+          return tx;
+        }
+      });
+
+      list = await Promise.all(listOrPromises);
+      writeNewList(list);
+    });
+
+    if (zp.wallet.defaultAccount) {
+      updateAddress(zp.wallet.defaultAccount);
+    }
+
+    const cache = window.localStorage.getItem(String(zp.wallet.defaultAccount?.base16));
+
+    if (cache) {
+      updateTxList(JSON.parse(cache));
+    }
+  }, [transactions]);
   const handleConnect = React.useCallback(async() => {
     setLoading(true);
     try {
@@ -77,42 +159,7 @@ export const ConnectZIlPay: React.FC = () => {
       wallet
         .zilpay
         .then((zp) => {
-          observerNet = zp
-            .wallet
-            .observableNetwork()
-            .subscribe((net: Net) => {
-              updateNet(net);
-            });
-
-          observer = zp
-            .wallet
-            .observableAccount()
-            .subscribe((acc: any) => {
-              const address = $wallet.getState();
-
-              if (address?.base16 !== acc.base16) {
-                updateAddress(acc);
-              }
-
-              clearTxList();
-
-              const cache = window.localStorage.getItem(String(zp.wallet.defaultAccount?.base16));
-
-              if (cache) {
-                updateTxList(JSON.parse(cache));
-              }
-            });
-
-          if (zp.wallet.defaultAccount) {
-            updateAddress(zp.wallet.defaultAccount);
-          }
-
-          const cache = window.localStorage.getItem(String(zp.wallet.defaultAccount?.base16));
-
-          if (cache) {
-            updateTxList(JSON.parse(cache));
-          }
-
+          hanldeObserverState(zp);
           setLoading(false);
         })
         .catch((err) => setLoading(false));
@@ -126,6 +173,9 @@ export const ConnectZIlPay: React.FC = () => {
       }
       if (observerNet) {
         observerNet.unsubscribe();
+      }
+      if (observerBlock) {
+        observerBlock.unsubscribe();
       }
     }
   }, []);

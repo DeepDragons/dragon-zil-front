@@ -56,7 +56,7 @@ export const TxCard: React.FC<Prop> = ({
       ) : (
         <Loader
           type="Puff"
-          color={Colors.Warning}
+          color={Colors.LightBlue}
           height={16}
           width={16}
         />

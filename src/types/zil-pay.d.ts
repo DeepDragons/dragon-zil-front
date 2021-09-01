@@ -16,6 +16,14 @@ abstract class TypeChecker {
   }
 }
 
+export interface Block {
+  TxBlock: {
+    body: object;
+    header: object;
+  };
+  TxHashes: Array<string[]>;
+}
+
 export interface ZIlpayResponse<T> {
   id: number;
   jsonrpc: string;
