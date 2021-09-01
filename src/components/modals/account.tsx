@@ -1,5 +1,4 @@
 import React from 'react';
-import Loader from "react-loader-spinner";
 import { useStore } from 'effector-react';
 import copy from 'clipboard-copy';
 import styled from 'styled-components';
@@ -16,10 +15,11 @@ import { StyleFonts } from '@/config/fonts';
 import { trim } from '@/lib/trim';
 import { viewAddress } from '@/lib/viewblock';
 import { $transactions, resetTxList } from 'store/transactions';
+import { Wallet } from '@/store/wallet';
 
 type Prop = {
   show: boolean;
-  address?: string;
+  address: Wallet | null;
   onClose: () => void;
 };
 
@@ -93,7 +93,7 @@ const Between = styled.div`
 export const AccountModal: React.FC<Prop> = ({
   show,
   onClose,
-  address = ''
+  address
 }) => {
   const txList = useStore($transactions);
 
@@ -126,10 +126,10 @@ export const AccountModal: React.FC<Prop> = ({
           fontVariant={StyleFonts.FiraSansMedium}
           size="20px"
         >
-          {address ? trim(address, 8) : ''}
+          {address ? trim(address.bech32, 8) : ''}
         </Text>
         <Row>
-          <CopyContainer onClick={() => copy(address)}>
+          <CopyContainer onClick={() => copy(String(address?.bech32))}>
             <CopyIcon />
             <Text
               fontColors={Colors.Muted}
@@ -142,7 +142,7 @@ export const AccountModal: React.FC<Prop> = ({
           </CopyContainer>
           <CopyContainer
             className="second"
-            href={address ? viewAddress(address) : ''}
+            href={address ? viewAddress(String(address?.bech32)) : ''}
             target="_blank"
           >
             <ViewIcon />
@@ -181,7 +181,7 @@ export const AccountModal: React.FC<Prop> = ({
                 fontColors={Colors.Info}
                 size="16px"
                 css="cursor: pointer;user-select: none;"
-                onClick={() => resetTxList(address)}
+                onClick={() => resetTxList(String(address?.base16))}
               >
                 (clear all)
               </Text>

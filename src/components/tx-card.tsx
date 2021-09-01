@@ -5,9 +5,15 @@ import { Colors } from 'config/colors';
 import { Tx } from 'store/transactions';
 import { viewTransaction } from 'lib/viewblock';
 import { SuccessIcon } from 'components/icons/success';
+import { RejectIcon } from 'components/icons/reject';
 
 type Prop = {
   tx: Tx;
+}
+
+type StatusIconProp = {
+  rejected?: boolean;
+  loading: boolean;
 }
 
 const Transaction = styled.a`
@@ -38,6 +44,32 @@ const TextWrapper = styled.div`
   font-size: 0.825rem;
 `;
 
+const StatusIcon :React.FC<StatusIconProp> = ({
+  rejected,
+  loading
+}) => {
+  if (rejected && !loading) {
+    return (
+      <RejectIcon />
+    );
+  }
+
+  if (!rejected && !loading) {
+    return (
+      <SuccessIcon />
+    );
+  }
+
+  return (
+    <Loader
+      type="Puff"
+      color={Colors.LightBlue}
+      height={16}
+      width={16}
+    />
+  );
+}
+
 export const TxCard: React.FC<Prop> = ({
   tx
 }) => {
@@ -51,16 +83,10 @@ export const TxCard: React.FC<Prop> = ({
           {tx.name} ↗
         </TextWrapper>
       </Wrapper>
-      {tx.confirmed ? (
-        <SuccessIcon />
-      ) : (
-        <Loader
-          type="Puff"
-          color={Colors.LightBlue}
-          height={16}
-          width={16}
-        />
-      )}
+      <StatusIcon
+        rejected={tx.error}
+        loading={!tx.confirmed}
+      />
     </Transaction>
   );
 };

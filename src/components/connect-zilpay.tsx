@@ -243,7 +243,7 @@ export const ConnectZIlPay: React.FC = () => {
       )}
       <AccountModal
         show={showModal}
-        address={address?.bech32}
+        address={address}
         onClose={() => setShowModal(false)}
       />
     </>
