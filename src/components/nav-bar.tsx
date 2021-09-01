@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { BrowserView, MobileView } from 'react-device-detect';
+import { BrowserView } from 'react-device-detect';
 import { useStore } from 'effector-react';
 
 import styled from 'styled-components';
@@ -8,7 +8,6 @@ import Link from 'next/link';
 
 import { ConnectZIlPay } from 'components/connect-zilpay';
 import { Modal } from 'components/modal';
-import { ModalItem } from 'components/mobile/modal-item';
 
 import { Text } from 'components/text';
 import { StyleFonts } from 'config/fonts';

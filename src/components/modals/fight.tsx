@@ -57,7 +57,7 @@ export const FightsModal: React.FC<Prop> = ({
     if (needApprove) {
       await zilPayToken.increaseAllowance(Contracts.FightPlace);
     } else {
-      await figthPlace.place(id, zlp);
+      await figthPlace.place(id, zlp, false);
       onClose();
     }
     setLoading(false);
