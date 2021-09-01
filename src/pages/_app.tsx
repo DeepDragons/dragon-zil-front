@@ -1,6 +1,7 @@
 import { AppProps } from 'next/app';
 import { BaseStyles, AnimationStyles } from '@/styles';
 import React from 'react';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 import { Footer } from 'components/footer';
 

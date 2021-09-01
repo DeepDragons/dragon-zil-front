@@ -1,5 +1,4 @@
 import React from 'react';
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { useStore } from 'effector-react';
 import styled from 'styled-components';
 import { isMobile } from 'react-device-detect';
@@ -46,6 +45,10 @@ export const ConnectZIlPay: React.FC = () => {
   const transactions = useStore($transactions);
   const [loading, setLoading] = React.useState(true);
   const [showModal, setShowModal] = React.useState(false);
+
+  const isLoading = React.useMemo(() => {
+    return transactions.filter((tx) => !tx.confirmed).length === 0
+  }, [transactions]);
 
   const hanldeObserverState = React.useCallback((zp) => {
     if (observerNet) {
@@ -220,7 +223,7 @@ export const ConnectZIlPay: React.FC = () => {
     <>
       {address ? (
         <ConnectZIlPayButton onClick={() => setShowModal(true)}>
-          {transactions.length === 0 ? trim(address.bech32) : (
+          {isLoading ? trim(address.bech32) : (
             <>
               <Loader
                 type="Puff"
