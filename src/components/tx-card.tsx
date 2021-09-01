@@ -16,6 +16,8 @@ const Container = styled.div`
 export const TxCard: React.FC<Prop> = ({
 }) => {
   return (
-    <Container></Container>
+    <Container>
+      
+    </Container>
   );
 };
