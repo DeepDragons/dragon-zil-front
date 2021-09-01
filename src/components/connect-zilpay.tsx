@@ -7,12 +7,14 @@ import { isMobile } from 'react-device-detect';
 import Loader from "react-loader-spinner";
 import { MobileNavigate } from 'components/mobile/navigate';
 import { AccountModal } from 'components/modals/account';
+import { Text } from 'components/text';
 
 import { StyleFonts } from 'config/fonts';
 import { Colors } from 'config/colors';
 import { ZilPayBase } from 'mixin/zilpay-base';
 import { trim } from 'lib/trim';
 import { $wallet, updateAddress } from 'store/wallet';
+import { $transactions } from 'store/transactions';
 import { updateNet } from 'store/wallet-netwrok';
 import { Net } from '@/types/zil-pay';
 
@@ -20,6 +22,8 @@ const ConnectZIlPayButton = styled.button`
   cursor: pointer;
   color: ${Colors.White};
   font-family: ${StyleFonts.FiraSansSemiBold};
+  display: flex;
+  align-items: center;
 
   padding: 10px 22px;
   border-radius: 16px;
@@ -38,6 +42,7 @@ let observer: any = null;
 let observerNet: any = null;
 export const ConnectZIlPay: React.FC = () => {
   const address = useStore($wallet);
+  const transactions = useStore($transactions);
   const [loading, setLoading] = React.useState(true);
   const [showModal, setShowModal] = React.useState(false);
 
@@ -137,7 +142,22 @@ export const ConnectZIlPay: React.FC = () => {
     <>
       {address ? (
         <ConnectZIlPayButton onClick={() => setShowModal(true)}>
-          {trim(address.bech32)}
+          {transactions.length === 0 ? trim(address.bech32) : (
+            <>
+              <Loader
+                type="Puff"
+                color={Colors.White}
+                height={10}
+                width={10}
+              />
+              <Text
+                size="16px"
+                css="text-indent: 5px;margin: 0;"
+              >
+                Pending...
+              </Text>
+            </>
+          )}
         </ConnectZIlPayButton>
       ) : (
         <ConnectZIlPayButton onClick={handleConnect}>
