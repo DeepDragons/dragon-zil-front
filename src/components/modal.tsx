@@ -36,6 +36,7 @@ const Container = styled.div`
 type Prop = {
   title?: React.ReactNode;
   show: boolean;
+  width?: string;
   onClose: () => void;
 };
 
@@ -43,6 +44,7 @@ export const Modal: React.FC<Prop> = ({
   children,
   title,
   show,
+  width,
   onClose
 }) => {
   const node = React.useRef<HTMLDivElement | null>(null);
@@ -59,7 +61,12 @@ export const Modal: React.FC<Prop> = ({
       ref={(n) => node.current = n}
       onClick={onToggle}
     >
-      <div className="modal-md">
+      <div
+        className="modal-md"
+        style={{
+          width
+        }}
+      >
         {title}
         <div>
           {children}

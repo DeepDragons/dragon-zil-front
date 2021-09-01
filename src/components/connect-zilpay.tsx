@@ -6,7 +6,7 @@ import { isMobile } from 'react-device-detect';
 
 import Loader from "react-loader-spinner";
 import { MobileNavigate } from 'components/mobile/navigate';
-import { Modal } from 'components/modal';
+import { AccountModal } from 'components/modals/account';
 
 import { StyleFonts } from 'config/fonts';
 import { Colors } from 'config/colors';
@@ -151,11 +151,11 @@ export const ConnectZIlPay: React.FC = () => {
           ) : 'Connect'}
         </ConnectZIlPayButton>
       )}
-      <Modal
+      <AccountModal
         show={showModal}
+        address={address?.bech32}
         onClose={() => setShowModal(false)}
-      >
-      </Modal>
+      />
     </>
   );
 };
