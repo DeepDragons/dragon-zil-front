@@ -1,7 +1,6 @@
 import Loader from 'react-loader-spinner';
 import React from 'react';
 import styled from 'styled-components';
-import { Text } from 'components/text';
 import { Colors } from 'config/colors';
 import { Tx } from 'store/transactions';
 import { viewTransaction } from 'lib/viewblock';

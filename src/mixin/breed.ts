@@ -1,6 +1,7 @@
 import { ZilPayBase } from 'mixin/zilpay-base';
 import { Contracts } from 'config/contracts';
 import { ZIlPayToken } from './zilpay-token';
+import { pushToList } from '@/store/transactions';
 
 export class BreedPlace {
   public zilpay = new ZilPayBase();
@@ -31,6 +32,14 @@ export class BreedPlace {
       contractAddress: Contracts.Breed
     });
 
+    pushToList({
+      timestamp: new Date().getTime(),
+      name: `Add a dragon #${tokenId} to breed for ${price} $ZLP`,
+      confirmed: false,
+      hash: res.ID,
+      from: res.from
+    });
+
     return String(res.ID);
   }
 
@@ -48,6 +57,14 @@ export class BreedPlace {
       params,
       amount: '0',
       contractAddress: Contracts.Breed
+    });
+
+    pushToList({
+      timestamp: new Date().getTime(),
+      name: `Get Back a dragon #${tokenId} from breed.`,
+      confirmed: false,
+      hash: res.ID,
+      from: res.from
     });
 
     return String(res.ID);

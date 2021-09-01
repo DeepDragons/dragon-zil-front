@@ -1,5 +1,7 @@
 import { ZilPayBase } from 'mixin/zilpay-base';
 import { Contracts } from 'config/contracts';
+import { pushToList } from '@/store/transactions';
+import { getKeyByValue } from '@/lib/key-by-value';
 
 export class ZIlPayToken {
   public static decimal = '1000000000000000000';
@@ -68,7 +70,15 @@ export class ZIlPayToken {
       transition,
       params,
       amount: '0',
-      contractAddress: Contracts.Main
+      contractAddress: Contracts.ZIlPay
+    });
+
+    pushToList({
+      timestamp: new Date().getTime(),
+      name: `increaseAllowance for ${getKeyByValue(Contracts, contract)}`,
+      confirmed: false,
+      hash: res.ID,
+      from: res.from
     });
 
     return String(res.ID);

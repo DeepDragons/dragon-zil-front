@@ -1,6 +1,7 @@
 import { ZilPayBase } from 'mixin/zilpay-base';
 import { Contracts } from 'config/contracts';
 import { ZIlPayToken } from './zilpay-token';
+import { pushToList } from 'store/transactions';
 
 export class GenLab {
   public zilpay = new ZilPayBase();
@@ -66,6 +67,14 @@ export class GenLab {
       params,
       amount: '0',
       contractAddress: Contracts.GenLab
+    });
+
+    pushToList({
+      timestamp: new Date().getTime(),
+      name: `Upgrade gen ${genNumber + 1} for Dragon #${tokenId}`,
+      confirmed: false,
+      hash: res.ID,
+      from: res.from
     });
 
     return String(res.ID);

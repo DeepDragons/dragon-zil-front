@@ -1,6 +1,7 @@
 import { ZilPayBase } from 'mixin/zilpay-base';
 import { Contracts } from 'config/contracts';
 import { $crowdSaleStore, updateState } from 'store/crowd-sale';
+import { pushToList } from '@/store/transactions';
 
 export class CrowdSale {
   public zilpay = new ZilPayBase();
@@ -40,13 +41,22 @@ export class CrowdSale {
     const transition = 'Buy';
     const amount = new BN(state.zilPrice);
     numberOf = new BN(numberOf);
+    const value = amount.mul(numberOf).toString();
 
     const res = await this.zilpay.call({
       transition,
       params,
-      amount: amount.mul(numberOf).toString(),
+      amount: value,
       contractAddress: Contracts.Distributer,
     }, gas);
+
+    pushToList({
+      timestamp: new Date().getTime(),
+      name: `Buy ${numberOf} egg for ${Number(value) / 10**12}`,
+      confirmed: false,
+      hash: res.ID,
+      from: res.from
+    });
 
     return String(res.ID);
   }
@@ -61,6 +71,7 @@ export class CrowdSale {
     };
     const amount = new BN(state.zlpPrice);
     numberOf = new BN(numberOf);
+    const value = amount.mul(numberOf).toString();
     const params = [
       {
         vname: 'to',
@@ -70,7 +81,7 @@ export class CrowdSale {
       {
         vname: 'amount',
         type: 'Uint128',
-        value: amount.mul(numberOf).toString()
+        value: value
       }
     ];
     const transition = 'Transfer';
@@ -80,6 +91,14 @@ export class CrowdSale {
       amount: '0',
       contractAddress: Contracts.ZIlPay
     }, gas);
+
+    pushToList({
+      timestamp: new Date().getTime(),
+      name: `Buy ${numberOf} egg for ${Number(value) / 10**18} $ZLP`,
+      confirmed: false,
+      hash: res.ID,
+      from: res.from
+    });
 
     return String(res.ID);
   }

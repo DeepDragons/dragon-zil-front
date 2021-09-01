@@ -1,5 +1,7 @@
 import { ZilPayBase } from 'mixin/zilpay-base';
 import { Contracts } from 'config/contracts';
+import { pushToList } from '@/store/transactions';
+import { getKeyByValue } from '@/lib/key-by-value';
 
 export class DragonZIL {
   public zilpay = new ZilPayBase();
@@ -54,6 +56,14 @@ export class DragonZIL {
       contractAddress: Contracts.Main
     });
 
+    pushToList({
+      timestamp: new Date().getTime(),
+      name: `Approve a dragon for ${getKeyByValue(Contracts, to)}`,
+      confirmed: false,
+      hash: res.ID,
+      from: res.from
+    });
+
     return String(res.ID);
   }
 
@@ -84,6 +94,14 @@ export class DragonZIL {
       contractAddress: Contracts.Main
     });
 
+    pushToList({
+      timestamp: new Date().getTime(),
+      name: `Hatch an egg #${tokenId}`,
+      confirmed: false,
+      hash: res.ID,
+      from: res.from
+    });
+
     return String(res.ID);
   }
 
@@ -101,6 +119,14 @@ export class DragonZIL {
       params,
       amount: '0',
       contractAddress: Contracts.Main
+    });
+
+    pushToList({
+      timestamp: new Date().getTime(),
+      name: `Kill a dragon #${tokenId}`,
+      confirmed: false,
+      hash: res.ID,
+      from: res.from
     });
 
     return String(res.ID);

@@ -1,5 +1,6 @@
 import { ZilPayBase } from 'mixin/zilpay-base';
 import { Contracts } from 'config/contracts';
+import { pushToList } from '@/store/transactions';
 
 export class MarketPlace {
   public static zilDecimal = '1000000000000';
@@ -51,6 +52,14 @@ export class MarketPlace {
       contractAddress: Contracts.MarketPlace
     });
 
+    pushToList({
+      timestamp: new Date().getTime(),
+      name: `Sell a dragon #${tokenId} on market-palce for ${price}`,
+      confirmed: false,
+      hash: res.ID,
+      from: res.from
+    });
+
     return String(res.ID);
   }
 
@@ -62,12 +71,20 @@ export class MarketPlace {
         value: tokenId
       }
     ];
-    const transition = 'Sell';
+    const transition = 'Purchase';
     const res = await this.zilpay.call({
       transition,
       params,
       amount,
       contractAddress: Contracts.MarketPlace
+    });
+
+    pushToList({
+      timestamp: new Date().getTime(),
+      name: `Purchase a dragon #${tokenId} for ${Number(amount) / 10**12}`,
+      confirmed: false,
+      hash: res.ID,
+      from: res.from
     });
 
     return String(res.ID);

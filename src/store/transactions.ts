@@ -5,38 +5,11 @@ const LIMIT = 10;
 export interface Tx {
   hash: string;
   name: string;
-  data: string;
   from: string;
-  value?: string;
-  toAddr: string;
   timestamp: number;
   confirmed: boolean;
-  id?: string;
 }
-let initState: Tx[] = [
-  {
-    hash: 'be61588f7502070da9af36fe78f9e60124282688b51ca922baafe3cacf2ba542',
-    name: 'Approve',
-    data: '',
-    value: '100 ZLP',
-    from: '',
-    toAddr: '',
-    confirmed: false,
-    id: '300',
-    timestamp: new Date().getTime()
-  },
-  {
-    hash: '73e6b6384afd11b1638fa04eecca8d605f6fb62c427a011f8aa874a873ce596b',
-    name: 'Breed',
-    data: '',
-    from: '',
-    value: '1 ZIL',
-    toAddr: '',
-    id: '3123',
-    confirmed: true,
-    timestamp: new Date().getTime()
-  }
-];
+let initState: Tx[] = [];
 const txDomain = createDomain();
 
 export const storageKey = 'transaction-listener';
