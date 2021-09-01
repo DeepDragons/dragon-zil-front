@@ -1,5 +1,6 @@
 import React from 'react';
 import Loader from "react-loader-spinner";
+import { useStore } from 'effector-react';
 import copy from 'clipboard-copy';
 import styled from 'styled-components';
 
@@ -13,6 +14,7 @@ import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
 import { trim } from '@/lib/trim';
 import { viewAddress } from '@/lib/viewblock';
+import { $transactions } from 'store/transactions';
 
 type Prop = {
   show: boolean;
@@ -83,10 +85,7 @@ export const AccountModal: React.FC<Prop> = ({
   onClose,
   address = ''
 }) => {
-
-  const list = [{
-    dsad: ''
-  }];
+  const txList = useStore($transactions);
 
   return (
     <Modal
@@ -149,11 +148,11 @@ export const AccountModal: React.FC<Prop> = ({
         </Row>
       </AccountContainer>
       <TxContainer>
-        {list.length === 0 ? (
+        {txList.length === 0 ? (
           <Text
             fontVariant={StyleFonts.FiraSansRegular}
             size="16px"
-            css="text-align: center;margin-top: 27px;"
+            css="text-align: center;margin-top: 10px;"
           >
             Your transactions will appear here...
           </Text>

@@ -24,7 +24,7 @@ if (process.browser) {
   }
 }
 
-export const $wallet = txDomain
+export const $transactions = txDomain
   .createStore<Tx[]>(initState)
   .on(pushToList, (state, tx) => {
     if (state.length >= LIMIT) {
