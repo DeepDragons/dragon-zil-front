@@ -11,7 +11,7 @@ export class FigthPlace {
     const BN = zilpay.utils.BN;
     const priceBN = new BN(String(price));
     const decimal = new BN(ZIlPayToken.decimal);
-    const value = priceBN.mul(decimal);
+    const value = priceBN.mul(decimal).toString();
     const params = [
       {
         vname: 'token_id',

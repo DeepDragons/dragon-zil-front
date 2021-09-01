@@ -23,6 +23,10 @@ export const $transactions = txDomain
   .createStore<Tx[]>(initState)
   .on(clearTxList, () => [])
   .on(writeNewList, (_, payload) => {
+    if (payload.length === 0) {
+      return payload;
+    }
+
     window.localStorage.setItem(payload[0].from, JSON.stringify(payload));
 
     return payload;

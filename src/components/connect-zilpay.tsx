@@ -91,7 +91,15 @@ export const ConnectZIlPay: React.FC = () => {
           }
 
           if (element.includes(tx.hash)) {
-            list[i].confirmed = true;
+            try {
+              const res = await zp.blockchain.getTransaction(tx.hash);
+              if (res && res.receipt && res.receipt.errors) {
+                tx.error = true;
+              }
+              list[i].confirmed = true;
+            } catch {
+              continue;
+            }
           }
         }
       }
@@ -102,7 +110,7 @@ export const ConnectZIlPay: React.FC = () => {
 
         try {
           const res = await zp.blockchain.getTransaction(tx.hash);
-          
+
           if (res && res.receipt && res.receipt.errors) {
             tx.error = true;
           }
