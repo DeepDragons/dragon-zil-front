@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { useStore } from 'effector-react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
@@ -7,16 +8,20 @@ import { Text } from 'components/text';
 import { ScreenModal } from '../screen-modal';
 import { Logo, links } from 'components/nav-bar';
 import { CloseIcon } from 'components/icons/close';
+import { TxCard } from 'components/tx-card';
+import { AccountCard } from 'components/account-card';
 
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
 import Loader from 'react-loader-spinner';
 import { trim } from '@/lib/trim';
+import { Wallet } from '@/store/wallet';
+import { $transactions, resetTxList } from 'store/transactions';
 
 type Prop = {
   show: boolean;
   loading: boolean;
-  address?: string;
+  wallet: Wallet | null;
   onConnect: () => void;
   onClose: () => void;
 };
@@ -39,6 +44,7 @@ const ConnectButton = styled.button`
   color: ${Colors.Muted};
   border-radius: 16px;
   padding: 17px 68px;
+  min-width: 230px;
   cursor: pointer;
   border: 1px solid ${Colors.Muted};
 `;
@@ -54,24 +60,47 @@ const Item = styled.li`
     ${(props: { selected: boolean }) =>
       props.selected ? Colors.Info : '#14161C'};
 `;
+const HeaderTxns = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+`;
 
 export const MobileNavigate: React.FC<Prop> = ({
   show,
   loading,
   onConnect,
-  address,
+  wallet,
   onClose
 }) => {
   const router = useRouter();
+  const txList = useStore($transactions);
+  const [showMenu, setShowMenu] = React.useState(false);
 
   const connectText = React.useMemo(() => {
-    return address ? trim(address) : 'Connect';
-  }, [address]);
+    if (showMenu && wallet) {
+      return 'Cancel';
+    }
+    if (wallet) {
+      return trim(wallet.bech32);
+    }
+    return 'Connect';
+  }, [wallet, showMenu]);
 
   const hanldeNavigate = React.useCallback((path: string) => {
     router.push(path);
     onClose();
   }, []);
+
+  const hanldeMenuOrConnect = React.useCallback(() => {
+    if (showMenu) {
+      setShowMenu(false);
+    } else if (wallet) {
+      setShowMenu(true);
+    } else {
+      onConnect();
+    }
+  }, [showMenu, wallet]);
 
   return (
     <ScreenModal
@@ -99,7 +128,7 @@ export const MobileNavigate: React.FC<Prop> = ({
             <CloseIcon />
           </div>
         </Wrapper>
-        <ul>
+        <ul style={{ display: showMenu ? 'none' : 'block' }}>
           {links.map((link, index) => (
             <Item
               key={index}
@@ -110,7 +139,44 @@ export const MobileNavigate: React.FC<Prop> = ({
             </Item>
           ))}
         </ul>
-        <ConnectButton onClick={onConnect}>
+        <div style={{ display: showMenu ? 'block' : 'none' }}>
+          <AccountCard wallet={wallet}/>
+          {txList.length === 0 ? (
+            <Text
+              fontVariant={StyleFonts.FiraSansRegular}
+              size="20px"
+              css="text-align: center;margin-top: 10px;"
+            >
+              Your transactions will appear here...
+            </Text>
+          ) : (
+            <HeaderTxns>
+              <Text
+                fontVariant={StyleFonts.FiraSansRegular}
+                size="20px"
+                css=""
+              >
+                Recent Transactions
+              </Text>
+              <Text
+                fontVariant={StyleFonts.FiraSansRegular}
+                fontColors={Colors.Info}
+                size="20px"
+                css="cursor: pointer;user-select: none;"
+                onClick={() => resetTxList(String(wallet?.base16))}
+              >
+                (clear all)
+              </Text>
+            </HeaderTxns>
+          )}
+          {txList.map((tx) => (
+            <TxCard
+              key={tx.hash}
+              tx={tx}
+            />
+          ))}
+        </div>
+        <ConnectButton onClick={hanldeMenuOrConnect}>
           {loading ? (
             <Loader
               type="ThreeDots"

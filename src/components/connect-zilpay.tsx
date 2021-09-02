@@ -207,7 +207,7 @@ export const ConnectZIlPay: React.FC = () => {
         <MobileNavigate
           show={showModal}
           loading={loading}
-          address={address.bech32}
+          wallet={address}
           onConnect={handleConnect}
           onClose={() => setShowModal(false)}
         />
