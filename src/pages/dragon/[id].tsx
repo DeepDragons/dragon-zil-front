@@ -7,7 +7,6 @@ import dynamic from 'next/dynamic';
 
 import { Navbar } from 'components/nav-bar';
 import { Text } from 'components/text';
-import { ParentsSection } from 'components/dragon/parents';
 import { Container } from 'components/pages/container';
 import { TransferModal } from 'components/modals/transfer';
 import { SaleModal } from 'components/modals/sale';
@@ -25,7 +24,6 @@ import { StyleFonts } from '@/config/fonts';
 import { getMarketOrder, getMarketPrice } from 'lib/get-action';
 
 const RarityImage = dynamic(import('components/rarity-image'));
-const BattlesSection = dynamic(import('components/dragon/battles'));
 const CombatGens = dynamic(import('components/dragon/combat-gens'));
 const BodyParts = dynamic(import('components/dragon/body-parts'));
 const ActionBar = dynamic(import('components/dragon/action-bar'));
@@ -146,7 +144,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
               gens={rarity.gensImage}
               color={rarity.color}
             />
-            <BattlesSection
+            {/* <BattlesSection
               color={rarity.color}
               win={dragon.fight_win}
               lost={dragon.fight_lose}
@@ -157,7 +155,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
                 first="300"
                 second="230"
               />
-            ) : null}
+            ) : null} */}
           </div>
         </Wrapper>
       ) : null}

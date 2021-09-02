@@ -62,6 +62,11 @@ export const Footer: React.FC = () => {
               Terms of service
             </Link>
           </Li>
+          <Li>
+            <Link href="/referral">
+              Referral program.
+            </Link>
+          </Li>
         </ul>
       </Wrapper>
       <Wrapper>
