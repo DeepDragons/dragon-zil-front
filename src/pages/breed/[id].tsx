@@ -91,6 +91,22 @@ export const BreedStart: NextPage = () => {
           content={`Breeding with #${router.query.id}`}
           key="title"
         />
+        <link
+          rel="canonical"
+          href={`https://dragonzil.xyz/breed/${router.query.id}`}
+        />
+        <meta
+          name="description"
+          content={`Breeding with #${router.query.id}`}
+        />
+        <meta
+          name="keywords"
+          content="Breeding, Dragons"
+        />
+        <meta
+          property="og:image"
+          content={dragon?.url}
+        />
       </Head>
       <Navbar />
       <Wrapper>

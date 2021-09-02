@@ -73,6 +73,22 @@ export const FightStart: NextPage = () => {
           content={`Fighting with #${router.query.id}`}
           key="title"
         />
+        <link
+          rel="canonical"
+          href={`https://dragonzil.xyz/fights/${router.query.id}`}
+        />
+        <meta
+          name="description"
+          content={`Fighting with #${router.query.id}`}
+        />
+        <meta
+          name="keywords"
+          content="Fighting, Dragons"
+        />
+        <meta
+          property="og:image"
+          content={attacked?.url}
+        />
       </Head>
       <Navbar />
       <Wrapper>

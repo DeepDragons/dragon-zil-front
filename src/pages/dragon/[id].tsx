@@ -88,10 +88,26 @@ export const Dragon: NextPage = () => {
         <title>
           {dragon?.stage === 0 ? 'Egg' : 'Dragon'} #{dragon?.id}
         </title>
+        <link
+          rel="canonical"
+          href={`https://dragonzil.xyz/dragon/${router.query.id}`}
+        />
         <meta
           property="og:title"
           content={`${dragon?.stage === 0 ? 'Egg' : 'Dragon'} #${dragon?.id}`}
           key="title"
+        />
+        <meta
+          name="description"
+          content={`${dragon?.stage === 0 ? 'An Egg' : 'A Dragon'} #${dragon?.id}`}
+        />
+        <meta
+          name="keywords"
+          content={dragon?.stage === 0 ? 'An Egg' : 'A Dragon'}
+        />
+        <meta
+          property="og:image"
+          content={dragon?.url}
         />
       </Head>
       <Navbar />
