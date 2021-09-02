@@ -178,3 +178,5 @@ export const CombatGens: React.FC<Prop> = ({
     </Container>
   );
 };
+
+export default CombatGens;

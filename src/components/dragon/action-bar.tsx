@@ -301,3 +301,5 @@ export const ActionBar: React.FC<Prop> = ({
     </Container>
   );
 };
+
+export default ActionBar;

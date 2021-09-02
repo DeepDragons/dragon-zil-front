@@ -2,20 +2,21 @@ import React from 'react';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import Loader from "react-loader-spinner";
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
 import { Navbar } from 'components/nav-bar';
 import { Container } from 'components/pages/container';
-import { ChoiceWith } from 'components/dragon/choice-with';
-import { CompareCombatGens } from 'components/dragon/compare-combat-gens'; 
 import { Wrapper, PageTitle } from 'components/dragon/styles';
 
 import { DragonAPI, DragonObject } from 'lib/api';
 import { FigthPlace } from 'mixin/fight-place';
-import { $dragonCache } from 'store/cache-dragon';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
 import { getPrice } from 'lib/get-price';
+
+const CompareCombatGens = dynamic(import('components/dragon/compare-combat-gens'));
+const ChoiceWith = dynamic(import('components/dragon/choice-with'));
 
 type Prop = {
   defended: DragonObject;

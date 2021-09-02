@@ -76,3 +76,5 @@ export const BattlesSection: React.FC<Prop> = ({
     </Container>
   );
 };
+
+export default BattlesSection;

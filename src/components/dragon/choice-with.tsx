@@ -112,3 +112,5 @@ export const ChoiceWith: React.FC<Prop> = ({
     </MainContainer>
   );
 };
+
+export default ChoiceWith;

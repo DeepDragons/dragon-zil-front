@@ -11,9 +11,7 @@ import {
   AncientAura
 } from 'components/aura';
 
-import { EMPTY } from 'config/emty';
 import { RARITY } from 'lib/rarity';
-import { Colors } from '@/config/colors';
 
 type Prop = {
   id: string;
@@ -103,3 +101,5 @@ export const RarityImage: React.FC<Prop> = ({
     />
   ][rarity];
 };
+
+export default RarityImage;

@@ -45,3 +45,5 @@ export const CompareCombatGens: React.FC<Prop> = ({
     </Container>
   );
 };
+
+export default CompareCombatGens;

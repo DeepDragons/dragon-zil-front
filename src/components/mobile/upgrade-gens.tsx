@@ -106,3 +106,5 @@ export const MobileUpgradeGens: React.FC<Prop> = ({
     </Container>
   );
 };
+
+export default MobileUpgradeGens;

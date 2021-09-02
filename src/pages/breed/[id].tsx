@@ -3,13 +3,12 @@ import { GetServerSidePropsContext, NextPage } from 'next';
 import styled from 'styled-components';
 import Loader from "react-loader-spinner";
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
 import { Navbar } from 'components/nav-bar';
 import { Container } from 'components/pages/container';
-import { ChoiceWith } from 'components/dragon/choice-with';
 import { BreadGensForm } from 'components/dragon/breed-gens';
-import { CompareCombatGens } from 'components/dragon/compare-combat-gens'; 
 
 import { DragonAPI, DragonObject } from 'lib/api';
 import { BreedPlace } from 'mixin/breed';
@@ -18,6 +17,9 @@ import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
 import { Wrapper, PageTitle } from 'components/dragon/styles';
 import { getPrice } from '@/lib/get-price';
+
+const CompareCombatGens = dynamic(import('components/dragon/compare-combat-gens'));
+const ChoiceWith = dynamic(import('components/dragon/choice-with'));
 
 type Prop = {
   lover: DragonObject;

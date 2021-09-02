@@ -3,14 +3,10 @@ import { GetServerSidePropsContext, NextPage } from 'next';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 
-import { RarityImage } from 'components/rarity-image';
 import { Navbar } from 'components/nav-bar';
 import { Text } from 'components/text';
-import { ActionBar } from 'components/dragon/action-bar';
-import { CombatGens } from 'components/dragon/combat-gens';
-import { BodyParts } from 'components/dragon/body-parts';
-import { BattlesSection } from 'components/dragon/battles';
 import { ParentsSection } from 'components/dragon/parents';
 import { Container } from 'components/pages/container';
 import { TransferModal } from 'components/modals/transfer';
@@ -27,6 +23,12 @@ import { BreedPlace } from 'mixin/breed';
 import { MarketPlace } from 'mixin/market-place';
 import { StyleFonts } from '@/config/fonts';
 import { getMarketOrder, getMarketPrice } from 'lib/get-action';
+
+const RarityImage = dynamic(import('components/rarity-image'));
+const BattlesSection = dynamic(import('components/dragon/battles'));
+const CombatGens = dynamic(import('components/dragon/combat-gens'));
+const BodyParts = dynamic(import('components/dragon/body-parts'));
+const ActionBar = dynamic(import('components/dragon/action-bar'));
 
 type prop = {
   dragon: DragonObject;

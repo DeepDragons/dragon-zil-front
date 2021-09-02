@@ -83,3 +83,5 @@ export const BodyParts: React.FC<Prop> = ({ color, gens }) => {
     </Container>
   );
 };
+
+export default BodyParts;

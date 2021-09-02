@@ -4,21 +4,23 @@ import { useRouter } from 'next/router';
 import { useStore } from 'effector-react';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { NextPage } from 'next';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
 import { Container } from 'components/pages/container';
 import { Navbar } from 'components/nav-bar';
 import { ActionBarTitle } from 'components/dragon/action-bar-title';
-import { UpgradeGens } from 'components/dragon/upgrade-gens';
-import { MobileUpgradeGens } from 'components/mobile/upgrade-gens';
 import { UpgradeGenModal } from 'components/modals/upgrade-gen';
-import { RarityImage } from '@/components/rarity-image';
 
 import { $dragonCache } from 'store/cache-dragon';
 import { DragonAPI, DragonObject } from '@/lib/api';
 import { getRarity } from '@/lib/rarity';
 import { $wallet } from '@/store/wallet';
 import { GenLab } from 'mixin/gen-lab';
+
+const UpgradeGens = dynamic(import('components/dragon/upgrade-gens'));
+const MobileUpgradeGens = dynamic(import('components/mobile/upgrade-gens'));
+const RarityImage = dynamic(import('components/rarity-image'));
 
 const Wrapper = styled.div`
   display: flex;

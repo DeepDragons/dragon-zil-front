@@ -162,3 +162,5 @@ export const UpgradeGens: React.FC<Prop> = ({
     </Container>
   );
 };
+
+export default UpgradeGens;
