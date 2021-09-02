@@ -158,25 +158,21 @@ export const ConnectZIlPay: React.FC = () => {
         updateTxList(JSON.parse(cache));
       }
     } catch (err) {
-      console.error(err);
+      console.warn(err);
     }
     setLoading(false);
   }, []);
 
   React.useEffect(() => {
-    try {
-      const wallet = new ZilPayBase();
+    const wallet = new ZilPayBase();
 
-      wallet
-        .zilpay
-        .then((zp) => {
-          hanldeObserverState(zp);
-          setLoading(false);
-        })
-        .catch((err) => setLoading(false));
-    } catch (err) {
-      setLoading(false);
-    }
+    wallet
+      .zilpay
+      .then((zp) => {
+        hanldeObserverState(zp);
+        setLoading(false);
+      })
+      .catch((err) => setLoading(false));
 
     return () => {
       if (observer) {

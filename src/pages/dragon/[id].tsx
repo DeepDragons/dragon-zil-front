@@ -1,5 +1,5 @@
 import React from 'react';
-import { NextPage } from 'next';
+import { GetServerSidePropsContext, NextPage } from 'next';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -28,6 +28,10 @@ import { MarketPlace } from 'mixin/market-place';
 import { StyleFonts } from '@/config/fonts';
 import { getMarketOrder, getMarketPrice } from 'lib/get-action';
 
+type prop = {
+  dragon: DragonObject;
+}
+
 const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -44,10 +48,9 @@ const Wrapper = styled.div`
 const backend = new DragonAPI();
 const breedPlace = new BreedPlace();
 const marketPlace = new MarketPlace();
-export const Dragon: NextPage = () => {
+export const Dragon: NextPage<prop> = ({ dragon }) => {
   const router = useRouter();
 
-  const [dragon, setDragon] = React.useState<DragonObject | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [transfer, setTransfer] = React.useState(false);
   const [sale, setSale] = React.useState(false);
@@ -70,32 +73,20 @@ export const Dragon: NextPage = () => {
     }
   }, [dragon]);
 
-  React.useEffect(() => {
-    if (router.query.id) {
-      backend
-        .getDragon(String(router.query.id))
-        .then((dragon) => {
-          setDragon(dragon);
-          setLoading(false);
-        })
-        .catch(() => setLoading(false));
-    }
-  }, [router.query.id]);
-
   return (
     <Container>
       <Head>
         <title>
           {dragon?.stage === 0 ? 'Egg' : 'Dragon'} #{dragon?.id}
         </title>
-        <link
-          rel="canonical"
-          href={`https://dragonzil.xyz/dragon/${router.query.id}`}
-        />
         <meta
           property="og:title"
           content={`${dragon?.stage === 0 ? 'Egg' : 'Dragon'} #${dragon?.id}`}
           key="title"
+        />
+        <link
+          rel="canonical"
+          href={`https://dragonzil.xyz/dragon/${router.query.id}`}
         />
         <meta
           name="description"
@@ -194,19 +185,39 @@ export const Dragon: NextPage = () => {
       />
       <SuicideModal
         show={suicide}
-        id={dragon?.id || ''}
+        id={dragon?.id}
         stage={dragon?.stage || 0}
         onClose={() => setSuicide(false)}
       />
       {dragon?.stage == 0 ? (
         <HatchEggModal
           show={hatchEgg}
-          id={dragon?.id || ''}
+          id={dragon.id}
           onClose={() => setHatchEgg(false)}
         />
       ) : null}
     </Container>
   );
 };
+
+export const getStaticProps = async (props: GetServerSidePropsContext) => {
+  const dragonId = String(props.params && props.params.id);
+  const dragon = await backend.getDragon(String(dragonId));
+
+  return {
+    props: {
+      dragon
+    }
+  };
+};
+
+export async function getStaticPaths() {
+  return {
+    paths: [
+      '/dragon/id',
+    ],
+    fallback: true
+  }
+}
 
 export default Dragon;
