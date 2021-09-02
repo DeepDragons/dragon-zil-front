@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { useStore } from 'effector-react';
 import { BrowserView, MobileView } from 'react-device-detect';
-import { NextPage } from 'next';
+import { GetServerSidePropsContext, NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
@@ -21,6 +21,10 @@ import { GenLab } from 'mixin/gen-lab';
 const UpgradeGens = dynamic(import('components/dragon/upgrade-gens'));
 const MobileUpgradeGens = dynamic(import('components/mobile/upgrade-gens'));
 const RarityImage = dynamic(import('components/rarity-image'));
+
+type Prop = {
+  dragon: DragonObject;
+}
 
 const Wrapper = styled.div`
   display: flex;
@@ -46,11 +50,9 @@ const TitleWrapper = styled.div`
 
 const backend = new DragonAPI();
 const genLab = new GenLab();
-export const GenLabPage: NextPage = () => {
+export const GenLabPage: NextPage<Prop> = ({ dragon }) => {
   const router = useRouter();
   const address = useStore($wallet);
-  const [loading, setLoading] = React.useState(false);
-  const [dragon, setDragon] = React.useState<DragonObject | null>(null);
   const [price, setPrice] = React.useState<string | null>('0');
   const [showModal, setShowModal] = React.useState(false);
   const [genToUpgrade, setGenToUpgrade] = React.useState({
@@ -85,21 +87,6 @@ export const GenLabPage: NextPage = () => {
       .getPrice(String(router.query.id))
       .then(([price]) => setPrice(price))
       .catch(console.error);
-    const cache = $dragonCache.getState();
-
-    if (router.query.id && !cache) {
-      backend
-        .getDragon(String(router.query.id))
-        .then((dragon) => {
-          setDragon(dragon);
-          setLoading(false);
-        })
-        .catch(() => setLoading(false));
-    }
-
-    if (cache) {
-      setDragon(cache);
-    }
   }, [router.query.id]);
 
   React.useEffect(() => {
@@ -112,11 +99,11 @@ export const GenLabPage: NextPage = () => {
     <Container>
       <Head>
         <title>
-          Mutate a dragon #{router.query.id}
+          Mutate a dragon #{dragon.id}
         </title>
         <meta
           property="og:title"
-          content={`Mutate a dragon #${router.query.id}`}
+          content={`Mutate a dragon #${dragon.id}`}
           key="title"
         />
       </Head>
@@ -165,6 +152,26 @@ export const GenLabPage: NextPage = () => {
       />
     </Container>
   );
+}
+
+export const getStaticProps = async (props: GetServerSidePropsContext) => {
+  const dragonId = String(props.params && props.params.id);
+  const dragon = await backend.getDragon(String(dragonId));
+
+  return {
+    props: {
+      dragon
+    }
+  };
+};
+
+export async function getStaticPaths() {
+  return {
+    paths: [
+      '/mutate/id',
+    ],
+    fallback: true
+  }
 }
 
 export default GenLabPage;

@@ -55,7 +55,7 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
         </title>
         <meta
           property="og:title"
-          content={`Fighting with #${defended?.id}`}
+          content={`Fighting with #${defended?.id} for ${amount} $ZLP`}
           key="title"
         />
         <link

@@ -2,7 +2,6 @@ import React from 'react';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import styled from 'styled-components';
 import Loader from "react-loader-spinner";
-import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
@@ -32,8 +31,6 @@ const Column = styled.div`
 const backend = new DragonAPI();
 const breedPlace = new BreedPlace();
 export const BreedStart: NextPage<Prop> = ({ lover }) => {
-  const router = useRouter();
-
   const [myDragon, setMyDragon] = React.useState<DragonObject | null>(null);
   const [loading, setLoading] = React.useState(false);
 
@@ -70,16 +67,16 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
     <Container>
       <Head>
         <title>
-          Breeding with #{router.query.id}
+          Breeding with #{lover?.id}
         </title>
         <meta
           property="og:title"
-          content={`Breeding with #${router.query.id}`}
+          content={`Breeding with #${lover?.id} for ${Number(amount) / 10**18} $ZLP`}
           key="title"
         />
         <link
           rel="canonical"
-          href={`https://dragonzil.xyz/breed/${router.query.id}`}
+          href={`https://dragonzil.xyz/breed/${lover?.id}`}
         />
         <meta
           name="description"
@@ -105,7 +102,7 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
           fontVariant={StyleFonts.FiraSansBold}
           size="56px"
         >
-          Bread with #{router.query.id}
+          Bread with #{lover?.id}
         </PageTitle>
         <PageTitle
           fontVariant={StyleFonts.FiraSansMedium}
