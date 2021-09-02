@@ -78,16 +78,16 @@ export const FightStart: NextPage = () => {
           href={`https://dragonzil.xyz/fights/${router.query.id}`}
         />
         <meta
-          name="description"
-          content={`Fighting with #${router.query.id}`}
-        />
-        <meta
           name="keywords"
           content="Fighting, Dragons"
         />
         <meta
           property="og:image"
-          content={attacked?.url}
+          content={defended?.url}
+        />
+        <meta
+          name="twitter:card"
+          content="summary_large_image"
         />
       </Head>
       <Navbar />

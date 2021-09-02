@@ -87,18 +87,26 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
         <link
           rel="canonical"
           href={`https://dragonzil.xyz/dragon/${router.query.id}`}
+          data-rh="true"
         />
         <meta
           name="description"
-          content={`${dragon?.stage === 0 ? 'An Egg' : 'A Dragon'} #${dragon?.id}`}
+          content={`Rarity ${rarity?.name}`}
+          data-rh="true"
         />
         <meta
           name="keywords"
           content={dragon?.stage === 0 ? 'An Egg' : 'A Dragon'}
+          data-rh="true"
         />
         <meta
           property="og:image"
           content={dragon?.url}
+          data-rh="true"
+        />
+        <meta
+          name="twitter:card"
+          content="summary_large_image"
         />
       </Head>
       <Navbar />

@@ -97,7 +97,8 @@ export const BreedStart: NextPage = () => {
         />
         <meta
           name="description"
-          content={`Breeding with #${router.query.id}`}
+          content={`Rarity ${rarityLover?.name}`}
+          data-rh="true"
         />
         <meta
           name="keywords"
@@ -106,6 +107,10 @@ export const BreedStart: NextPage = () => {
         <meta
           property="og:image"
           content={dragon?.url}
+        />
+        <meta
+          name="twitter:card"
+          content="summary_large_image"
         />
       </Head>
       <Navbar />
