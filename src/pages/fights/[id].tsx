@@ -1,5 +1,5 @@
 import React from 'react';
-import { NextPage } from 'next';
+import { GetServerSidePropsContext, NextPage } from 'next';
 import Loader from "react-loader-spinner";
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -17,15 +17,17 @@ import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
 import { getPrice } from 'lib/get-price';
 
+type Prop = {
+  defended: DragonObject;
+}
+
 const backend = new DragonAPI();
 const figthPlace = new FigthPlace();
-export const FightStart: NextPage = () => {
+export const FightStart: NextPage<Prop> = ({ defended }) => {
   const router = useRouter();
 
-  const [defended, setDefended] = React.useState<DragonObject | null>(null);
   const [attacked, setAttacked] = React.useState<DragonObject | null>(null);
   const [loading, setLoading] = React.useState(false);
-  const [skelet, setSkelet] = React.useState(true);
 
   const amount = React.useMemo(() => {
     return getPrice(defended?.actions);
@@ -44,38 +46,20 @@ export const FightStart: NextPage = () => {
     setLoading(false);
   }, [defended, attacked]);
 
-  React.useEffect(() => {
-    const cache = $dragonCache.getState();
-
-    if (router.query.id && !cache) {
-      backend
-        .getDragon(String(router.query.id))
-        .then((dragon) => {
-          setDefended(dragon);
-          setSkelet(false);
-        })
-        .catch(() => setSkelet(false));
-    }
-
-    if (cache) {
-      setDefended(cache);
-    }
-  }, [router.query.id]);
-
   return (
     <Container>
       <Head>
         <title>
-          Fighting with #{router.query.id}
+          Fighting with #{defended?.id}
         </title>
         <meta
           property="og:title"
-          content={`Fighting with #${router.query.id}`}
+          content={`Fighting with #${defended?.id}`}
           key="title"
         />
         <link
           rel="canonical"
-          href={`https://dragonzil.xyz/fights/${router.query.id}`}
+          href={`https://dragonzil.xyz/fights/${defended?.id}`}
         />
         <meta
           name="keywords"
@@ -137,5 +121,25 @@ export const FightStart: NextPage = () => {
     </Container>
   );
 };
+
+export const getStaticProps = async (props: GetServerSidePropsContext) => {
+  const dragonId = String(props.params && props.params.id);
+  const defended = await backend.getDragon(String(dragonId));
+
+  return {
+    props: {
+      defended
+    }
+  };
+};
+
+export async function getStaticPaths() {
+  return {
+    paths: [
+      '/fights/id',
+    ],
+    fallback: true
+  }
+}
 
 export default FightStart;

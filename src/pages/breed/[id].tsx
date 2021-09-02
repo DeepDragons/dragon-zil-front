@@ -1,5 +1,5 @@
 import React from 'react';
-import { NextPage } from 'next';
+import { GetServerSidePropsContext, NextPage } from 'next';
 import styled from 'styled-components';
 import Loader from "react-loader-spinner";
 import { useRouter } from 'next/router';
@@ -14,11 +14,14 @@ import { CompareCombatGens } from 'components/dragon/compare-combat-gens';
 import { DragonAPI, DragonObject } from 'lib/api';
 import { BreedPlace } from 'mixin/breed';
 import { getRarity } from 'lib/rarity';
-import { $dragonCache } from 'store/cache-dragon';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
 import { Wrapper, PageTitle } from 'components/dragon/styles';
 import { getPrice } from '@/lib/get-price';
+
+type Prop = {
+  lover: DragonObject;
+}
 
 const Column = styled.div`
   display: flex;
@@ -26,32 +29,31 @@ const Column = styled.div`
 `;
 const backend = new DragonAPI();
 const breedPlace = new BreedPlace();
-export const BreedStart: NextPage = () => {
+export const BreedStart: NextPage<Prop> = ({ lover }) => {
   const router = useRouter();
 
-  const [dragon, setDragon] = React.useState<DragonObject | null>(null);
   const [myDragon, setMyDragon] = React.useState<DragonObject | null>(null);
   const [loading, setLoading] = React.useState(false);
 
   const handleStartBreed = React.useCallback(async() => {
-    if (!dragon || !myDragon) {
+    if (!lover || !myDragon) {
       return null;
     }
     setLoading(true);
     try {
-      await breedPlace.startBreeding(dragon.id, myDragon.id);
+      await breedPlace.startBreeding(lover.id, myDragon.id);
     } catch {
       //
     }
     setLoading(false);
-  }, [dragon, myDragon]);
+  }, [lover, myDragon]);
 
   const rarityLover = React.useMemo(() => {
-    if (!dragon) {
+    if (!lover) {
       return null;
     }
-    return getRarity(dragon.rarity, dragon.gen_image);
-  }, [dragon]);
+    return getRarity(lover.rarity, lover.gen_image);
+  }, [lover]);
   const rarityMyDragon = React.useMemo(() => {
     if (!myDragon) {
       return null;
@@ -59,26 +61,8 @@ export const BreedStart: NextPage = () => {
     return getRarity(myDragon.rarity, myDragon.gen_image);
   }, [myDragon]);
   const amount = React.useMemo(() => {
-    return getPrice(dragon?.actions);
-  }, [dragon]);
-
-  React.useEffect(() => {
-    const cache = $dragonCache.getState();
-
-    if (router.query.id && !cache) {
-      backend
-        .getDragon(String(router.query.id))
-        .then((dragon) => {
-          setDragon(dragon);
-          setLoading(false);
-        })
-        .catch(() => setLoading(false));
-    }
-
-    if (cache) {
-      setDragon(cache);
-    }
-  }, [router.query.id]);
+    return getPrice(lover?.actions);
+  }, [lover]);
 
   return (
     <Container>
@@ -106,7 +90,7 @@ export const BreedStart: NextPage = () => {
         />
         <meta
           property="og:image"
-          content={dragon?.url}
+          content={lover?.url}
         />
         <meta
           name="twitter:card"
@@ -128,10 +112,10 @@ export const BreedStart: NextPage = () => {
           Price <span>{Number(amount) / 10**18} $ZLP</span>
         </PageTitle>
       </Wrapper>
-      {dragon && rarityLover ? (
+      {lover && rarityLover ? (
         <Wrapper>
           <ChoiceWith
-            dragon={dragon}
+            dragon={lover}
             myDragon={myDragon}
             color={Colors.Primary}
             btnColor={Colors.Primary}
@@ -151,12 +135,12 @@ export const BreedStart: NextPage = () => {
           {myDragon && rarityMyDragon && rarityLover ? (
             <Column>
               <CompareCombatGens
-                loverDragon={dragon}
+                loverDragon={lover}
                 myDragon={myDragon}
                 color={Colors.Muted}
               />
               <BreadGensForm
-                loverId={dragon.id}
+                loverId={lover.id}
                 myDragonId={myDragon.id}
                 myDragon={rarityMyDragon}
                 lover={rarityLover}
@@ -168,5 +152,25 @@ export const BreedStart: NextPage = () => {
     </Container>
   );
 };
+
+export const getStaticProps = async (props: GetServerSidePropsContext) => {
+  const dragonId = String(props.params && props.params.id);
+  const lover = await backend.getDragon(String(dragonId));
+
+  return {
+    props: {
+      lover
+    }
+  };
+};
+
+export async function getStaticPaths() {
+  return {
+    paths: [
+      '/breed/id',
+    ],
+    fallback: true
+  }
+}
 
 export default BreedStart;
