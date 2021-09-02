@@ -52,11 +52,8 @@ export interface ZIlPayBlockchain {
   }>>;
   createTransaction: (tx) => Promise<ZIlpayResponse<any>>;
   getBlockChainInfo: () => Promise<ZIlpayResponse<any>>;
-  getContractAddressFromTransactionID: (id: string) => Promise<ZIlpayResponse<any>>;
   getCurrentDSEpoch: () => Promise<ZIlpayResponse<any>>;
   getCurrentMiniEpoch: () => Promise<ZIlpayResponse<any>>;
-  getDSBlock: (block: string) => Promise<ZIlpayResponse<any>>;
-  getDSBlockListing: (block: string) => Promise<ZIlpayResponse<any>>;
   getDSBlockRate: () => Promise<ZIlpayResponse<any>>;
   getLatestDSBlock: () => Promise<ZIlpayResponse<any>>;
   getLatestTxBlock: () => Promise<ZIlpayResponse<any>>;
@@ -65,10 +62,6 @@ export interface ZIlPayBlockchain {
   getNumDSBlocks: () => Promise<ZIlpayResponse<any>>;
   getNumTransactions: () => Promise<ZIlpayResponse<any>>;
   getNumTxBlocks: () => Promise<ZIlpayResponse<any>>;
-  getNumTxnsDSEpoch: (block: string) => Promise<ZIlpayResponse<any>>;
-  getNumTxnsTxEpoch: (block: string) => Promise<ZIlpayResponse<any>>;
-  getPendingTxn: (id: string) => Promise<ZIlpayResponse<any>>;
-  getPendingTxns: () => Promise<ZIlpayResponse<any>>;
   getPrevDSDifficulty: () => Promise<ZIlpayResponse<any>>;
   getPrevDifficulty: () => Promise<ZIlpayResponse<any>>;
   getRecentTransactions: () => Promise<ZIlpayResponse<any>>;

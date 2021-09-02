@@ -18,14 +18,13 @@ export class ZilPayBase {
   constructor() {
     this.zilpay = new Promise((resolve, reject) => {
       if (!process.browser) {
-        reject('server has no ZIlPay');
-        return null;
+        return resolve({} as any);
       }
       let k = 0;
       const i = setInterval(() => {
         if (k >= 10) {
           clearInterval(i);
-          return reject('ZilPay inot installed');
+          return reject('ZIlPay is not installed.');
         }
 
         if (typeof window['zilPay'] !== 'undefined') {
@@ -39,6 +38,10 @@ export class ZilPayBase {
   }
 
   async getSubState(contract: string, field: string, params: string[] = []) {
+    if (!process.browser) {
+      return null;
+    }
+
     const zilPay = await this.zilpay;
     const res = await zilPay
       .blockchain
@@ -69,6 +72,9 @@ export class ZilPayBase {
   }
 
   async getState(contract: string) {
+    if (!process.browser) {
+      return null;
+    }
     const zilPay = await this.zilpay;
     const res = await zilPay
       .blockchain
@@ -84,6 +90,10 @@ export class ZilPayBase {
   }
 
   async getBlockchainInfo() {
+    if (!process.browser) {
+      return null;
+    }
+
     const zilPay = await this.zilpay;
     const { error, result } = await zilPay
       .blockchain
