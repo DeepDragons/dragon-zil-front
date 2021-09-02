@@ -3,6 +3,7 @@ import { NextPage } from 'next';
 import styled from 'styled-components';
 import Loader from "react-loader-spinner";
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 import { Navbar } from 'components/nav-bar';
 import { Container } from 'components/pages/container';
@@ -81,6 +82,16 @@ export const BreedStart: NextPage = () => {
 
   return (
     <Container>
+      <Head>
+        <title>
+          Breeding with #{router.query.id}
+        </title>
+        <meta
+          property="og:title"
+          content={`Breeding with #${router.query.id}`}
+          key="title"
+        />
+      </Head>
       <Navbar />
       <Wrapper>
         <PageTitle

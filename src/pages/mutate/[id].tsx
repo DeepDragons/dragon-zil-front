@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useStore } from 'effector-react';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { NextPage } from 'next';
+import Head from 'next/head';
 
 import { Container } from 'components/pages/container';
 import { Navbar } from 'components/nav-bar';
@@ -107,6 +108,16 @@ export const GenLabPage: NextPage = () => {
 
   return (
     <Container>
+      <Head>
+        <title>
+          Mutate a dragon #{router.query.id}
+        </title>
+        <meta
+          property="og:title"
+          content={`Mutate a dragon #${router.query.id}`}
+          key="title"
+        />
+      </Head>
       <Navbar />
       {dragon && rarity ? (
         <TitleWrapper>

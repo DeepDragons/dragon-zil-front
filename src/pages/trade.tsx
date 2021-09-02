@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
+import Head from 'next/head';
 import { useStore } from 'effector-react';
 
 import { Navbar } from 'components/nav-bar';
@@ -86,6 +87,16 @@ export const TradePage: NextPage = () => {
 
   return (
     <Container>
+      <Head>
+        <title>
+          Dragons market place.
+        </title>
+        <meta
+          property="og:title"
+          content="Dragons market place."
+          key="title"
+        />
+      </Head>
       <Navbar />
       <FilterBar
         title="Market"

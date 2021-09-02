@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NextPage } from 'next';
+import Head from 'next/head';
 
 import { Navbar } from 'components/nav-bar';
 import { Text } from 'components/text';
@@ -18,6 +19,16 @@ const Wrapper = styled.div`
 
 export const Terms: NextPage = () => (
   <Container>
+    <Head>
+      <title>
+        Terms of Policy.
+      </title>
+      <meta
+        property="og:title"
+        content="Terms of Policy."
+        key="title"
+      />
+    </Head>
     <Navbar />
     <Text
       fontVariant={StyleFonts.FiraSansBold}

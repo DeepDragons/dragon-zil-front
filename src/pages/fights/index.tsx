@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
-import Link from 'next/link';
+import Head from 'next/head';
 import { useStore } from 'effector-react';
 
 import { Navbar } from 'components/nav-bar';
@@ -93,6 +93,16 @@ export const FightPage: NextPage = () => {
 
   return (
     <Container>
+      <Head>
+        <title>
+          Fight place.
+        </title>
+        <meta
+          property="og:title"
+          content="Fight place."
+          key="title"
+        />
+      </Head>
       <Navbar />
       <FilterBar title="Fight arena" />
       <Wrapper>

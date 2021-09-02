@@ -2,6 +2,7 @@ import React from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 import { RarityImage } from 'components/rarity-image';
 import { Navbar } from 'components/nav-bar';
@@ -83,6 +84,16 @@ export const Dragon: NextPage = () => {
 
   return (
     <Container>
+      <Head>
+        <title>
+          {dragon?.stage === 0 ? 'Egg' : 'Dragon'} #{dragon?.id}
+        </title>
+        <meta
+          property="og:title"
+          content={`${dragon?.stage === 0 ? 'Egg' : 'Dragon'} #${dragon?.id}`}
+          key="title"
+        />
+      </Head>
       <Navbar />
       {dragon && rarity ? (
         <ActionBar

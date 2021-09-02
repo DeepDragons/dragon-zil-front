@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NextPage } from 'next';
-import { BrowserView, MobileView } from 'react-device-detect';
 import Link from 'next/link';
+import Head from 'next/head';
 
 import { Navbar } from 'components/nav-bar';
 import { Text } from 'components/text';
@@ -25,6 +25,16 @@ const Preview = styled.img`
 
 export const MainPage: NextPage = () => (
   <Container>
+    <Head>
+      <title>
+        DragonZIL
+      </title>
+      <meta
+        property="og:title"
+        content="DragonZIL"
+        key="title"
+      />
+    </Head>
     <Navbar />
     <Preview
       src="/imgs/dragons.png"

@@ -1,6 +1,7 @@
 import React from 'react';
 import { NextPage } from 'next';
 import { useStore } from 'effector-react';
+import Head from 'next/head';
 import Link from 'next/link';
 import Loader from "react-loader-spinner";
 
@@ -85,6 +86,16 @@ export const MyDragons: NextPage = () => {
 
   return (
     <Container>
+      <Head>
+        <title>
+          My Eggs | Dragons.
+        </title>
+        <meta
+          property="og:title"
+          content="My Eggs | Dragons."
+          key="title"
+        />
+      </Head>
       <Navbar />
       <FilterBar
         title="My dragons"

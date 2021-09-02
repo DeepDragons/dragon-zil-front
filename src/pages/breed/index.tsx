@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
 import { useStore } from 'effector-react';
+import Head from 'next/head';
 
 import { Navbar } from 'components/nav-bar';
 import { SkeletCard } from '@/components/skelet/card';
@@ -94,6 +95,16 @@ export const BreedPage: NextPage = () => {
 
   return (
     <Container>
+      <Head>
+        <title>
+          Breed place.
+        </title>
+        <meta
+          property="og:title"
+          content="Breed place."
+          key="title"
+        />
+      </Head>
       <Navbar />
       <FilterBar
         title="Dragon breeding"

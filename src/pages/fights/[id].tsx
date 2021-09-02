@@ -1,6 +1,7 @@
 import React from 'react';
 import { NextPage } from 'next';
 import Loader from "react-loader-spinner";
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { Navbar } from 'components/nav-bar';
@@ -63,6 +64,16 @@ export const FightStart: NextPage = () => {
 
   return (
     <Container>
+      <Head>
+        <title>
+          Fighting with #{router.query.id}
+        </title>
+        <meta
+          property="og:title"
+          content={`Fighting with #${router.query.id}`}
+          key="title"
+        />
+      </Head>
       <Navbar />
       <Wrapper>
         <PageTitle

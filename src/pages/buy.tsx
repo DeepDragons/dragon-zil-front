@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useStore } from 'effector-react';
 import { NextPage } from 'next';
+import Head from 'next/head';
 
 import { Navbar } from 'components/nav-bar';
 import Loader from "react-loader-spinner";
@@ -111,6 +112,16 @@ export const BuyPage: NextPage = () => {
 
   return (
     <Container>
+      <Head>
+        <title>
+          Buy an egg
+        </title>
+        <meta
+          property="og:title"
+          content="Buy an egg"
+          key="title"
+        />
+      </Head>
       <Navbar />
       <Main>
         <Form>
