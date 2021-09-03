@@ -1,7 +1,9 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { NextPage } from 'next';
+import { NextPage, GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 import { useStore } from 'effector-react';
 
 import { Navbar } from 'components/nav-bar';
@@ -34,6 +36,8 @@ let maxPage = 1;
 const backend = new DragonAPI();
 const figthPlace = new FigthPlace();
 export const FightPage: NextPage = () => {
+  const fightsLocale = useTranslation('fights');
+  const commonLocale = useTranslation('common');
   const router = useRouter();
   const address = useStore($wallet);
   const dragons = useStore($marketDragons);
@@ -95,16 +99,16 @@ export const FightPage: NextPage = () => {
     <Container>
       <Head>
         <title>
-          Fight place.
+          {commonLocale.t('name')} | {fightsLocale.t('title')}
         </title>
         <meta
           property="og:title"
-          content="Fight place."
+          content={`${commonLocale.t('name')} | ${fightsLocale.t('title')}`}
           key="title"
         />
       </Head>
       <Navbar />
-      <FilterBar title="Fight arena" />
+      <FilterBar title={fightsLocale.t('title')} />
       <Wrapper>
         {skelet ? (
           <>
@@ -141,14 +145,14 @@ export const FightPage: NextPage = () => {
                       color={Colors.Dark}
                       onClick={() => handleSelect(dragon)}
                     >
-                      Fight
+                      {commonLocale.t('start_fight')}
                     </Button>
                   ) : (
                     <Button
                       color={Colors.Primary}
                       onClick={() => handleCancel(dragon)}
                     >
-                      Get back
+                      {commonLocale.t('get_back')}
                     </Button>
                   )}
                 </CardContainer>
@@ -168,5 +172,13 @@ export const FightPage: NextPage = () => {
     </Container>
   );
 }
+
+export const getStaticProps = async (props: GetServerSidePropsContext) => {
+  return {
+    props: {
+      ...await serverSideTranslations(props.locale || 'en', ['common', 'fights']),
+    }
+  };
+};
 
 export default FightPage;

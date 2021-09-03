@@ -78,7 +78,8 @@ const tokens = [
 
 const crowdSale = new CrowdSale();
 export const BuyPage: NextPage = () => {
-  const { t } = useTranslation('common');
+  const storeLocale = useTranslation('store');
+  const commonLocale = useTranslation('common');
   const crowdSaleStore = useStore(crowdSale.store);
   const [selected, setSelected] = React.useState(0);
   const [eggs, setEggs] = React.useState(1);
@@ -117,11 +118,11 @@ export const BuyPage: NextPage = () => {
     <Container>
       <Head>
         <title>
-          Buy an egg {t('name')}
+          {commonLocale.t('name')} | {storeLocale.t('title')}
         </title>
         <meta
           property="og:title"
-          content="Buy an egg"
+          content={storeLocale.t('title')}
           key="title"
         />
       </Head>
@@ -134,7 +135,7 @@ export const BuyPage: NextPage = () => {
               size="24px"
               css="margin-right: 10px;"
             >
-              Buy eggs
+              {storeLocale.t('title')}
             </Text>
             <img
               src="/icons/egg.svg"
@@ -147,13 +148,13 @@ export const BuyPage: NextPage = () => {
               selected={selected}
               onSelected={setSelected}
             >
-              Choose token
+              {storeLocale.t('choose_token')}
             </Tab>
             <IntInput
               value={eggs}
               onInput={setEggs}
             >
-              Number of eggs
+              {storeLocale.t('number_of_eggs')}
             </IntInput>
             <BuyButton
               disabled={loading}
@@ -168,7 +169,7 @@ export const BuyPage: NextPage = () => {
                 />
               ) : (
                 <div>
-                  Buy for  {Math.round(amount * eggs)} ${tokens[selected]}
+                  {storeLocale.t('but_for')} {Math.round(amount * eggs)} ${tokens[selected]}
                 </div>
               )}
             </BuyButton>
@@ -182,7 +183,7 @@ export const BuyPage: NextPage = () => {
 export const getStaticProps = async (props: GetServerSidePropsContext) => {
   return {
     props: {
-      ...await serverSideTranslations(props.locale || 'en', ['common']),
+      ...await serverSideTranslations(props.locale || 'en', ['common', 'store']),
     }
   };
 };

@@ -1,9 +1,11 @@
 import React from 'react';
-import { NextPage } from 'next';
+import { NextPage, GetServerSidePropsContext } from 'next';
 import { useStore } from 'effector-react';
 import Head from 'next/head';
+import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import Loader from "react-loader-spinner";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import { Navbar } from 'components/nav-bar';
 import { Card } from 'components/card';
@@ -30,6 +32,8 @@ const limit = 9;
 let page = 0;
 let maxPage = 1;
 export const MyDragons: NextPage = () => {
+  const dragonsLocale = useTranslation('dragons');
+  const commonLocale = useTranslation('common');
   const address = useStore($wallet);
   const dragons = useStore($myDragons);
   const [skelet, setSkelet] = React.useState(true);
@@ -88,17 +92,17 @@ export const MyDragons: NextPage = () => {
     <Container>
       <Head>
         <title>
-          My Eggs | Dragons.
+          {commonLocale.t('name')} | {dragonsLocale.t('title')}
         </title>
         <meta
           property="og:title"
-          content="My Eggs | Dragons."
+          content={`${commonLocale.t('name')} | ${dragonsLocale.t('title')}`}
           key="title"
         />
       </Head>
       <Navbar />
       <FilterBar
-        title="My dragons"
+        title={dragonsLocale.t('title')}
         rarity={dragons.length !== 0}
       />
       <Wrapper>
@@ -140,11 +144,11 @@ export const MyDragons: NextPage = () => {
             fontVariant={StyleFonts.FiraSansRegular}
             css="text-align: center;max-width: 400px;"
           >
-            You have no dragons, you can buy it on market-palce or buy eggs.
+            {dragonsLocale.t('no_dragons')}
           </Text>
           <Link href="/buy">
             <Button>
-              Buy
+              {commonLocale.t('buy')}
             </Button>
           </Link>
         </>
@@ -164,5 +168,13 @@ export const MyDragons: NextPage = () => {
     </Container>
   );
 }
+
+export const getStaticProps = async (props: GetServerSidePropsContext) => {
+  return {
+    props: {
+      ...await serverSideTranslations(props.locale || 'en', ['common', 'dragons']),
+    }
+  };
+};
 
 export default MyDragons;

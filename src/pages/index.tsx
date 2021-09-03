@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NextPage } from 'next';
+import { NextPage, GetServerSidePropsContext } from 'next';
+import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
 import { Navbar } from 'components/nav-bar';
@@ -24,43 +26,56 @@ const Preview = styled.img`
   z-index: -1;
 `;
 
-export const MainPage: NextPage = () => (
-  <Container>
-    <Head>
-      <title>
-        DragonZIL
-      </title>
-      <meta
-        property="og:title"
-        content="DragonZIL"
-        key="title"
-      />
-    </Head>
-    <Navbar />
-    {/* <Preview
-      src="/imgs/dragons.png"
-      alt="Preview"
-    /> */}
-    <Text
-      color={Colors.White}
-      fontVariant={StyleFonts.FiraSansBold}
-      size="42px"
-      css="margin-top: 350px;"
-    >
-      DragonZIL
-    </Text>
-    <Text
-      fontVariant={StyleFonts.FiraSansRegular}
-      css="text-align: center;max-width: 400px;"
-    >
-      Here, you can buy Dragons for ZIL, and they will mate, fight, mutаte and die. Because Dragons are no Kitties.
-    </Text>
-    <Link href="/buy">
-      <Button>
-        Buy
-      </Button>
-    </Link>
-  </Container>
-);
+export const MainPage: NextPage = () => {
+  const dragonsLocale = useTranslation('main');
+  const commonLocale = useTranslation('common');
+
+  return (
+    <Container>
+      <Head>
+        <title>
+          {commonLocale.t('name')} | {dragonsLocale.t('title')}
+        </title>
+        <meta
+          property="og:title"
+          content={`${commonLocale.t('name')} | ${dragonsLocale.t('title')}`}
+          key="title"
+        />
+      </Head>
+      <Navbar />
+      {/* <Preview
+        src="/imgs/dragons.png"
+        alt="Preview"
+      /> */}
+      <Text
+        color={Colors.White}
+        fontVariant={StyleFonts.FiraSansBold}
+        size="42px"
+        css="margin-top: 350px;"
+      >
+        {commonLocale.t('name')}
+      </Text>
+      <Text
+        fontVariant={StyleFonts.FiraSansRegular}
+        css="text-align: center;max-width: 400px;"
+      >
+        {dragonsLocale.t('description')}
+      </Text>
+      <Link href="/buy">
+        <Button>
+          {commonLocale.t('buy')}
+        </Button>
+      </Link>
+    </Container>
+  );
+}
+
+export const getStaticProps = async (props: GetServerSidePropsContext) => {
+  return {
+    props: {
+      ...await serverSideTranslations(props.locale || 'en', ['common', 'main']),
+    }
+  };
+};
 
 export default MainPage;
