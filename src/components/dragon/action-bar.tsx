@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useStore } from 'effector-react';
 import { BrowserView, MobileView } from 'react-device-detect';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { Text } from 'components/text';
@@ -33,6 +34,14 @@ const Container = styled.div`
 const ActionsRow = styled.div`
   display: ${(p: ActionsRowProp) => p.show ? 'flex' : 'none' };
   align-items: center;
+`;
+const ActionsForNotFree = styled.div`
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: 835px) {
+    width: 100%;
+  }
 `;
 const ActionButton = styled.button`
   cursor: pointer;
@@ -189,26 +198,20 @@ export const ActionBar: React.FC<Prop> = ({
         dragon={dragon}
         color={color}
       />
-      <BrowserView>
-        {dragon.actions.length === 0 ? (
-          <ActionsRow show={isOwner}>
-            {actionList.map((action) => (
-              <ActionButton
-                key={action.name}
-                color={color}
-                onClick={action.method}
-              >
-                <img
-                  src={`/icons/${action.icon}`}
-                  alt="action-icon"
-                  height="38"
-                />
-                <Text size="16px">
-                  {action.name}
-                </Text>
-              </ActionButton>
-            ))}
-          </ActionsRow>
+      <ActionsForNotFree>
+        {currentAction === 1 ? (
+          <Link href={`/fights/${dragon.id}`}>
+            <ActionButton color={color}>
+              <img
+                src={`/icons/arena.svg`}
+                alt="action-icon"
+                height="38"
+              />
+              <Text size="16px">
+                Fight with.
+              </Text>
+            </ActionButton>
+          </Link>
         ) : null}
         {currentAction === 2 ? (
           <ActionButton
@@ -239,6 +242,28 @@ export const ActionBar: React.FC<Prop> = ({
               {isOwner ? 'Remove from Sale' : 'Buy'}
             </Text>
           </ActionButton>
+        ) : null}
+      </ActionsForNotFree>
+      <BrowserView>
+        {dragon.actions.length === 0 ? (
+          <ActionsRow show={isOwner}>
+            {actionList.map((action) => (
+              <ActionButton
+                key={action.name}
+                color={color}
+                onClick={action.method}
+              >
+                <img
+                  src={`/icons/${action.icon}`}
+                  alt="action-icon"
+                  height="38"
+                />
+                <Text size="16px">
+                  {action.name}
+                </Text>
+              </ActionButton>
+            ))}
+          </ActionsRow>
         ) : null}
       </BrowserView>
       <MobileView>

@@ -1,18 +1,12 @@
 import React from 'react';
-import { useStore } from 'effector-react';
 import styled from 'styled-components';
 import Image from 'next/image';
 
 import { Modal } from 'components/modal';
 import { Text } from 'components/text';
 import { CloseIcon } from 'components/icons/close';
-import { TxCard } from 'components/tx-card';
-import { AccountCard } from '@/components/account-card';
 
 import { Colors } from 'config/colors';
-import { StyleFonts } from '@/config/fonts';
-import { $transactions, resetTxList } from 'store/transactions';
-import { Wallet } from '@/store/wallet';
 
 type Prop = {
   show: boolean;
