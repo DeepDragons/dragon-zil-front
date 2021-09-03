@@ -20,7 +20,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 90vh;
+  min-height: 90vh;
+  height: 100%;
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -34,17 +35,20 @@ const ReferralContainer = styled.div`
   border-radius: 16px;
   border: 1px solid ${Colors.Primary};
   padding: 30px;
+  margin: 10px;
 `;
 const LevelContainer = styled.div`
   border-radius: 16px;
   border: 1px solid ${Colors.Primary};
   padding: 30px;
+  margin: 10px;
+  min-width: 250px;
 `;
 const LevelWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-width: 280px;
+  min-width: 250px;
   border-bottom: 1px solid ${Colors.Primary};
 `;
 const CopyContainer = styled.div`
@@ -64,7 +68,7 @@ const ReferralLink = styled.input`
   color: ${Colors.White};
   outline: none;
   padding: 10px;
-  min-width: 260px;
+  min-width: 200px;
   width: 100%;
 
   :focus {
@@ -166,6 +170,7 @@ export const ReferralPage: NextPage = () => {
               fontColors={Colors.Muted}
               fontVariant={StyleFonts.FiraSansRegular}
               size="16px"
+              css="text-align: center;"
             >
               If someone bought by your link your level going to up
             </Text>

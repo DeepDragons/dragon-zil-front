@@ -1,5 +1,6 @@
 import React from 'react';
 import copy from 'clipboard-copy';
+import { useStore } from 'effector-react';
 import styled from 'styled-components';
 
 import { Text } from 'components/text';
@@ -11,6 +12,7 @@ import { StyleFonts } from '@/config/fonts';
 import { trim } from '@/lib/trim';
 import { viewAddress } from '@/lib/viewblock';
 import { Wallet } from '@/store/wallet';
+import { $net } from 'store/wallet-netwrok';
 
 const AccountContainer = styled.div`
   margin: 16px;
@@ -53,16 +55,21 @@ type Prop = {
 export const AccountCard: React.FC<Prop> = ({
   wallet
 }) => {
+  const netwrok = useStore($net);
+
+  const netColor = React.useMemo(() => {
+    return netwrok === 'mainnet' ? Colors.Muted : Colors.Danger;
+  }, [netwrok]);
 
   return (
     <AccountContainer>
       <Text
-        fontColors={Colors.Muted}
+        fontColors={netColor}
         fontVariant={StyleFonts.FiraSansRegular}
         css="margin: 0;"
         size="16px"
       >
-        Connectet with ZilPay wallet.
+        Connectet with ZilPay wallet to {netwrok}.
       </Text>
       <Text
         fontVariant={StyleFonts.FiraSansMedium}
