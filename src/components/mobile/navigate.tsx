@@ -39,6 +39,10 @@ const Wrapper = styled.div`
   padding-top: 12px;
 `;
 const ConnectButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   border: 0;
   background: transparent;
   color: ${Colors.Muted};
@@ -178,12 +182,17 @@ export const MobileNavigate: React.FC<Prop> = ({
         </div>
         <ConnectButton onClick={hanldeMenuOrConnect}>
           {loading ? (
-            <Loader
-              type="ThreeDots"
-              color="#fff"
-              height={10}
-              width={20}
-            />
+            <>
+              <Loader
+                type="ThreeDots"
+                color="#fff"
+                height={10}
+                width={20}
+              />
+              <Text css="text-indent: 5px;margin: 0;">
+                Pending
+              </Text>
+            </>
           ) : connectText}
         </ConnectButton>
       </Container>
