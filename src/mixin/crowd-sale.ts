@@ -20,8 +20,22 @@ export class CrowdSale {
 
     updateState(data);
 
-
     return data;
+  }
+
+  public async getReferralPercent(address: string) {
+    const field = 'referrals';
+    const res = await this.zilpay.getSubState(
+      Contracts.Distributer,
+      field,
+      [address.toLowerCase()]
+    );
+
+    if (!res) {
+      return 10;
+    }
+
+    return Number(res);
   }
 
   public async buyForZIL(numberOf: number, ref = '0x0000000000000000000000000000000000000000'): Promise<string> {

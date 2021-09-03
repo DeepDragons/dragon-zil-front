@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Colors } from 'config/colors';
 import { Container, Empety } from 'components/card';
 
-const Wrapper = styled(Container)`
+export const Wrapper = styled(Container)`
   cursor: progress;
   background:
     linear-gradient(0.25turn, transparent, ${Colors.Darker}, transparent),
