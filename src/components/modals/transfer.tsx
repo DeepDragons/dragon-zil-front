@@ -72,7 +72,7 @@ export const TransferModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          You can transfer your {dragonStage} to your friends.
+          You can move your {dragonStage} (token) between your accounts or send it to somebody, as a gift for example.
         </Text>
         <Input
           fontColors={error ? Colors.Danger : Colors.LightBlue}

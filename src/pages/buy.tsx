@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useStore } from 'effector-react';
-import { NextPage } from 'next';
+import { NextPage, GetServerSidePropsContext } from 'next';
+import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import { Navbar } from 'components/nav-bar';
 import Loader from "react-loader-spinner";
@@ -76,6 +78,7 @@ const tokens = [
 
 const crowdSale = new CrowdSale();
 export const BuyPage: NextPage = () => {
+  const { t } = useTranslation('common');
   const crowdSaleStore = useStore(crowdSale.store);
   const [selected, setSelected] = React.useState(0);
   const [eggs, setEggs] = React.useState(1);
@@ -114,7 +117,7 @@ export const BuyPage: NextPage = () => {
     <Container>
       <Head>
         <title>
-          Buy an egg
+          Buy an egg {t('name')}
         </title>
         <meta
           property="og:title"
@@ -175,5 +178,13 @@ export const BuyPage: NextPage = () => {
     </Container>
   );
 }
+
+export const getStaticProps = async (props: GetServerSidePropsContext) => {
+  return {
+    props: {
+      ...await serverSideTranslations(props.locale || 'en', ['common']),
+    }
+  };
+};
 
 export default BuyPage;

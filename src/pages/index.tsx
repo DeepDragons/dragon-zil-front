@@ -15,7 +15,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 90vh;
+  min-height: 90vh;
+  height: 100%;
 `;
 const Preview = styled.img`
   position: absolute;
@@ -36,14 +37,14 @@ export const MainPage: NextPage = () => (
       />
     </Head>
     <Navbar />
-    <Preview
+    {/* <Preview
       src="/imgs/dragons.png"
       alt="Preview"
-    />
+    /> */}
     <Text
       color={Colors.White}
       fontVariant={StyleFonts.FiraSansBold}
-      size="8rem"
+      size="42px"
       css="margin-top: 350px;"
     >
       DragonZIL

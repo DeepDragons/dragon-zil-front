@@ -88,7 +88,7 @@ export const FightsModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          Test the strength of your dragon by putting it on the arena.
+          Put your dragon (token) on a battlefield! Other players will be able to fight with your dragon.
         </Text>
         <IntInput
           value={zlp}

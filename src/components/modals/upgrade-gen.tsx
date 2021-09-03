@@ -71,7 +71,7 @@ export const UpgradeGenModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          You can upgrade combat gens of your dragon for become stronger.
+          Choose a gene and try to improve it, you’ll need some zip though.
         </Description>
         <br />
         <Description

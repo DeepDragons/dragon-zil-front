@@ -105,7 +105,7 @@ export const SaleModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          Earn money on your {dragonStage} by trading them on the market!
+          You can set the custom price and put your {dragonStage} (token) on the marketplace for sale.
         </Text>
         <IntInput
           value={zils}

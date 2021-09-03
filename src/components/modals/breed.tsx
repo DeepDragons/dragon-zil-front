@@ -60,7 +60,7 @@ export const BreedModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          You can make money on your dragons, just like a pimp. Expose your most beautiful whores for ZLP.
+          Set a price and put your dragon (token) on a marketplace, where other players can pay you to mate their dragons with yours.
         </Text>
         <IntInput
           value={zlp}

@@ -99,11 +99,11 @@ export const GenLabPage: NextPage<Prop> = ({ dragon }) => {
     <Container>
       <Head>
         <title>
-          Mutate a dragon #{dragon.id}
+          Mutate a dragon #{dragon?.id}
         </title>
         <meta
           property="og:title"
-          content={`Mutate a dragon #${dragon.id}`}
+          content={`Mutate a dragon #${dragon?.id}`}
           key="title"
         />
       </Head>

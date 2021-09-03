@@ -65,7 +65,7 @@ export const SuicideModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          If you kill the {dragonStage}, it will be irretrievably lost.
+          If you are cruel enough you can burn your {dragonStage} (token) forever!
         </Text>
         <ButtonsWrapper>
           <ModalButton

@@ -1,20 +1,16 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { BrowserView } from 'react-device-detect';
-import { useStore } from 'effector-react';
+import { useTranslation } from 'next-i18next';
 
 import styled from 'styled-components';
 import Link from 'next/link';
 
 import { ConnectZIlPay } from 'components/connect-zilpay';
-import { Modal } from 'components/modal';
 
 import { Text } from 'components/text';
 import { StyleFonts } from 'config/fonts';
 import { Colors } from 'config/colors';
-import { trim } from 'lib/trim';
-import { $wallet } from 'store/wallet';
-import { $net } from '@/store/wallet-netwrok';
 
 const Container = styled.div`
   display: flex;
@@ -68,27 +64,28 @@ export const Li = styled.li`
 export const links = [
   {
     path: '/buy',
-    name: 'Store',
+    name: 'store',
   },
   {
     path: '/mydragons',
-    name: 'My dragons',
+    name: 'my_dragons',
   },
   {
     path: '/fights',
-    name: 'Fights',
+    name: 'fights',
   },
   {
     path: '/breed',
-    name: 'Breed',
+    name: 'breed',
   },
   {
     path: '/trade',
-    name: 'Trade',
+    name: 'market',
   },
 ];
 
 export const Navbar: React.FC = () => {
+  const common = useTranslation('common');
   const router = useRouter();
 
   return (
@@ -104,7 +101,7 @@ export const Navbar: React.FC = () => {
             fontVariant={StyleFonts.FiraSansBold}
             css="margin-left: 5px;"
           >
-            DragonZIL
+            {common.t('name')}
           </Text>
         </Logo>
       </Link>
@@ -115,7 +112,7 @@ export const Navbar: React.FC = () => {
               key={index}
               selected={router.pathname === link.path}
             >
-              <Link href={link.path}>{link.name}</Link>
+              <Link href={link.path}>{common.t(link.name)}</Link>
             </Li>
           ))}
         </Ul>
