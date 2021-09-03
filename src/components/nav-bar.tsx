@@ -90,10 +90,6 @@ export const links = [
 
 export const Navbar: React.FC = () => {
   const router = useRouter();
-  const address = useStore($wallet);
-  const netwrok = useStore($net);
-
-  const [zIlPayModal, setZIlPayModal] = React.useState(false);
 
   return (
     <Container>
@@ -125,31 +121,6 @@ export const Navbar: React.FC = () => {
         </Ul>
       </BrowserView>
       <ConnectZIlPay/>
-      <Modal
-        show={zIlPayModal}
-        title={
-          <Text
-            fontColors={Colors.Warning}
-            css="padding: 16px;"
-          >
-            ZilPay wallet error.
-          </Text>
-        }
-        onClose={() => setZIlPayModal(false)}
-      >
-        <ModalContainer>
-          {!address ? (
-            <Text>
-              Please unlock ZilPay wallet.
-            </Text>
-          ) : null}
-          {netwrok !== 'mainnet' ? (
-            <Text>
-              Please choice the mainnet netwrok.
-            </Text>
-          ) : null}
-        </ModalContainer>
-      </Modal>
     </Container>
   );
 };

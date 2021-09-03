@@ -7,6 +7,7 @@ import Loader from "react-loader-spinner";
 import { MobileNavigate } from 'components/mobile/navigate';
 import { AccountModal } from 'components/modals/account';
 import { Text } from 'components/text';
+import { WalletErrorModal } from 'components/modals/no-wallet';
 
 import { StyleFonts } from 'config/fonts';
 import { Colors } from 'config/colors';
@@ -14,8 +15,12 @@ import { ZilPayBase } from 'mixin/zilpay-base';
 import { trim } from 'lib/trim';
 import { $wallet, updateAddress, Wallet } from 'store/wallet';
 import { $transactions, updateTxList, clearTxList, writeNewList } from 'store/transactions';
-import { updateNet } from 'store/wallet-netwrok';
+import { updateNet, $net } from 'store/wallet-netwrok';
 import { Block, Net } from '@/types/zil-pay';
+
+type ConnectZIlPayButtonProp = {
+  color: Colors | string;
+}
 
 const ConnectZIlPayButton = styled.button`
   cursor: pointer;
@@ -23,11 +28,12 @@ const ConnectZIlPayButton = styled.button`
   font-family: ${StyleFonts.FiraSansSemiBold};
   display: flex;
   align-items: center;
+  justify-content: center;
 
   padding: 10px 22px;
   border-radius: 16px;
   border: 1px solid ${Colors.Darker};
-  background: ${Colors.Darker};
+  background: ${(p: ConnectZIlPayButtonProp) => p.color};
   user-select: none;
   min-width: 100px;
   text-align: center;
@@ -42,15 +48,22 @@ let observerNet: any = null;
 let observerBlock: any = null;
 export const ConnectZIlPay: React.FC = () => {
   const address = useStore($wallet);
+  const net = useStore($net);
   const transactions = useStore($transactions);
   const [loading, setLoading] = React.useState(true);
   const [showModal, setShowModal] = React.useState(false);
+  const [error, setError] = React.useState('');
 
+  const btnColor = React.useMemo(() => {
+    return net === 'mainnet' ? Colors.Darker : Colors.Danger;
+  }, [net]);
   const isLoading = React.useMemo(() => {
     return transactions.filter((tx) => !tx.confirmed).length === 0
   }, [transactions]);
 
   const hanldeObserverState = React.useCallback((zp) => {
+    updateNet(zp.wallet.net);
+
     if (observerNet) {
       observerNet.unsubscribe();
     }
@@ -158,7 +171,7 @@ export const ConnectZIlPay: React.FC = () => {
         updateTxList(JSON.parse(cache));
       }
     } catch (err) {
-      console.warn(err);
+      setError(String((err as any).message));
     }
     setLoading(false);
   }, []);
@@ -172,7 +185,12 @@ export const ConnectZIlPay: React.FC = () => {
         hanldeObserverState(zp);
         setLoading(false);
       })
-      .catch((err) => setLoading(false));
+      .catch((err) => {
+        if (err.message !== 'ZilPay is disabled.') {
+          setError(err.message);
+        }
+        setLoading(false);
+      });
 
     return () => {
       if (observer) {
@@ -218,7 +236,10 @@ export const ConnectZIlPay: React.FC = () => {
   return (
     <>
       {address ? (
-        <ConnectZIlPayButton onClick={() => setShowModal(true)}>
+        <ConnectZIlPayButton
+          color={btnColor}
+          onClick={() => setShowModal(true)}
+        >
           {isLoading ? trim(address.bech32) : (
             <>
               <Loader
@@ -237,7 +258,10 @@ export const ConnectZIlPay: React.FC = () => {
           )}
         </ConnectZIlPayButton>
       ) : (
-        <ConnectZIlPayButton onClick={handleConnect}>
+        <ConnectZIlPayButton
+          color={btnColor}
+          onClick={handleConnect}
+        >
           {loading ? (
             <Loader
               type="ThreeDots"
@@ -252,6 +276,11 @@ export const ConnectZIlPay: React.FC = () => {
         show={showModal}
         address={address}
         onClose={() => setShowModal(false)}
+      />
+      <WalletErrorModal
+        show={Boolean(error)}
+        message={error}
+        onClose={() => setError('')}
       />
     </>
   );

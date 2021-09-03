@@ -24,7 +24,7 @@ export class ZilPayBase {
       const i = setInterval(() => {
         if (k >= 10) {
           clearInterval(i);
-          return reject('ZIlPay is not installed.');
+          return reject(new Error('ZIlPay is not installed.'));
         }
 
         if (typeof window['zilPay'] !== 'undefined') {
