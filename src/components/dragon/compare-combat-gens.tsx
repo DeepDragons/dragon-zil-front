@@ -1,5 +1,6 @@
 import React from 'react';
 import { TitleUpgradeGens } from './upgrade-gens-title';
+import { useTranslation } from 'next-i18next';
 import { compareRadar } from 'lib/radar';
 import { Container } from './styles';
 import { DragonObject } from '@/lib/api';
@@ -15,6 +16,8 @@ export const CompareCombatGens: React.FC<Prop> = ({
   myDragon,
   color
 }) => {
+  const commonLocale = useTranslation('common');
+
   React.useEffect(() => {
     const ctx = document.querySelector('#combat') as HTMLCanvasElement;
 
@@ -34,7 +37,7 @@ export const CompareCombatGens: React.FC<Prop> = ({
   return (
     <Container color={color}>
       <TitleUpgradeGens icon="gens.svg">
-        Compare combat gens
+        {commonLocale.t('compare_gens_title')}
       </TitleUpgradeGens>
       <div>
         <canvas

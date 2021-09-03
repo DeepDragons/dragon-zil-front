@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 import styled from 'styled-components';
 
 import { AttackIcon } from 'components/icons/attack';
@@ -26,6 +27,7 @@ const Column = styled.div`
 type Prop = {
   gens: string;
   color: string;
+  price: number | string;
   onSelect: (gen: number, value: number, name: string) => void;
 };
 
@@ -36,8 +38,11 @@ const tabElements = [
 export const MobileUpgradeGens: React.FC<Prop> = ({
   gens,
   color,
+  price,
   onSelect
 }) => {
+  const mutateLocale = useTranslation('mutate');
+
   const [selected, setSelected] = React.useState(0);
   const [gen, setGen] = React.useState(1);
 
@@ -64,7 +69,7 @@ export const MobileUpgradeGens: React.FC<Prop> = ({
   return (
     <Container color={color}>
       <TitleUpgradeGens>
-        Upgrade gens
+        {mutateLocale.t('form_title')}
       </TitleUpgradeGens>
       <Column>
         <div>
@@ -78,7 +83,7 @@ export const MobileUpgradeGens: React.FC<Prop> = ({
           selected={selected}
           onSelected={setSelected}
         >
-          Choose a gen
+          {mutateLocale.t('choose_gen')}
         </Tab>
         <div>
           <LinePercent
@@ -93,14 +98,14 @@ export const MobileUpgradeGens: React.FC<Prop> = ({
           max={10}
           onInput={setGen}
         >
-          A gen index
+          {mutateLocale.t('gen_index')}
         </IntInput>
         <Button
           color={Colors.Success}
           css="padding: 20px 45px 20px 45px;"
           onClick={() => onSelect(gen, gensChain[selected === 0 ? gen - 1 : gen + 9], genName)}
         >
-          Upgrade for 10 $ZLP
+          {mutateLocale.t('upgrade_for')} {price} $ZLP
         </Button>
       </Column>
     </Container>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 import styled from 'styled-components';
 
 import { Text } from 'components/text';
@@ -69,6 +70,9 @@ export const UpgradeGens: React.FC<Prop> = ({
   color,
   onSelect
 }) => {
+  const mutateLocale = useTranslation('mutate');
+  const commonLocale = useTranslation('common');
+
   const gensArray = React.useMemo(() => {
     const list = genParse(gens);
     const gensList = [];
@@ -103,7 +107,7 @@ export const UpgradeGens: React.FC<Prop> = ({
   return (
     <Container color={color}>
       <TitleUpgradeGens>
-        Upgrade gens
+        {mutateLocale.t('form_title')}
       </TitleUpgradeGens>
       <GensContainer>
         <div>
@@ -117,12 +121,12 @@ export const UpgradeGens: React.FC<Prop> = ({
             <GenNameContainer>
               <DefenceIcon />
               <Text>
-                Defence
+                {commonLocale.t('defence')}
               </Text>
             </GenNameContainer>
             <GenNameContainer>
               <Text>
-                Attack
+                {commonLocale.t('attack')}
               </Text>
               <AttackIcon />
             </GenNameContainer>
@@ -130,7 +134,7 @@ export const UpgradeGens: React.FC<Prop> = ({
           <GensWrapper>
             {gensArray.map((el, index) => (
               <Gens key={index}>
-                <NumberOfGen onClick={() => onSelect(index, el.def, 'Defence')}>
+                <NumberOfGen onClick={() => onSelect(index, el.def, commonLocale.t('defence'))}>
                   <Text css="margin: 0;">
                     {index + 1}
                   </Text>
@@ -149,7 +153,7 @@ export const UpgradeGens: React.FC<Prop> = ({
                   value={el.atteck}
                   color={Colors.Danger}
                 />
-                <NumberOfGen onClick={() => onSelect(index + 9, el.atteck, 'Attack')}>
+                <NumberOfGen onClick={() => onSelect(index + 9, el.atteck, commonLocale.t('attack'))}>
                   <Text css="margin: 0;">
                     {index + 1}
                   </Text>

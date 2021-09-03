@@ -1,8 +1,10 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { NextPage } from 'next';
+import { NextPage, GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { useStore } from 'effector-react';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import { Navbar } from 'components/nav-bar';
 import { SkeletCard } from '@/components/skelet/card';
@@ -35,6 +37,8 @@ let maxPage = 1;
 const backend = new DragonAPI();
 const marketPlace = new MarketPlace();
 export const TradePage: NextPage = () => {
+  const tradeLocale = useTranslation('trade');
+  const commonLocale = useTranslation('common');
   const router = useRouter();
   const address = useStore($wallet);
   const dragons = useStore($marketDragons);
@@ -89,17 +93,17 @@ export const TradePage: NextPage = () => {
     <Container>
       <Head>
         <title>
-          Dragons market place.
+          {commonLocale.t('name')} | {tradeLocale.t('title')}
         </title>
         <meta
           property="og:title"
-          content="Dragons market place."
+          content={`${commonLocale.t('name')} | ${tradeLocale.t('title')}`}
           key="title"
         />
       </Head>
       <Navbar />
       <FilterBar
-        title="Market"
+        title={tradeLocale.t('title')}
         rarity
         price
       />
@@ -139,14 +143,14 @@ export const TradePage: NextPage = () => {
                       color={Colors.LightBlue}
                       onClick={() => marketPlace.purchase(dragon.id, getMarketPrice(dragon.actions))}
                     >
-                      Buy
+                      {commonLocale.t('buy')}
                     </Button>
                   ) : (
                     <Button
                       color={Colors.Info}
                       onClick={() => marketPlace.cancel(getMarketOrder(dragon.actions))}
                     >
-                      Get back
+                      {commonLocale.t('get_back')}
                     </Button>
                   )}
                 </CardContainer>
@@ -166,5 +170,13 @@ export const TradePage: NextPage = () => {
     </Container>
   );
 }
+
+export const getStaticProps = async (props: GetServerSidePropsContext) => {
+  return {
+    props: {
+      ...await serverSideTranslations(props.locale || 'en', ['common', 'trade'])
+    }
+  };
+};
 
 export default TradePage;

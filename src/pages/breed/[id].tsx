@@ -1,7 +1,9 @@
 import React from 'react';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import styled from 'styled-components';
+import { useTranslation } from 'next-i18next';
 import Loader from "react-loader-spinner";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
@@ -31,6 +33,8 @@ const Column = styled.div`
 const backend = new DragonAPI();
 const breedPlace = new BreedPlace();
 export const BreedStart: NextPage<Prop> = ({ lover }) => {
+  const breedingLocale = useTranslation('breeding');
+  const commonLocale = useTranslation('common');
   const [myDragon, setMyDragon] = React.useState<DragonObject | null>(null);
   const [loading, setLoading] = React.useState(false);
 
@@ -67,11 +71,11 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
     <Container>
       <Head>
         <title>
-          Breeding with #{lover?.id}
+          {commonLocale.t('name')} | {breedingLocale.t('title')} #{lover?.id} for {Number(amount) / 10**18} $ZLP
         </title>
         <meta
           property="og:title"
-          content={`Breeding with #${lover?.id} for ${Number(amount) / 10**18} $ZLP`}
+          content={`${commonLocale.t('name')} | ${breedingLocale.t('title')} #${lover?.id} for ${Number(amount) / 10**18} $ZLP`}
           key="title"
         />
         <link
@@ -85,7 +89,7 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
         />
         <meta
           name="keywords"
-          content="Breeding, Dragons"
+          content={breedingLocale.t('keywords')}
         />
         <meta
           property="og:image"
@@ -102,13 +106,13 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
           fontVariant={StyleFonts.FiraSansBold}
           size="56px"
         >
-          Bread with #{lover?.id}
+          {breedingLocale.t('title')} #{lover?.id}
         </PageTitle>
         <PageTitle
           fontVariant={StyleFonts.FiraSansMedium}
           size="21px"
         >
-          Price <span>{Number(amount) / 10**18} $ZLP</span>
+          {commonLocale.t('price')} <span>{Number(amount) / 10**18} $ZLP</span>
         </PageTitle>
       </Wrapper>
       {lover && rarityLover ? (
@@ -129,7 +133,7 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
                 height={10}
                 width={40}
               />
-            ) : 'Start Breeding'}
+            ) : breedingLocale.t('start_btn')}
           </ChoiceWith>
           {myDragon && rarityMyDragon && rarityLover ? (
             <Column>
@@ -158,7 +162,8 @@ export const getStaticProps = async (props: GetServerSidePropsContext) => {
 
   return {
     props: {
-      lover
+      lover,
+      ...await serverSideTranslations(props.locale || 'en', ['common', 'breeding'])
     }
   };
 };

@@ -18,5 +18,12 @@
   "privacy_policy": "Privacy policy",
   "terms_service": "Terms of service",
   "referral_program": "Referral program",
-  "follow": "Follow us"
+  "follow": "Follow us",
+  "dragon": "Dragon",
+  "owner": "Owner",
+  "defence": "Defence",
+  "attack": "Attack",
+  "cancel": "Cancel",
+  "compare_gens_title": "Compare combat gens.",
+  "body_parts": "Body parts"
 }

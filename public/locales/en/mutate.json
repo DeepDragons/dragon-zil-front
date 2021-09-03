@@ -1,0 +1,11 @@
+{
+  "title": "GenLab",
+  "sub_title": "Mutate a dragon",
+  "form_title": "Upgrade gens",
+  "choose_gen": "Choose a gen",
+  "gen_index": "A gen index",
+  "current_gen": "Current gen value",
+  "upgrade_for": "Upgrade for",
+  "upgrade_btn": "Upgrade",
+  "modal_sub_title": "Choose a gene and try to improve it, you’ll need some zip though."
+}

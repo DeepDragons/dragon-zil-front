@@ -176,7 +176,7 @@ export const FightPage: NextPage = () => {
 export const getStaticProps = async (props: GetServerSidePropsContext) => {
   return {
     props: {
-      ...await serverSideTranslations(props.locale || 'en', ['common', 'fights']),
+      ...await serverSideTranslations(props.locale || 'en', ['common', 'fights'])
     }
   };
 };

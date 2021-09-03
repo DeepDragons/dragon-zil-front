@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NextPage } from 'next';
+import { NextPage, GetServerSidePropsContext } from 'next';
 import { useStore } from 'effector-react';
 import copy from 'clipboard-copy';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
 import { Navbar } from 'components/nav-bar';
@@ -78,6 +80,8 @@ const ReferralLink = styled.input`
 
 const crowdSale = new CrowdSale();
 export const ReferralPage: NextPage = () => {
+  const referralLocale = useTranslation('referral');
+  const commonLocale = useTranslation('common');
   const wallet = useStore($wallet);
   const [percent, setPercent] = React.useState(10);
   const [loading, setLoading] = React.useState(true);
@@ -102,11 +106,11 @@ export const ReferralPage: NextPage = () => {
     <Container>
       <Head>
         <title>
-          DragonZIL | referral
+          {commonLocale.t('name')} | {referralLocale.t('title')}
         </title>
         <meta
           property="og:title"
-          content="DragonZIL | referral"
+          content={`${commonLocale.t('name')} | ${referralLocale.t('title')}`}
           key="title"
         />
       </Head>
@@ -116,7 +120,7 @@ export const ReferralPage: NextPage = () => {
         size="32px"
         css="width: 100%;max-width: 1024px;"
       >
-        Referral
+        {referralLocale.t('title')}
       </Text>
       <Wrapper>
         {loading ? (
@@ -124,7 +128,7 @@ export const ReferralPage: NextPage = () => {
         ) : (
           <ReferralContainer>
             <Text fontVariant={StyleFonts.FiraSansBold}>
-              Your Referral Link
+              {referralLocale.t('link_title')}
             </Text>
             <CopyContainer onClick={() => copy(refLink)}>
               <ReferralLink
@@ -139,7 +143,7 @@ export const ReferralPage: NextPage = () => {
               size="16px"
               css="max-width: 400px;"
             >
-              Referral link - when somebody will buy eggs using it, you will get from 10% up to 50% of the purchase amount to your wallet. The basic level starts at 10% and then increased by 1%  to a maximum of 50%.
+              {referralLocale.t('mechanism')}
             </Text>
           </ReferralContainer>
         )}
@@ -151,11 +155,11 @@ export const ReferralPage: NextPage = () => {
               fontVariant={StyleFonts.FiraSansBold}
               size="20px"
             >
-              Your Current Level
+              {referralLocale.t('level_title')}
             </Text>
             <LevelWrapper>
               <Text>
-                Level {(percent * 50 / 500).toFixed()}
+                {referralLocale.t('level')} {(percent * 50 / 500).toFixed()}
               </Text>
               <LinePercent
                 max={50}
@@ -172,7 +176,7 @@ export const ReferralPage: NextPage = () => {
               size="16px"
               css="text-align: center;"
             >
-              If someone bought by your link your level going to up
+              {referralLocale.t('level_mechanism')}
             </Text>
           </LevelContainer>
         )}
@@ -180,5 +184,13 @@ export const ReferralPage: NextPage = () => {
     </Container>
   );
 }
+
+export const getStaticProps = async (props: GetServerSidePropsContext) => {
+  return {
+    props: {
+      ...await serverSideTranslations(props.locale || 'en', ['common', 'referral'])
+    }
+  };
+};
 
 export default ReferralPage;

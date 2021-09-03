@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { useStore } from 'effector-react';
 import { BrowserView, MobileView } from 'react-device-detect';
-import { GetServerSidePropsContext, NextPage } from 'next';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { NextPage, GetServerSidePropsContext } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
@@ -12,7 +14,6 @@ import { Navbar } from 'components/nav-bar';
 import { ActionBarTitle } from 'components/dragon/action-bar-title';
 import { UpgradeGenModal } from 'components/modals/upgrade-gen';
 
-import { $dragonCache } from 'store/cache-dragon';
 import { DragonAPI, DragonObject } from '@/lib/api';
 import { getRarity } from '@/lib/rarity';
 import { $wallet } from '@/store/wallet';
@@ -51,6 +52,8 @@ const TitleWrapper = styled.div`
 const backend = new DragonAPI();
 const genLab = new GenLab();
 export const GenLabPage: NextPage<Prop> = ({ dragon }) => {
+  const mutateLocale = useTranslation('mutate');
+  const commonLocale = useTranslation('common');
   const router = useRouter();
   const address = useStore($wallet);
   const [price, setPrice] = React.useState<string | null>('0');
@@ -83,15 +86,17 @@ export const GenLabPage: NextPage<Prop> = ({ dragon }) => {
   }, []);
 
   React.useEffect(() => {
-    genLab
-      .getPrice(String(router.query.id))
-      .then(([price]) => setPrice(price))
-      .catch(console.error);
-  }, [router.query.id]);
+    if (dragon) {
+      genLab
+        .getPrice(String(dragon.id))
+        .then(([price]) => setPrice(price))
+        .catch(console.error);
+    }
+  }, [dragon]);
 
   React.useEffect(() => {
     if (dragon && address &&  dragon.owner.toLowerCase() !== address.base16.toLowerCase()) {
-      router.push(`/dragon/${router.query.id}`);
+      router.push(`/dragon/${dragon.id}`);
     }
   }, [dragon, address]);
 
@@ -99,11 +104,11 @@ export const GenLabPage: NextPage<Prop> = ({ dragon }) => {
     <Container>
       <Head>
         <title>
-          Mutate a dragon #{dragon?.id}
+          {commonLocale.t('name')} | {mutateLocale.t('sub_title')} #{dragon?.id}
         </title>
         <meta
           property="og:title"
-          content={`Mutate a dragon #${dragon?.id}`}
+          content={`${commonLocale.t('name')} | ${mutateLocale.t('sub_title')} #${dragon?.id}`}
           key="title"
         />
       </Head>
@@ -137,6 +142,7 @@ export const GenLabPage: NextPage<Prop> = ({ dragon }) => {
           <MobileView>
             <MobileUpgradeGens
               color={rarity.color}
+              price={price ? price : 0}
               gens={dragon.gen_fight}
               onSelect={handleUpgrade}
             />
@@ -160,7 +166,8 @@ export const getStaticProps = async (props: GetServerSidePropsContext) => {
 
   return {
     props: {
-      dragon
+      dragon,
+      ...await serverSideTranslations(props.locale || 'en', ['common', 'mutate'])
     }
   };
 };

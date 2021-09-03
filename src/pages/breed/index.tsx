@@ -1,8 +1,10 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { NextPage } from 'next';
 import { useStore } from 'effector-react';
 import Head from 'next/head';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { NextPage, GetServerSidePropsContext } from 'next';
 
 import { Navbar } from 'components/nav-bar';
 import { SkeletCard } from '@/components/skelet/card';
@@ -35,6 +37,8 @@ let maxPage = 1;
 const backend = new DragonAPI();
 const breedPlace = new BreedPlace();
 export const BreedPage: NextPage = () => {
+  const breedLocale = useTranslation('breed');
+  const commonLocale = useTranslation('common');
   const router = useRouter();
   const address = useStore($wallet);
   const dragons = useStore($marketDragons);
@@ -97,17 +101,17 @@ export const BreedPage: NextPage = () => {
     <Container>
       <Head>
         <title>
-          Breed place.
+          {commonLocale.t('name')} | {breedLocale.t('title')}
         </title>
         <meta
           property="og:title"
-          content="Breed place."
+          content={`${commonLocale.t('name')} | ${breedLocale.t('title')}`}
           key="title"
         />
       </Head>
       <Navbar />
       <FilterBar
-        title="Dragon breeding"
+        title={breedLocale.t('title')}
         price
         rarity
       />
@@ -147,14 +151,14 @@ export const BreedPage: NextPage = () => {
                       color={Colors.Dark}
                       onClick={() => handleSelect(dragon)}
                     >
-                      Start breed
+                      {breedLocale.t('start_btn')}
                     </Button>
                   ) : (
                     <Button
                       color={Colors.Primary}
                       onClick={() => handleCancel(dragon)}
                     >
-                      Get back
+                      {commonLocale.t('get_back')}
                     </Button>
                   )}
                 </CardContainer>
@@ -174,5 +178,13 @@ export const BreedPage: NextPage = () => {
     </Container>
   );
 }
+
+export const getStaticProps = async (props: GetServerSidePropsContext) => {
+  return {
+    props: {
+      ...await serverSideTranslations(props.locale || 'en', ['common', 'breed'])
+    }
+  };
+};
 
 export default BreedPage;

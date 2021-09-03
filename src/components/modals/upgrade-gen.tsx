@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Loader from "react-loader-spinner";
+import { useTranslation } from 'next-i18next';
 
 import { Modal } from 'components/modal';
 import { Text } from 'components/text';
@@ -39,6 +40,8 @@ export const UpgradeGenModal: React.FC<Prop> = ({
   price,
   onClose
 }) => {
+  const mutateLocale = useTranslation('mutate');
+  const commonLocale = useTranslation('common');
   const [loading, setLoading] = React.useState(false);
 
   const handleUpgrade = React.useCallback(async() => {
@@ -59,7 +62,7 @@ export const UpgradeGenModal: React.FC<Prop> = ({
           fontVariant={StyleFonts.FiraSansBold}
           size="32px"
         >
-          Upgrade #{id}
+          {mutateLocale.t('upgrade_btn')} #{id}
         </ModalTitle>
       )}
       show={show}
@@ -71,7 +74,7 @@ export const UpgradeGenModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          Choose a gene and try to improve it, you’ll need some zip though.
+          {mutateLocale.t('modal_sub_title')}
         </Description>
         <br />
         <Description
@@ -79,21 +82,21 @@ export const UpgradeGenModal: React.FC<Prop> = ({
           size="19px"
           css="margin: 0;"
         >
-          Gen index: <span>{gen.gen + 1}</span>
+          {mutateLocale.t('gen_index')}: <span>{gen.gen + 1}</span>
         </Description>
         <Description
           fontColors={Colors.Muted}
           size="19px"
           css="margin: 0;"
         >
-          Current gen value: <span>{gen.value}</span>
+          {mutateLocale.t('current_gen')}: <span>{gen.value}</span>
         </Description>
         <Description
           fontColors={Colors.Muted}
           size="19px"
           css="margin: 0;"
         >
-          Price: <span>{price} $ZLP</span>
+          {commonLocale.t('price')}: <span>{price} $ZLP</span>
         </Description>
         <ButtonsWrapper>
           <ModalButton
@@ -108,13 +111,13 @@ export const UpgradeGenModal: React.FC<Prop> = ({
                 height={10}
                 width={40}
               />
-            ) : 'Upgrade'}
+            ) : mutateLocale.t('upgrade_btn')}
           </ModalButton>
           <ModalButton
             color={Colors.Dark}
             onClick={onClose}
           >
-            Cancel
+            {commonLocale.t('cancel')}
           </ModalButton>
         </ButtonsWrapper>
       </Container>

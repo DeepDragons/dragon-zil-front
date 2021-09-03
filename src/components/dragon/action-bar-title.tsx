@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 import styled from 'styled-components';
 
 import { Text } from 'components/text';
@@ -44,6 +45,8 @@ export const ActionBarTitle: React.FC<Prop> = ({
   isOwner,
   price
 }) => {
+  const commonLocale = useTranslation('common');
+
   return (
     <TitleWrapper>
       <Text
@@ -51,13 +54,13 @@ export const ActionBarTitle: React.FC<Prop> = ({
         size="50px"
         css="margin: 0;"
       >
-        Dragon #{dragon.id}
+        {commonLocale.t('dragon')} #{dragon.id}
       </Text>
       <InfoText
         fontColors={Colors.Muted}
         fontVariant={StyleFonts.FiraSansRegular}
       >
-        Owner:
+        {commonLocale.t('owner')}:
         <a
           href={viewAddress(dragon.owner)}
           target='_blank'
@@ -71,7 +74,7 @@ export const ActionBarTitle: React.FC<Prop> = ({
         fontColors={Colors.Muted}
         fontVariant={StyleFonts.FiraSansRegular}
       >
-        Rarity:&#160;<Text
+        {commonLocale.t('rarity')}:&#160;<Text
           fontColors={color}
           css="margin: 0;"
         >
@@ -83,7 +86,7 @@ export const ActionBarTitle: React.FC<Prop> = ({
           fontColors={Colors.Muted}
           fontVariant={StyleFonts.FiraSansRegular}
         >
-          Price:&#160;<Text
+          {commonLocale.t('price')}:&#160;<Text
             fontColors={color}
             css="margin: 0;"
           >

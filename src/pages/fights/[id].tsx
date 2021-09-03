@@ -2,7 +2,9 @@ import React from 'react';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import Loader from "react-loader-spinner";
 import Head from 'next/head';
+import { useTranslation } from 'next-i18next';
 import dynamic from 'next/dynamic';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
 
 import { Navbar } from 'components/nav-bar';
@@ -25,6 +27,8 @@ type Prop = {
 const backend = new DragonAPI();
 const figthPlace = new FigthPlace();
 export const FightStart: NextPage<Prop> = ({ defended }) => {
+  const arenaLocale = useTranslation('arena');
+  const commonLocale = useTranslation('common');
   const router = useRouter();
 
   const [attacked, setAttacked] = React.useState<DragonObject | null>(null);
@@ -51,11 +55,11 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
     <Container>
       <Head>
         <title>
-          Fighting with #{defended?.id}
+          {commonLocale.t('name')} | {arenaLocale.t('title')} #{defended?.id}
         </title>
         <meta
           property="og:title"
-          content={`Fighting with #${defended?.id} for ${amount} $ZLP`}
+          content={`${commonLocale.t('name')} | ${arenaLocale.t('title')} #${defended?.id}`}
           key="title"
         />
         <link
@@ -64,7 +68,7 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
         />
         <meta
           name="keywords"
-          content="Fighting, Dragons"
+          content={arenaLocale.t('keywords')}
         />
         <meta
           property="og:image"
@@ -81,13 +85,13 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
           fontVariant={StyleFonts.FiraSansBold}
           size="56px"
         >
-          Battle with #{router.query.id}
+          {arenaLocale.t('sub_title')} #{router.query.id}
         </PageTitle>
         <PageTitle
           fontVariant={StyleFonts.FiraSansMedium}
           size="21px"
         >
-          Price <span>{Number(amount) / 10**18} $ZLP</span>
+          {commonLocale.t('price')} <span>{Number(amount) / 10**18} $ZLP</span>
         </PageTitle>
       </Wrapper>
       {defended ? (
@@ -108,7 +112,7 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
                 height={10}
                 width={40}
               />
-            ) : 'Start Battle'}
+            ) : arenaLocale.t('start_btn')}
           </ChoiceWith>
           {attacked ? (
             <CompareCombatGens
@@ -129,7 +133,8 @@ export const getStaticProps = async (props: GetServerSidePropsContext) => {
 
   return {
     props: {
-      defended
+      defended,
+      ...await serverSideTranslations(props.locale || 'en', ['common', 'arena'])
     }
   };
 };

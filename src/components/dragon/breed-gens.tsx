@@ -2,14 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Text } from 'components/text';
-import { AttackIcon } from 'components/icons/attack';
-import { DefenceIcon } from 'components/icons/defence';
+import { useTranslation } from 'next-i18next';
 import { LinePercent } from 'components/line-percent';
 import { TitleUpgradeGens } from './upgrade-gens-title';
 
 import { Colors } from 'config/colors';
-import { radar } from 'lib/radar';
-import { genParse } from 'lib/gen-parse';
 import { AuraIcon } from 'components/icons/aura';
 import { HornsIcon } from 'components/icons/horns';
 import { GrowthsIcon } from 'components/icons/growths';
@@ -88,10 +85,12 @@ export const BreadGensForm: React.FC<Prop> = ({
   lover,
   myDragon
 }) => {
+  const commonLocale = useTranslation('common');
+
   return (
     <Container color={Colors.Muted}>
       <TitleUpgradeGens>
-        Body parts
+        {commonLocale.t('body_parts')}
       </TitleUpgradeGens>
       <GensContainer>
       <Row>

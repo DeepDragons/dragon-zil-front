@@ -38,7 +38,7 @@ const TxContainer = styled.div`
 `;
 const Between = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
 
   span {
