@@ -36,7 +36,7 @@ const Menu = styled.ul`
   position: absolute;
   display: ${(p: MenuProp) => p.open ? 'block' : 'none'};
   z-index: 20;
-  transform: translate(0,201px);
+  transform: translate(-5%,2%);
 `;
 const Item = styled.li`
   cursor: pointer;
@@ -87,25 +87,25 @@ export const DropDown: React.FC<Prop> = ({
         <Text size="17px">
           {items[selected]}
         </Text>
+        <Menu
+          open={opned}
+        >
+          {items.map((el, index) => (
+            <Item
+              key={index}
+              last={index === items.length - 1}
+              style={{
+                width: refContainer.current?.clientWidth
+              }}
+              onClick={() => hanldeSelect(index)}
+            >
+              <Text size="17px">
+                {el}
+              </Text>
+            </Item>
+          ))}
+        </Menu>
       </Container>
-      <Menu
-        open={opned}
-      >
-        {items.map((el, index) => (
-          <Item
-            key={index}
-            last={index === items.length - 1}
-            style={{
-              width: refContainer.current?.clientWidth
-            }}
-            onClick={() => hanldeSelect(index)}
-          >
-            <Text size="17px">
-              {el}
-            </Text>
-          </Item>
-        ))}
-      </Menu>
     </React.Fragment>
   );
 };

@@ -16,7 +16,7 @@ type Prop = {
   items?: string[];
   selectedSort?: number;
   onSelectSort?: (index: number) => void;
-  onFilter: (from: number, to: number) => void;
+  onFilter?: (from: number, to: number) => void;
 }
 
 const Container = styled.div`
@@ -43,11 +43,11 @@ const Wrapper = styled.div`
 
 export const FilterBar: React.FC<Prop> = ({
   title,
-  onFilter,
   price = false,
   items = [],
   selectedSort = 0,
-  onSelectSort = () => null
+  onSelectSort = () => null,
+  onFilter = () => null
 }) => {
   const commonLocale = useTranslation('common');
   const [filterbyFrom, setFilterbyFrom] = React.useState(0);

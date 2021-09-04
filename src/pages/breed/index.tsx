@@ -18,12 +18,12 @@ import { CardContainer } from 'components/dragon/styles';
 
 import { $wallet } from 'store/wallet';
 import {
-  $marketDragons,
-  contactMarketDragons,
-  resetMarketDragons
-} from 'store/market';
+  $BreedDragons,
+  contactBreedDragons,
+  resetBreedDragons
+} from 'store/breed';
 import { RARITY } from 'lib/rarity';
-import { DragonAPI } from '@/lib/api';
+import { DragonAPI, QueryParams } from '@/lib/api';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
 import { updateCache } from 'store/cache-dragon';
@@ -31,8 +31,10 @@ import { useScrollEvent } from 'mixin/scroll';
 import { BreedPlace } from 'mixin/breed';
 import { Button } from '@/components/button';
 
-const limit = 9;
-let page = 0;
+const params: QueryParams = {
+  limit: 9,
+  offset: 0
+};
 let maxPage = 1;
 const backend = new DragonAPI();
 const breedPlace = new BreedPlace();
@@ -41,25 +43,70 @@ export const BreedPage: NextPage = () => {
   const commonLocale = useTranslation('common');
   const router = useRouter();
   const address = useStore($wallet);
-  const dragons = useStore($marketDragons);
+  const dragons = useStore($BreedDragons);
+  const [sortItem, setSortItem] = React.useState(0);
   const [skelet, setSkelet] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
+
+  const items = React.useMemo(() => [
+    commonLocale.t('all'),
+    commonLocale.t('rarity'),
+    commonLocale.t('strong'),
+    commonLocale.t('price')
+  ], []);
 
   const fetchData = async () => {
     const addr = $wallet.getState();
 
-    if (maxPage <= page || !addr) {
+    if (maxPage <= params.offset || !addr) {
       return null;
     }
 
-		const result = await backend.getDragonsFromBreed(limit, page);
+		const result = await backend.getDragonsFromBreed(params);
 
     maxPage = result.pagination.pages;
 
-    contactMarketDragons(result.list);
+    contactBreedDragons(result.list);
 
-    page += 1;
+    params.offset = params.offset + 1;
 	};
+
+  const handleFiltred = React.useCallback(async(startPrice: number, endPrice: number) => {
+    setSkelet(true);
+
+    params.startPrice = startPrice;
+    params.endPrice = endPrice;
+
+    try {
+      const result = await backend.getDragonsFromBreed(params);
+
+      maxPage = result.pagination.pages;
+
+      resetBreedDragons();
+      contactBreedDragons(result.list);
+    } catch {
+      //
+    }
+    setSkelet(false);
+  }, []);
+  const hanldeSort = React.useCallback(async(index: number) => {
+    setSortItem(index);
+    setSkelet(true);
+
+    params.sort = index;
+
+    try {
+      const result = await backend.getDragonsFromBreed(params);
+
+      maxPage = result.pagination.pages;
+  
+      resetBreedDragons();
+      contactBreedDragons(result.list);
+    } catch {
+      //
+    }
+    setSkelet(false);
+  }, []);
 
   const handleSelect = React.useCallback((dragon) => {
     updateCache(dragon);
@@ -71,8 +118,8 @@ export const BreedPage: NextPage = () => {
 
   React.useEffect(() => {
     setSkelet(true);
-    resetMarketDragons();
-    page = 0;
+    resetBreedDragons();
+    params.offset = 0;
     fetchData()
       .then(() => setSkelet(false))
       .catch(() => setSkelet(false));
@@ -112,8 +159,11 @@ export const BreedPage: NextPage = () => {
       <Navbar />
       <FilterBar
         title={breedLocale.t('title')}
+        selectedSort={sortItem}
+        items={items}
         price
-        rarity
+        onFilter={handleFiltred}
+        onSelectSort={hanldeSort}
       />
       <Wrapper>
         {skelet ? (

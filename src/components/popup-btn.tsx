@@ -50,7 +50,7 @@ const Menu = styled.div`
   padding: 16px;
   min-width: 291px;
   min-height: 175px;
-  transform: translate(12px,74px);
+  transform: translate(-52%,-26%);
 
   background: ${Colors.Darker};
 
@@ -122,45 +122,45 @@ export const PopUpButton: React.FC<Prop> = ({
         <Text fontVariant={StyleFonts.FiraSansMedium}>
           {children}
         </Text>
+        <Menu open={opned}>
+          <MenuWrapper>
+            <Column>
+              <Text
+                fontVariant={StyleFonts.FiraSansMedium}
+                fontColors={Colors.Muted}
+              >
+                From
+              </Text>
+              <Input
+                defaultValue={from}
+                type="number"
+                min="0"
+                onInput={(event) => onChange(Number(event.currentTarget.value), to)}
+              />
+            </Column>
+            <Text size="40px">
+              -
+            </Text>
+            <Column>
+              <Text
+                fontVariant={StyleFonts.FiraSansMedium}
+                fontColors={Colors.Muted}
+              >
+                To
+              </Text>
+              <Input
+                defaultValue={to}
+                type="number"
+                min="0"
+                onInput={(event) => onChange(from, Number(event.currentTarget.value))}
+              />
+            </Column>
+          </MenuWrapper>
+          <Apply onClick={onApply}>
+            Apply
+          </Apply>
+        </Menu>
       </Container>
-      <Menu open={opned}>
-        <MenuWrapper>
-          <Column>
-            <Text
-              fontVariant={StyleFonts.FiraSansMedium}
-              fontColors={Colors.Muted}
-            >
-              From
-            </Text>
-            <Input
-              defaultValue={from}
-              type="number"
-              min="0"
-              onInput={(event) => onChange(Number(event.currentTarget.value), to)}
-            />
-          </Column>
-          <Text size="40px">
-            -
-          </Text>
-          <Column>
-            <Text
-              fontVariant={StyleFonts.FiraSansMedium}
-              fontColors={Colors.Muted}
-            >
-              To
-            </Text>
-            <Input
-              defaultValue={to}
-              type="number"
-              min="0"
-              onInput={(event) => onChange(from, Number(event.currentTarget.value))}
-            />
-          </Column>
-        </MenuWrapper>
-        <Apply onClick={onApply}>
-          Apply
-        </Apply>
-      </Menu>
     </React.Fragment>
   );
 };

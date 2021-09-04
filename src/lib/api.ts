@@ -114,10 +114,10 @@ export class DragonAPI {
     };
   }
 
-  public async getDragonsFromBreed(limit = 6, offset = 0) {
-    const params = `limit=${limit}&offset=${offset}`;
-    const url = `${this._host}/${this._api}/${Methods.Breed}?${params}`;
-    const res = await fetch(url);
+  public async getDragonsFromBreed(params: QueryParams) {
+    let url = new URL(`${this._host}/${this._api}/${Methods.Breed}`);
+    url = this._addParams(url, params);
+    const res = await fetch(url.toString());
 
     if (res.status !== 200) {
       throw new Error(String(res.status));
