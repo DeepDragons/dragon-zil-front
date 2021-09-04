@@ -1,0 +1,53 @@
+{
+  "egg": "Egg",
+  "dragon": "Dragon",
+  "keywords": "My Dragon, Dragon, Egg, manage",
+  "actions": {
+    "name": "Actions",
+    "hatch_egg": "Hatch Egg",
+    "transfer": "Transfer",
+    "sale": "To sale",
+    "mutate": "Mutate",
+    "arena": "To arena",
+    "breed": "Breed",
+    "suicide": "Suicide",
+    "fight": "Fight with",
+    "remove_breed.": "Remove from breed",
+    "bread_with": "Breed with",
+    "sale_remove": "Cancel Sale"
+  },
+  "combat_gens": "Combat gens",
+  "body_parts": "Body parts",
+  "not_found": "Not found a dragon",
+  "transfer_info": "You can move your {{dragonStage}} (token) between your accounts or send it to somebody, as a gift for example.",
+  "sale": {
+    "title": "To sale",
+    "info": "You can set the custom price and put your {{dragonStage}} (token) on the marketplace for sale.",
+    "set_price": "Set a price in ZILs",
+    "btn_sale": "Sale",
+    "btn_approve": "Approve"
+  },
+  "fights_modal": {
+    "title": "To arena",
+    "info": "Put your dragon (token) on a battlefield! Other players will be able to fight with your dragon.",
+    "set_price": "Set a bet in ZLP",
+    "btn_approve": "Approve ZLP",
+    "btn_start": "Start fight."
+  },
+  "breed_modal": {
+    "title": "Breeding",
+    "info": "Set a price and put your dragon (token) on a marketplace, where other players can pay you to mate their dragons with yours.",
+    "set_price": "Set a whores price in ZLP.",
+    "btn": "Place to breed"
+  },
+  "suicide_modal": {
+    "title": "Suicide",
+    "info": "If you are cruel enough you can burn your {{dragonStage}} (token) forever!",
+    "btn": "Kill {{dragonStage}}"
+  },
+  "hatch_egg": {
+    "title": "Hatch an egg",
+    "info": "You can hatch an egg for become a dragon.",
+    "btn": "Hatch an egg."
+  }
+}

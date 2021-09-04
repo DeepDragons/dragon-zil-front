@@ -1,5 +1,6 @@
 import React from 'react';
 import Loader from "react-loader-spinner";
+import { useTranslation } from 'next-i18next';
 
 import { Modal } from 'components/modal';
 import { Text } from 'components/text';
@@ -27,6 +28,8 @@ export const BreedModal: React.FC<Prop> = ({
   id,
   onClose
 }) => {
+  const commonLocale = useTranslation('common');
+  const dragonLocale = useTranslation('dragon');
   const [zlp, setZLP] = React.useState(50);
   const [loading, setLoading] = React.useState(false);
 
@@ -48,7 +51,7 @@ export const BreedModal: React.FC<Prop> = ({
           fontVariant={StyleFonts.FiraSansBold}
           size="32px"
         >
-          Breed #{id}
+          {dragonLocale.t('breed_modal.title')} #{id}
         </ModalTitle>
       )}
       show={show}
@@ -60,14 +63,14 @@ export const BreedModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          Set a price and put your dragon (token) on a marketplace, where other players can pay you to mate their dragons with yours.
+          {dragonLocale.t('breed_modal.info')}
         </Text>
         <IntInput
           value={zlp}
           bg={Colors.Dark}
           onInput={setZLP}
         >
-          Set a whores price in ZLP.
+          {dragonLocale.t('breed_modal.set_price')}
         </IntInput>
         <ButtonsWrapper>
           <ModalButton
@@ -82,13 +85,13 @@ export const BreedModal: React.FC<Prop> = ({
                 height={10}
                 width={40}
               />
-            ) : 'Place to breed'}
+            ) : dragonLocale.t('breed_modal.btn')}
           </ModalButton>
           <ModalButton
             color={Colors.Dark}
             onClick={onClose}
           >
-            Cancel
+            {commonLocale.t('cancel')}
           </ModalButton>
         </ButtonsWrapper>
       </Container>

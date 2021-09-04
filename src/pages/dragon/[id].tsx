@@ -1,8 +1,10 @@
 import React from 'react';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import styled from 'styled-components';
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import dynamic from 'next/dynamic';
 
 import { Navbar } from 'components/nav-bar';
@@ -49,6 +51,8 @@ const backend = new DragonAPI();
 const breedPlace = new BreedPlace();
 const marketPlace = new MarketPlace();
 export const Dragon: NextPage<prop> = ({ dragon }) => {
+  const commonLocale = useTranslation('common');
+  const dragonLocale = useTranslation('dragon');
   const router = useRouter();
 
   const [loading, setLoading] = React.useState(false);
@@ -59,6 +63,13 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
   const [suicide, setSuicide] = React.useState(false);
   const [hatchEgg, setHatchEgg] = React.useState(false);
 
+  const stageType = React.useMemo(() => {
+    if (!dragon) {
+      return dragonLocale.t('dragon');
+    }
+
+    return dragon?.stage === 0 ? dragonLocale.t('egg') : dragonLocale.t('dragon');
+  }, [dragon]);
   const rarity = React.useMemo(() => {
     if (!dragon) {
       return null;
@@ -77,11 +88,11 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
     <Container>
       <Head>
         <title>
-          {dragon?.stage === 0 ? 'Egg' : 'Dragon'} #{dragon?.id}
+          {commonLocale.t('name')} | {stageType} #{dragon?.id}
         </title>
         <meta
           property="og:title"
-          content={`${dragon?.stage === 0 ? 'Egg' : 'Dragon'} #${dragon?.id}`}
+          content={`${commonLocale.t('name')} | ${stageType} #${dragon?.id}`}
           key="title"
         />
         <link
@@ -96,7 +107,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
         />
         <meta
           name="keywords"
-          content={dragon?.stage === 0 ? 'An Egg' : 'A Dragon'}
+          content={dragonLocale.t('keywords')}
           data-rh="true"
         />
         <meta
@@ -165,7 +176,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
             fontVariant={StyleFonts.FiraSansBold}
             size="50px"
           >
-            Not found a dragon #{router.query.id}
+            {dragonLocale.t('not_found')} #{router.query.id}
           </Text>
         </Wrapper>
       ) : null}
@@ -214,7 +225,8 @@ export const getStaticProps = async (props: GetServerSidePropsContext) => {
 
   return {
     props: {
-      dragon
+      dragon,
+      ...await serverSideTranslations(props.locale || 'en', ['common', 'dragon'])
     }
   };
 };

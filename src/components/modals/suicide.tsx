@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'next-i18next';
 import Loader from "react-loader-spinner";
 
 import { Modal } from 'components/modal';
@@ -28,6 +29,8 @@ export const SuicideModal: React.FC<Prop> = ({
   id,
   onClose
 }) => {
+  const commonLocale = useTranslation('common');
+  const dragonLocale = useTranslation('dragon');
   const [loading, setLoading] = React.useState(false);
 
   const dragonStage = React.useMemo(
@@ -53,7 +56,7 @@ export const SuicideModal: React.FC<Prop> = ({
           fontVariant={StyleFonts.FiraSansBold}
           size="32px"
         >
-          Transfer #{id}
+          {dragonLocale.t('suicide_modal.title')} #{id}
         </ModalTitle>
       )}
       show={show}
@@ -65,7 +68,7 @@ export const SuicideModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          If you are cruel enough you can burn your {dragonStage} (token) forever!
+          {dragonLocale.t('suicide_modal.info', { dragonStage })}
         </Text>
         <ButtonsWrapper>
           <ModalButton
@@ -80,13 +83,13 @@ export const SuicideModal: React.FC<Prop> = ({
                 height={10}
                 width={40}
               />
-            ) : `Kill ${dragonStage}`}
+            ) : dragonLocale.t('suicide_modal.btn', { dragonStage })}
           </ModalButton>
           <ModalButton
             color={Colors.Dark}
             onClick={onClose}
           >
-            Cancel
+            {commonLocale.t('cancel')}
           </ModalButton>
         </ButtonsWrapper>
       </Container>

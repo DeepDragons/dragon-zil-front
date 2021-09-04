@@ -1,6 +1,7 @@
 import React from 'react';
 import Loader from "react-loader-spinner";
 import styled from 'styled-components';
+import { useTranslation } from 'next-i18next';
 
 import { Modal } from 'components/modal';
 import { Text } from 'components/text';
@@ -29,6 +30,8 @@ export const TransferModal: React.FC<Prop> = ({
   id,
   onClose
 }) => {
+  const commonLocale = useTranslation('common');
+  const dragonLocale = useTranslation('dragon');
   const [bech32, setBech32] = React.useState('');
   const [error, setError] = React.useState('');
   const [loading, setLoading] = React.useState(false);
@@ -60,7 +63,7 @@ export const TransferModal: React.FC<Prop> = ({
           fontVariant={StyleFonts.FiraSansBold}
           size="32px"
         >
-          Transfer #{id}
+          {commonLocale.t('transfer')} #{id}
         </ModalTitle>
       )}
       show={show}
@@ -72,7 +75,7 @@ export const TransferModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          You can move your {dragonStage} (token) between your accounts or send it to somebody, as a gift for example.
+          {dragonLocale.t('transfer_info', { dragonStage })}
         </Text>
         <Input
           fontColors={error ? Colors.Danger : Colors.LightBlue}
@@ -99,7 +102,7 @@ export const TransferModal: React.FC<Prop> = ({
             color={Colors.Dark}
             onClick={onClose}
           >
-            Cancel
+            {commonLocale.t('cancel')}
           </ModalButton>
         </ButtonsWrapper>
       </Container>

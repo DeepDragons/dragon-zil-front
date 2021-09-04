@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 import styled from 'styled-components';
 
 import { Text } from 'components/text';
@@ -42,6 +43,8 @@ type Prop = {
 };
 
 export const BodyParts: React.FC<Prop> = ({ color, gens }) => {
+  const dragonLocale = useTranslation('dragon');
+
   return (
     <Container color={color}>
       <TitleRow>
@@ -49,7 +52,7 @@ export const BodyParts: React.FC<Prop> = ({ color, gens }) => {
           fontVariant={StyleFonts.FiraSansSemiBold}
           size="24px"
         >
-          Body parts
+          {dragonLocale.t('body_parts')}
         </Text>
         <img
           src="/icons/body.svg"

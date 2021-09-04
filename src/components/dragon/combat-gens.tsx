@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { isBrowser, isMobile } from 'react-device-detect';
+import { isBrowser } from 'react-device-detect';
+import { useTranslation } from 'next-i18next';
 
 import { Text } from 'components/text';
 import { Column } from 'components/column';
@@ -69,6 +70,7 @@ export const CombatGens: React.FC<Prop> = ({
   gens,
   color
 }) => {
+  const dragonLocale = useTranslation('dragon');
   const [selected, setSelected] = React.useState(isBrowser ? 1 : 0);
 
   const gensArray = React.useMemo(() => {
@@ -97,7 +99,7 @@ export const CombatGens: React.FC<Prop> = ({
             fontVariant={StyleFonts.FiraSansSemiBold}
             size="24px"
           >
-            Combat gens
+            {dragonLocale.t('combat_gens')}
           </Text>
           <img
             src="/icons/gens.svg"

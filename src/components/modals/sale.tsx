@@ -3,6 +3,7 @@ import React from 'react';
 import { Modal } from 'components/modal';
 import Loader from "react-loader-spinner";
 import { Text } from 'components/text';
+import { useTranslation } from 'next-i18next';
 import { IntInput } from 'components/int-input';
 import {
   ModalTitle,
@@ -32,6 +33,8 @@ export const SaleModal: React.FC<Prop> = ({
   id,
   onClose
 }) => {
+  const commonLocale = useTranslation('common');
+  const dragonLocale = useTranslation('dragon');
   const [zils, setZils] = React.useState(1000);
   const [approved, setApproved] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
@@ -42,7 +45,7 @@ export const SaleModal: React.FC<Prop> = ({
   );
 
   const buttonName = React.useMemo(
-    () => approved ? 'Sale' : 'Approve',
+    () => approved ? dragonLocale.t('sale.btn_sale') : dragonLocale.t('sale.btn_approve'),
     [approved, id]
   );
 
@@ -93,7 +96,7 @@ export const SaleModal: React.FC<Prop> = ({
           fontVariant={StyleFonts.FiraSansBold}
           size="32px"
         >
-          To sale #{id}
+          {dragonLocale.t('sale.title')} #{id}
         </ModalTitle>
       )}
       show={show}
@@ -105,14 +108,14 @@ export const SaleModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          You can set the custom price and put your {dragonStage} (token) on the marketplace for sale.
+          {dragonLocale.t('sale.info', {dragonStage})}
         </Text>
         <IntInput
           value={zils}
           bg={Colors.Dark}
           onInput={setZils}
         >
-          Set a price in ZILs
+          {dragonLocale.t('sale.set_price')}
         </IntInput>
         <ButtonsWrapper>
           <ModalButton
@@ -134,7 +137,7 @@ export const SaleModal: React.FC<Prop> = ({
             color={Colors.Dark}
             onClick={onClose}
           >
-            Cancel
+            {commonLocale.t('cancel')}
           </ModalButton>
         </ButtonsWrapper>
       </Container>

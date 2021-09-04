@@ -1,4 +1,5 @@
 import Loader from "react-loader-spinner";
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 
 import { Modal } from 'components/modal';
@@ -32,13 +33,16 @@ export const FightsModal: React.FC<Prop> = ({
   id,
   onClose
 }) => {
+  const commonLocale = useTranslation('common');
+  const dragonLocale = useTranslation('dragon');
   const address = useStore($wallet);
   const [loading, setLoading] = React.useState(true);
   const [zlp, setZLP] = React.useState(500);
   const [needApprove, setNeedApprove] = React.useState(true);
 
   const btnText = React.useMemo(() => {
-    return needApprove ? 'Approve ZLP' : 'Start fight.';
+    return needApprove ?
+      dragonLocale.t('fights_modal.btn_approve') : dragonLocale.t('fights_modal.btn_start');
   }, [needApprove]);
 
   const hanldeUpdate = React.useCallback(async() => {
@@ -76,7 +80,7 @@ export const FightsModal: React.FC<Prop> = ({
           fontVariant={StyleFonts.FiraSansBold}
           size="32px"
         >
-          To arena #{id}
+          {dragonLocale.t('fights_modal.title')} #{id}
         </ModalTitle>
       )}
       show={show}
@@ -88,14 +92,14 @@ export const FightsModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          Put your dragon (token) on a battlefield! Other players will be able to fight with your dragon.
+          {dragonLocale.t('fights_modal.info')}
         </Text>
         <IntInput
           value={zlp}
           bg={Colors.Dark}
           onInput={setZLP}
         >
-          Set a bet in ZLP
+          {dragonLocale.t('fights_modal.set_price')}
         </IntInput>
         <ButtonsWrapper>
           <ModalButton
@@ -116,7 +120,7 @@ export const FightsModal: React.FC<Prop> = ({
             color={Colors.Dark}
             onClick={onClose}
           >
-            Cancel
+            {commonLocale.t('cancel')}
           </ModalButton>
         </ButtonsWrapper>
       </Container>

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Loader from "react-loader-spinner";
+import { useTranslation } from 'next-i18next';
 
 import { Modal } from 'components/modal';
 import { Text } from 'components/text';
@@ -26,6 +27,8 @@ export const HatchEggModal: React.FC<Prop> = ({
   id,
   onClose
 }) => {
+  const commonLocale = useTranslation('common');
+  const dragonLocale = useTranslation('dragon');
   const [loading, setLoading] = React.useState(false);
 
   const handleHatch = React.useCallback(async() => {
@@ -46,7 +49,7 @@ export const HatchEggModal: React.FC<Prop> = ({
           fontVariant={StyleFonts.FiraSansBold}
           size="32px"
         >
-          Hatch an egg #{id}
+          {dragonLocale.t('hatch_egg.title')} #{id}
         </ModalTitle>
       )}
       show={show}
@@ -58,7 +61,7 @@ export const HatchEggModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          You can hatch an egg for become a dragon.
+          {dragonLocale.t('hatch_egg.info')}
         </Text>
         <ButtonsWrapper>
           <ModalButton
@@ -73,13 +76,13 @@ export const HatchEggModal: React.FC<Prop> = ({
                 height={10}
                 width={40}
               />
-            ) : 'Hatch an egg.'}
+            ) : dragonLocale.t('hatch_egg.btn')}
           </ModalButton>
           <ModalButton
             color={Colors.Dark}
             onClick={onClose}
           >
-            Cancel
+            {commonLocale.t('cancel')}
           </ModalButton>
         </ButtonsWrapper>
       </Container>
