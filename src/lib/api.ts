@@ -74,10 +74,10 @@ export class DragonAPI {
 
   public async getDragonsFromMarket(params: QueryParams) {
     const url = new URL(`${this._host}/${this._api}/${Methods.Market}`);
-    if (params.endPrice) {
+    if (params.endPrice && !(params.endPrice <= 0)) {
       url.searchParams.set('end_price', String(params.endPrice * 10**12));
     }
-    if (params.startPrice) {
+    if (params.startPrice && !(params.startPrice <= 0)) {
       url.searchParams.set('start_price', String(params.startPrice * 10**12));
     }
     if (params.limit) {
@@ -92,7 +92,7 @@ export class DragonAPI {
     if (params.sort) {
       url.searchParams.set('sort', String(params.sort));
     }
-    if (params.stage) {
+    if (!isNaN(Number(params.stage))) {
       url.searchParams.set('stage', String(params.stage));
     }
     const res = await fetch(url.toString());

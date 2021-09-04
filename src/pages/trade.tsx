@@ -40,7 +40,9 @@ const items = [
   'all',
   'Rarity',
   'Stronger',
-  'Price'
+  'Price',
+  'Dragons',
+  'Eggs'
 ];
 const backend = new DragonAPI();
 const marketPlace = new MarketPlace();
@@ -82,6 +84,35 @@ export const TradePage: NextPage = () => {
 
       maxPage = result.pagination.pages;
   
+      resetMarketDragons();
+      contactMarketDragons(result.list);
+    } catch {
+      //
+    }
+    setSkelet(false);
+  }, []);
+  const hanldeSort = React.useCallback(async(index: number) => {
+    setSortItem(index);
+    setSkelet(true);
+
+    params.sort = undefined;
+    params.owner = undefined;
+    params.stage = undefined;
+
+    if (index === 4) {
+      params.stage = 1;
+    } else if (index === 5) {
+      params.stage = 0;
+    } else {
+      params.sort = index;
+    }
+
+    try {
+      const result = await backend.getDragonsFromMarket(params);
+
+      maxPage = result.pagination.pages;
+  
+      resetMarketDragons();
       contactMarketDragons(result.list);
     } catch {
       //
@@ -136,7 +167,7 @@ export const TradePage: NextPage = () => {
         items={items}
         price
         onFilter={handleFiltred}
-        onSelectSort={setSortItem}
+        onSelectSort={hanldeSort}
       />
       <Wrapper>
         {skelet ? (
