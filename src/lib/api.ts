@@ -73,28 +73,8 @@ export class DragonAPI {
   }
 
   public async getDragonsFromMarket(params: QueryParams) {
-    const url = new URL(`${this._host}/${this._api}/${Methods.Market}`);
-    if (params.endPrice && !(params.endPrice <= 0)) {
-      url.searchParams.set('end_price', String(params.endPrice * 10**12));
-    }
-    if (params.startPrice && !(params.startPrice <= 0)) {
-      url.searchParams.set('start_price', String(params.startPrice * 10**12));
-    }
-    if (params.limit) {
-      url.searchParams.set('limit', String(params.limit));
-    }
-    if (params.offset) {
-      url.searchParams.set('offset', String(params.offset));
-    }
-    if (params.owner) {
-      url.searchParams.set('owner', String(params.owner));
-    }
-    if (params.sort) {
-      url.searchParams.set('sort', String(params.sort));
-    }
-    if (!isNaN(Number(params.stage))) {
-      url.searchParams.set('stage', String(params.stage));
-    }
+    let url = new URL(`${this._host}/${this._api}/${Methods.Market}`);
+    url = this._addParams(url, params);
     const res = await fetch(url.toString());
 
     if (res.status === 404) {
@@ -149,5 +129,31 @@ export class DragonAPI {
       list: result.data as DragonObject[],
       pagination: result.pagination as PaginationObject
     };
+  }
+
+  private _addParams(url: URL, params: QueryParams) {
+    if (params.endPrice && !(params.endPrice <= 0)) {
+      url.searchParams.set('end_price', String(params.endPrice * 10**12));
+    }
+    if (params.startPrice && !(params.startPrice <= 0)) {
+      url.searchParams.set('start_price', String(params.startPrice * 10**12));
+    }
+    if (params.limit) {
+      url.searchParams.set('limit', String(params.limit));
+    }
+    if (params.offset) {
+      url.searchParams.set('offset', String(params.offset));
+    }
+    if (params.owner) {
+      url.searchParams.set('owner', String(params.owner));
+    }
+    if (params.sort) {
+      url.searchParams.set('sort', String(params.sort));
+    }
+    if (!isNaN(Number(params.stage))) {
+      url.searchParams.set('stage', String(params.stage));
+    }
+
+    return url;
   }
 }

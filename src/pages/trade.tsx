@@ -36,14 +36,6 @@ const params: QueryParams = {
   offset: 0
 };
 let maxPage = 1;
-const items = [
-  'all',
-  'Rarity',
-  'Stronger',
-  'Price',
-  'Dragons',
-  'Eggs'
-];
 const backend = new DragonAPI();
 const marketPlace = new MarketPlace();
 export const TradePage: NextPage = () => {
@@ -56,6 +48,15 @@ export const TradePage: NextPage = () => {
   const [sortItem, setSortItem] = React.useState(0);
   const [skelet, setSkelet] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
+
+  const items = React.useMemo(() => [
+    commonLocale.t('all'),
+    commonLocale.t('rarity'),
+    commonLocale.t('strong'),
+    commonLocale.t('price'),
+    commonLocale.t('dragons'),
+    commonLocale.t('eggs')
+  ], []);
 
   const fetchData = async () => {
     const addr = $wallet.getState();

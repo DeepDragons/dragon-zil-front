@@ -7,6 +7,7 @@ import { DropDown } from 'components/drop-down';
 import { PopUpButton } from 'components/popup-btn';
 
 import { StyleFonts } from 'config/fonts';
+import { useTranslation } from 'next-i18next';
 
 type Prop = {
   title: string;
@@ -48,6 +49,7 @@ export const FilterBar: React.FC<Prop> = ({
   selectedSort = 0,
   onSelectSort = () => null
 }) => {
+  const commonLocale = useTranslation('common');
   const [filterbyFrom, setFilterbyFrom] = React.useState(0);
   const [filterbyTo, setFilterbyTo] = React.useState(0);
 
@@ -83,7 +85,7 @@ export const FilterBar: React.FC<Prop> = ({
             onApply={() => onFilter(filterbyFrom, filterbyTo)}
             onChange={hanldeChangePriceFilter}
           >
-            Price
+            {commonLocale.t('price')}
           </PopUpButton>
         ) : null}
       </Wrapper>
