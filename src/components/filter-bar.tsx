@@ -12,6 +12,10 @@ type Prop = {
   title: string;
   price?: boolean;
   rarity?: boolean;
+  items?: string[];
+  selectedSort?: number;
+  onSelectSort?: (index: number) => void;
+  onFilter: (from: number, to: number) => void;
 }
 
 const Container = styled.div`
@@ -36,19 +40,16 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const items = [
-  'Rarity',
-  'Strong'
-];
-
 export const FilterBar: React.FC<Prop> = ({
   title,
+  onFilter,
   price = false,
-  rarity = false
+  items = [],
+  selectedSort = 0,
+  onSelectSort = () => null
 }) => {
-  const [filterBy, setFilterBy] = React.useState(0);
   const [filterbyFrom, setFilterbyFrom] = React.useState(0);
-  const [filterbyTo, setFilterbyTo] = React.useState(100);
+  const [filterbyTo, setFilterbyTo] = React.useState(0);
 
   const hanldeChangePriceFilter = React.useCallback((from, to) => {
     if (from !== filterbyFrom) {
@@ -68,18 +69,18 @@ export const FilterBar: React.FC<Prop> = ({
         {title}
       </Text>
       <Wrapper>
-        {rarity ? (
+        {items.length > 0 ? (
           <DropDown
             items={items}
-            selected={filterBy}
-            onSelected={setFilterBy}
+            selected={selectedSort}
+            onSelected={onSelectSort}
           />
         ) : null}
         {price ? (
           <PopUpButton
             from={filterbyFrom}
             to={filterbyTo}
-            onApply={() => console.log(filterbyFrom, filterbyTo)}
+            onApply={() => onFilter(filterbyFrom, filterbyTo)}
             onChange={hanldeChangePriceFilter}
           >
             Price

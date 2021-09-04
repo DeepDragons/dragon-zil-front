@@ -23,7 +23,7 @@ import {
   resetMarketDragons
 } from 'store/market';
 import { RARITY } from 'lib/rarity';
-import { DragonAPI } from '@/lib/api';
+import { DragonAPI, QueryParams } from '@/lib/api';
 import { getMarketOrder, getMarketPrice } from 'lib/get-action';
 import { StyleFonts } from '@/config/fonts';
 import { CardContainer } from 'components/dragon/styles';
@@ -31,9 +31,17 @@ import { Colors } from '@/config/colors';
 import { useScrollEvent } from '@/mixin/scroll';
 import { MarketPlace } from 'mixin/market-place';
 
-const limit = 9;
-let page = 0;
+const params: QueryParams = {
+  limit: 9,
+  offset: 0
+};
 let maxPage = 1;
+const items = [
+  'all',
+  'Rarity',
+  'Stronger',
+  'Price'
+];
 const backend = new DragonAPI();
 const marketPlace = new MarketPlace();
 export const TradePage: NextPage = () => {
@@ -42,29 +50,49 @@ export const TradePage: NextPage = () => {
   const router = useRouter();
   const address = useStore($wallet);
   const dragons = useStore($marketDragons);
+
+  const [sortItem, setSortItem] = React.useState(0);
   const [skelet, setSkelet] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
 
   const fetchData = async () => {
     const addr = $wallet.getState();
 
-    if (maxPage <= page || !addr) {
+    if (maxPage <= params.offset || !addr) {
       return null;
     }
 
-		const result = await backend.getDragonsFromMarket(limit, page);
+		const result = await backend.getDragonsFromMarket(params);
 
     maxPage = result.pagination.pages;
 
     contactMarketDragons(result.list);
 
-    page += 1;
+    params.offset = params.offset + 1;
 	};
+
+  const handleFiltred = React.useCallback(async(startPrice: number, endPrice: number) => {
+    setSkelet(true);
+
+    params.startPrice = startPrice;
+    params.endPrice = endPrice;
+
+    try {
+      const result = await backend.getDragonsFromMarket(params);
+
+      maxPage = result.pagination.pages;
+  
+      contactMarketDragons(result.list);
+    } catch {
+      //
+    }
+    setSkelet(false);
+  }, []);
 
   React.useEffect(() => {
     setSkelet(true);
     resetMarketDragons();
-    page = 0;
+    params.offset = 0;
     fetchData()
       .then(() => setSkelet(false))
       .catch(() => setSkelet(false));
@@ -104,8 +132,11 @@ export const TradePage: NextPage = () => {
       <Navbar />
       <FilterBar
         title={tradeLocale.t('title')}
-        rarity
+        selectedSort={sortItem}
+        items={items}
         price
+        onFilter={handleFiltred}
+        onSelectSort={setSortItem}
       />
       <Wrapper>
         {skelet ? (

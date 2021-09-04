@@ -24,7 +24,8 @@ const Container = styled.div`
   
   background: ${Colors.Darker};
   z-index: 20;
-  padding: 5px 46px;
+  padding: 8px;
+  min-width: 150px;
 
   user-select: none;
   text-align: center;
@@ -35,14 +36,15 @@ const Menu = styled.ul`
   position: absolute;
   display: ${(p: MenuProp) => p.open ? 'block' : 'none'};
   z-index: 20;
-  transform: translate(0,67%);
+  transform: translate(0,60%);
 `;
 const Item = styled.li`
   cursor: pointer;
   background: ${Colors.Darker};
   z-index: 20;
-  padding: 5px 46px;
+  padding: 8px;
   text-align: center;
+  width: fit-content;
 
   user-select: none;
 
@@ -82,20 +84,20 @@ export const DropDown: React.FC<Prop> = ({
         ref={(n) => refContainer.current = n}
         onClick={() => SetOpened(true)}
       >
-        <Text>
+        <Text size="17px">
           {items[selected]}
         </Text>
       </Container>
       <Menu
         open={opned}
-        style={{
-          width: refContainer.current?.clientWidth
-        }}
       >
         {items.map((el, index) => (
           <Item
             key={index}
             last={index === items.length - 1}
+            style={{
+              width: refContainer.current?.clientWidth
+            }}
             onClick={() => hanldeSelect(index)}
           >
             <Text size="17px">

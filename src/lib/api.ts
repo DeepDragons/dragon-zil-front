@@ -20,6 +20,16 @@ export interface DragonObject {
   url: string;
 }
 
+export interface QueryParams {
+  limit: number;
+  offset: number;
+  owner?: string;
+  stage?: number;
+  sort?: number; // 0 and _ - id, 1 - rarity, 2 - strong, 3 - price
+  startPrice?: number;
+  endPrice?: number;
+}
+
 export interface PaginationObject {
   current_page: number;
   limit: number;
@@ -62,18 +72,38 @@ export class DragonAPI {
     return data[0];
   }
 
-  public async getDragonsFromMarket(limit = 6, offset = 0) {
-    const params = `limit=${limit}&offset=${offset}`;
-    const url = `${this._host}/${this._api}/${Methods.Market}?${params}`;
-    const res = await fetch(url);
+  public async getDragonsFromMarket(params: QueryParams) {
+    const url = new URL(`${this._host}/${this._api}/${Methods.Market}`);
+    if (params.endPrice) {
+      url.searchParams.set('end_price', String(params.endPrice * 10**12));
+    }
+    if (params.startPrice) {
+      url.searchParams.set('start_price', String(params.startPrice * 10**12));
+    }
+    if (params.limit) {
+      url.searchParams.set('limit', String(params.limit));
+    }
+    if (params.offset) {
+      url.searchParams.set('offset', String(params.offset));
+    }
+    if (params.owner) {
+      url.searchParams.set('owner', String(params.owner));
+    }
+    if (params.sort) {
+      url.searchParams.set('sort', String(params.sort));
+    }
+    if (params.stage) {
+      url.searchParams.set('stage', String(params.stage));
+    }
+    const res = await fetch(url.toString());
 
     if (res.status === 404) {
       return {
         list: [] as DragonObject[],
         pagination: {
-          limit,
+          limit: params.limit,
           current_page: 0,
-          pages: offset,
+          pages: params.offset,
           records: 0
         } as PaginationObject
       };

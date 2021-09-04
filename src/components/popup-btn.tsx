@@ -25,9 +25,10 @@ const Container = styled.div`
   cursor: pointer;
   
   background: ${Colors.Darker};
-  padding: 5px 46px;
+  padding: 5px;
 
   min-width: 60px;
+  width: 144px;
 
   user-select: none;
   text-align: center;
@@ -49,7 +50,7 @@ const Menu = styled.div`
   padding: 16px;
   min-width: 291px;
   min-height: 175px;
-  transform: translate(0, 74px);
+  transform: translate(12px,74px);
 
   background: ${Colors.Darker};
 
