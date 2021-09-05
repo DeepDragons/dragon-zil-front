@@ -9,6 +9,7 @@ import { StyleFonts } from 'config/fonts';
 import { Colors } from 'config/colors';
 import { viewAddress } from 'lib/viewblock';
 import { Contracts } from 'config/contracts';
+import { useTranslation } from 'next-i18next';
 
 const Container = styled.div`
   display: flex;
@@ -42,6 +43,8 @@ const Li = styled.li`
 const keys = Object.keys(Contracts);
 const values = Object.values(Contracts);
 export const Footer: React.FC = () => {
+  const commonLocale = useTranslation('common');
+
   return (
     <Container>
       <Wrapper>
@@ -49,22 +52,22 @@ export const Footer: React.FC = () => {
           fontVariant={StyleFonts.FiraSansBold}
           fontColors={Colors.Muted}
         >
-          DragonZIL
+          {commonLocale.t('name')}
         </Text>
         <ul>
           <Li>
             <Link href="/privacy">
-              Privacy policy
+              {commonLocale.t('privacy_policy')}
             </Link>
           </Li>
           <Li>
             <Link href="/terms">
-              Terms of service
+              {commonLocale.t('terms_service')}
             </Link>
           </Li>
           <Li>
             <Link href="/referral">
-              Referral program.
+              {commonLocale.t('referral_program')}
             </Link>
           </Li>
         </ul>
@@ -74,7 +77,7 @@ export const Footer: React.FC = () => {
           fontVariant={StyleFonts.FiraSansBold}
           fontColors={Colors.Muted}
         >
-          Contracts
+          {commonLocale.t('contracts')}
         </Text>
         <ul>
           {keys.map((keyName, index) => (
@@ -95,7 +98,7 @@ export const Footer: React.FC = () => {
           fontVariant={StyleFonts.FiraSansBold}
           fontColors={Colors.Muted}
         >
-          Follow us
+          {commonLocale.t('follow')}
         </Text>
         <UlList>
           <Li>
