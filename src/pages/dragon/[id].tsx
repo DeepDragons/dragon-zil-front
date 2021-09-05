@@ -55,7 +55,6 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
   const dragonLocale = useTranslation('dragon');
   const router = useRouter();
 
-  const [loading, setLoading] = React.useState(false);
   const [transfer, setTransfer] = React.useState(false);
   const [sale, setSale] = React.useState(false);
   const [arena, setArena] = React.useState(false);
@@ -170,7 +169,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
           </div>
         </Wrapper>
       ) : null}
-      {!dragon && !loading ? (
+      {!dragon ? (
         <Wrapper>
           <Text
             fontVariant={StyleFonts.FiraSansBold}

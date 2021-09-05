@@ -5,6 +5,7 @@ import { Text } from 'components/text';
 
 import { Colors } from '@/config/colors';
 import { StyleFonts } from '@/config/fonts';
+import { useTranslation } from 'next-i18next';
 
 type Prop = {
   from: number;
@@ -111,6 +112,7 @@ export const PopUpButton: React.FC<Prop> = ({
   onChange,
   onApply
 }) => {
+  const commonLocale = useTranslation('common');
   const [opned, SetOpened] = React.useState(false);
 
   return (
@@ -129,7 +131,7 @@ export const PopUpButton: React.FC<Prop> = ({
                 fontVariant={StyleFonts.FiraSansMedium}
                 fontColors={Colors.Muted}
               >
-                From
+                {commonLocale.t('from')}
               </Text>
               <Input
                 defaultValue={from}
@@ -146,7 +148,7 @@ export const PopUpButton: React.FC<Prop> = ({
                 fontVariant={StyleFonts.FiraSansMedium}
                 fontColors={Colors.Muted}
               >
-                To
+                {commonLocale.t('to')}
               </Text>
               <Input
                 defaultValue={to}
@@ -157,7 +159,7 @@ export const PopUpButton: React.FC<Prop> = ({
             </Column>
           </MenuWrapper>
           <Apply onClick={onApply}>
-            Apply
+            {commonLocale.t('apply')}
           </Apply>
         </Menu>
       </Container>

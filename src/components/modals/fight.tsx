@@ -58,20 +58,24 @@ export const FightsModal: React.FC<Prop> = ({
 
   const hanldeSubmit = React.useCallback(async() => {
     setLoading(true);
-    if (needApprove) {
-      await zilPayToken.increaseAllowance(Contracts.FightPlace);
-    } else {
-      await figthPlace.place(id, zlp, false);
-      onClose();
+    try {
+      if (needApprove) {
+        await zilPayToken.increaseAllowance(Contracts.FightPlace);
+      } else {
+        await figthPlace.place(id, zlp, false);
+        onClose();
+      }
+    } catch {
+      //
     }
     setLoading(false);
   }, [needApprove, id, zlp]);
 
   React.useEffect(() => {
-    if (address) {
+    if (address && show) {
       hanldeUpdate();
     }
-  }, [address]);
+  }, [address, show]);
 
   return (
     <Modal
