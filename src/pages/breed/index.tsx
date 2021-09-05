@@ -76,6 +76,7 @@ export const BreedPage: NextPage = () => {
 
     params.startPrice = startPrice;
     params.endPrice = endPrice;
+    params.offset = 0;
 
     try {
       const result = await backend.getDragonsFromBreed(params);
@@ -94,6 +95,7 @@ export const BreedPage: NextPage = () => {
     setSkelet(true);
 
     params.sort = index;
+    params.offset = 0;
 
     try {
       const result = await backend.getDragonsFromBreed(params);

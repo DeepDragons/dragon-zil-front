@@ -77,6 +77,7 @@ export const TradePage: NextPage = () => {
   const handleFiltred = React.useCallback(async(startPrice: number, endPrice: number) => {
     setSkelet(true);
 
+    params.offset = 0;
     params.startPrice = startPrice;
     params.endPrice = endPrice;
 
@@ -99,6 +100,7 @@ export const TradePage: NextPage = () => {
     params.sort = undefined;
     params.owner = undefined;
     params.stage = undefined;
+    params.offset = 0;
 
     if (index === 4) {
       params.stage = 1;
