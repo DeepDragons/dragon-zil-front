@@ -99,40 +99,48 @@ export const Footer: React.FC = () => {
         </Text>
         <UlList>
           <Li>
-            <img
-              src="/icons/github.svg"
-              alt="github"
-            />
+            <a
+              href="https://github.com/DeepDragons"
+              target="_blank"
+            >
+              <img
+                src="/icons/github.svg"
+                alt="github"
+              />
+            </a>
           </Li>
           <Li>
-            <img
-              src="/icons/medium.svg"
-              alt="medium"
-            />
+            <a
+              href="http://t.me/Deep_Dragons"
+              target="_blank"
+            >
+              <img
+                src="/icons/tg.svg"
+                alt="Telegram"
+              />
+            </a>
           </Li>
           <Li>
-            <img
-              src="/icons/discord.svg"
-              alt="discord"
-            />
+            <a
+              href="https://www.facebook.com/ethdragons"
+              target="_blank"
+            >
+              <img
+                src="/icons/fb.svg"
+                alt="Facebook"
+              />
+            </a>
           </Li>
           <Li>
-            <img
-              src="/icons/tg.svg"
-              alt="Telegram"
-            />
-          </Li>
-          <Li>
-            <img
-              src="/icons/fb.svg"
-              alt="Facebook"
-            />
-          </Li>
-          <Li>
-            <img
-              src="/icons/twitter.svg"
-              alt="Twitter"
-            />
+            <a
+              href="https://twitter.com/dragons_eth"
+              target="_blank"
+            >
+              <img
+                src="/icons/twitter.svg"
+                alt="Twitter"
+              />
+            </a>
           </Li>
         </UlList>
       </Wrapper>

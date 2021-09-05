@@ -52,7 +52,7 @@ const FirstDragon = styled.div`
   position: absolute;
   width: 500px;
   height: 480px;
-  background-image: url(http://dragoneth.com/images/Left_dragon_roar_1x_sprite_650x82.png);
+  background-image: url(/imgs/dragon.webp);
   background-position: 0 60px;
   background-size: 41000px 300px;
   background-repeat: no-repeat;
