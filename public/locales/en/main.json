@@ -1,4 +1,16 @@
 {
   "title": "Introduction",
-  "description": "Here, you can buy Dragons for ZIL, and they will mate, fight, mutаte and die. Because Dragons are no Kitties."
+  "description": "Here, you can buy Dragons for ZIL, and they will mate, fight, mutаte and die. Because Dragons are no Kitties.",
+  "buy": "Give The Eggs",
+  "section_1": {
+    "title": "What's going on here?",
+    "form_0": {
+      "title": "DragonZIL is...",
+      "description": "An investment game based on Zilliqa smart contracts. Each Dragon is an ZRC1 token protected by blockchain. You know everything there is to know about blockchain, so, let’s hold back from spoon-feeding."
+    },
+    "form_1": {
+      "title": "Everyone buys Eggs",
+      "description": "Everyone buys Eggs. You can hatche from an Egg that can be bought by a single movement of your hand – simply install the ZilPay browser extension."
+    }
+  }
 }
