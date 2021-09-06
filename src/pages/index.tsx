@@ -8,6 +8,7 @@ import Head from 'next/head';
 import { Navbar } from 'components/nav-bar';
 import { MainSection } from 'components/section/main';
 import { DescriptionSection } from 'components/section/description';
+import { HowWorksSection } from 'components/section/how-it-works';
 
 const Container = styled.main`
   display: flex;
@@ -37,6 +38,7 @@ export const MainPage: NextPage = () => {
         <Navbar />
         <MainSection />
         <DescriptionSection />
+        <HowWorksSection />
       </Container>
     </>
   );

@@ -25,8 +25,6 @@ const Wrapper = styled.div`
   margin: 30px;
 `;
 const SubTitle = styled(Text)`
-  font-size: 62px;
-
   background: linear-gradient(to right, #fff 40%, rgba(163, 163, 163, 0.3) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -63,7 +61,7 @@ export const DescriptionSection: React.FC = () => {
 
   return (
     <Container>
-      <SubTitle>
+      <SubTitle size="62px">
         {mainLocale.t('section_1.title')}
       </SubTitle>
       <Row>

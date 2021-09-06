@@ -12,5 +12,29 @@
       "title": "Everyone buys Eggs",
       "description": "Everyone buys Eggs. You can hatche from an Egg that can be bought by a single movement of your hand – simply install the ZilPay browser extension."
     }
+  },
+  "section_2": {
+    "title": "How does it work?",
+    "form_0": {
+      "title": "What s a Dragon?",
+      "description_0": "Who the hell knows. 20 battle and 10 visual genes, 256 colour schemes with some truly rare combinations that give your Dragon a unique appearance and a supernatural power.",
+      "description_1": "But there is no guarantee that your Egg will hatch into a battle unit capable of breeding and fighting. Buy more Eggs and pray for good luck."
+    },
+    "form_1": {
+      "title": "And what to do with it?",
+      "description_0": "First of all, wait until it hatches. Then evaluate its potential: visual and battle characteristics. If it turns out to be quite a Dragon, propose it for a fight.",
+      "description_1": "A Dragon is born for a good fight. The outcome of a fight is defined by your Dragon’s strength. After each fight you get a mutagen. When you win – a whole lot of mutagen, when you lose – just a bit of it."
+    },
+    "form_2": {
+      "title": "How to mutate?",
+      "description_0": "A decent ZLP. You feed it to your Dragon, and the Dragon mutates.",
+      "description_1": "Mutation is the process of your Dragon’s DNA change (yes, the token itself). Your unique beast reborn into something different or even more unique.",
+      "description_2": "If your Dragon is weak but attractive, then go to the gene laboratory. There, you may exchange anything for money."
+    },
+    "form_3": {
+      "title": "Okay, what else?",
+      "description_0": "When your Dragon gets older, it may breed during breaks between fights.",
+      "description_1": "Yes, you always have to pay for sex. Yes, it’s possible to fuck while being high on mutagen. No, you can’t always take the kiddoes."
+    }
   }
 }
