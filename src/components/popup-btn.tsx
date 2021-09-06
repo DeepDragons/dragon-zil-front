@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Text } from 'components/text';
+import { Button } from 'components/button';
 
 import { Colors } from '@/config/colors';
 import { StyleFonts } from '@/config/fonts';
@@ -22,9 +23,7 @@ type MenuProp = {
   open: boolean;
 };
 
-const Container = styled.div`
-  cursor: pointer;
-  
+const Container = styled.div`  
   background: ${Colors.Darker};
   padding: 5px;
 
@@ -58,17 +57,6 @@ const Menu = styled.div`
   @media (max-width: 500px) {
     min-width: 280px;
   }
-`;
-const Apply = styled.div`
-  cursor: pointer;
-  text-align: center;
-
-  border-radius: 8px;
-  padding: 14px 83px;
-
-  color: ${Colors.White};
-  background: ${Colors.Blue};
-  font-family: ${StyleFonts.FiraSansSemiBold};
 `;
 const Closer = styled.a`
   cursor: pointer;
@@ -115,6 +103,10 @@ export const PopUpButton: React.FC<Prop> = ({
   const commonLocale = useTranslation('common');
   const [opned, SetOpened] = React.useState(false);
 
+  const disabled = React.useMemo(() => {
+    return from > to || from === 0 && to === 0;
+  }, [from, to]);
+
   return (
     <React.Fragment>
       {opned ? (
@@ -158,9 +150,14 @@ export const PopUpButton: React.FC<Prop> = ({
               />
             </Column>
           </MenuWrapper>
-          <Apply onClick={onApply}>
+          <Button
+            color={Colors.Success}
+            disabled={disabled}
+            css="width: 100%;"
+            onClick={onApply}
+          >
             {commonLocale.t('apply')}
-          </Apply>
+          </Button>
         </Menu>
       </Container>
     </React.Fragment>
