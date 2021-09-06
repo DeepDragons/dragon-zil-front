@@ -19,6 +19,16 @@ const Row = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+
+  img {
+    height: 600px;
+  }
+
+  @media (max-width: 650px) {
+    img {
+      height: 400px;
+    }
+  }
 `;
 const Wrapper = styled.div`
   max-width: 500px;
@@ -57,7 +67,6 @@ const Horns = styled.div`
 
 export const DescriptionSection: React.FC = () => {
   const mainLocale = useTranslation('main');
-  const commonLocale = useTranslation('common');
 
   return (
     <Container>
@@ -65,36 +74,42 @@ export const DescriptionSection: React.FC = () => {
         {mainLocale.t('section_1.title')}
       </SubTitle>
       <Row>
-        <Wrapper>
-          <Title
-            fontVariant={StyleFonts.FiraSansBold}
-            size="33px"
-          >
-            <Wings />
-            {mainLocale.t('section_1.form_0.title')}
-          </Title>
-          <Text
-            size="18px"
-            css="margin-bottom: 60px;"
-          >
-            {mainLocale.t('section_1.form_0.description')}
-          </Text>
-        </Wrapper>
-        <Wrapper>
-          <Title
-            fontVariant={StyleFonts.FiraSansBold}
-            size="33px"
-          >
-            <Horns />
-            {mainLocale.t('section_1.form_1.title')}
-          </Title>
-          <Text
-            size="18px"
-            css="margin-bottom: 60px;"
-          >
-            {mainLocale.t('section_1.form_1.description')}
-          </Text>
-        </Wrapper>
+        <img
+          src="/imgs/ipad.webp"
+          alt="ipda"
+        />
+        <div>
+          <Wrapper>
+            <Title
+              fontVariant={StyleFonts.FiraSansBold}
+              size="33px"
+            >
+              <Wings />
+              {mainLocale.t('section_1.form_0.title')}
+            </Title>
+            <Text
+              size="18px"
+              css="margin-bottom: 60px;"
+            >
+              {mainLocale.t('section_1.form_0.description')}
+            </Text>
+          </Wrapper>
+          <Wrapper>
+            <Title
+              fontVariant={StyleFonts.FiraSansBold}
+              size="33px"
+            >
+              <Horns />
+              {mainLocale.t('section_1.form_1.title')}
+            </Title>
+            <Text
+              size="18px"
+              css="margin-bottom: 60px;"
+            >
+              {mainLocale.t('section_1.form_1.description')}
+            </Text>
+          </Wrapper>
+        </div>
       </Row>
     </Container>
   );
