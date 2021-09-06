@@ -50,7 +50,7 @@ const ImageWrapper = styled.div`
   align-items: center;
   justify-content: center;
 
-  @media (max-width: 600px) {
+  @media (max-width: 1000px) {
     width: 100%;
     max-width: 600px;
     padding: 16px;
