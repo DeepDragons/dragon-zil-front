@@ -24,6 +24,7 @@ type MenuProp = {
 };
 
 const Container = styled.div`  
+  cursor: pointer;
   background: ${Colors.Darker};
   padding: 5px;
 
