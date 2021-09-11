@@ -1,6 +1,7 @@
 import React from 'react';
 import copy from 'clipboard-copy';
 import { useStore } from 'effector-react';
+import { useTranslation } from 'next-i18next';
 import styled from 'styled-components';
 
 import { Text } from 'components/text';
@@ -55,6 +56,7 @@ type Prop = {
 export const AccountCard: React.FC<Prop> = ({
   wallet
 }) => {
+  const common = useTranslation('common');
   const netwrok = useStore($net);
 
   const netColor = React.useMemo(() => {
@@ -69,7 +71,7 @@ export const AccountCard: React.FC<Prop> = ({
         css="margin: 0;"
         size="16px"
       >
-        Connectet with ZilPay wallet to {netwrok}.
+        {common.t('connected_via')} {netwrok}.
       </Text>
       <Text
         fontVariant={StyleFonts.FiraSansMedium}
@@ -86,7 +88,7 @@ export const AccountCard: React.FC<Prop> = ({
             css="margin: 0;text-indent: 5px;"
             size="16px"
           >
-            Copy address
+            {common.t('copy_adr')}
           </Text>
         </CopyContainer>
         <CopyContainer
@@ -101,7 +103,7 @@ export const AccountCard: React.FC<Prop> = ({
             css="margin: 0;text-indent: 5px;"
             size="16px"
           >
-            View on Explorer
+            {common.t('view_explorer')}
           </Text>
         </CopyContainer>
       </Row>

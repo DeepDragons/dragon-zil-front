@@ -1,5 +1,6 @@
 import React from 'react';
 import { useStore } from 'effector-react';
+import { useTranslation } from 'next-i18next';
 import styled from 'styled-components';
 
 import { Modal } from 'components/modal';
@@ -58,6 +59,7 @@ export const AccountModal: React.FC<Prop> = ({
   onClose,
   address
 }) => {
+  const common = useTranslation('common');
   const txList = useStore($transactions);
 
   return (
@@ -66,7 +68,7 @@ export const AccountModal: React.FC<Prop> = ({
       title={(
         <Between>
           <Text css="padding: 0 16px;">
-            Account
+            {common.t('account')}
           </Text>
           <span onClick={onClose}>
             <CloseIcon />
@@ -84,7 +86,7 @@ export const AccountModal: React.FC<Prop> = ({
             size="16px"
             css="text-align: center;margin-top: 10px;"
           >
-            Your transactions will appear here...
+            {common.t('tx_appear_here')}
           </Text>
         ) : (
           <div>
@@ -94,7 +96,7 @@ export const AccountModal: React.FC<Prop> = ({
                 size="16px"
                 css=""
               >
-                Recent Transactions
+                {common.t('recent_txns')}
               </Text>
               <Text
                 fontVariant={StyleFonts.FiraSansRegular}
@@ -103,7 +105,7 @@ export const AccountModal: React.FC<Prop> = ({
                 css="cursor: pointer;user-select: none;"
                 onClick={() => resetTxList(String(address?.base16))}
               >
-                (clear all)
+                ({common.t('clear_all')})
               </Text>
             </div>
             {txList.map((tx) => (

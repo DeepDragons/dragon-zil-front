@@ -29,5 +29,14 @@
   "transfer": "Transfer",
   "all": "All",
   "dragons": "Dragons",
-  "eggs": "Eggs"
+  "eggs": "Eggs",
+  "tx_appear_here": "Your transactions will appear here...",
+  "recent_txns": "Recent Transactions",
+  "clear_all": "Clear all",
+  "pending": "Pending",
+  "account": "Account",
+  "connect": "Connect",
+  "connected_via": "Connectet with ZilPay wallet to",
+  "copy_adr": "Copy address",
+  "view_explorer": "View on Explorer"
 }

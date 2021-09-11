@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useStore } from 'effector-react';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import styled from 'styled-components';
 
 import { Text } from 'components/text';
@@ -77,18 +78,19 @@ export const MobileNavigate: React.FC<Prop> = ({
   wallet,
   onClose
 }) => {
+  const common = useTranslation('common');
   const router = useRouter();
   const txList = useStore($transactions);
   const [showMenu, setShowMenu] = React.useState(false);
 
   const connectText = React.useMemo(() => {
     if (showMenu && wallet) {
-      return 'Cancel';
+      return common.t('cancel');
     }
     if (wallet) {
       return trim(wallet.bech32);
     }
-    return 'Connect';
+    return common.t('connect');
   }, [wallet, showMenu]);
 
   const hanldeNavigate = React.useCallback((path: string) => {
@@ -124,7 +126,7 @@ export const MobileNavigate: React.FC<Prop> = ({
                 fontVariant={StyleFonts.FiraSansBold}
                 css="margin-left: 5px;"
               >
-                DragonZIL
+                {common.t('name')}
               </Text>
             </Logo>
           </Link>
@@ -139,7 +141,7 @@ export const MobileNavigate: React.FC<Prop> = ({
               selected={router.pathname === link.path}
               onClick={() => hanldeNavigate(link.path)}
             >
-              {link.name}
+              {common.t(link.name)}
             </Item>
           ))}
         </ul>
@@ -151,7 +153,7 @@ export const MobileNavigate: React.FC<Prop> = ({
               size="20px"
               css="text-align: center;margin-top: 10px;"
             >
-              Your transactions will appear here...
+              {common.t('tx_appear_here')}
             </Text>
           ) : (
             <HeaderTxns>
@@ -160,7 +162,7 @@ export const MobileNavigate: React.FC<Prop> = ({
                 size="20px"
                 css=""
               >
-                Recent Transactions
+                {common.t('recent_txns')}
               </Text>
               <Text
                 fontVariant={StyleFonts.FiraSansRegular}
@@ -169,7 +171,7 @@ export const MobileNavigate: React.FC<Prop> = ({
                 css="cursor: pointer;user-select: none;"
                 onClick={() => resetTxList(String(wallet?.base16))}
               >
-                (clear all)
+                ({common.t('clear_all')})
               </Text>
             </HeaderTxns>
           )}
@@ -190,7 +192,7 @@ export const MobileNavigate: React.FC<Prop> = ({
                 width={20}
               />
               <Text css="text-indent: 5px;margin: 0;">
-                Pending
+                {common.t('pending')}
               </Text>
             </>
           ) : connectText}
