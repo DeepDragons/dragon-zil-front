@@ -38,5 +38,6 @@
   "connect": "Connect",
   "connected_via": "Connectet with ZilPay wallet to",
   "copy_adr": "Copy address",
-  "view_explorer": "View on Explorer"
+  "view_explorer": "View on Explorer",
+  "no_dragons": "You have no dragons, you can buy it on market-palce or buy eggs."
 }

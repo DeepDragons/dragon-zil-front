@@ -144,7 +144,7 @@ export const MyDragons: NextPage = () => {
             fontVariant={StyleFonts.FiraSansRegular}
             css="text-align: center;max-width: 400px;"
           >
-            {dragonsLocale.t('no_dragons')}
+            {commonLocale.t('no_dragons')}
           </Text>
           <Link href="/buy">
             <Button>

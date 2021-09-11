@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useStore } from 'effector-react';
+import Link from 'next/link';
 import Loader from "react-loader-spinner";
+import { useTranslation } from 'next-i18next';
 
 import { Text } from 'components/text';
 import { Card } from 'components/card';
@@ -9,6 +11,7 @@ import { SkeletCard } from 'components/skelet/card';
 import { FilterBar } from 'components/filter-bar';
 import { CardContainer } from 'components/dragon/styles';
 import { ScreenModal } from 'components/screen-modal';
+import { Button } from '@/components/button';
 
 import { $wallet } from 'store/wallet';
 import { Colors } from 'config/colors';
@@ -47,6 +50,7 @@ export const DragonsSelectModal: React.FC<Prop> = ({
   onSelect,
   onClose
 }) => {
+  const commonLocale = useTranslation('common');
   const address = useStore($wallet);
   const dragons = useStore($myDragons);
   const [loading, setLoading] = React.useState(false);
@@ -157,6 +161,21 @@ export const DragonsSelectModal: React.FC<Prop> = ({
             </>
           )}
         </Wrapper>
+        {!loading && !skelet && dragons.length === 0 ? (
+          <>
+            <Text
+              fontVariant={StyleFonts.FiraSansRegular}
+              css="text-align: center;max-width: 400px;"
+            >
+              {commonLocale.t('no_dragons')}
+            </Text>
+            <Link href="/buy">
+              <Button>
+                {commonLocale.t('buy')}
+              </Button>
+            </Link>
+          </>
+        ) : null}
         {loading ? (
           <Loader
             type="ThreeDots"
