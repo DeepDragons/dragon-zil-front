@@ -69,9 +69,9 @@ const Closer = styled.a`
   z-index: 0;
   background: #00000052;
 `;
-const MenuWrapper = styled.div`
+const MenuWrapper = styled.form`
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
   align-items: center;
 `;
 const Column = styled.div`
@@ -79,6 +79,12 @@ const Column = styled.div`
   flex-direction: column;
   max-width: 70px;
   min-height: 129px;
+`;
+const Row = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
 `;
 const Input = styled.input`
   background: transparent;
@@ -102,63 +108,70 @@ export const PopUpButton: React.FC<Prop> = ({
   onApply
 }) => {
   const commonLocale = useTranslation('common');
-  const [opned, SetOpened] = React.useState(false);
+  const [opned, setOpened] = React.useState(false);
 
   const disabled = React.useMemo(() => {
     return from > to || from === 0 && to === 0;
-  }, [from, to]);
+  }, [from, to, opned]);
+
+  const handleApply = React.useCallback((event) => {
+    event.preventDefault();
+    setOpened(false);
+    onApply();
+  }, []);
 
   return (
     <React.Fragment>
       {opned ? (
-        <Closer onClick={() => SetOpened(false)}/>
+        <Closer onClick={() => setOpened(false)}/>
       ) : null}
-      <Container onClick={() => SetOpened(true)}>
+      <Container onClick={() => setOpened(true)}>
         <Text fontVariant={StyleFonts.FiraSansMedium}>
           {children}
         </Text>
         <Menu open={opned}>
-          <MenuWrapper>
-            <Column>
-              <Text
-                fontVariant={StyleFonts.FiraSansMedium}
-                fontColors={Colors.Muted}
-              >
-                {commonLocale.t('from')}
+          <MenuWrapper onSubmit={handleApply}>
+            <Row>
+              <Column>
+                <Text
+                  fontVariant={StyleFonts.FiraSansMedium}
+                  fontColors={Colors.Muted}
+                >
+                  {commonLocale.t('from')}
+                </Text>
+                <Input
+                  defaultValue={from}
+                  type="number"
+                  min="0"
+                  onInput={(event) => onChange(Number(event.currentTarget.value), to)}
+                />
+              </Column>
+              <Text size="40px">
+                -
               </Text>
-              <Input
-                defaultValue={from}
-                type="number"
-                min="0"
-                onInput={(event) => onChange(Number(event.currentTarget.value), to)}
-              />
-            </Column>
-            <Text size="40px">
-              -
-            </Text>
-            <Column>
-              <Text
-                fontVariant={StyleFonts.FiraSansMedium}
-                fontColors={Colors.Muted}
-              >
-                {commonLocale.t('to')}
-              </Text>
-              <Input
-                defaultValue={to}
-                type="number"
-                min="0"
-                onInput={(event) => onChange(from, Number(event.currentTarget.value))}
-              />
-            </Column>
+              <Column>
+                <Text
+                  fontVariant={StyleFonts.FiraSansMedium}
+                  fontColors={Colors.Muted}
+                >
+                  {commonLocale.t('to')}
+                </Text>
+                <Input
+                  defaultValue={to}
+                  type="number"
+                  min="0"
+                  onInput={(event) => onChange(from, Number(event.currentTarget.value))}
+                />
+              </Column>
+            </Row>
+            <Button
+              color={Colors.Success}
+              disabled={disabled}
+              css="width: 100%;"
+            >
+              {commonLocale.t('apply')}
+            </Button>
           </MenuWrapper>
-          <Button
-            color={Colors.Success}
-            disabled={disabled}
-            css="width: 100%;"
-            onClick={onApply}
-          >
-            {commonLocale.t('apply')}
-          </Button>
         </Menu>
       </Container>
     </React.Fragment>

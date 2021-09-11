@@ -52,6 +52,7 @@ export const FilterBar: React.FC<Prop> = ({
   const commonLocale = useTranslation('common');
   const [filterbyFrom, setFilterbyFrom] = React.useState(0);
   const [filterbyTo, setFilterbyTo] = React.useState(0);
+  const [showSort, setShowSort] = React.useState(false);
 
   const hanldeChangePriceFilter = React.useCallback((from, to) => {
     if (from !== filterbyFrom) {
@@ -76,6 +77,9 @@ export const FilterBar: React.FC<Prop> = ({
             items={items}
             selected={selectedSort}
             onSelected={onSelectSort}
+            open={showSort}
+            onClose={() => setShowSort(false)}
+            onShow={() => setShowSort(true)}
           />
         ) : null}
         {price ? (

@@ -8,6 +8,9 @@ import { Colors } from '@/config/colors';
 type Prop = {
   items: string[];
   selected: number;
+  open: boolean;
+  onClose: () => void;
+  onShow: () => void;
   onSelected: (index: number) => void;
 };
 
@@ -64,32 +67,39 @@ const Closer = styled.a`
 export const DropDown: React.FC<Prop> = ({
   items,
   selected,
-  onSelected
+  open,
+  onSelected,
+  onShow,
+  onClose
 }) => {
   const refContainer = React.useRef<HTMLDivElement | null>();
-  const [opned, SetOpened] = React.useState(false);
-  
-  const hanldeSelect = React.useCallback((index: number) => {
+
+  const handleOpen = React.useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (open) {
+      onClose();
+    } else {
+      onShow();
+    }
+  }, [open]);
+  const hanldeSelect = (index: number) => {
+    onClose();
     onSelected(index);
-    SetOpened(false);
-  }, []);
+  };
 
   return (
     <React.Fragment>
-      {opned ? (
-        <Closer onClick={() => SetOpened(false)}/>
+      {open ? (
+        <Closer onClick={onClose}/>
       ) : null}
       <Container
-        open={opned}
+        open={open}
         ref={(n) => refContainer.current = n}
-        onClick={() => SetOpened(true)}
+        onClick={handleOpen}
       >
         <Text size="17px">
           {items[selected]}
         </Text>
-        <Menu
-          open={opned}
-        >
+        <Menu open={open}>
           {items.map((el, index) => (
             <Item
               key={index}
