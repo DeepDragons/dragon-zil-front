@@ -30,6 +30,7 @@ import { updateCache } from 'store/cache-dragon';
 import { useScrollEvent } from 'mixin/scroll';
 import { BreedPlace } from 'mixin/breed';
 import { Button } from '@/components/button';
+import { isMobile } from 'react-device-detect';
 
 const params: QueryParams = {
   limit: 9,
@@ -132,7 +133,8 @@ export const BreedPage: NextPage = () => {
   }, [address]);
 
   useScrollEvent(async () => {
-    const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop) + 350;
+    const h = isMobile ? 450 : 350;
+    const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop) + h;
     const second = document.documentElement.offsetHeight;
 
     if (first < second || loading) {

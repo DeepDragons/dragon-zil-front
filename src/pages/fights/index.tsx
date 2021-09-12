@@ -29,6 +29,7 @@ import { Colors } from '@/config/colors';
 import { useScrollEvent } from '@/mixin/scroll';
 import { Button } from '@/components/button';
 import { FigthPlace } from 'mixin/fight-place';
+import { isMobile } from 'react-device-detect';
 
 const limit = 9;
 let page = 0;
@@ -77,7 +78,8 @@ export const FightPage: NextPage = () => {
   }, [address]);
 
   useScrollEvent(async () => {
-    const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop);
+    const h = isMobile ? 450 : 350;
+    const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop) + h;
     const second = document.documentElement.offsetHeight;
 
     if (first !== second || loading) {

@@ -26,6 +26,7 @@ import { Colors } from '@/config/colors';
 import { RARITY } from '@/lib/rarity';
 import { getAction } from '@/lib/get-action';
 import { useScrollEvent } from 'mixin/scroll';
+import { isMobile } from 'react-device-detect';
 
 const backend = new DragonAPI();
 const limit = 9;
@@ -70,7 +71,8 @@ export const MyDragons: NextPage = () => {
   }, [address]);
 
   useScrollEvent(async () => {
-    const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop);
+    const h = isMobile ? 450 : 350;
+    const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop) + h;
     const second = document.documentElement.offsetHeight;
 
     if (first !== second || loading) {
