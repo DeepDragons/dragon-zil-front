@@ -7,14 +7,18 @@ import { appWithTranslation } from 'next-i18next';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 import { Footer } from 'components/footer';
+
 import { Colors } from '@/config/colors';
+import { updateRef } from 'store/referral';
 
 export function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
-  // React.useEffect(() => {
-  //   console.log(router.query);
-  // }, [router.query]);
+  React.useEffect(() => {
+    if (router.query.ref) {
+      updateRef(String(router.query.ref));
+    }
+  }, [router.query]);
 
   return (
     <>

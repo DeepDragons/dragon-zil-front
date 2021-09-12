@@ -2,6 +2,7 @@ import { ZilPayBase } from 'mixin/zilpay-base';
 import { Contracts } from 'config/contracts';
 import { $crowdSaleStore, updateState } from 'store/crowd-sale';
 import { pushToList } from '@/store/transactions';
+import { $referral } from 'store/referral';
 
 export class CrowdSale {
   public zilpay = new ZilPayBase();
@@ -38,8 +39,16 @@ export class CrowdSale {
     return Number(res);
   }
 
-  public async buyForZIL(numberOf: number, ref = '0x0000000000000000000000000000000000000000'): Promise<string> {
-    const BN = (await this.zilpay.zilpay()).utils.BN;
+  public async buyForZIL(numberOf: number): Promise<string> {
+    let ref = $referral.getState();
+    const zp = await this.zilpay.zilpay();
+    const BN = zp.utils.BN;
+    const validation = zp.utils.validation;
+
+    if (!validation.isAddress(ref)) {
+      ref = Contracts.NIL;
+    }
+
     const params = [
       {
         vname: 'refAddr',
