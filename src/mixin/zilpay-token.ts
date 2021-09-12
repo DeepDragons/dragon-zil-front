@@ -9,7 +9,7 @@ export class ZIlPayToken {
 
   public async getBalance() {
     const field = 'balances';
-    const zilpay = await this.zilpay.zilpay;
+    const zilpay = await this.zilpay.zilpay();
     const result = await this.zilpay.getSubState(
       Contracts.ZIlPay,
       field,
@@ -23,7 +23,7 @@ export class ZIlPayToken {
   }
 
   public async calcAllowances(value: number, allowances: string): Promise<boolean> {
-    const zilpay = await this.zilpay.zilpay;
+    const zilpay = await this.zilpay.zilpay();
     const BN = zilpay.utils.BN;
     const decimalBN = new BN(ZIlPayToken.decimal);
     const valueBN = new BN(String(value));
@@ -35,7 +35,7 @@ export class ZIlPayToken {
 
   public async getAllowances(contract: Contracts): Promise<string> {
     const field = 'allowances';
-    const zilpay = await this.zilpay.zilpay;
+    const zilpay = await this.zilpay.zilpay();
     const owner = String(zilpay.wallet.defaultAccount?.base16).toLowerCase();
     const address = contract.toLowerCase();
     const result = await this.zilpay.getSubState(

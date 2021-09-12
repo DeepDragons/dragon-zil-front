@@ -115,7 +115,11 @@ export const BreedPage: NextPage = () => {
     router.push(`/breed/${dragon.id}`);
   }, []);
   const handleCancel = React.useCallback(async(dragon) => {
-    await breedPlace.cancelBreed(dragon.id);
+    try {
+      await breedPlace.cancelBreed(dragon.id);
+    } catch {
+      ///
+    }
   }, []);
 
   React.useEffect(() => {
@@ -128,10 +132,10 @@ export const BreedPage: NextPage = () => {
   }, [address]);
 
   useScrollEvent(async () => {
-    const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop);
+    const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop) + 350;
     const second = document.documentElement.offsetHeight;
 
-    if (first !== second || loading) {
+    if (first < second || loading) {
       return null;
     }
 

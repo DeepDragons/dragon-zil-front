@@ -12,9 +12,9 @@ import { Colors } from '@/config/colors';
 export function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
-  React.useEffect(() => {
-    console.log(router.query);
-  }, [router.query]);
+  // React.useEffect(() => {
+  //   console.log(router.query);
+  // }, [router.query]);
 
   return (
     <>

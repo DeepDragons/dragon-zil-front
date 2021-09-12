@@ -39,7 +39,7 @@ export class CrowdSale {
   }
 
   public async buyForZIL(numberOf: number, ref = '0x0000000000000000000000000000000000000000'): Promise<string> {
-    const BN = (await this.zilpay.zilpay).utils.BN;
+    const BN = (await this.zilpay.zilpay()).utils.BN;
     const params = [
       {
         vname: 'refAddr',
@@ -77,7 +77,7 @@ export class CrowdSale {
 
   public async buyForZLP(numberOf: number): Promise<string> {
     const state = this.store.getState();
-    const zilpay = await this.zilpay.zilpay;
+    const zilpay = await this.zilpay.zilpay();
     const BN = zilpay.utils.BN;
     const gas = {
       gasPrice: '2000',

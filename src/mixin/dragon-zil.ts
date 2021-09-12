@@ -8,7 +8,7 @@ export class DragonZIL {
   public zilpay = new ZilPayBase();
 
   public async transfer(to: string, tokenId: string) {
-    const zilpay = await this.zilpay.zilpay;
+    const zilpay = await this.zilpay.zilpay();
     if (!zilpay.utils.validation.isBech32(to)) {
       throw new Error('Address should be bech32 format');
     }

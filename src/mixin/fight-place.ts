@@ -39,7 +39,7 @@ export class FigthPlace {
   }
 
   public async place(tokenId: string, price: number, remove: boolean) {
-    const zilpay = await this.zilpay.zilpay;
+    const zilpay = await this.zilpay.zilpay();
     const BN = zilpay.utils.BN;
     const priceBN = new BN(String(price));
     const decimal = new BN(ZIlPayToken.decimal);

@@ -13,10 +13,10 @@ const DEFAUL_GAS = {
   gaslimit: '5000'
 };
 export class ZilPayBase {
-  public zilpay: Promise<ZIlPayInject>;
+  public zilpay: () => Promise<ZIlPayInject>;
 
   constructor() {
-    this.zilpay = new Promise((resolve, reject) => {
+    this.zilpay = () => new Promise((resolve, reject) => {
       if (!process.browser) {
         return resolve({} as any);
       }
@@ -42,7 +42,7 @@ export class ZilPayBase {
       return null;
     }
 
-    const zilPay = await this.zilpay;
+    const zilPay = await this.zilpay();
     const res = await zilPay
       .blockchain
       .getSmartContractSubState(
@@ -75,7 +75,7 @@ export class ZilPayBase {
     if (!process.browser) {
       return null;
     }
-    const zilPay = await this.zilpay;
+    const zilPay = await this.zilpay();
     const res = await zilPay
       .blockchain
       .getSmartContractState(
@@ -94,7 +94,7 @@ export class ZilPayBase {
       return null;
     }
 
-    const zilPay = await this.zilpay;
+    const zilPay = await this.zilpay();
     const { error, result } = await zilPay
       .blockchain
       .getBlockChainInfo();
@@ -107,7 +107,7 @@ export class ZilPayBase {
   }
 
   async call(data: Params, gas = DEFAUL_GAS) {
-    const zilPay = await this.zilpay;
+    const zilPay = await this.zilpay();
     const { contracts, utils } = zilPay;
     const contract = contracts.at(data.contractAddress);
     const gasPrice = utils.units.toQa(gas.gasPrice, utils.units.Units.Li);

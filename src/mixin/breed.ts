@@ -7,7 +7,7 @@ export class BreedPlace {
   public zilpay = new ZilPayBase();
 
   public async add(tokenId: string, price: number) {
-    const zilpay = await this.zilpay.zilpay;
+    const zilpay = await this.zilpay.zilpay();
     const BN = zilpay.utils.BN;
     const priceBN = new BN(String(price));
     const decimal = new BN(ZIlPayToken.decimal);

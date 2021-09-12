@@ -27,7 +27,7 @@ export class MarketPlace {
   }
 
   public async sell(tokenId: string, price: number) {
-    const zilpay = await this.zilpay.zilpay;
+    const zilpay = await this.zilpay.zilpay();
     const BN = zilpay.utils.BN;
     const priceBN = new BN(String(price));
     const decimal = new BN(MarketPlace.zilDecimal);

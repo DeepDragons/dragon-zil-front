@@ -23,7 +23,7 @@ export class GenLab {
     const field0 = 'price_multiplicator';
     const field1 = 'start_price';
     const field2 = 'use_count';
-    const zilpay = await this.zilpay.zilpay;
+    const zilpay = await this.zilpay.zilpay();
     const BN = zilpay.utils.BN;
     let [priceMultiplicator, startPrice, useCount] = await Promise.all([
       this.zilpay.getSubState(Contracts.GenLab, field0),

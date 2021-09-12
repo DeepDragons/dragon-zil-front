@@ -156,7 +156,7 @@ export const ConnectZIlPay: React.FC = () => {
     setLoading(true);
     try {
       const wallet = new ZilPayBase();
-      const zp = await wallet.zilpay;
+      const zp = await wallet.zilpay();
       const connected = await zp.wallet.connect();
 
       if (connected && zp.wallet.defaultAccount) {
@@ -180,7 +180,7 @@ export const ConnectZIlPay: React.FC = () => {
     const wallet = new ZilPayBase();
 
     wallet
-      .zilpay
+      .zilpay()
       .then((zp) => {
         hanldeObserverState(zp);
         setLoading(false);
