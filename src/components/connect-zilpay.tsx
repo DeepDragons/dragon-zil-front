@@ -186,9 +186,6 @@ export const ConnectZIlPay: React.FC = () => {
         setLoading(false);
       })
       .catch((err) => {
-        if (err.message !== 'ZilPay is disabled.') {
-          setError(err.message);
-        }
         setLoading(false);
       });
 
