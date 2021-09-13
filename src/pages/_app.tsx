@@ -3,6 +3,7 @@ import '../styles/fonts.css';
 
 import { AppProps } from 'next/app';
 import { BaseStyles, AnimationStyles } from '@/styles';
+import NextNprogress from 'nextjs-progressbar';
 import React from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -44,6 +45,13 @@ export function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <BaseStyles />
       <AnimationStyles />
+      <NextNprogress
+        color={Colors.Primary}
+        startPosition={0.3}
+        stopDelayMs={200}
+        height={3}
+        showOnShallow={true}
+      />
       <Component {...pageProps} />
       <Footer />
     </>

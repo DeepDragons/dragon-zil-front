@@ -50,7 +50,6 @@ export const Wrapper = styled.div`
   justify-content: space-evenly;
   width: 100%;
   padding-top: 30px;
-  align-items: end;
 
   @media (max-width: 947px) {
     align-items: center;
