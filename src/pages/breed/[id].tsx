@@ -78,7 +78,7 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
           content={`${commonLocale.t('name')} | ${breedingLocale.t('title')} #${lover?.id} for ${Number(amount) / 10**18} $ZLP`}
           key="title"
         />
-        <link
+        {/* <link
           rel="canonical"
           href={`https://dragonzil.xyz/breed/${lover?.id}`}
         />
@@ -102,7 +102,22 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
         <meta
           name="twitter:card"
           content="summary_large_image"
-        />
+        /> */}
+
+        <meta name="twitter:image:src" content="https://opengraph.githubassets.com/c88695796a5736a86bcbc86d04d9fcbe92bc26a1ad97d306028fd4d2aef699e7/DeepDragons/dragon-zil-front" />
+        <meta name="twitter:site" content="@github" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Issues · DeepDragons/dragon-zil-front" />
+        <meta name="twitter:description" content="Contribute to DeepDragons/dragon-zil-front development by creating an account on GitHub." />
+        <meta property="og:image" content="https://opengraph.githubassets.com/c88695796a5736a86bcbc86d04d9fcbe92bc26a1ad97d306028fd4d2aef699e7/DeepDragons/dragon-zil-front" />
+        <meta property="og:image:alt" content="Contribute to DeepDragons/dragon-zil-front development by creating an account on GitHub." />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="600" />
+        <meta property="og:site_name" content="GitHub" />
+        <meta property="og:type" content="object" />
+        <meta property="og:title" content="Issues · DeepDragons/dragon-zil-front" />
+        <meta property="og:url" content="https://github.com/DeepDragons/dragon-zil-front" />
+        <meta property="og:description" content="Contribute to DeepDragons/dragon-zil-front development by creating an account on GitHub." />
       </Head>
       <Navbar />
       <Wrapper>
