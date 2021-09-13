@@ -91,7 +91,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
           {commonLocale.t('name')} | {stageType} #{dragon?.id}
         </title>
         <OpenGraph
-          url={`https://stg.dragonzil.xyz/dragon/${dragon?.id}`}
+          url={`https://dragonzil.xyz/dragon/${dragon?.id}`}
           title={`${commonLocale.t('name')} | ${stageType} #${dragon?.id}`}
           description={`Rarity ${rarity?.name}`}
           img={dragon?.url}

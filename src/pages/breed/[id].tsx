@@ -75,7 +75,7 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
           {commonLocale.t('name')} | {breedingLocale.t('title')} #{lover?.id} for {Number(amount) / 10**18} $ZLP
         </title>
         <OpenGraph
-          url={`https://stg.dragonzil.xyz/breed/${lover?.id}`}
+          url={`https://dragonzil.xyz/breed/${lover?.id}`}
           title={`${breedingLocale.t('title')} #${lover?.id} for ${Number(amount) / 10**18} $ZLP`}
           description={`start breeding with a dragon ${lover?.id}`}
           img={lover?.url}
