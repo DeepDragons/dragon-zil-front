@@ -54,7 +54,7 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
     setLoading(true);
     try {
       if (needApprove) {
-        await zilPayToken.increaseAllowance(Contracts.FightPlace);
+        await zilPayToken.increaseAllowance(Contracts.Breed);
 
         setNeedApprove(false);
       } else {
