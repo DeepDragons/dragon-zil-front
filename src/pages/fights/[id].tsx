@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
 
+import { OpenGraph } from 'components/open-graph';
 import { Navbar } from 'components/nav-bar';
 import { Container } from 'components/pages/container';
 import { Wrapper, PageTitle } from 'components/dragon/styles';
@@ -57,30 +58,14 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
         <title>
           {commonLocale.t('name')} | {arenaLocale.t('title')} #{defended?.id}
         </title>
-        <meta
-          property="og:title"
-          content={`${commonLocale.t('name')} | ${arenaLocale.t('title')} #${defended?.id}`}
-          key="title"
-        />
-        <link
-          rel="canonical"
-          href={`https://dragonzil.xyz/fights/${defended?.id}`}
-        />
-        <meta
-          name="keywords"
-          content={arenaLocale.t('keywords')}
-        />
-        <meta
-          property="og:image"
-          content={defended?.url}
-        />
-        <meta
-          name="twitter:card"
-          content="summary_large_image"
-        />
-        <meta
-          name="twitter:image"
-          content={defended?.url}
+        <OpenGraph
+          url={`https://dragonzil.xyz/fights/${defended?.id}`}
+          title={`${arenaLocale.t('title')} #${defended?.id}`}
+          description={`Fight with Dragon #${defended.id} for ${Number(amount) / 10**18} $ZLP`}
+          img={defended?.url}
+          alt={`Dragon ID #${defended?.url}`}
+          site="@dragons_eth"
+          siteName="dragonZIL"
         />
       </Head>
       <Navbar />

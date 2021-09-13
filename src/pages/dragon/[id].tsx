@@ -11,6 +11,7 @@ import { Navbar } from 'components/nav-bar';
 import { Text } from 'components/text';
 import { Container } from 'components/pages/container';
 import { TransferModal } from 'components/modals/transfer';
+import { OpenGraph } from 'components/open-graph';
 import { SaleModal } from 'components/modals/sale';
 import { FightsModal } from 'components/modals/fight';
 import { BreedModal } from 'components/modals/breed';
@@ -89,38 +90,14 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
         <title>
           {commonLocale.t('name')} | {stageType} #{dragon?.id}
         </title>
-        <meta
-          property="og:title"
-          content={`${commonLocale.t('name')} | ${stageType} #${dragon?.id}`}
-          key="title"
-        />
-        <link
-          rel="canonical"
-          href={`https://dragonzil.xyz/dragon/${router.query.id}`}
-          data-rh="true"
-        />
-        <meta
-          name="description"
-          content={`Rarity ${rarity?.name}`}
-          data-rh="true"
-        />
-        <meta
-          name="keywords"
-          content={dragonLocale.t('keywords')}
-          data-rh="true"
-        />
-        <meta
-          property="og:image"
-          content={dragon?.url}
-          data-rh="true"
-        />
-        <meta
-          name="twitter:image"
-          content={dragon?.url}
-        />
-        <meta
-          name="twitter:card"
-          content="summary_large_image"
+        <OpenGraph
+          url={`https://stg.dragonzil.xyz/dragon/${dragon?.id}`}
+          title={`${commonLocale.t('name')} | ${stageType} #${dragon?.id}`}
+          description={`Rarity ${rarity?.name}`}
+          img={dragon?.url}
+          alt={`Dragon ID #${dragon?.id}`}
+          site="@dragons_eth"
+          siteName="dragonZIL"
         />
       </Head>
       <Navbar />

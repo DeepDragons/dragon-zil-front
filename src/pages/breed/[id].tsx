@@ -9,6 +9,7 @@ import Head from 'next/head';
 
 import { Navbar } from 'components/nav-bar';
 import { Container } from 'components/pages/container';
+import { OpenGraph } from 'components/open-graph';
 import { BreadGensForm } from 'components/dragon/breed-gens';
 
 import { DragonAPI, DragonObject } from 'lib/api';
@@ -73,53 +74,14 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
         <title>
           {commonLocale.t('name')} | {breedingLocale.t('title')} #{lover?.id} for {Number(amount) / 10**18} $ZLP
         </title>
-        <meta
-          name="twitter:image:src"
-          content={lover?.url}
-        />
-        <meta
-          name="twitter:site"
-          content="@dragons_eth"
-        />
-        <meta
-          name="twitter:card"
-          content="summary_large_image"
-        />
-        <meta
-          name="twitter:title"
-          content={`Rarity ${rarityLover?.name}`}
-        />
-        <meta
-          name="twitter:description"
-          content={`start breeding with a dragon ${lover?.id}`}
-        />
-        <meta
-          property="og:image"
-          content={lover?.url}
-        />
-        <meta
-          property="og:image:alt"
-          content={`Dragon ID #${lover?.id}`}
-        />
-        <meta
-          property="og:site_name"
-          content="dragonZIL"
-        />
-        <meta
-          property="og:type"
-          content="object"
-        />
-        <meta
-          property="og:title"
-          content={`${breedingLocale.t('title')} #${lover?.id} for ${Number(amount) / 10**18} $ZLP`}
-        />
-        <meta
-          property="og:url"
-          content={`https://stg.dragonzil.xyz/breed/${lover?.id}`}
-        />
-        <meta
-          property="og:description"
-          content={`${breedingLocale.t('title')} #${lover?.id} for ${Number(amount) / 10**18} $ZLP`}
+        <OpenGraph
+          url={`https://stg.dragonzil.xyz/breed/${lover?.id}`}
+          title={`${breedingLocale.t('title')} #${lover?.id} for ${Number(amount) / 10**18} $ZLP`}
+          description={`start breeding with a dragon ${lover?.id}`}
+          img={lover?.url}
+          alt={`Dragon ID #${lover?.id}`}
+          site="@dragons_eth"
+          siteName="dragonZIL"
         />
       </Head>
       <Navbar />
