@@ -61,7 +61,7 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
         <OpenGraph
           url={`https://dragonzil.xyz/fights/${defended?.id}`}
           title={`${arenaLocale.t('title')} #${defended?.id}`}
-          description={`Fight with Dragon #${defended.id} for ${Number(amount) / 10**18} $ZLP`}
+          description={`Fight with Dragon #${defended?.id} for ${Number(amount) / 10**18} $ZLP`}
           img={defended?.url}
           alt={`Dragon ID #${defended?.url}`}
           site="@dragons_eth"
