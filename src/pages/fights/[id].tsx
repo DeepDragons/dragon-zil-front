@@ -1,6 +1,7 @@
 import React from 'react';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import Loader from "react-loader-spinner";
+import { useStore } from 'effector-react';
 import Head from 'next/head';
 import { useTranslation } from 'next-i18next';
 import dynamic from 'next/dynamic';
@@ -19,6 +20,8 @@ import { Colors } from '@/config/colors';
 import { ZIlPayToken } from 'mixin/zilpay-token';
 import { getPrice } from 'lib/get-price';
 import { Contracts } from '@/config/contracts';
+import { $transactions } from 'store/transactions';
+import { $wallet } from 'store/wallet';
 
 const CompareCombatGens = dynamic(import('components/dragon/compare-combat-gens'));
 const ChoiceWith = dynamic(import('components/dragon/choice-with'));
@@ -35,6 +38,8 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
   const commonLocale = useTranslation('common');
   const router = useRouter();
 
+  const txns = useStore($transactions);
+  const wallet = useStore($wallet);
   const [attacked, setAttacked] = React.useState<DragonObject | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [needApprove, setNeedApprove] = React.useState(true);
@@ -64,6 +69,8 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
     try {
       if (needApprove) {
         await zilPayToken.increaseAllowance(Contracts.FightPlace);
+
+        return null;
       } else {
         await figthPlace.startFight(defended.id, attacked.id);
       }
@@ -74,7 +81,16 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
   }, [defended, attacked, needApprove]);
 
   React.useEffect(() => {
-    hanldeUpdate();
+    if (process.browser) {
+      hanldeUpdate();
+    }
+  }, [wallet]);
+
+  React.useEffect(() => {
+    const hasTxns = txns.some((tx) => !tx.confirmed);
+    if (process.browser && hasTxns) {
+      hanldeUpdate();
+    }
   }, []);
 
   return (
