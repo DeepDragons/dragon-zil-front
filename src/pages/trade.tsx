@@ -206,7 +206,7 @@ export const TradePage: NextPage = () => {
                   {dragon.owner.toLowerCase() !== String(address?.base16).toLowerCase() ? (
                     <Button
                       color={Colors.LightBlue}
-                      onClick={() => marketPlace.purchase(dragon.id, getMarketPrice(dragon.actions))}
+                      onClick={() => marketPlace.purchase(getMarketOrder(dragon.actions), getMarketPrice(dragon.actions))}
                     >
                       {commonLocale.t('buy')}
                     </Button>

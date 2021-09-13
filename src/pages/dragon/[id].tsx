@@ -122,7 +122,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
           sale={() => setSale(true)}
           RemoveBreed={() => breedPlace.cancelBreed(String(router.query.id))}
           RemoveSale={() => marketPlace.cancel(getMarketOrder(dragon.actions))}
-          buy={() => marketPlace.purchase(dragon.id, getMarketPrice(dragon.actions))}
+          buy={() => marketPlace.purchase(getMarketOrder(dragon.actions), getMarketPrice(dragon.actions))}
           mutate={hanldeMutate}
           fight={() => setArena(true)}
           breed={() => setBreed(true)}
