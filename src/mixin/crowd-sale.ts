@@ -58,7 +58,7 @@ export class CrowdSale {
     ];
     const gas = {
       gasPrice: '2000',
-      gaslimit: String(2000 * numberOf)
+      gaslimit: String(25000)
     };
     const state = this.store.getState();
     const transition = 'Buy';
