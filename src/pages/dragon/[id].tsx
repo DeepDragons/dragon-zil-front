@@ -90,9 +90,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
         .getDragon(String(dragon.id))
         .then((d) => {
           if (d) {
-            dragon.url = d.url;
-            dragon.owner= d.owner;
-            dragon.gen_fight = d.gen_fight;
+            dragon = d;
           }
         });
     }
