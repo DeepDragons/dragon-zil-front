@@ -4,6 +4,7 @@ import { NextPage, GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
 import { useStore } from 'effector-react';
 
 import { Navbar } from 'components/nav-bar';
@@ -163,6 +164,21 @@ export const FightPage: NextPage = () => {
           </>
         )}
       </Wrapper>
+      {!loading && !skelet && dragons.length === 0 ? (
+        <>
+          <Text
+            fontVariant={StyleFonts.FiraSansRegular}
+            css="text-align: center;max-width: 400px;"
+          >
+            {fightsLocale.t('no_dragons')}
+          </Text>
+          <Link href="/mydragons">
+            <Button>
+              {fightsLocale.t('place')}
+            </Button>
+          </Link>
+        </>
+      ) : null}
       {loading ? (
         <Loader
           type="ThreeDots"
