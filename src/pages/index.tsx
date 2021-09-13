@@ -9,7 +9,7 @@ import { Navbar } from 'components/nav-bar';
 import { MainSection } from 'components/section/main';
 import { DescriptionSection } from 'components/section/description';
 import { HowWorksSection } from 'components/section/how-it-works';
-import { ReferralSection } from 'components/section/referral';
+// import { ReferralSection } from 'components/section/referral';
 
 const Container = styled.main`
   display: flex;
@@ -40,7 +40,7 @@ export const MainPage: NextPage = () => {
         <MainSection />
         <DescriptionSection />
         <HowWorksSection />
-        <ReferralSection />
+        {/* <ReferralSection /> */}
       </Container>
     </>
   );

@@ -115,6 +115,10 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
           data-rh="true"
         />
         <meta
+          name="twitter:image"
+          content={dragon?.url}
+        />
+        <meta
           name="twitter:card"
           content="summary_large_image"
         />

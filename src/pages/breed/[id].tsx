@@ -96,6 +96,10 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
           content={lover?.url}
         />
         <meta
+          name="twitter:image"
+          content={lover?.url}
+        />
+        <meta
           name="twitter:card"
           content="summary_large_image"
         />

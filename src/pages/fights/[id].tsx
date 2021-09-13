@@ -78,6 +78,10 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
           name="twitter:card"
           content="summary_large_image"
         />
+        <meta
+          name="twitter:image"
+          content={defended?.url}
+        />
       </Head>
       <Navbar />
       <Wrapper>
