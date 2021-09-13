@@ -4,7 +4,7 @@
   "keywords": "My Dragon, Dragon, Egg, manage",
   "actions": {
     "name": "Actions",
-    "hatch_egg": "Hatch Egg",
+    "hatch_egg": "hatch Egg",
     "transfer": "Transfer",
     "sale": "To sale",
     "mutate": "Mutate",
