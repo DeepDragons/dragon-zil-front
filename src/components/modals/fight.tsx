@@ -49,7 +49,8 @@ export const FightsModal: React.FC<Prop> = ({
     setLoading(true);
     try {
       const allow = await zilPayToken.getAllowances(Contracts.FightPlace);
-      setNeedApprove(await zilPayToken.calcAllowances(zlp, allow));
+      const bigValue = BigInt(zlp.toFixed()) * BigInt(ZIlPayToken.decimal);
+      setNeedApprove(!zilPayToken.isAllow(String(bigValue), allow));
     } catch {
       ///
     }
@@ -61,6 +62,7 @@ export const FightsModal: React.FC<Prop> = ({
     try {
       if (needApprove) {
         await zilPayToken.increaseAllowance(Contracts.FightPlace);
+        setNeedApprove(false);
       } else {
         await figthPlace.place(id, zlp, false);
         onClose();

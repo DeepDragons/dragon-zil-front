@@ -22,15 +22,11 @@ export class ZIlPayToken {
     return '0';
   }
 
-  public async calcAllowances(value: number, allowances: string): Promise<boolean> {
-    const zilpay = await this.zilpay.zilpay();
-    const BN = zilpay.utils.BN;
-    const decimalBN = new BN(ZIlPayToken.decimal);
-    const valueBN = new BN(String(value));
-    const zlpBN = decimalBN.mul(valueBN);
-    const allowancesBN = new BN(allowances);
+  public isAllow(value: string, allowances: string) {
+    const bigValue = BigInt(value);
+    const bigAllow = BigInt(allowances);
 
-    return allowancesBN.lt(zlpBN);
+    return bigValue < bigAllow;
   }
 
   public async getAllowances(contract: Contracts): Promise<string> {
