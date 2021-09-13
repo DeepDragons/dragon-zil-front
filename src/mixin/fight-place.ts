@@ -11,12 +11,12 @@ export class FigthPlace {
       {
         vname: 'who_id',
         type: 'Uint256',
-        value: String(id1)
+        value: String(id0)
       },
       {
         vname: 'with_id',
         type: 'Uint256',
-        value: String(id0)
+        value: String(id1)
       }
     ];
     const transition = 'FightStart';
