@@ -38,7 +38,7 @@ export interface PaginationObject {
 }
 
 export class DragonAPI {
-  private _host = process.browser ? 'https://stg.dragonzil.xyz' : 'https://stg.dragonzil.xyz';
+  private _host = process.browser ? 'https://stg.dragonzil.xyz' : 'http://127.0.0.1:80';
   private _api = 'api/v1';
 
   public async getDragons(owner: string, limit = 6, offset = 0) {
