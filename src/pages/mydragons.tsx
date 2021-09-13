@@ -14,13 +14,13 @@ import { SkeletCard } from 'components/skelet/card';
 import { FilterBar } from 'components/filter-bar';
 import { Container } from 'components/pages/container';
 import { Wrapper } from 'components/pages/wrapper';
+import { Button } from '@/components/button';
 import { ErrorModal } from 'components/modals/error';
+import { CardContainer } from 'components/dragon/styles';
 
 import { $wallet } from 'store/wallet';
-import { CardContainer } from 'components/dragon/styles';
 import { $myDragons, contctDragons, resetDragons } from 'store/my-dragons';
 import { DragonAPI } from 'lib/api';
-import { Button } from '@/components/button';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
 import { RARITY } from '@/lib/rarity';
@@ -71,7 +71,7 @@ export const MyDragons: NextPage = () => {
   }, [address]);
 
   useScrollEvent(async () => {
-    const h = isMobile ? 450 : 350;
+    const h = isMobile ? 450 : 250;
     const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop) + h;
     const second = document.documentElement.offsetHeight;
 
@@ -163,6 +163,7 @@ export const MyDragons: NextPage = () => {
           width={100}
         />
       ) : null}
+      {}
       <ErrorModal
         show={Boolean(errorCode)}
         code={errorCode}

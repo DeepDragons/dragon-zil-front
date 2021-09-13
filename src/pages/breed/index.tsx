@@ -133,7 +133,7 @@ export const BreedPage: NextPage = () => {
   }, [address]);
 
   useScrollEvent(async () => {
-    const h = isMobile ? 450 : 350;
+    const h = isMobile ? 450 : 250;
     const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop) + h;
     const second = document.documentElement.offsetHeight;
 
