@@ -74,50 +74,53 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
           {commonLocale.t('name')} | {breedingLocale.t('title')} #{lover?.id} for {Number(amount) / 10**18} $ZLP
         </title>
         <meta
-          property="og:title"
-          content={`${commonLocale.t('name')} | ${breedingLocale.t('title')} #${lover?.id} for ${Number(amount) / 10**18} $ZLP`}
-          key="title"
-        />
-        {/* <link
-          rel="canonical"
-          href={`https://dragonzil.xyz/breed/${lover?.id}`}
+          name="twitter:image:src"
+          content={lover?.url}
         />
         <meta
-          name="description"
+          name="twitter:site"
+          content="@dragons_eth"
+        />
+        <meta
+          name="twitter:card"
+          content="summary_large_image"
+        />
+        <meta
+          name="twitter:title"
           content={`Rarity ${rarityLover?.name}`}
-          data-rh="true"
         />
         <meta
-          name="keywords"
-          content={breedingLocale.t('keywords')}
+          name="twitter:description"
+          content={`start breeding with a dragon ${lover?.id}`}
         />
         <meta
           property="og:image"
           content={lover?.url}
         />
         <meta
-          name="twitter:image"
-          content={lover?.url}
+          property="og:image:alt"
+          content={`Dragon ID #${lover?.id}`}
         />
         <meta
-          name="twitter:card"
-          content="summary_large_image"
-        /> */}
-
-        <meta name="twitter:image:src" content="https://opengraph.githubassets.com/c88695796a5736a86bcbc86d04d9fcbe92bc26a1ad97d306028fd4d2aef699e7/DeepDragons/dragon-zil-front" />
-        <meta name="twitter:site" content="@github" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Issues · DeepDragons/dragon-zil-front" />
-        <meta name="twitter:description" content="Contribute to DeepDragons/dragon-zil-front development by creating an account on GitHub." />
-        <meta property="og:image" content="https://opengraph.githubassets.com/c88695796a5736a86bcbc86d04d9fcbe92bc26a1ad97d306028fd4d2aef699e7/DeepDragons/dragon-zil-front" />
-        <meta property="og:image:alt" content="Contribute to DeepDragons/dragon-zil-front development by creating an account on GitHub." />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="600" />
-        <meta property="og:site_name" content="GitHub" />
-        <meta property="og:type" content="object" />
-        <meta property="og:title" content="Issues · DeepDragons/dragon-zil-front" />
-        <meta property="og:url" content="https://github.com/DeepDragons/dragon-zil-front" />
-        <meta property="og:description" content="Contribute to DeepDragons/dragon-zil-front development by creating an account on GitHub." />
+          property="og:site_name"
+          content="dragonZIL"
+        />
+        <meta
+          property="og:type"
+          content="object"
+        />
+        <meta
+          property="og:title"
+          content={`${breedingLocale.t('title')} #${lover?.id} for ${Number(amount) / 10**18} $ZLP`}
+        />
+        <meta
+          property="og:url"
+          content={`https://stg.dragonzil.xyz/breed/${lover?.id}`}
+        />
+        <meta
+          property="og:description"
+          content={`${breedingLocale.t('title')} #${lover?.id} for ${Number(amount) / 10**18} $ZLP`}
+        />
       </Head>
       <Navbar />
       <Wrapper>
