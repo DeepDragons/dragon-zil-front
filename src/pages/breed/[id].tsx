@@ -64,7 +64,7 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
       //
     }
     setLoading(false);
-  }, [lover, myDragon]);
+  }, [lover, myDragon, needApprove]);
 
   const rarityLover = React.useMemo(() => {
     if (!lover) {
