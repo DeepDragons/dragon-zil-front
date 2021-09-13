@@ -2,6 +2,7 @@ import React from 'react';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import styled from 'styled-components';
 import { useTranslation } from 'next-i18next';
+import { useStore } from 'effector-react';
 import Loader from "react-loader-spinner";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import dynamic from 'next/dynamic';
@@ -15,10 +16,13 @@ import { BreadGensForm } from 'components/dragon/breed-gens';
 import { DragonAPI, DragonObject } from 'lib/api';
 import { BreedPlace } from 'mixin/breed';
 import { getRarity } from 'lib/rarity';
+import { ZIlPayToken } from 'mixin/zilpay-token';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
 import { Wrapper, PageTitle } from 'components/dragon/styles';
 import { getPrice } from '@/lib/get-price';
+import { Contracts } from '@/config/contracts';
+import { $wallet } from 'store/wallet';
 
 const CompareCombatGens = dynamic(import('components/dragon/compare-combat-gens'));
 const ChoiceWith = dynamic(import('components/dragon/choice-with'));
@@ -32,11 +36,15 @@ const Column = styled.div`
   flex-direction: column;
 `;
 const backend = new DragonAPI();
+const zilPayToken = new ZIlPayToken();
 const breedPlace = new BreedPlace();
 export const BreedStart: NextPage<Prop> = ({ lover }) => {
   const breedingLocale = useTranslation('breeding');
   const commonLocale = useTranslation('common');
+
+  const wallet = useStore($wallet);
   const [myDragon, setMyDragon] = React.useState<DragonObject | null>(null);
+  const [needApprove, setNeedApprove] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
 
   const handleStartBreed = React.useCallback(async() => {
@@ -45,7 +53,13 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
     }
     setLoading(true);
     try {
-      await breedPlace.startBreeding(lover.id, myDragon.id);
+      if (needApprove) {
+        await zilPayToken.increaseAllowance(Contracts.FightPlace);
+
+        setNeedApprove(false);
+      } else {
+        await breedPlace.startBreeding(lover.id, myDragon.id);
+      }
     } catch {
       //
     }
@@ -67,6 +81,21 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
   const amount = React.useMemo(() => {
     return getPrice(lover?.actions);
   }, [lover]);
+
+  const hanldeUpdate = React.useCallback(async() => {
+    setLoading(true);
+    try {
+      const allow = await zilPayToken.getAllowances(Contracts.Breed);
+      setNeedApprove(!zilPayToken.isAllow(amount, allow));
+    } catch {
+      ///
+    }
+    setLoading(false);
+  }, [amount]);
+
+  React.useEffect(() => {
+    hanldeUpdate();
+  }, [wallet]);
 
   return (
     <Container>
@@ -105,7 +134,7 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
             dragon={lover}
             myDragon={myDragon}
             color={Colors.Primary}
-            btnColor={Colors.Primary}
+            btnColor={needApprove ? Colors.LightBlue : Colors.Primary}
             icon="heart.svg"
             setDragon={setMyDragon}
             onStart={handleStartBreed}
@@ -117,7 +146,8 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
                 height={10}
                 width={40}
               />
-            ) : breedingLocale.t('start_btn')}
+            ) : needApprove ?
+              breedingLocale.t('approve') : breedingLocale.t('start_btn')}
           </ChoiceWith>
           {myDragon && rarityMyDragon && rarityLover ? (
             <Column>
