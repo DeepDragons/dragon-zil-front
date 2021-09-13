@@ -16,7 +16,9 @@ import { DragonAPI, DragonObject } from 'lib/api';
 import { FigthPlace } from 'mixin/fight-place';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
+import { ZIlPayToken } from 'mixin/zilpay-token';
 import { getPrice } from 'lib/get-price';
+import { Contracts } from '@/config/contracts';
 
 const CompareCombatGens = dynamic(import('components/dragon/compare-combat-gens'));
 const ChoiceWith = dynamic(import('components/dragon/choice-with'));
@@ -26,6 +28,7 @@ type Prop = {
 }
 
 const backend = new DragonAPI();
+const zilPayToken = new ZIlPayToken();
 const figthPlace = new FigthPlace();
 export const FightStart: NextPage<Prop> = ({ defended }) => {
   const arenaLocale = useTranslation('arena');
@@ -34,23 +37,45 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
 
   const [attacked, setAttacked] = React.useState<DragonObject | null>(null);
   const [loading, setLoading] = React.useState(false);
+  const [needApprove, setNeedApprove] = React.useState(true);
 
   const amount = React.useMemo(() => {
     return getPrice(defended?.actions);
   }, [defended]);
+
+  const hanldeUpdate = React.useCallback(async() => {
+    setLoading(true);
+    try {
+      const zlp = Number(amount) / 10**18;
+      const allow = await zilPayToken.getAllowances(Contracts.FightPlace);
+      setNeedApprove(await zilPayToken.calcAllowances(zlp, allow));
+    } catch {
+      ///
+    }
+    setLoading(false);
+  }, [amount]);
 
   const handleStartFight = React.useCallback(async() => {
     if (!attacked || !defended) {
       return null;
     }
     setLoading(true);
+
     try {
-      await figthPlace.startFight(defended.id, attacked.id);
+      if (needApprove) {
+        await zilPayToken.increaseAllowance(Contracts.FightPlace);
+      } else {
+        await figthPlace.startFight(defended.id, attacked.id);
+      }
     } catch {
       //
     }
     setLoading(false);
-  }, [defended, attacked]);
+  }, [defended, attacked, needApprove]);
+
+  React.useEffect(() => {
+    hanldeUpdate();
+  }, []);
 
   return (
     <Container>
@@ -89,7 +114,7 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
             dragon={defended}
             myDragon={attacked}
             color={Colors.Danger}
-            btnColor={Colors.Info}
+            btnColor={needApprove ? Colors.LightBlue : Colors.Info}
             icon="arena.svg"
             setDragon={setAttacked}
             onStart={handleStartFight}
@@ -101,7 +126,8 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
                 height={10}
                 width={40}
               />
-            ) : arenaLocale.t('start_btn')}
+            ) : needApprove ?
+              arenaLocale.t('approve') : arenaLocale.t('start_btn')}
           </ChoiceWith>
           {attacked ? (
             <CompareCombatGens
