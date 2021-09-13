@@ -137,7 +137,7 @@ export const BreedPage: NextPage = () => {
     const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop) + h;
     const second = document.documentElement.offsetHeight;
 
-    if (first < second || loading) {
+    if (first < second || loading || skelet) {
       return null;
     }
 
