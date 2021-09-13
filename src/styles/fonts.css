@@ -1,0 +1,16 @@
+@font-face {
+  font-family: "FiraSansBold";
+  src: url('/fonts/FiraSans-Bold.ttf');
+}
+@font-face {
+  font-family: "FiraSansSemiBold";
+  src: url('/fonts/FiraSans-SemiBold.ttf');
+}
+@font-face {
+  font-family: "FiraSansMedium";
+  src: url('/fonts/FiraSans-Medium.ttf');
+}
+@font-face {
+  font-family: "FiraSansRegular";
+  src: url('/fonts/FiraSans-Regular.ttf');
+}

@@ -1,10 +1,12 @@
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import '../styles/fonts.css';
+
 import { AppProps } from 'next/app';
 import { BaseStyles, AnimationStyles } from '@/styles';
 import React from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { appWithTranslation } from 'next-i18next';
-import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 import { Footer } from 'components/footer';
 
