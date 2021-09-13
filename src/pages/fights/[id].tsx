@@ -53,7 +53,7 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
     try {
       const zlp = Number(amount) / 10**18;
       const allow = await zilPayToken.getAllowances(Contracts.FightPlace);
-      setNeedApprove(await zilPayToken.calcAllowances(zlp, allow));
+      setNeedApprove(!await zilPayToken.calcAllowances(zlp, allow));
     } catch {
       ///
     }
@@ -81,9 +81,7 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
   }, [defended, attacked, needApprove]);
 
   React.useEffect(() => {
-    if (process.browser) {
-      hanldeUpdate();
-    }
+    hanldeUpdate();
   }, [wallet]);
 
   React.useEffect(() => {
@@ -91,7 +89,7 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
     if (process.browser && hasTxns) {
       hanldeUpdate();
     }
-  }, []);
+  }, [txns]);
 
   return (
     <Container>
