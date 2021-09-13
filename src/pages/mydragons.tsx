@@ -71,7 +71,7 @@ export const MyDragons: NextPage = () => {
   }, [address]);
 
   useScrollEvent(async () => {
-    const h = isMobile ? 450 : 250;
+    const h = isMobile ? 450 : 0;
     const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop) + h;
     const second = document.documentElement.offsetHeight;
 
