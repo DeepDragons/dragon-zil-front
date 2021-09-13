@@ -83,7 +83,7 @@ export const BuyPage: NextPage = () => {
   const crowdSaleStore = useStore(crowdSale.store);
   const [selected, setSelected] = React.useState(0);
   const [eggs, setEggs] = React.useState(1);
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
 
   const amount = React.useMemo(() => {
     if (selected === 0) {
@@ -108,10 +108,9 @@ export const BuyPage: NextPage = () => {
   }, [eggs, selected]);
 
   React.useEffect(() => {
-    setLoading(true);
     crowdSale
       .update()
-      .finally(() => setLoading(false))
+      .finally(() => null)
   }, []);
 
   return (
