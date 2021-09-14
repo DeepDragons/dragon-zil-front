@@ -65,11 +65,11 @@ export const Footer: React.FC = () => {
               {commonLocale.t('terms_service')}
             </Link>
           </Li>
-          {/* <Li>
+          <Li>
             <Link href="/referral">
               {commonLocale.t('referral_program')}
             </Link>
-          </Li> */}
+          </Li>
         </ul>
       </Wrapper>
       <Wrapper>

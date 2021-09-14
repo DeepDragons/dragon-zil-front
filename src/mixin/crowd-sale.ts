@@ -45,7 +45,7 @@ export class CrowdSale {
     const BN = zp.utils.BN;
     const validation = zp.utils.validation;
 
-    if (!validation.isAddress(ref)) {
+    if (!validation.isAddress(ref) || ref === zp.wallet.defaultAccount?.base16) {
       ref = Contracts.NIL;
     }
 
