@@ -35,10 +35,14 @@ const params: QueryParams = {
 };
 let maxPage = 1;
 export const MyDragons: NextPage = () => {
+  const refWrapper = React.useRef<HTMLDivElement | null>();
+
   const dragonsLocale = useTranslation('dragons');
   const commonLocale = useTranslation('common');
+
   const address = useStore($wallet);
   const dragons = useStore($myDragons);
+
   const [skelet, setSkelet] = React.useState(true);
   const [errorCode, setErrorCode] = React.useState<number | string | null>(null);
   const [sortItem, setSortItem] = React.useState(0);
@@ -112,11 +116,11 @@ export const MyDragons: NextPage = () => {
   }, [address]);
 
   useScrollEvent(async () => {
-    const h = isMobile ? 450 : 0;
+    const h = isMobile ? window.innerHeight / 2 : 0;
     const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop) + h;
-    const second = document.documentElement.offsetHeight;
+    const second = refWrapper.current?.scrollHeight || document.documentElement.offsetHeight;
 
-    if (first !== second || loading || skelet) {
+    if (first < second || loading || skelet) {
       return null;
     }
 
@@ -151,7 +155,7 @@ export const MyDragons: NextPage = () => {
         items={items}
         onSelectSort={hanldeSort}
       />
-      <Wrapper>
+      <Wrapper ref={(n) => refWrapper.current = n}>
         {skelet ? (
           <>
           <SkeletCard />

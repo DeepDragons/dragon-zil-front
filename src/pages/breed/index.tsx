@@ -40,8 +40,11 @@ let maxPage = 1;
 const backend = new DragonAPI();
 const breedPlace = new BreedPlace();
 export const BreedPage: NextPage = () => {
+  const refWrapper = React.useRef<HTMLDivElement | null>();
+
   const breedLocale = useTranslation('breed');
   const commonLocale = useTranslation('common');
+
   const router = useRouter();
   const address = useStore($wallet);
   const dragons = useStore($BreedDragons);
@@ -133,9 +136,9 @@ export const BreedPage: NextPage = () => {
   }, [address]);
 
   useScrollEvent(async () => {
-    const h = isMobile ? 450 : 0;
+    const h = isMobile ? window.innerHeight / 2 : 0;
     const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop) + h;
-    const second = document.documentElement.offsetHeight;
+    const second = refWrapper.current?.scrollHeight || document.documentElement.offsetHeight;
 
     if (first < second || loading || skelet) {
       return null;
@@ -173,7 +176,7 @@ export const BreedPage: NextPage = () => {
         onFilter={handleFiltred}
         onSelectSort={hanldeSort}
       />
-      <Wrapper>
+      <Wrapper ref={(n) => refWrapper.current = n}>
         {skelet ? (
           <>
           <SkeletCard />

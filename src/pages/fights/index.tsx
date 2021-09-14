@@ -38,8 +38,11 @@ let maxPage = 1;
 const backend = new DragonAPI();
 const figthPlace = new FigthPlace();
 export const FightPage: NextPage = () => {
+  const refWrapper = React.useRef<HTMLDivElement | null>();
+
   const fightsLocale = useTranslation('fights');
   const commonLocale = useTranslation('common');
+
   const router = useRouter();
   const address = useStore($wallet);
   const dragons = useStore($marketDragons);
@@ -79,11 +82,11 @@ export const FightPage: NextPage = () => {
   }, [address]);
 
   useScrollEvent(async () => {
-    const h = isMobile ? 450 : 0;
+    const h = isMobile ? window.innerHeight / 2 : 0;
     const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop) + h;
-    const second = document.documentElement.offsetHeight;
+    const second = refWrapper.current?.scrollHeight || document.documentElement.offsetHeight;
 
-    if (first !== second || loading || skelet) {
+    if (first < second || loading || skelet) {
       return null;
     }
 
@@ -112,7 +115,7 @@ export const FightPage: NextPage = () => {
       </Head>
       <Navbar />
       <FilterBar title={fightsLocale.t('title')} />
-      <Wrapper>
+      <Wrapper ref={(n) => refWrapper.current = n}>
         {skelet ? (
           <>
           <SkeletCard />

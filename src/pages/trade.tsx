@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { isMobile } from 'react-device-detect';
 import { NextPage, GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import { useStore } from 'effector-react';
@@ -39,8 +40,11 @@ let maxPage = 1;
 const backend = new DragonAPI();
 const marketPlace = new MarketPlace();
 export const TradePage: NextPage = () => {
+  const refWrapper = React.useRef<HTMLDivElement | null>();
+
   const tradeLocale = useTranslation('trade');
   const commonLocale = useTranslation('common');
+
   const router = useRouter();
   const address = useStore($wallet);
   const dragons = useStore($marketDragons);
@@ -133,10 +137,11 @@ export const TradePage: NextPage = () => {
   }, [address]);
 
   useScrollEvent(async () => {
-    const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop);
-    const second = document.documentElement.offsetHeight;
+    const h = isMobile ? window.innerHeight / 2 : 0;
+    const first = Math.ceil(window.innerHeight + document.documentElement.scrollTop) + h;
+    const second = refWrapper.current?.scrollHeight || document.documentElement.offsetHeight;
 
-    if (first !== second || loading) {
+    if (first < second || loading || skelet) {
       return null;
     }
 
@@ -172,7 +177,7 @@ export const TradePage: NextPage = () => {
         onFilter={handleFiltred}
         onSelectSort={hanldeSort}
       />
-      <Wrapper>
+      <Wrapper ref={(n) => refWrapper.current = n}>
         {skelet ? (
           <>
           <SkeletCard />
