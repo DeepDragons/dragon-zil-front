@@ -16,8 +16,8 @@ import { Button } from '@/components/button';
 import { $wallet } from 'store/wallet';
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
-import { DragonObject, DragonAPI } from '@/lib/api';
-import { $myDragons, contctDragons } from 'store/my-dragons';
+import { DragonObject, DragonAPI, QueryParams } from '@/lib/api';
+import { $myDragons, contctDragons, resetDragons, updateDragons } from 'store/my-dragons';
 import { RARITY } from '@/lib/rarity';
 
 type Prop = {
@@ -41,8 +41,10 @@ const Wrapper = styled.div`
 `;
 
 const backend = new DragonAPI();
-const limit = 20;
-let page = 0;
+const params: QueryParams = {
+  limit: 9,
+  offset: 0
+};
 let maxPage = 1;
 let records: number | null = null;
 export const DragonsSelectModal: React.FC<Prop> = ({
@@ -54,32 +56,56 @@ export const DragonsSelectModal: React.FC<Prop> = ({
   const address = useStore($wallet);
   const dragons = useStore($myDragons);
   const [loading, setLoading] = React.useState(false);
+  const [sortItem, setSortItem] = React.useState(0);
   const [skelet, setSkelet] = React.useState(true);
-  const [onlyDragons, setOnlyDragons] = React.useState<DragonObject[]>($myDragons.getState());
+
+  const items = React.useMemo(() => [
+    commonLocale.t('all'),
+    commonLocale.t('rarity'),
+    commonLocale.t('strong')
+  ], []);
 
   const fetchData = React.useCallback(async () => {
     const addr = $wallet.getState();
 
-    if (maxPage <= page || !addr) {
-      return null;
-    } else if (!records && records === dragons.length) {
+    if (maxPage <= params.offset || !addr) {
       return null;
     }
 
-    const owner = String(addr.base16).toLowerCase();
-    const result = await backend.getDragons(owner, limit, page);
+    params.owner = String(addr.base16).toLowerCase();
+    params.stage = 1;
+		const result = await backend.getDragons(params);
 
     maxPage = result.pagination.pages;
-    records = result.pagination.records;
 
     contctDragons(result.list);
 
-    setOnlyDragons(dragons.filter(
-      (dragon) => dragon.stage > 0 && dragon.actions.length === 0
-    ));
-
-    page += 1;
+    params.offset = params.offset + 1;
   }, [dragons]);
+
+  const hanldeSort = React.useCallback(async(index: number) => {
+    setSortItem(index);
+    resetDragons();
+    setSkelet(true);
+
+    params.sort = undefined;
+    params.owner = String($wallet.getState()?.base16).toLowerCase();
+    params.stage = 1;
+    params.offset = 0;
+    params.sort = index;
+
+    try {
+      const result = await backend.getDragons(params);
+
+      maxPage = result.pagination.pages;
+  
+      updateDragons(result.list);
+    } catch {
+      //
+    }
+
+    setSkelet(false);
+  }, []);
 
   const handleScroll = React.useCallback(async(event: React.UIEvent<HTMLDivElement, UIEvent>) => {
     if (!show) {
@@ -111,7 +137,7 @@ export const DragonsSelectModal: React.FC<Prop> = ({
   React.useEffect(() => {
     if (dragons.length === 0 && show) {
       setSkelet(true);
-      page = 0;
+      params.offset = 0;
       fetchData()
         .then(() => setSkelet(false))
         .catch(() => {
@@ -127,20 +153,23 @@ export const DragonsSelectModal: React.FC<Prop> = ({
     >
       <Content className="modal-content">
         <FilterBar
-          title="Select a dragon"
-          rarity
+          title={commonLocale.t('select')}
+          selectedSort={sortItem}
+          rarity={dragons.length !== 0}
+          items={items}
+          onSelectSort={hanldeSort}
         />
         <Wrapper onScrollCapture={handleScroll}>
           {dragons.length === 0 && skelet ? (
             <>
-            <SkeletCard />
-            <SkeletCard />
-            <SkeletCard />
-            <SkeletCard />
+              <SkeletCard />
+              <SkeletCard />
+              <SkeletCard />
+              <SkeletCard />
             </>
           ) : (
             <>
-              {onlyDragons.map((dragon, index) => (
+              {dragons.map((dragon, index) => (
                 <div
                   key={index}
                   onClick={() => hanldeOnSelect(dragon)}

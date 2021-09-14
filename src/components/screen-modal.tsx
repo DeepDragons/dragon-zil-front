@@ -52,11 +52,17 @@ export const ScreenModal: React.FC<Prop> = ({
 }) => {
   const node = React.useRef<HTMLDivElement | null>(null);
 
+  const onToggle = React.useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (e.target == node.current) {
+      onClose();
+    }
+  }, [node]);
+
   return (
     <Container
       ref={(n) => node.current = n}
       className={show ? 'show-dialog' : ''}
-      onClick={onClose}
+      onClick={onToggle}
     >
       {children}
     </Container>
