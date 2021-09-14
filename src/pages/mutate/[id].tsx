@@ -100,6 +100,18 @@ export const GenLabPage: NextPage<Prop> = ({ dragon }) => {
     }
   }, [dragon, address]);
 
+  React.useEffect(() => {
+    if (dragon) {
+      backend
+        .getDragon(String(dragon.id))
+        .then((d) => {
+          if (d) {
+            dragon = d;
+          }
+        });
+    }
+  }, []);
+
   return (
     <Container>
       <Head>
