@@ -106,7 +106,7 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
         <OpenGraph
           url={`https://dragonzil.xyz/breed/${lover?.id}`}
           title={`${breedingLocale.t('title')} #${lover?.id} for ${Number(amount) / 10**18} $ZLP`}
-          description={`start breeding with a dragon ${lover?.id}`}
+          description={`Rarity #${lover?.id}: ${rarityLover?.name}`}
           img={lover?.url}
           alt={`Dragon ID #${lover?.id}`}
           site="@dragons_eth"
