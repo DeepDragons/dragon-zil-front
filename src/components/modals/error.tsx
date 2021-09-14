@@ -69,7 +69,7 @@ export const ErrorModal: React.FC<Prop> = ({
           </li>
           <li>
             <Text fontColors={Colors.Info}>
-              <a href="http://t.me/Deep_Dragons" target="_blank">
+              <a href="https://t.me/dragonzil" target="_blank">
                 Ask us on telegram channel.
               </a>
             </Text>

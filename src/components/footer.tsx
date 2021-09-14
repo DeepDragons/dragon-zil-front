@@ -114,7 +114,7 @@ export const Footer: React.FC = () => {
           </Li>
           <Li>
             <a
-              href="http://t.me/Deep_Dragons"
+              href="https://t.me/dragonzil"
               target="_blank"
             >
               <img
