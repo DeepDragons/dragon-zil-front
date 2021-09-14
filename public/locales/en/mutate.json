@@ -7,5 +7,6 @@
   "current_gen": "Current gen value",
   "upgrade_for": "Upgrade for",
   "upgrade_btn": "Upgrade",
-  "modal_sub_title": "Choose a gene and try to improve it, you’ll need some zip though."
+  "modal_sub_title": "Choose a gene and try to improve it, you’ll need some zip though.",
+  "approve": "Approve ZLP"
 }

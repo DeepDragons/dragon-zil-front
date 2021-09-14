@@ -10,6 +10,8 @@ import { ModalTitle, ButtonsWrapper, ModalButton } from './style';
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
 import { GenLab } from 'mixin/gen-lab';
+import { ZIlPayToken } from 'mixin/zilpay-token';
+import { Contracts } from '@/config/contracts';
 
 const Container = styled.div`
   padding: 24px;
@@ -32,6 +34,7 @@ type Prop = {
   onClose: () => void;
 };
 
+const zilPayToken = new ZIlPayToken();
 const genLab = new GenLab();
 export const UpgradeGenModal: React.FC<Prop> = ({
   show,
@@ -43,17 +46,41 @@ export const UpgradeGenModal: React.FC<Prop> = ({
   const mutateLocale = useTranslation('mutate');
   const commonLocale = useTranslation('common');
   const [loading, setLoading] = React.useState(false);
+  const [needApprove, setNeedApprove] = React.useState(true);
 
-  const handleUpgrade = React.useCallback(async() => {
+  const hanldeUpdate = React.useCallback(async() => {
     setLoading(true);
     try {
-      await genLab.changeGen(id, gen.gen);
-      onClose();
+      const allow = await zilPayToken.getAllowances(Contracts.GenLab);
+      const bigValue = BigInt(Number(price).toFixed()) * BigInt(ZIlPayToken.decimal);
+      setNeedApprove(!zilPayToken.isAllow(String(bigValue), allow));
     } catch {
       ///
     }
     setLoading(false);
-  }, [id, gen]);
+  }, [price]);
+
+  const handleUpgrade = React.useCallback(async() => {
+    setLoading(true);
+    try {
+      if (needApprove) {
+        await zilPayToken.increaseAllowance(Contracts.GenLab);
+        setNeedApprove(false);
+      } else {
+        await genLab.changeGen(id, gen.gen);
+        onClose();
+      }
+    } catch {
+      ///
+    }
+    setLoading(false);
+  }, [id, gen, needApprove]);
+
+  React.useEffect(() => {
+    if (show) {
+      hanldeUpdate();
+    }
+  }, [show]);
 
   return (
     <Modal
@@ -100,18 +127,19 @@ export const UpgradeGenModal: React.FC<Prop> = ({
         </Description>
         <ButtonsWrapper>
           <ModalButton
-            color={Colors.Success}
+            color={needApprove ? Colors.Warning : Colors.Success}
+            fontColors={needApprove ? Colors.Black : Colors.White}
             disabled={loading}
             onClick={handleUpgrade}
           >
             {loading ? (
               <Loader
                 type="ThreeDots"
-                color={Colors.White}
+                color={needApprove ? Colors.Black : Colors.White}
                 height={10}
                 width={40}
               />
-            ) : mutateLocale.t('upgrade_btn')}
+            ) : needApprove ? mutateLocale.t('approve') : mutateLocale.t('upgrade_btn')}
           </ModalButton>
           <ModalButton
             color={Colors.Dark}
