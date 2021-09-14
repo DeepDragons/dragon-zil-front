@@ -48,7 +48,6 @@ export const MyDragons: NextPage = () => {
     commonLocale.t('all'),
     commonLocale.t('rarity'),
     commonLocale.t('strong'),
-    commonLocale.t('price'),
     commonLocale.t('dragons'),
     commonLocale.t('eggs')
   ], []);
@@ -79,9 +78,9 @@ export const MyDragons: NextPage = () => {
     params.stage = undefined;
     params.offset = 0;
 
-    if (index === 4) {
+    if (index === 3) {
       params.stage = 1;
-    } else if (index === 5) {
+    } else if (index === 4) {
       params.stage = 0;
     } else {
       params.sort = index;
