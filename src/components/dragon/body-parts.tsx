@@ -64,7 +64,7 @@ export const BodyParts: React.FC<Prop> = ({ color, gens }) => {
           {gens.map((gen, index) => (
             <Column
               key={`body-${index}`}
-              color={Colors.White}
+              color={color}
               max={Number(gen.max)}
               value={Number(gen.value)}
               invert={true}
@@ -72,15 +72,15 @@ export const BodyParts: React.FC<Prop> = ({ color, gens }) => {
           ))}
         </GensContainer>
         <GensContainer>
-          <AuraIcon />
-          <HornsIcon />
-          <GrowthsIcon />
-          <SpotsIcon />
-          <TailIcon />
-          <WingsIcon />
-          <BodyIcon />
-          <EyesIcon />
-          <HeadIcon />
+          <AuraIcon color={color}/>
+          <HornsIcon color={color}/>
+          <GrowthsIcon color={color}/>
+          <SpotsIcon color={color}/>
+          <TailIcon color={color}/>
+          <WingsIcon color={color}/>
+          <BodyIcon color={color}/>
+          <EyesIcon color={color}/>
+          <HeadIcon color={color}/>
         </GensContainer>
       </GensWrapper>
     </Container>
