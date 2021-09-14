@@ -3,5 +3,5 @@ export function genParse(_genNumber: string) {
   const gens = String(shortGens).split(/(..)/g);
   const gensArray = gens.filter(el => el !== '').map(el => Number(el));
 
-  return gensArray;
+  return gensArray.reverse();
 }

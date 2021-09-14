@@ -77,7 +77,6 @@ export const UpgradeGens: React.FC<Prop> = ({
     const list = genParse(gens);
     const gensList = [];
 
-
     for (let index = 0; index < list.length / 2; index++) {
       const def = list[index];
       const atteck = list[index + 10];
@@ -85,7 +84,7 @@ export const UpgradeGens: React.FC<Prop> = ({
       gensList.push({
         def,
         atteck
-      })
+      });
     }
 
     return gensList;
@@ -98,9 +97,10 @@ export const UpgradeGens: React.FC<Prop> = ({
       if (ctx) {
         const list = genParse(gens);
         const chunk = chunkArray(list, 10);
+
         setTimeout(() => {
           radar(chunk, ctx);
-        }, 500);
+        }, 300);
       }
     } catch {
     }
@@ -155,7 +155,7 @@ export const UpgradeGens: React.FC<Prop> = ({
                   value={el.atteck}
                   color={Colors.Danger}
                 />
-                <NumberOfGen onClick={() => onSelect(index + 9, el.atteck, commonLocale.t('attack'))}>
+                <NumberOfGen onClick={() => onSelect(index + 10, el.atteck, commonLocale.t('attack'))}>
                   <Text css="margin: 0;">
                     {index + 1}
                   </Text>
