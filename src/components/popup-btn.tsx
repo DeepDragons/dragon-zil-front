@@ -15,10 +15,6 @@ type Prop = {
   onApply: () => void;
 };
 
-type ItemProp = {
-  last: boolean;
-};
-
 type MenuProp = {
   open: boolean;
 };
@@ -36,6 +32,10 @@ const Container = styled.div`
 
   border-radius: 16px;
   margin: 5px;
+
+  :hover {
+    border: 1px solid ${Colors.Muted};
+  }
 `;
 const Menu = styled.div`
   display: flex;

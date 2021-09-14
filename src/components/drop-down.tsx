@@ -33,17 +33,25 @@ const Container = styled.div`
   user-select: none;
   text-align: center;
 
+  border: 1px solid ${Colors.Darker};
   border-radius: ${(p: MenuProp) => p.open ? ' 16px 16px 0 0' : '16px'};
+
+  :hover {
+    ${(p: MenuProp) => p.open ? '' : `border: 1px solid ${Colors.Muted}`}
+  }
 `;
 const Menu = styled.ul`
   position: absolute;
   display: ${(p: MenuProp) => p.open ? 'block' : 'none'};
   z-index: 20;
-  transform: translate(-5%,2%);
+  transform: translate(-6%,2%);
+
+  border-radius: 0px 0px 16px 16px;
 `;
 const Item = styled.li`
   cursor: pointer;
   background: ${Colors.Darker};
+  color: ${Colors.White};
   z-index: 20;
   padding: 8px;
   text-align: center;
@@ -52,6 +60,10 @@ const Item = styled.li`
   user-select: none;
 
   ${(p: ItemProp) => p.last ? 'border-radius: 0px 0px 16px 16px;' : ''}
+
+  :hover {
+    color: ${Colors.Muted};
+  }
 `;
 const Closer = styled.a`
   cursor: pointer;
@@ -109,7 +121,10 @@ export const DropDown: React.FC<Prop> = ({
               }}
               onClick={() => hanldeSelect(index)}
             >
-              <Text size="17px">
+              <Text
+                size="17px"
+                css="color: inherit;"
+              >
                 {el}
               </Text>
             </Item>
