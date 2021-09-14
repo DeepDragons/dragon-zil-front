@@ -19,8 +19,8 @@ import { ErrorModal } from 'components/modals/error';
 import { CardContainer } from 'components/dragon/styles';
 
 import { $wallet } from 'store/wallet';
-import { $myDragons, contctDragons, resetDragons } from 'store/my-dragons';
-import { DragonAPI } from 'lib/api';
+import { $myDragons, contctDragons, resetDragons, updateDragons } from 'store/my-dragons';
+import { DragonAPI, QueryParams } from 'lib/api';
 import { StyleFonts } from '@/config/fonts';
 import { Colors } from '@/config/colors';
 import { RARITY } from '@/lib/rarity';
@@ -29,8 +29,10 @@ import { useScrollEvent } from 'mixin/scroll';
 import { isMobile } from 'react-device-detect';
 
 const backend = new DragonAPI();
-const limit = 9;
-let page = 0;
+const params: QueryParams = {
+  limit: 9,
+  offset: 0
+};
 let maxPage = 1;
 export const MyDragons: NextPage = () => {
   const dragonsLocale = useTranslation('dragons');
@@ -39,29 +41,69 @@ export const MyDragons: NextPage = () => {
   const dragons = useStore($myDragons);
   const [skelet, setSkelet] = React.useState(true);
   const [errorCode, setErrorCode] = React.useState<number | string | null>(null);
+  const [sortItem, setSortItem] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
+
+  const items = React.useMemo(() => [
+    commonLocale.t('all'),
+    commonLocale.t('rarity'),
+    commonLocale.t('strong'),
+    commonLocale.t('price'),
+    commonLocale.t('dragons'),
+    commonLocale.t('eggs')
+  ], []);
 
   const fetchData = async () => {
     const addr = $wallet.getState();
 
-    if (maxPage <= page || !addr) {
+    if (maxPage <= params.offset || !addr) {
       return null;
     }
 
-    const owner = String(addr.base16).toLowerCase();
-		const result = await backend.getDragons(owner, limit, page);
+    params.owner = String(addr.base16).toLowerCase();
+		const result = await backend.getDragons(params);
 
     maxPage = result.pagination.pages;
 
     contctDragons(result.list);
 
-    page += 1;
+    params.offset = params.offset + 1;
 	};
+
+  const hanldeSort = React.useCallback(async(index: number) => {
+    setSortItem(index);
+    setSkelet(true);
+
+    params.sort = undefined;
+    params.owner = String($wallet.getState()?.base16).toLowerCase();
+    params.stage = undefined;
+    params.offset = 0;
+
+    if (index === 4) {
+      params.stage = 1;
+    } else if (index === 5) {
+      params.stage = 0;
+    } else {
+      params.sort = index;
+    }
+
+    try {
+      const result = await backend.getDragons(params);
+
+      maxPage = result.pagination.pages;
+  
+      resetDragons();
+      updateDragons(result.list);
+    } catch {
+      //
+    }
+    setSkelet(false);
+  }, []);
 
   React.useEffect(() => {
     setSkelet(true);
     resetDragons();
-    page = 0;
+    params.offset = 0;
     fetchData()
       .then(() => setSkelet(false))
       .catch((err) => {
@@ -105,7 +147,10 @@ export const MyDragons: NextPage = () => {
       <Navbar />
       <FilterBar
         title={dragonsLocale.t('title')}
+        selectedSort={sortItem}
         rarity={dragons.length !== 0}
+        items={items}
+        onSelectSort={hanldeSort}
       />
       <Wrapper>
         {skelet ? (

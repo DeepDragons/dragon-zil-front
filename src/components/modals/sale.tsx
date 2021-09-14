@@ -64,24 +64,19 @@ export const SaleModal: React.FC<Prop> = ({
     return false;
   }, [id]);
   const handleSubmit = React.useCallback(async() => {
-    if (approved) {
-      setLoading(true);
-      await market.sell(id, zils);
+    setLoading(true);
+    try {
+      if (approved) {
+        await market.sell(id, zils);
+        setLoading(false);
+        onClose();
+      } else {
+        await dragonZIL.setApprove(id, Contracts.MarketPlace);
+        setApproved(true);
+        setLoading(false);
+      }
+    } catch {
       setLoading(false);
-      onClose();
-    } else {
-      setLoading(true);
-      await dragonZIL.setApprove(id, Contracts.MarketPlace);
-
-      const iter = setInterval(async() => {
-        const isApproved = await hanldeUpdateApprovals();
-        setLoading(true);
-
-        if (isApproved) {
-          setLoading(false);
-          clearInterval(iter);
-        }
-      }, 8000);
     }
   }, [id, approved, zils]);
 

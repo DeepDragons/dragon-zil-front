@@ -38,14 +38,13 @@ export interface PaginationObject {
 }
 
 export class DragonAPI {
-  private _host = process.browser ? 'https://dragonzil.xyz' : 'https://dragonzil.xyz';
+  private _host = process.browser ? 'https://dragonzil.xyz' : 'http://127.0.0.1:80';
   private _api = 'api/v1';
 
-  public async getDragons(owner: string, limit = 6, offset = 0) {
-    owner = String(owner).toLowerCase();
-    const params = `owner=${owner}&limit=${limit}&offset=${offset}`;
-    const url = `${this._host}/${this._api}/${Methods.Dragons}?${params}`;
-    const res = await fetch(url);
+  public async getDragons(params: QueryParams) {
+    let url = new URL(`${this._host}/${this._api}/${Methods.Dragons}?${params}`);
+    url = this._addParams(url, params);
+    const res = await fetch(url.toString());
 
     if (res.status !== 200) {
       throw new Error(String(res.status));
