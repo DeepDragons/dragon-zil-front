@@ -143,13 +143,12 @@ export const CombatGens: React.FC<Prop> = ({
           </SeporateContainer>
           <GensWrapper>
             <GensContainer>
-              {gensArray[0].map((gen, index) => (
+              {gensArray[1].map((gen, index) => (
                 <Column
-                  key={`deffence-${index}`}
-                  color={Colors.Success}
+                  key={`attack-${index}`}
+                  color={Colors.Danger}
                   max={99}
                   value={gen}
-                  invert={true}
                 />
               ))}
             </GensContainer>
@@ -165,12 +164,13 @@ export const CombatGens: React.FC<Prop> = ({
               ))}
             </GensContainer>
             <GensContainer>
-              {gensArray[1].map((gen, index) => (
+              {gensArray[0].map((gen, index) => (
                 <Column
-                  key={`attack-${index}`}
-                  color={Colors.Danger}
+                  key={`deffence-${index}`}
+                  color={Colors.Success}
                   max={99}
                   value={gen}
+                  invert={true}
                 />
               ))}
             </GensContainer>
