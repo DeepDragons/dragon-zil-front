@@ -84,9 +84,7 @@ export const CombatGens: React.FC<Prop> = ({
 
     try {
       if (ctx && isBrowser) {
-        setTimeout(() => {
-          radar(gensArray, ctx);
-        }, 500);
+        radar(gensArray, ctx);
       }
     } catch {
       setSelected(0);

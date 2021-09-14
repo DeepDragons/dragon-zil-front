@@ -25,7 +25,7 @@ export function radar(gens: Array<number[]>, ctx: HTMLCanvasElement) {
       ],
       datasets: [{
         label: 'Attack',
-        data: gens[0],
+        data: gens[1],
         fill: false,
         backgroundColor: '#e8313e87',
         borderColor: '#E8313E',
@@ -33,7 +33,7 @@ export function radar(gens: Array<number[]>, ctx: HTMLCanvasElement) {
         pointHoverBorderColor: '#E8313E'
       }, {
         label: 'Defence',
-        data: gens[1],
+        data: gens[0],
         fill: false,
         backgroundColor: Colors.Success + '70',
         borderColor: Colors.Success,
@@ -59,14 +59,6 @@ export function compareRadar(first: DragonObject, second: DragonObject, ctx: HTM
   const data = {
     labels: Array.from({length: 20}, (e, i)=> String(i + 1)),
     datasets: [{
-      label: `#${first.id}`,
-      data: firstGens,
-      fill: false,
-      backgroundColor: firstColor + '87',
-      borderColor: firstColor,
-      pointBackgroundColor: firstColor,
-      pointHoverBorderColor: firstColor
-    }, {
       label: `#${second.id}`,
       data: secondGens,
       fill: false,
@@ -74,6 +66,14 @@ export function compareRadar(first: DragonObject, second: DragonObject, ctx: HTM
       borderColor: secondColor,
       pointBackgroundColor: secondColor,
       pointHoverBorderColor: secondColor
+    }, {
+      label: `#${first.id}`,
+      data: firstGens,
+      fill: false,
+      backgroundColor: firstColor + '87',
+      borderColor: firstColor,
+      pointBackgroundColor: firstColor,
+      pointHoverBorderColor: firstColor
     }]
   };
   Chart.register(...registerables);

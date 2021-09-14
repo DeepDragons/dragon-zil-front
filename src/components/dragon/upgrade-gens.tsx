@@ -98,9 +98,7 @@ export const UpgradeGens: React.FC<Prop> = ({
         const list = genParse(gens);
         const chunk = chunkArray(list, 10);
 
-        setTimeout(() => {
-          radar(chunk, ctx);
-        }, 300);
+        radar(chunk, ctx);
       }
     } catch {
     }

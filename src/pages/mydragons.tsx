@@ -107,6 +107,7 @@ export const MyDragons: NextPage = () => {
     setSkelet(true);
     resetDragons();
     params.offset = 0;
+    params.owner = String(address?.base16).toLowerCase();
     fetchData()
       .then(() => setSkelet(false))
       .catch((err) => {
