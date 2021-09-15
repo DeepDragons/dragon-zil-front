@@ -17,6 +17,7 @@ import { FightsModal } from 'components/modals/fight';
 import { BreedModal } from 'components/modals/breed';
 import { SuicideModal } from 'components/modals/suicide';
 import { HatchEggModal } from 'components/modals/hatch-egg';
+import { NoCache } from 'components/no-cache';
 
 import { DragonAPI, DragonObject } from 'lib/api';
 import { getRarity } from 'lib/rarity';
@@ -87,7 +88,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
   const price = React.useMemo(() => {
     const p = Number(getMarketPrice(dragon?.actions));
     if (!p) {
-      return null;
+      return undefined;
     }
     return `${Number(getMarketPrice(dragon?.actions)) / 10**12} $ZIL`;
   }, [dragon]);
@@ -133,9 +134,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
           site="@dragons_eth"
           siteName="dragonZIL"
         />
-        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-        <meta http-equiv="Pragma" content="no-cache"/>
-        <meta http-equiv="Expires" content="0"/>
+        <NoCache />
       </Head>
       <Navbar />
       {dragon && rarity ? (

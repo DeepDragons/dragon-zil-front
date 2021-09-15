@@ -12,6 +12,7 @@ import { OpenGraph } from 'components/open-graph';
 import { Navbar } from 'components/nav-bar';
 import { Container } from 'components/pages/container';
 import { Wrapper, PageTitle } from 'components/dragon/styles';
+import { NoCache } from 'components/no-cache';
 
 import { DragonAPI, DragonObject } from 'lib/api';
 import { FigthPlace } from 'mixin/fight-place';
@@ -96,6 +97,7 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
           site="@dragons_eth"
           siteName="dragonZIL"
         />
+        <NoCache />
       </Head>
       <Navbar />
       <Wrapper>

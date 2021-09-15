@@ -12,6 +12,7 @@ import { Navbar } from 'components/nav-bar';
 import { Container } from 'components/pages/container';
 import { OpenGraph } from 'components/open-graph';
 import { BreadGensForm } from 'components/dragon/breed-gens';
+import { NoCache } from 'components/no-cache';
 
 import { DragonAPI, DragonObject } from 'lib/api';
 import { BreedPlace } from 'mixin/breed';
@@ -112,6 +113,7 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
           site="@dragons_eth"
           siteName="dragonZIL"
         />
+        <NoCache />
       </Head>
       <Navbar />
       <Wrapper>

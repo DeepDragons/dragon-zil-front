@@ -13,6 +13,7 @@ import { Container } from 'components/pages/container';
 import { Navbar } from 'components/nav-bar';
 import { ActionBarTitle } from 'components/dragon/action-bar-title';
 import { UpgradeGenModal } from 'components/modals/upgrade-gen';
+import { NoCache } from 'components/no-cache';
 
 import { DragonAPI, DragonObject } from '@/lib/api';
 import { getRarity } from '@/lib/rarity';
@@ -123,6 +124,7 @@ export const GenLabPage: NextPage<Prop> = ({ dragon }) => {
           content={`${commonLocale.t('name')} | ${mutateLocale.t('sub_title')} #${dragon?.id}`}
           key="title"
         />
+        <NoCache />
       </Head>
       <Navbar />
       {dragon && rarity ? (
