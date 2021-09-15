@@ -32,7 +32,7 @@ const BodyParts = dynamic(import('components/dragon/body-parts'));
 const ActionBar = dynamic(import('components/dragon/action-bar'));
 
 type prop = {
-  dragon: DragonObject;
+  dragon?: DragonObject;
 }
 
 const Wrapper = styled.div`
