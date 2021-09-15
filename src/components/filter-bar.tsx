@@ -50,18 +50,7 @@ export const FilterBar: React.FC<Prop> = ({
   onFilter = () => null
 }) => {
   const commonLocale = useTranslation('common');
-  const [filterbyFrom, setFilterbyFrom] = React.useState(0);
-  const [filterbyTo, setFilterbyTo] = React.useState(0);
   const [showSort, setShowSort] = React.useState(false);
-
-  const hanldeChangePriceFilter = React.useCallback((from, to) => {
-    if (from !== filterbyFrom) {
-      setFilterbyFrom(from);
-    }
-    if (to !== filterbyTo) {
-      setFilterbyTo(to);
-    }
-  }, [filterbyTo, filterbyFrom]);
 
   return (
     <Container>
@@ -83,12 +72,7 @@ export const FilterBar: React.FC<Prop> = ({
           />
         ) : null}
         {price ? (
-          <PopUpButton
-            from={filterbyFrom}
-            to={filterbyTo}
-            onApply={() => onFilter(filterbyFrom, filterbyTo)}
-            onChange={hanldeChangePriceFilter}
-          >
+          <PopUpButton onApply={onFilter}>
             {commonLocale.t('price')}
           </PopUpButton>
         ) : null}

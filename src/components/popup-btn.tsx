@@ -9,10 +9,7 @@ import { StyleFonts } from '@/config/fonts';
 import { useTranslation } from 'next-i18next';
 
 type Prop = {
-  from: number;
-  to: number;
-  onChange: (from: number, to: number) => void;
-  onApply: () => void;
+  onApply: (from: number, to: number) => void;
 };
 
 type MenuProp = {
@@ -102,13 +99,12 @@ const Input = styled.input`
 
 export const PopUpButton: React.FC<Prop> = ({
   children,
-  from,
-  to,
-  onChange,
   onApply
 }) => {
   const commonLocale = useTranslation('common');
   const [opned, setOpened] = React.useState(false);
+  const [from, setFrom] = React.useState(0);
+  const [to, setTo] = React.useState(0);
 
   const disabled = React.useMemo(() => {
     return from > to || from === 0 && to === 0;
@@ -117,8 +113,8 @@ export const PopUpButton: React.FC<Prop> = ({
   const handleApply = React.useCallback((event) => {
     event.preventDefault();
     setOpened(false);
-    onApply();
-  }, []);
+    onApply(from, to);
+  }, [from, to]);
 
   return (
     <React.Fragment>
@@ -143,7 +139,7 @@ export const PopUpButton: React.FC<Prop> = ({
                   defaultValue={from}
                   type="number"
                   min="0"
-                  onInput={(event) => onChange(Number(event.currentTarget.value), to)}
+                  onInput={(event) => setFrom(Number(event.currentTarget.value))}
                 />
               </Column>
               <Text size="40px">
@@ -160,7 +156,7 @@ export const PopUpButton: React.FC<Prop> = ({
                   defaultValue={to}
                   type="number"
                   min="0"
-                  onInput={(event) => onChange(from, Number(event.currentTarget.value))}
+                  onInput={(event) => setTo(Number(event.currentTarget.value))}
                 />
               </Column>
             </Row>

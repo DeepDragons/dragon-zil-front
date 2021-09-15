@@ -2,6 +2,7 @@ import React from 'react';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import styled from 'styled-components';
 import { useTranslation } from 'next-i18next';
+import { useStore } from 'effector-react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -26,6 +27,7 @@ import { BreedPlace } from 'mixin/breed';
 import { MarketPlace } from 'mixin/market-place';
 import { StyleFonts } from '@/config/fonts';
 import { getMarketOrder, getMarketPrice } from 'lib/get-action';
+import { $transactions } from 'store/transactions';
 
 const RarityImage = dynamic(import('components/rarity-image'));
 const CombatGens = dynamic(import('components/dragon/combat-gens'));
@@ -52,10 +54,13 @@ const Wrapper = styled.div`
 const backend = new DragonAPI();
 const breedPlace = new BreedPlace();
 const marketPlace = new MarketPlace();
+
 export const Dragon: NextPage<prop> = ({ dragon }) => {
   const commonLocale = useTranslation('common');
   const dragonLocale = useTranslation('dragon');
   const router = useRouter();
+
+  const txns = useStore($transactions);
 
   const [transfer, setTransfer] = React.useState(false);
   const [sale, setSale] = React.useState(false);
@@ -108,16 +113,16 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
   }, [dragon]);
 
   // React.useEffect(() => {
-  //   if (dragon) {
-  //     backend
-  //       .getDragon(String(dragon.id))
-  //       .then((d) => {
-  //         if (d) {
-  //           setDragon(d);
-  //         }
-  //       });
-  //   }
-  // }, []);
+  //   // if (dragon) {
+  //   //   backend
+  //   //     .getDragon(String(dragon.id))
+  //   //     .then((d) => {
+  //   //       if (d) {
+  //   //         setDragon(d);
+  //   //       }
+  //   //     });
+  //   // }
+  // }, [txns]);
 
   return (
     <Container>

@@ -131,10 +131,10 @@ export class DragonAPI {
   }
 
   private _addParams(url: URL, params: QueryParams) {
-    if (params.endPrice && !(params.endPrice <= 0)) {
+    if (params.endPrice && Number(params.endPrice) > 0) {
       url.searchParams.set('end_price', String(params.endPrice * 10**12));
     }
-    if (params.startPrice && !(params.startPrice <= 0)) {
+    if (params.startPrice && Number(params.startPrice) > 0) {
       url.searchParams.set('start_price', String(params.startPrice * 10**12));
     }
     if (params.limit) {
