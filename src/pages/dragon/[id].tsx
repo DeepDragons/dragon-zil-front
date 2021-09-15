@@ -28,6 +28,7 @@ import { MarketPlace } from 'mixin/market-place';
 import { StyleFonts } from '@/config/fonts';
 import { getMarketOrder, getMarketPrice } from 'lib/get-action';
 import { $transactions } from 'store/transactions';
+import { ZIlPayToken } from '@/mixin/zilpay-token';
 
 const RarityImage = dynamic(import('components/rarity-image'));
 const CombatGens = dynamic(import('components/dragon/combat-gens'));
@@ -92,14 +93,26 @@ export const Dragon: NextPage<prop> = (props) => {
   }, [dragon]);
   const price = React.useMemo(() => {
     const p = Number(getMarketPrice(dragon?.actions));
+
+    console.log(currentAction);
+
     if (!p) {
       return undefined;
     }
-    return `${Number(getMarketPrice(dragon?.actions)) / 10**12} $ZIL`;
+
+    if (currentAction === 3) {
+      return `${p / 10**12} $ZIL`;
+    }
+
+    if (currentAction === 2 || currentAction === 1) {
+      return `${p / Number(ZIlPayToken.decimal)} $ZLP`;
+    }
+
+    return undefined;
   }, [dragon]);
   const descriptionOpenGraph = React.useMemo(() => {
     if (currentAction === 3) {
-      return `Rarity ${rarity?.name}, ${commonLocale.t('buy')} for ${price} ZIL`;
+      return `Rarity ${rarity?.name}, ${commonLocale.t('buy')} for ${price}`;
     }
 
     return `Rarity ${rarity?.name}`;
