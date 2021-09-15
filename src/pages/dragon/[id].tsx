@@ -51,7 +51,7 @@ const Wrapper = styled.div`
 const backend = new DragonAPI();
 const breedPlace = new BreedPlace();
 const marketPlace = new MarketPlace();
-export const Dragon: NextPage<prop> = (props) => {
+export const Dragon: NextPage<prop> = ({ dragon }) => {
   const commonLocale = useTranslation('common');
   const dragonLocale = useTranslation('dragon');
   const router = useRouter();
@@ -62,7 +62,7 @@ export const Dragon: NextPage<prop> = (props) => {
   const [breed, setBreed] = React.useState(false);
   const [suicide, setSuicide] = React.useState(false);
   const [hatchEgg, setHatchEgg] = React.useState(false);
-  const [dragon, setDragon] = React.useState<DragonObject | null>(props.dragon);
+  // const [dragon, setDragon] = React.useState<DragonObject | null>(props.dragon);
 
   const stageType = React.useMemo(() => {
     if (!dragon) {
@@ -85,17 +85,17 @@ export const Dragon: NextPage<prop> = (props) => {
     }
   }, [dragon]);
 
-  React.useEffect(() => {
-    if (dragon) {
-      backend
-        .getDragon(String(dragon.id))
-        .then((d) => {
-          if (d) {
-            setDragon(d);
-          }
-        });
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (dragon) {
+  //     backend
+  //       .getDragon(String(dragon.id))
+  //       .then((d) => {
+  //         if (d) {
+  //           setDragon(d);
+  //         }
+  //       });
+  //   }
+  // }, []);
 
   return (
     <Container>
