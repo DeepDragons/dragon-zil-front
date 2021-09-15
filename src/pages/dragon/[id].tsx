@@ -35,7 +35,7 @@ const BodyParts = dynamic(import('components/dragon/body-parts'));
 const ActionBar = dynamic(import('components/dragon/action-bar'));
 
 type prop = {
-  dragon?: DragonObject;
+  dragon: DragonObject | null;
 }
 
 const Wrapper = styled.div`
@@ -55,7 +55,7 @@ const backend = new DragonAPI();
 const breedPlace = new BreedPlace();
 const marketPlace = new MarketPlace();
 
-export const Dragon: NextPage<prop> = ({ dragon }) => {
+export const Dragon: NextPage<prop> = (props) => {
   const commonLocale = useTranslation('common');
   const dragonLocale = useTranslation('dragon');
   const router = useRouter();
@@ -68,7 +68,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
   const [breed, setBreed] = React.useState(false);
   const [suicide, setSuicide] = React.useState(false);
   const [hatchEgg, setHatchEgg] = React.useState(false);
-  // const [dragon, setDragon] = React.useState<DragonObject | null>(props.dragon);
+  const [dragon, setDragon] = React.useState<DragonObject | null>(props.dragon);
 
   const currentAction = React.useMemo(() => {
     if (dragon && dragon.actions && dragon.actions[0] && dragon.actions[0][0]) {
@@ -112,17 +112,17 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
     }
   }, [dragon]);
 
-  // React.useEffect(() => {
-  //   // if (dragon) {
-  //   //   backend
-  //   //     .getDragon(String(dragon.id))
-  //   //     .then((d) => {
-  //   //       if (d) {
-  //   //         setDragon(d);
-  //   //       }
-  //   //     });
-  //   // }
-  // }, [txns]);
+  React.useEffect(() => {
+    if (dragon) {
+      backend
+        .getDragon(String(dragon.id))
+        .then((d) => {
+          if (d) {
+            setDragon(d);
+          }
+        });
+    }
+  }, []);
 
   return (
     <Container>
