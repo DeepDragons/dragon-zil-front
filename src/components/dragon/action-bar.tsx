@@ -99,6 +99,7 @@ const MobileButton = styled.button`
 type Prop = {
   dragon: DragonObject;
   color: string;
+  price?: string;
   currentAction: number;
   transfer: () => void;
   hatchEgg: () => void;
@@ -115,6 +116,7 @@ type Prop = {
 export const ActionBar: React.FC<Prop> = ({
   dragon,
   color,
+  price,
   currentAction,
   transfer,
   hatchEgg,
@@ -188,12 +190,14 @@ export const ActionBar: React.FC<Prop> = ({
     setModalShow(false);
   }, []);
 
+
   return (
     <Container>
       <ActionBarTitle
         isOwner={isOwner}
         dragon={dragon}
         color={color}
+        price={price}
       />
       <ActionsForNotFree>
         {currentAction === 1 ? (
@@ -251,11 +255,7 @@ export const ActionBar: React.FC<Prop> = ({
             />
             <Text size="16px">
               {isOwner ?
-                dragonLocale.t('actions.sale_remove')
-                :
-                dragonLocale.t('buy_for', {
-                  price: String(Number(getMarketPrice(dragon.actions)) / 10**12)
-                })}
+                dragonLocale.t('actions.sale_remove') : commonLocale.t('buy')}
             </Text>
           </ActionButton>
         ) : null}

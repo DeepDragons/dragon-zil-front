@@ -84,14 +84,16 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
     }
     return getRarity(dragon.rarity, dragon.gen_image);
   }, [dragon]);
+  const price = React.useMemo(() => {
+    return `${Number(getMarketPrice(dragon.actions)) / 10**12} $ZIL`;
+  }, [dragon]);
   const descriptionOpenGraph = React.useMemo(() => {
     if (currentAction === 3) {
-      const price = Number(getMarketPrice(dragon.actions)) / 10**12;
       return `Rarity ${rarity?.name}, ${commonLocale.t('buy')} for ${price} ZIL`;
     }
 
     return `Rarity ${rarity?.name}`;
-  }, [dragon, currentAction]);
+  }, [currentAction, price]);
 
   const hanldeMutate = React.useCallback(() => {
     if (dragon) {
@@ -133,6 +135,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
         <ActionBar
           dragon={dragon}
           color={rarity.color}
+          price={price}
           currentAction={currentAction}
           transfer={() => setTransfer(true)}
           hatchEgg={() => setHatchEgg(true)}

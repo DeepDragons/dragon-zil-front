@@ -2,7 +2,6 @@
   "egg": "Egg",
   "dragon": "Dragon",
   "keywords": "My Dragon, Dragon, Egg, manage",
-  "buy_for": "Buy for {{price}} $ZIL",
   "actions": {
     "name": "Actions",
     "hatch_egg": "hatch Egg",
