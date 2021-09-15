@@ -23,13 +23,11 @@ export const CompareCombatGens: React.FC<Prop> = ({
 
     try {
       if (ctx) {
-        setTimeout(() => {
-          compareRadar(
-            loverDragon,
-            myDragon,
-            ctx
-          );
-        }, 300);
+        compareRadar(
+          loverDragon,
+          myDragon,
+          ctx
+        );
       }
     } catch {
       //

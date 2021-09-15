@@ -81,8 +81,6 @@ export function compareRadar(first: DragonObject, second: DragonObject, ctx: HTM
   if (char) {
     char.data = data;
     char.update();
-
-    return char;
   }
 
   char = new Chart(ctx, {
