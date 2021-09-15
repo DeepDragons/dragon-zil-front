@@ -46,7 +46,6 @@ const params: QueryParams = {
   offset: 0
 };
 let maxPage = 1;
-let records: number | null = null;
 export const DragonsSelectModal: React.FC<Prop> = ({
   show,
   onSelect,
@@ -135,8 +134,10 @@ export const DragonsSelectModal: React.FC<Prop> = ({
   }, []);
 
   React.useEffect(() => {
-    if (dragons.length === 0 && show) {
+    if (address && show) {
+      resetDragons();
       setSkelet(true);
+      maxPage = 1;
       params.offset = 0;
       fetchData()
         .then(() => setSkelet(false))
