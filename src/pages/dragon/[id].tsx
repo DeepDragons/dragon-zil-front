@@ -64,6 +64,13 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
   const [hatchEgg, setHatchEgg] = React.useState(false);
   // const [dragon, setDragon] = React.useState<DragonObject | null>(props.dragon);
 
+  const currentAction = React.useMemo(() => {
+    if (dragon.actions && dragon.actions[0] && dragon.actions[0][0]) {
+      return Number(dragon.actions[0][0]);
+    }
+
+    return 0;
+  }, [dragon]);
   const stageType = React.useMemo(() => {
     if (!dragon) {
       return dragonLocale.t('dragon');
@@ -77,6 +84,14 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
     }
     return getRarity(dragon.rarity, dragon.gen_image);
   }, [dragon]);
+  const descriptionOpenGraph = React.useMemo(() => {
+    if (currentAction === 3) {
+      const price = Number(getMarketPrice(dragon.actions)) / 10**12;
+      return `Rarity ${rarity?.name}, ${commonLocale.t('buy')} for ${price} ZIL`;
+    }
+
+    return `Rarity ${rarity?.name}`;
+  }, [dragon, currentAction]);
 
   const hanldeMutate = React.useCallback(() => {
     if (dragon) {
@@ -106,7 +121,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
         <OpenGraph
           url={`https://dragonzil.xyz/dragon/${dragon?.id}`}
           title={`${commonLocale.t('name')} | ${stageType} #${dragon?.id}`}
-          description={`Rarity ${rarity?.name}`}
+          description={descriptionOpenGraph}
           img={dragon?.url}
           alt={`Dragon ID #${dragon?.id}`}
           site="@dragons_eth"
@@ -118,6 +133,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
         <ActionBar
           dragon={dragon}
           color={rarity.color}
+          currentAction={currentAction}
           transfer={() => setTransfer(true)}
           hatchEgg={() => setHatchEgg(true)}
           sale={() => setSale(true)}

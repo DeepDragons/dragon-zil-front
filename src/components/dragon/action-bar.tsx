@@ -13,6 +13,7 @@ import { ActionBarTitle } from './action-bar-title';
 import { Colors } from 'config/colors';
 import { DragonObject } from 'lib/api';
 import { $wallet } from 'store/wallet';
+import { getMarketPrice } from '@/lib/get-action';
 
 type ActionButtonProp = {
   color: string;
@@ -98,6 +99,7 @@ const MobileButton = styled.button`
 type Prop = {
   dragon: DragonObject;
   color: string;
+  currentAction: number;
   transfer: () => void;
   hatchEgg: () => void;
   sale: () => void;
@@ -113,6 +115,7 @@ type Prop = {
 export const ActionBar: React.FC<Prop> = ({
   dragon,
   color,
+  currentAction,
   transfer,
   hatchEgg,
   sale,
@@ -132,13 +135,6 @@ export const ActionBar: React.FC<Prop> = ({
   const isOwner = React.useMemo(() => {
     return dragon.owner.toLowerCase() === address?.base16.toLowerCase();
   }, [address, dragon]);
-  const currentAction = React.useMemo(() => {
-    if (dragon.actions && dragon.actions[0] && dragon.actions[0][0]) {
-      return Number(dragon.actions[0][0]);
-    }
-
-    return 0;
-  }, [dragon]);
 
   const actionList = React.useMemo(() => {
     return [
@@ -254,7 +250,12 @@ export const ActionBar: React.FC<Prop> = ({
               height="38"
             />
             <Text size="16px">
-              {isOwner ? dragonLocale.t('actions.sale_remove') : commonLocale.t('buy')}
+              {isOwner ?
+                dragonLocale.t('actions.sale_remove')
+                :
+                dragonLocale.t('buy_for', {
+                  price: String(Number(getMarketPrice(dragon.actions)) / 10**12)
+                })}
             </Text>
           </ActionButton>
         ) : null}
