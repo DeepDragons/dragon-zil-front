@@ -1,5 +1,5 @@
 import React from 'react';
-import { GetServerSidePropsContext, NextPage } from 'next';
+import { GetServerSidePropsContext, NextPage, NextPageContext } from 'next';
 import styled from 'styled-components';
 import { useTranslation } from 'next-i18next';
 import { useStore } from 'effector-react';
@@ -243,6 +243,12 @@ export const Dragon: NextPage<prop> = (props) => {
 };
 
 export const getStaticProps = async (props: GetServerSidePropsContext) => {
+  if (props.res) {
+    // res available only at server
+    // no-store disable bfCache for any browser. So your HTML will not be cached
+    props.res.setHeader('Cache-Control', 'no-store');
+  }
+
   const dragonId = String(props.params && props.params.id);
   const dragon = await backend.getDragon(String(dragonId));
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { GetServerSidePropsContext, NextPage } from 'next';
+import { GetServerSidePropsContext, NextPage, NextPageContext } from 'next';
 import styled from 'styled-components';
 import { useTranslation } from 'next-i18next';
 import { useStore } from 'effector-react';
@@ -29,7 +29,7 @@ const CompareCombatGens = dynamic(import('components/dragon/compare-combat-gens'
 const ChoiceWith = dynamic(import('components/dragon/choice-with'));
 
 type Prop = {
-  lover: DragonObject;
+  lover: DragonObject | null;
 }
 
 const Column = styled.div`
@@ -173,6 +173,12 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
 };
 
 export const getStaticProps = async (props: GetServerSidePropsContext) => {
+  if (props.res) {
+    // res available only at server
+    // no-store disable bfCache for any browser. So your HTML will not be cached
+    props.res.setHeader('Cache-Control', 'no-store');
+  }
+
   const dragonId = String(props.params && props.params.id);
   const lover = await backend.getDragon(String(dragonId));
 

@@ -175,6 +175,12 @@ export const GenLabPage: NextPage<Prop> = ({ dragon }) => {
 }
 
 export const getStaticProps = async (props: GetServerSidePropsContext) => {
+  if (props.res) {
+    // res available only at server
+    // no-store disable bfCache for any browser. So your HTML will not be cached
+    props.res.setHeader('Cache-Control', 'no-store');
+  }
+
   const dragonId = String(props.params && props.params.id);
   const dragon = await backend.getDragon(String(dragonId));
 
