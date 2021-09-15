@@ -65,7 +65,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
   // const [dragon, setDragon] = React.useState<DragonObject | null>(props.dragon);
 
   const currentAction = React.useMemo(() => {
-    if (dragon.actions && dragon.actions[0] && dragon.actions[0][0]) {
+    if (dragon && dragon.actions && dragon.actions[0] && dragon.actions[0][0]) {
       return Number(dragon.actions[0][0]);
     }
 
@@ -85,7 +85,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
     return getRarity(dragon.rarity, dragon.gen_image);
   }, [dragon]);
   const price = React.useMemo(() => {
-    return `${Number(getMarketPrice(dragon.actions)) / 10**12} $ZIL`;
+    return `${Number(getMarketPrice(dragon?.actions)) / 10**12} $ZIL`;
   }, [dragon]);
   const descriptionOpenGraph = React.useMemo(() => {
     if (currentAction === 3) {
@@ -141,8 +141,8 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
           hatchEgg={() => setHatchEgg(true)}
           sale={() => setSale(true)}
           RemoveBreed={() => breedPlace.cancelBreed(String(router.query.id))}
-          RemoveSale={() => marketPlace.cancel(getMarketOrder(dragon.actions))}
-          buy={() => marketPlace.purchase(getMarketOrder(dragon.actions), getMarketPrice(dragon.actions))}
+          RemoveSale={() => marketPlace.cancel(getMarketOrder(dragon?.actions))}
+          buy={() => marketPlace.purchase(getMarketOrder(dragon?.actions), getMarketPrice(dragon?.actions))}
           mutate={hanldeMutate}
           fight={() => setArena(true)}
           breed={() => setBreed(true)}
