@@ -48,13 +48,13 @@ export const MyDragons: NextPage = () => {
   const [sortItem, setSortItem] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
 
-  const items = React.useMemo(() => [
+  const items = React.useMemo(() => dragons .length > 0 ? [
     commonLocale.t('all'),
     commonLocale.t('rarity'),
     commonLocale.t('strong'),
     commonLocale.t('dragons'),
     commonLocale.t('eggs')
-  ], []);
+  ] : [], [dragons]);
 
   const fetchData = async () => {
     const addr = $wallet.getState();
@@ -106,6 +106,7 @@ export const MyDragons: NextPage = () => {
   React.useEffect(() => {
     setSkelet(true);
     resetDragons();
+    maxPage = 1;
     params.offset = 0;
     params.owner = String(address?.base16).toLowerCase();
     fetchData()
