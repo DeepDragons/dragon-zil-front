@@ -13,7 +13,6 @@ import { ActionBarTitle } from './action-bar-title';
 import { Colors } from 'config/colors';
 import { DragonObject } from 'lib/api';
 import { $wallet } from 'store/wallet';
-import { getMarketPrice } from '@/lib/get-action';
 
 type ActionButtonProp = {
   color: string;

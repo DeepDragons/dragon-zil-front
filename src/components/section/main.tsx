@@ -8,7 +8,6 @@ import { Button } from 'components/button';
 
 import { Colors } from '@/config/colors';
 import { StyleFonts } from '@/config/fonts';
-import { BrowserView, TabletView } from 'react-device-detect';
 
 const Container = styled.section`
   display: flex;
@@ -52,7 +51,7 @@ const FirstDragon = styled.div`
   position: absolute;
   width: 500px;
   height: 480px;
-  background-image: url(http://dragoneth.com/images/Left_dragon_roar_1x_sprite_650x82.png);
+  background-image: url(https://dragoneth.com/images/Left_dragon_roar_1x_sprite_650x82.png);
   background-position: 0 60px;
   background-size: 41000px 300px;
   background-repeat: no-repeat;
@@ -79,7 +78,7 @@ const SecondDragon = styled.div`
   position: absolute;
   width: 320px;
   height: 480px;
-  background-image: url(http://dragoneth.com/images/Right_dragon_1x_sprite_480x76.png);
+  background-image: url(https://dragoneth.com/images/Right_dragon_1x_sprite_480x76.png);
   background-position: 0 50%;
   background-size: 24320px;
   background-repeat: no-repeat;
