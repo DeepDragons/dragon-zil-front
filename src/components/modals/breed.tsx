@@ -68,7 +68,6 @@ export const BreedModal: React.FC<Prop> = ({
         </Text>
         <IntInput
           value={zlp}
-          width={isMobile ? '100px' : ''}
           bg={Colors.Dark}
           onInput={setZLP}
         >
