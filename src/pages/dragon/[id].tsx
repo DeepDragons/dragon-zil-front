@@ -85,6 +85,10 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
     return getRarity(dragon.rarity, dragon.gen_image);
   }, [dragon]);
   const price = React.useMemo(() => {
+    const p = Number(getMarketPrice(dragon?.actions));
+    if (!p) {
+      return null;
+    }
     return `${Number(getMarketPrice(dragon?.actions)) / 10**12} $ZIL`;
   }, [dragon]);
   const descriptionOpenGraph = React.useMemo(() => {

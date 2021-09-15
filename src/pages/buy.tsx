@@ -53,6 +53,9 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   width: 100%;
 `;
+const InputWrapper = styled.div`
+  max-width: 290px;
+`;
 const BuyButton = styled(Button)`
   display: flex;
   align-items: center;
@@ -149,12 +152,14 @@ export const BuyPage: NextPage = () => {
             >
               {storeLocale.t('choose_token')}
             </Tab>
-            <IntInput
-              value={eggs}
-              onInput={setEggs}
-            >
-              {storeLocale.t('number_of_eggs')}
-            </IntInput>
+            <InputWrapper>
+              <IntInput
+                value={eggs}
+                onInput={setEggs}
+              >
+                {storeLocale.t('number_of_eggs')}
+              </IntInput>
+            </InputWrapper>
             <BuyButton
               disabled={loading}
               onClick={handleBuyEggs}

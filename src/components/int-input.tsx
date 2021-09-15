@@ -35,7 +35,7 @@ const Input = styled.input`
   color: ${Colors.White};
   font-size: 40px;
   text-align: center;
-  max-width: 96px;
+  width: 100%;
 `;
 const Incr = styled.div`
   color: ${Colors.White};
@@ -43,6 +43,9 @@ const Incr = styled.div`
 
   height: 80px;
   width: 80px;
+
+  padding-right: 15px;
+  padding-left: 15px;
 
   display: flex;
   justify-content: center;
