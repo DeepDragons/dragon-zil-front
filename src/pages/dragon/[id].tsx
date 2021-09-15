@@ -51,7 +51,7 @@ const Wrapper = styled.div`
 const backend = new DragonAPI();
 const breedPlace = new BreedPlace();
 const marketPlace = new MarketPlace();
-export const Dragon: NextPage<prop> = ({ dragon }) => {
+export const Dragon: NextPage<prop> = (props) => {
   const commonLocale = useTranslation('common');
   const dragonLocale = useTranslation('dragon');
   const router = useRouter();
@@ -62,6 +62,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
   const [breed, setBreed] = React.useState(false);
   const [suicide, setSuicide] = React.useState(false);
   const [hatchEgg, setHatchEgg] = React.useState(false);
+  const [dragon, setDragon] = React.useState<DragonObject | null>(props.dragon);
 
   const stageType = React.useMemo(() => {
     if (!dragon) {
@@ -90,7 +91,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
         .getDragon(String(dragon.id))
         .then((d) => {
           if (d) {
-            dragon = d;
+            setDragon(d);
           }
         });
     }
@@ -196,7 +197,7 @@ export const Dragon: NextPage<prop> = ({ dragon }) => {
       />
       <SuicideModal
         show={suicide}
-        id={dragon?.id}
+        id={dragon?.id || ''}
         stage={dragon?.stage || 0}
         onClose={() => setSuicide(false)}
       />
