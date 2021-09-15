@@ -37,7 +37,7 @@
   "breed_modal": {
     "title": "Breeding",
     "info": "Set a price and put your dragon (token) on a marketplace, where other players can pay you to mate their dragons with yours.",
-    "set_price": "Set a whores price in ZLP.",
+    "set_price": "Set a price in ZLP.",
     "btn": "Place to breed"
   },
   "suicide_modal": {
