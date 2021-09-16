@@ -23,6 +23,7 @@ type Prop = {
 };
 
 const breedPlace = new BreedPlace();
+const minPrice = 50;
 export const BreedModal: React.FC<Prop> = ({
   show,
   id,
@@ -43,6 +44,12 @@ export const BreedModal: React.FC<Prop> = ({
     }
     setLoading(false);
   }, [id, zlp]);
+
+  const handleOnInput = React.useCallback((value) => {
+    if (minPrice <= value) {
+      setZLP(value);
+    }
+  }, []);
 
   return (
     <Modal
@@ -67,9 +74,9 @@ export const BreedModal: React.FC<Prop> = ({
         </Text>
         <IntInput
           value={zlp}
-          min={50}
+          min={minPrice}
           bg={Colors.Dark}
-          onInput={setZLP}
+          onInput={handleOnInput}
         >
           {dragonLocale.t('breed_modal.set_price')}
         </IntInput>
