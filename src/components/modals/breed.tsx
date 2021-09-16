@@ -15,7 +15,6 @@ import {
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
 import { BreedPlace } from 'mixin/breed';
-import { isMobile } from 'react-device-detect';
 
 type Prop = {
   show: boolean;
@@ -68,6 +67,7 @@ export const BreedModal: React.FC<Prop> = ({
         </Text>
         <IntInput
           value={zlp}
+          min={50}
           bg={Colors.Dark}
           onInput={setZLP}
         >

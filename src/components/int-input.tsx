@@ -6,6 +6,7 @@ import { Colors } from 'config/colors';
 type Prop = {
   value: number;
   max?: number;
+  min?: number;
   bg?: string | Colors;
   onInput: (value: number) => void
 }
@@ -57,6 +58,7 @@ export const IntInput: React.FC<Prop> = ({
   value,
   max,
   onInput,
+  min = 0,
   bg = Colors.Darker
 }) => {
   const onInputNumber = React.useCallback((e: React.FormEvent<HTMLInputElement>) => {
@@ -111,6 +113,7 @@ export const IntInput: React.FC<Prop> = ({
         <Input
           value={value}
           max={max}
+          min={min}
           onInput={onInputNumber}
         />
         <Incr onClick={increase}>
