@@ -52,12 +52,13 @@ const TitleWrapper = styled.div`
 
 const backend = new DragonAPI();
 const genLab = new GenLab();
-export const GenLabPage: NextPage<Prop> = ({ dragon }) => {
+export const GenLabPage: NextPage<Prop> = (props) => {
   const mutateLocale = useTranslation('mutate');
   const commonLocale = useTranslation('common');
   const router = useRouter();
   const address = useStore($wallet);
   const [price, setPrice] = React.useState<string | null>('0');
+  const [dragon, setDragon] = React.useState<DragonObject | null>(props.dragon);
   const [showModal, setShowModal] = React.useState(false);
   const [genToUpgrade, setGenToUpgrade] = React.useState({
     gen: 0,
@@ -107,7 +108,7 @@ export const GenLabPage: NextPage<Prop> = ({ dragon }) => {
         .getDragon(String(dragon.id))
         .then((d) => {
           if (d) {
-            dragon = d;
+            setDragon(d);
           }
         });
     }

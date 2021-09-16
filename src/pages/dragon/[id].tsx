@@ -61,8 +61,6 @@ export const Dragon: NextPage<prop> = (props) => {
   const dragonLocale = useTranslation('dragon');
   const router = useRouter();
 
-  const txns = useStore($transactions);
-
   const [transfer, setTransfer] = React.useState(false);
   const [sale, setSale] = React.useState(false);
   const [arena, setArena] = React.useState(false);
