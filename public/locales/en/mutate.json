@@ -2,11 +2,11 @@
   "title": "GenLab",
   "sub_title": "Mutate a dragon",
   "form_title": "Upgrade genes",
-  "choose_gen": "Choose a gen",
-  "gen_index": "A gen index",
-  "current_gen": "Current gen value",
+  "choose_gen": "Choose a gene",
+  "gen_index": "A gene index",
+  "current_gen": "Current a gene value",
   "upgrade_for": "Upgrade for",
   "upgrade_btn": "Upgrade",
-  "modal_sub_title": "Choose a gene and try to improve it, you’ll need some zip though.",
+  "modal_sub_title": "Choose a gene and try to improve it, you'll need some zip though.",
   "approve": "Approve ZLP"
 }
