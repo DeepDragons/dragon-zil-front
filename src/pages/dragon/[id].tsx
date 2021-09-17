@@ -92,8 +92,6 @@ export const Dragon: NextPage<prop> = (props) => {
   const price = React.useMemo(() => {
     const p = Number(getMarketPrice(dragon?.actions));
 
-    console.log(currentAction);
-
     if (!p) {
       return undefined;
     }

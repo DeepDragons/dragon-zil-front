@@ -24,6 +24,7 @@ type Prop = {
 
 const breedPlace = new BreedPlace();
 const minPrice = 50;
+let load = false;
 export const BreedModal: React.FC<Prop> = ({
   show,
   id,
@@ -36,6 +37,7 @@ export const BreedModal: React.FC<Prop> = ({
 
   const handlePlace = React.useCallback(async() => {
     setLoading(true);
+    load = true;
     try {
       await breedPlace.add(id, zlp);
       onClose();
@@ -43,12 +45,21 @@ export const BreedModal: React.FC<Prop> = ({
       //
     }
     setLoading(false);
+    load = false;
   }, [id, zlp]);
 
   const handleOnInput = React.useCallback((value) => {
     if (minPrice <= value) {
       setZLP(value);
     }
+  }, []);
+
+  const hanldeClose = React.useCallback(() => {
+    if (load) {
+      return null;
+    }
+
+    onClose();
   }, []);
 
   return (
@@ -62,7 +73,7 @@ export const BreedModal: React.FC<Prop> = ({
         </ModalTitle>
       )}
       show={show}
-      onClose={onClose}
+      onClose={hanldeClose}
     >
       <Container>
         <Text
@@ -70,16 +81,18 @@ export const BreedModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          {dragonLocale.t('breed_modal.info')}
+          {loading ? commonLocale.t('do_not_refresh') : dragonLocale.t('breed_modal.info')}
         </Text>
-        <IntInput
-          value={zlp}
-          min={minPrice}
-          bg={Colors.Dark}
-          onInput={handleOnInput}
-        >
-          {dragonLocale.t('breed_modal.set_price')}
-        </IntInput>
+        {loading ? null : (
+          <IntInput
+            value={zlp}
+            min={minPrice}
+            bg={Colors.Dark}
+            onInput={handleOnInput}
+          >
+            {dragonLocale.t('breed_modal.set_price')}
+          </IntInput>
+        )}
         <ButtonsWrapper>
           <ModalButton
             color={Colors.Info}
@@ -97,7 +110,8 @@ export const BreedModal: React.FC<Prop> = ({
           </ModalButton>
           <ModalButton
             color={Colors.Dark}
-            onClick={onClose}
+            disabled={loading}
+            onClick={hanldeClose}
           >
             {commonLocale.t('cancel')}
           </ModalButton>

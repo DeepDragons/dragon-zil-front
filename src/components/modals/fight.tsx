@@ -28,6 +28,7 @@ type Prop = {
 
 const zilPayToken = new ZIlPayToken();
 const figthPlace = new FigthPlace();
+let load = false;
 export const FightsModal: React.FC<Prop> = ({
   show,
   id,
@@ -59,6 +60,7 @@ export const FightsModal: React.FC<Prop> = ({
 
   const hanldeSubmit = React.useCallback(async() => {
     setLoading(true);
+    load = true;
     try {
       if (needApprove) {
         await zilPayToken.increaseAllowance(Contracts.FightPlace);
@@ -71,7 +73,16 @@ export const FightsModal: React.FC<Prop> = ({
       //
     }
     setLoading(false);
+    load = false;
   }, [needApprove, id, zlp]);
+
+  const hanldeClose = React.useCallback(() => {
+    if (load) {
+      return null;
+    }
+
+    onClose();
+  }, []);
 
   React.useEffect(() => {
     if (address && show) {
@@ -90,7 +101,7 @@ export const FightsModal: React.FC<Prop> = ({
         </ModalTitle>
       )}
       show={show}
-      onClose={onClose}
+      onClose={hanldeClose}
     >
       <Container>
         <Text
@@ -98,18 +109,21 @@ export const FightsModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          {dragonLocale.t('fights_modal.info')}
+          {loading ? commonLocale.t('do_not_refresh') : dragonLocale.t('fights_modal.info')}
         </Text>
-        <IntInput
-          value={zlp}
-          bg={Colors.Dark}
-          onInput={setZLP}
-        >
-          {dragonLocale.t('fights_modal.set_price')}
-        </IntInput>
+        {!loading ? (
+          <IntInput
+            value={zlp}
+            bg={Colors.Dark}
+            onInput={setZLP}
+          >
+            {dragonLocale.t('fights_modal.set_price')}
+          </IntInput>
+        ) : null}
         <ButtonsWrapper>
           <ModalButton
             color={needApprove ? Colors.Warning : Colors.Info}
+            disabled={loading}
             fontColors={needApprove ? Colors.Dark : Colors.White}
             onClick={hanldeSubmit}
           >
@@ -124,7 +138,8 @@ export const FightsModal: React.FC<Prop> = ({
           </ModalButton>
           <ModalButton
             color={Colors.Dark}
-            onClick={onClose}
+            disabled={loading}
+            onClick={hanldeClose}
           >
             {commonLocale.t('cancel')}
           </ModalButton>

@@ -24,6 +24,7 @@ type Prop = {
 };
 
 const dragonZIL = new DragonZIL();
+let load = false;
 export const TransferModal: React.FC<Prop> = ({
   show,
   stage,
@@ -47,6 +48,7 @@ export const TransferModal: React.FC<Prop> = ({
 
   const hanldeTransfer = React.useCallback(async() => {
     setLoading(true);
+    load = true;
     try {
       await dragonZIL.transfer(bech32, id);
       onClose();
@@ -54,7 +56,15 @@ export const TransferModal: React.FC<Prop> = ({
       setError((err as Error).message);
     }
     setLoading(false);
+    load = false;
   }, [bech32, id]);
+  const hanldeClose = React.useCallback(() => {
+    if (load) {
+      return null;
+    }
+
+    onClose();
+  }, []);
 
   return (
     <Modal
@@ -67,7 +77,7 @@ export const TransferModal: React.FC<Prop> = ({
         </ModalTitle>
       )}
       show={show}
-      onClose={onClose}
+      onClose={hanldeClose}
     >
       <Container>
         <Text
@@ -75,15 +85,20 @@ export const TransferModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          {dragonLocale.t('transfer_info', { dragonStage })}
+          {loading ?
+            commonLocale.t('do_not_refresh') : dragonLocale.t('transfer_info', {
+              dragonStage
+            })}
         </Text>
-        <Input
-          fontColors={error ? Colors.Danger : Colors.LightBlue}
-          placeholder="zil1wl38cwww2u3g8wzgutxlxtxwwc0rf7jf27zace"
-          border="2"
-          css="text-align: center;"
-          onInput={hanldeInputAddress}
-        />
+        {loading ? null : (
+          <Input
+            fontColors={error ? Colors.Danger : Colors.LightBlue}
+            placeholder="zil1wl38cwww2u3g8wzgutxlxtxwwc0rf7jf27zace"
+            border="2"
+            css="text-align: center;"
+            onInput={hanldeInputAddress}
+          />
+        )}
         <ButtonsWrapper>
           <ModalButton
             disabled={Boolean(loading || !bech32 || error)}
@@ -100,7 +115,8 @@ export const TransferModal: React.FC<Prop> = ({
           </ModalButton>
           <ModalButton
             color={Colors.Dark}
-            onClick={onClose}
+            disabled={loading}
+            onClick={hanldeClose}
           >
             {commonLocale.t('cancel')}
           </ModalButton>

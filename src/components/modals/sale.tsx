@@ -27,6 +27,7 @@ type Prop = {
 
 const dragonZIL = new DragonZIL();
 const market = new MarketPlace();
+let load = false;
 export const SaleModal: React.FC<Prop> = ({
   show,
   stage,
@@ -65,6 +66,7 @@ export const SaleModal: React.FC<Prop> = ({
   }, [id]);
   const handleSubmit = React.useCallback(async() => {
     setLoading(true);
+    load = true;
     try {
       if (approved) {
         await market.sell(id, zils);
@@ -74,11 +76,20 @@ export const SaleModal: React.FC<Prop> = ({
         await dragonZIL.setApprove(id, Contracts.MarketPlace);
         setApproved(true);
         setLoading(false);
+        load = false;
       }
     } catch {
       setLoading(false);
+      load = false;
     }
   }, [id, approved, zils]);
+  const hanldeClose = React.useCallback(() => {
+    if (load) {
+      return null;
+    }
+
+    onClose();
+  }, []);
 
   React.useEffect(() => {
     hanldeUpdateApprovals();
@@ -95,7 +106,7 @@ export const SaleModal: React.FC<Prop> = ({
         </ModalTitle>
       )}
       show={show}
-      onClose={onClose}
+      onClose={hanldeClose}
     >
       <Container>
         <Text
@@ -103,15 +114,20 @@ export const SaleModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          {dragonLocale.t('sale.info', {dragonStage})}
+          {loading
+            ? commonLocale.t('do_not_refresh') : dragonLocale.t('sale.info', {
+              dragonStage
+            })}
         </Text>
-        <IntInput
-          value={zils}
-          bg={Colors.Dark}
-          onInput={setZils}
-        >
-          {dragonLocale.t('sale.set_price')}
-        </IntInput>
+        {loading ? null : (
+          <IntInput
+            value={zils}
+            bg={Colors.Dark}
+            onInput={setZils}
+          >
+            {dragonLocale.t('sale.set_price')}
+          </IntInput>
+        )}
         <ButtonsWrapper>
           <ModalButton
             disabled={loading}
@@ -130,7 +146,8 @@ export const SaleModal: React.FC<Prop> = ({
           </ModalButton>
           <ModalButton
             color={Colors.Dark}
-            onClick={onClose}
+            disabled={loading}
+            onClick={hanldeClose}
           >
             {commonLocale.t('cancel')}
           </ModalButton>
