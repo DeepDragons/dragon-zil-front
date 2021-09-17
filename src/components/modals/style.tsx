@@ -5,7 +5,7 @@ import { Text } from 'components/text';
 import { Button } from 'components/button';
 
 export const ModalTitle = styled(Text)`
-  padding: 10px;
+  padding: 20px;
 `;
 export const ModalButton = styled(Button)`
   min-width: 200px;
