@@ -121,6 +121,19 @@ export class Necropolis {
     return amount + combatAmount + faceAmount + genLab;
   }
 
+  public async getCurve() {
+    const field = 'curve';
+    const res = await this.zilpay.getSubState(Contracts.Necropolis, field);
+    const [faceCurve, combatCurve, maxCurve, supplyCurve] = res.arguments;
+
+    return {
+      faceCurve,
+      combatCurve,
+      maxCurve,
+      supplyCurve
+    };
+  }
+
   public calcGenLab(price: bigint, count: number, multiplicator: number) {
     if (count === 0) {
       return f0;

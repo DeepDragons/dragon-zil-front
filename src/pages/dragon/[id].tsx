@@ -236,6 +236,7 @@ export const Dragon: NextPage<prop> = (props) => {
       />
       <SuicideModal
         show={suicide}
+        dragon={dragon}
         id={dragon?.id || ''}
         stage={dragon?.stage || 0}
         onClose={() => setSuicide(false)}

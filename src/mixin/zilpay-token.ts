@@ -2,18 +2,20 @@ import { ZilPayBase } from 'mixin/zilpay-base';
 import { Contracts } from 'config/contracts';
 import { pushToList } from '@/store/transactions';
 import { getKeyByValue } from '@/lib/key-by-value';
+import { $wallet } from 'store/wallet';
 
 export class ZIlPayToken {
   public static decimal = '1000000000000000000';
   public zilpay = new ZilPayBase();
 
-  public async getBalance() {
+  public async getBalance(addr: string) {
+    addr = String(addr).toLowerCase();
     const field = 'balances';
     const zilpay = await this.zilpay.zilpay();
     const result = await this.zilpay.getSubState(
       Contracts.ZIlPay,
       field,
-      [String(zilpay.wallet.defaultAccount?.base16).toLowerCase()]
+      [addr]
     );
     if (result) {
       return result;
@@ -48,7 +50,8 @@ export class ZIlPayToken {
   }
 
   public async increaseAllowance(contract: Contracts) {
-    const balance = await this.getBalance();
+    const wallet = $wallet.getState();
+    const balance = await this.getBalance(String(wallet?.base16));
     const params = [
       {
         vname: 'spender',

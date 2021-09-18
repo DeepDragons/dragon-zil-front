@@ -87,6 +87,13 @@ export class DragonZIL {
     return result === contract;
   }
 
+  public async getTokenSupply() {
+    const field = 'total_supply';
+    const res = await this.zilpay.getSubState(Contracts.Main, field);
+
+    return res;
+  }
+
   public async hatchEgg(tokenId: string) {
     const params = [
       {
