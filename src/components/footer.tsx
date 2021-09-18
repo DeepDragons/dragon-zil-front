@@ -145,6 +145,17 @@ export const Footer: React.FC = () => {
               />
             </a>
           </Li>
+          <Li>
+            <a
+              href="http://instagram.com/dragonzil.xyz"
+              target="_blank"
+            >
+              <img
+                src="/icons/instagram.svg"
+                alt="instagram"
+              />
+            </a>
+          </Li>
         </UlList>
       </Wrapper>
     </Container>
