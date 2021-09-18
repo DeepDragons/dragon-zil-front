@@ -1,8 +1,7 @@
 import React from 'react';
-import { GetServerSidePropsContext, NextPage, NextPageContext } from 'next';
+import { GetServerSidePropsContext, NextPage } from 'next';
 import styled from 'styled-components';
 import { useTranslation } from 'next-i18next';
-import { useStore } from 'effector-react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -27,7 +26,6 @@ import { BreedPlace } from 'mixin/breed';
 import { MarketPlace } from 'mixin/market-place';
 import { StyleFonts } from '@/config/fonts';
 import { getMarketOrder, getMarketPrice } from 'lib/get-action';
-import { $transactions } from 'store/transactions';
 import { ZIlPayToken } from '@/mixin/zilpay-token';
 
 const RarityImage = dynamic(import('components/rarity-image'));

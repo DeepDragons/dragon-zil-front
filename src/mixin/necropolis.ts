@@ -163,7 +163,7 @@ export class Necropolis {
       transition,
       params,
       amount: '0',
-      contractAddress: Contracts.Distributer,
+      contractAddress: Contracts.Necropolis,
     }, gas);
 
     pushToList({

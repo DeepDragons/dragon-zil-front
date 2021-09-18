@@ -127,17 +127,16 @@ export const SuicideModal: React.FC<Prop> = ({
         onClose();
       } else {
         await dragonZIL.setApprove(id, Contracts.Necropolis);
+        load = false;
         setApproved(true);
         setLoading(false);
-        load = false;
       }
-      onClose();
     } catch {
       ///
     }
     load = false;
     setLoading(false);
-  }, [id]);
+  }, [id, approved]);
   const hanldeClose = React.useCallback(() => {
     if (load) {
       return null;
@@ -189,7 +188,7 @@ export const SuicideModal: React.FC<Prop> = ({
           width: '100%'
         }}>
           <ModalButton
-            color={approved ? Colors.Primary : Colors.Warning}
+            color={approved ? Colors.Info : Colors.Warning}
             fontColors={approved ? Colors.White : Colors.Dark}
             disabled={loading}
             onClick={handleSubmit}

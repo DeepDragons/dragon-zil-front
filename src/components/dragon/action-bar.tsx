@@ -175,12 +175,12 @@ export const ActionBar: React.FC<Prop> = ({
         method: breed,
         show: dragon.stage > 0
       },
-      {
-        icon: 'suicide.svg',
-        name: dragonLocale.t('actions.suicide'),
-        method: suicide,
-        show: true
-      },
+      // {
+      //   icon: 'suicide.svg',
+      //   name: dragonLocale.t('actions.suicide'),
+      //   method: suicide,
+      //   show: true
+      // },
     ].filter((el) => el.show);
   }, [dragon]);
 
