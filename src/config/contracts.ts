@@ -7,5 +7,6 @@ export enum Contracts {
   Breed = '0x71435501608be1993c4146f9cabfa3f547205f6f',
   MarketPlace = '0x7b9b80aaf561ecd4e89ea55d83d59ab7ac01a575',
   Wallet = '0x54fb9f7e7b6423677d4ffd67b53d452f6d0fa509',
+  Necropolis = '0x949569d440b2cd4dc9b7e2ee0eb68dc35c8d9246',
   NIL = '0x0000000000000000000000000000000000000000'
 }

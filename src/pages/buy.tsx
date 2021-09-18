@@ -84,7 +84,7 @@ export const BuyPage: NextPage = () => {
   const storeLocale = useTranslation('store');
   const commonLocale = useTranslation('common');
   const crowdSaleStore = useStore(crowdSale.store);
-  const [selected, setSelected] = React.useState(0);
+  const [selected, setSelected] = React.useState(1);
   const [eggs, setEggs] = React.useState(1);
   const [loading, setLoading] = React.useState(false);
 

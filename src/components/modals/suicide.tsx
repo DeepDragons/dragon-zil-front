@@ -10,6 +10,7 @@ import { ModalTitle, ButtonsWrapper, ModalButton } from './style';
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
 import { DragonZIL } from 'mixin/dragon-zil';
+import { Contracts } from '@/config/contracts';
 
 const Container = styled.div`
   padding: 24px;
@@ -23,6 +24,7 @@ type Prop = {
 };
 
 const dragonZIL = new DragonZIL();
+let load = false;
 export const SuicideModal: React.FC<Prop> = ({
   show,
   stage,
@@ -32,21 +34,64 @@ export const SuicideModal: React.FC<Prop> = ({
   const commonLocale = useTranslation('common');
   const dragonLocale = useTranslation('dragon');
   const [loading, setLoading] = React.useState(false);
+  const [approved, setApproved] = React.useState(false);
 
   const dragonStage = React.useMemo(
     () => stage === 0 ? 'egg' : 'dragon',
     [stage]
   );
+  const buttonName = React.useMemo(
+    () => approved ?
+      dragonLocale.t('suicide_modal.btn', { dragonStage }) : dragonLocale.t('sale.btn_approve'),
+    [approved, id]
+  );
 
-  const handleSuicide = React.useCallback(async() => {
+  const hanldeUpdateApprovals = React.useCallback(async() => {
+    setLoading(true);
+    if (id) {
+      const isApproved = await dragonZIL.getTokenApprovals(id, Contracts.Necropolis);
+
+      setApproved(isApproved);
+      setLoading(false);
+
+      return isApproved;
+    }
+    setLoading(false);
+
+    return false;
+  }, [id]);
+  const handleSubmit = React.useCallback(async() => {
+    load = true;
     setLoading(true);
     try {
-      await dragonZIL.burn(id);
+      if (approved) {
+        // await market.sell(id, zils);
+        setLoading(false);
+        load = false;
+        onClose();
+      } else {
+        await dragonZIL.setApprove(id, Contracts.Necropolis);
+        setApproved(true);
+        setLoading(false);
+        load = false;
+      }
       onClose();
     } catch {
       ///
     }
     setLoading(false);
+    load = false;
+  }, [id]);
+  const hanldeClose = React.useCallback(() => {
+    if (load) {
+      return null;
+    }
+
+    onClose();
+  }, []);
+
+  React.useEffect(() => {
+    hanldeUpdateApprovals();
   }, [id]);
 
   return (
@@ -60,7 +105,7 @@ export const SuicideModal: React.FC<Prop> = ({
         </ModalTitle>
       )}
       show={show}
-      onClose={onClose}
+      onClose={hanldeClose}
     >
       <Container>
         <Text
@@ -68,13 +113,15 @@ export const SuicideModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          {dragonLocale.t('suicide_modal.info', { dragonStage })}
+          {loading
+            ? commonLocale.t('do_not_refresh') : dragonLocale.t('suicide_modal.info', { dragonStage })}
         </Text>
         <ButtonsWrapper>
           <ModalButton
-            color={Colors.Danger}
+            color={approved ? Colors.Primary : Colors.Warning}
+            fontColors={approved ? Colors.White : Colors.Dark}
             disabled={loading}
-            onClick={handleSuicide}
+            onClick={handleSubmit}
           >
             {loading ? (
               <Loader
@@ -83,15 +130,25 @@ export const SuicideModal: React.FC<Prop> = ({
                 height={10}
                 width={40}
               />
-            ) : dragonLocale.t('suicide_modal.btn', { dragonStage })}
+            ) : buttonName}
           </ModalButton>
           <ModalButton
             color={Colors.Dark}
-            onClick={onClose}
+            disabled={loading}
+            onClick={hanldeClose}
           >
             {commonLocale.t('cancel')}
           </ModalButton>
         </ButtonsWrapper>
+        {loading && load ? null : (
+          <Text
+            fontColors={Colors.Muted}
+            size="16px"
+            css="text-align: center;"
+          >
+            {dragonLocale.t('suicide_modal.info0')}
+          </Text>
+        )}
       </Container>
     </Modal>
   );

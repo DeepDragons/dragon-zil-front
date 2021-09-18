@@ -42,7 +42,8 @@
   },
   "suicide_modal": {
     "title": "Suicide",
-    "info": "If you are cruel enough you can burn your {{dragonStage}} (token) forever!",
+    "info": "If you are cruel enough, you can burn your {{dragonStage}} (token) and get some ZLP, as a reward",
+    "info0": "ZLP rewards calculate from your Rarity genes, Combat genes, also current pool size of ZLP token.",
     "btn": "Kill {{dragonStage}}"
   },
   "hatch_egg": {
