@@ -271,7 +271,7 @@ export async function getStaticPaths() {
     paths: [
       '/dragon/id',
     ],
-    fallback: 'blocking'
+    fallback: true
   }
 }
 
