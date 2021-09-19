@@ -186,7 +186,8 @@ export const getStaticProps = async (props: GetServerSidePropsContext) => {
     props: {
       lover,
       ...await serverSideTranslations(props.locale || 'en', ['common', 'breeding'])
-    }
+    },
+    revalidate: 1
   };
 };
 

@@ -162,7 +162,8 @@ export const getStaticProps = async (props: GetServerSidePropsContext) => {
     props: {
       defended,
       ...await serverSideTranslations(props.locale || 'en', ['common', 'arena'])
-    }
+    },
+    revalidate: 1
   };
 };
 

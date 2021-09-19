@@ -189,7 +189,8 @@ export const getStaticProps = async (props: GetServerSidePropsContext) => {
     props: {
       dragon,
       ...await serverSideTranslations(props.locale || 'en', ['common', 'mutate'])
-    }
+    },
+    revalidate: 1
   };
 };
 
