@@ -4,5 +4,6 @@ module.exports = {
   i18n,
   future: {
     webpack5: true,
-  }
+  },
+  generateEtags: false
 };
