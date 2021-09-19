@@ -120,16 +120,14 @@ export const Dragon: NextPage<prop> = (props) => {
   }, [dragon]);
 
   React.useEffect(() => {
-    if (dragon) {
-      backend
-        .getDragon(String(dragon.id))
-        .then((d) => {
-          if (d) {
-            setDragon(d);
-          }
-        });
-    }
-  }, []);
+    backend
+    .getDragon(String(router.query.id))
+    .then((d) => {
+      if (d) {
+        setDragon(d);
+      }
+    });
+  }, [router]);
 
   return (
     <Container>
