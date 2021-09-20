@@ -1,6 +1,7 @@
 import { ZilPayBase } from 'mixin/zilpay-base';
 import { Contracts } from 'config/contracts';
 import { pushToList } from '@/store/transactions';
+import { ZIlPayToken } from './zilpay-token';
 
 export interface RewardsParams {
   combat: string;
@@ -15,42 +16,43 @@ export interface RewardsParams {
   supplyCurve: string;
 }
 
-const f0 = BigInt(0);
-const f1 = BigInt(10);
-const f2 = BigInt(100);
-const f4 = BigInt(10000);
-const f7 = BigInt(1000000);
-const f6 = BigInt(10000000);
-const f9 = BigInt(100000000);
-const f11 = BigInt(10000000000);
-const f12 = BigInt(100000000000);
-const f13 = BigInt(1000000000000);
-const f15 = BigInt(100000000000000);
-const f16 = BigInt(1000000000000000);
-const f17 = BigInt(10000000000000000);
-const f18 = BigInt(100000000000000000);
-const f19 = BigInt(1000000000000000000);
-const f20 = BigInt(10000000000000000000);
-const f21 = BigInt(100000000000000000000);
-const f23 = BigInt(10000000000000000000000);
-const f22 = BigInt(100000000000000000000000);
-const f25 = BigInt(1000000000000000000000000);
-const f26 = BigInt(10000000000000000000000000);
-const f27 = BigInt(100000000000000000000000000);
-const f29 = BigInt(10000000000000000000000000000);
-const f31 = BigInt(1000000000000000000000000000000);
-const f33 = BigInt(100000000000000000000000000000000);
-const f35 = BigInt(10000000000000000000000000000000000);
-const f37 = BigInt(1000000000000000000000000000000000000);
-const f39 = BigInt(100000000000000000000000000000000000000);
-const f41 = BigInt(10000000000000000000000000000000000000000);
-const f43 = BigInt(1000000000000000000000000000000000000000000);
+const f0 = BigInt('0');
+const f1 = BigInt('10');
+const f2 = BigInt('100');
+const f4 = BigInt('10000');
+const f7 = BigInt('1000000');
+const f6 = BigInt('10000000');
+const f9 = BigInt('100000000');
+const f11 = BigInt('10000000000');
+const f12 = BigInt('100000000000');
+const f13 = BigInt('1000000000000');
+const f15 = BigInt('100000000000000');
+const f16 = BigInt('1000000000000000');
+const f17 = BigInt('10000000000000000');
+const f18 = BigInt('100000000000000000');
+const f19 = BigInt('1000000000000000000');
+const f20 = BigInt('10000000000000000000');
+const f21 = BigInt('100000000000000000000');
+const f23 = BigInt('10000000000000000000000');
+const f22 = BigInt('100000000000000000000000');
+const f25 = BigInt('1000000000000000000000000');
+const f26 = BigInt('10000000000000000000000000');
+const f27 = BigInt('100000000000000000000000000');
+const f29 = BigInt('10000000000000000000000000000');
+const f31 = BigInt('1000000000000000000000000000000');
+const f33 = BigInt('100000000000000000000000000000000');
+const f35 = BigInt('10000000000000000000000000000000000');
+const f37 = BigInt('1000000000000000000000000000000000000');
+const f39 = BigInt('100000000000000000000000000000000000000');
+const f41 = BigInt('10000000000000000000000000000000000000000');
+const f43 = BigInt('1000000000000000000000000000000000000000000');
 
 export class Necropolis {
   public zilpay = new ZilPayBase();
 
   private _getAGen(gens: bigint, f: bigint, s: bigint, last: bigint) {
-    return (gens % f / (f / s)) + last;
+    console.log(gens, f, s);
+    return (gens % f) / (f / s) + last;
   }
 
   private _calcFaceGenes(gens: bigint, s: bigint) {
@@ -113,6 +115,10 @@ export class Necropolis {
     const faceAmount = this._calcFaceGenes(face, faceCurve);
     const combatAmount = this._calcCombatGens(combat, combatCurve);
     const amount = this._calcAmount(zlp, supply, tokenid, supplyCurve);
+
+    console.log('combatAmount', combatAmount / BigInt(ZIlPayToken.decimal));
+    console.log('faceAmount', faceAmount / BigInt(ZIlPayToken.decimal));
+    console.log('amount', amount / BigInt(ZIlPayToken.decimal));
 
     if (amount > max) {
       return max;
