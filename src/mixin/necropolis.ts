@@ -116,10 +116,6 @@ export class Necropolis {
     const combatAmount = this._calcCombatGens(combat, combatCurve);
     const amount = this._calcAmount(zlp, supply, tokenid, supplyCurve);
 
-    console.log('combatAmount', combatAmount / BigInt(ZIlPayToken.decimal));
-    console.log('faceAmount', faceAmount / BigInt(ZIlPayToken.decimal));
-    console.log('amount', amount / BigInt(ZIlPayToken.decimal));
-
     if (amount > max) {
       return max;
     }
