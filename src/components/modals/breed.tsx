@@ -47,8 +47,9 @@ export const BreedModal: React.FC<Prop> = ({
     }
 
     const value = faceCounter + (combatCounter / 2);
+    const rounded = Math.round(value / 2);
 
-    setPrice(Math.round(value / 2));
+    setPrice(rounded - rounded * 0.2);
   }, [combatGenes, faceCounter]);
   const handlePlace = React.useCallback(async() => {
     load = true;
