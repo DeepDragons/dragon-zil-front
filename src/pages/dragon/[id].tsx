@@ -27,6 +27,7 @@ import { MarketPlace } from 'mixin/market-place';
 import { StyleFonts } from '@/config/fonts';
 import { getMarketOrder, getMarketPrice } from 'lib/get-action';
 import { ZIlPayToken } from '@/mixin/zilpay-token';
+import { genParse } from '@/lib/gen-parse';
 
 const RarityImage = dynamic(import('components/rarity-image'));
 const CombatGens = dynamic(import('components/dragon/combat-gens'));
@@ -86,6 +87,26 @@ export const Dragon: NextPage<prop> = (props) => {
       return null;
     }
     return getRarity(dragon.rarity, dragon.gen_image);
+  }, [dragon]);
+  const faceGenesCounter = React.useMemo(() => {
+    let counter = 0;
+
+    if (rarity && rarity.gensImage) {
+      for (let index = 0; index < rarity.gensImage.length; index++) {
+        const element = rarity.gensImage[index];
+
+        counter += Number(element.value);
+      }
+    }
+
+    return counter;
+  }, [rarity]);
+  const genes = React.useMemo(() => {
+    if (dragon) {
+      return genParse(dragon?.gen_fight);
+    }
+
+    return [];
   }, [dragon]);
   const price = React.useMemo(() => {
     const p = Number(getMarketPrice(dragon?.actions));
@@ -176,7 +197,7 @@ export const Dragon: NextPage<prop> = (props) => {
           />
           <div>
             <CombatGens
-              gens={dragon.gen_fight}
+              gens={genes}
               color={rarity.color}
             />
             <BodyParts
@@ -228,6 +249,8 @@ export const Dragon: NextPage<prop> = (props) => {
       <BreedModal
         show={breed}
         id={dragon?.id || ''}
+        combatGenes={genes}
+        faceCounter={faceGenesCounter}
         onClose={() => setBreed(false)}
       />
       <SuicideModal

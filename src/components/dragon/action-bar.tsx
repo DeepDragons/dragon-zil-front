@@ -179,7 +179,7 @@ export const ActionBar: React.FC<Prop> = ({
         icon: 'suicide.svg',
         name: dragonLocale.t('actions.suicide'),
         method: suicide,
-        show: true
+        show: false
       },
     ].filter((el) => el.show);
   }, [dragon]);

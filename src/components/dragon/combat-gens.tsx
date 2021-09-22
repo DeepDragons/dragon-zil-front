@@ -62,7 +62,7 @@ const GenNumber = styled(Text)`
 `;
 
 type Prop = {
-  gens: string;
+  gens: number[];
   color: string;
 };
 
@@ -74,9 +74,7 @@ export const CombatGens: React.FC<Prop> = ({
   const [selected, setSelected] = React.useState(isBrowser ? 1 : 0);
 
   const gensArray = React.useMemo(() => {
-    const list = genParse(gens);
-
-    return chunkArray(list, 10);
+    return chunkArray(gens, 10);
   }, [gens]);
 
   React.useEffect(() => {

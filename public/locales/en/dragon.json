@@ -36,7 +36,7 @@
   },
   "breed_modal": {
     "title": "Breeding",
-    "info": "Set a price and put your dragon (token) on a marketplace, where other players can pay you to mate their dragons with yours.",
+    "info": "You can earn on your dragon by betting it on Breed-Place. If someone breed with your dragon, you will get {{price}} $ZLP",
     "set_price": "Set a price in ZLP.",
     "btn": "Place to breed"
   },
