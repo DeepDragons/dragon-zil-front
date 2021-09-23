@@ -1,6 +1,5 @@
 import { ZilPayBase } from 'mixin/zilpay-base';
 import { Contracts } from 'config/contracts';
-import { ZIlPayToken } from './zilpay-token';
 import { pushToList } from '@/store/transactions';
 
 export class BreedPlace {
@@ -90,5 +89,19 @@ export class BreedPlace {
     });
 
     return String(res.ID);
+  }
+
+  public async getCurve() {
+    const field = 'price_curve';
+    const res = await this.zilpay.getSubState(
+      Contracts.Breed,
+      field
+    );
+
+    if (!res) {
+      return BigInt(0);
+    }
+
+    return BigInt(res);
   }
 }

@@ -38,21 +38,29 @@ export const BreedModal: React.FC<Prop> = ({
   const [loading, setLoading] = React.useState(false);
   const [price, setPrice] = React.useState(0);
   
-  const handleUpdate = React.useCallback(() => {
-    let combatCounter = 0;
+  const handleUpdate = React.useCallback(async() => {
+    load = true;
+    setLoading(true);
 
-    for (let index = 0; index < combatGenes.length; index++) {
-      const element = combatGenes[index];
+    try {
+      let combatCounter = 0;
 
-      combatCounter += Number(element);
+      for (let index = 0; index < combatGenes.length; index++) {
+        const element = combatGenes[index];
+  
+        combatCounter += Number(element);
+      }
+  
+      const value =  faceCounter + (combatCounter / 2);
+      const rounded = Math.round(value);
+      const curve = await breedPlace.getCurve();
+  
+      setPrice(Number((curve * BigInt(rounded)) / BigInt(ZIlPayToken.decimal)));
+    } catch {
+      ///
     }
-
-    console.log(faceCounter + (combatCounter / 2));
-
-    const value =  faceCounter + (combatCounter / 2);
-    const rounded = Math.round(value);
-
-    setPrice(Number((BigInt('500000000000000000') * BigInt(rounded)) / BigInt(ZIlPayToken.decimal)));
+    load = false;
+    setLoading(false);
   }, [combatGenes, faceCounter]);
   const handlePlace = React.useCallback(async() => {
     load = true;
