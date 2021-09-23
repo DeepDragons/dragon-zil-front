@@ -14,6 +14,7 @@ import {
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
 import { BreedPlace } from 'mixin/breed';
+import { ZIlPayToken } from '@/mixin/zilpay-token';
 
 type Prop = {
   show: boolean;
@@ -46,10 +47,12 @@ export const BreedModal: React.FC<Prop> = ({
       combatCounter += Number(element);
     }
 
-    const value = faceCounter + (combatCounter / 2);
-    const rounded = Math.round(value / 2);
+    console.log(faceCounter + (combatCounter / 2));
 
-    setPrice(rounded - rounded * 0.2);
+    const value =  faceCounter + (combatCounter / 2);
+    const rounded = Math.round(value);
+
+    setPrice(Number((BigInt('500000000000000000') * BigInt(rounded)) / BigInt(ZIlPayToken.decimal)));
   }, [combatGenes, faceCounter]);
   const handlePlace = React.useCallback(async() => {
     load = true;
