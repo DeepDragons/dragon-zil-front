@@ -27,6 +27,11 @@
     "btn_sale": "Sale",
     "btn_approve": "Approve"
   },
+  "name": {
+    "title": "Name changes",
+    "info": "You can change name your {{dragonStage}} (token).",
+    "placeholder": "Input a new name."
+  },
   "fights_modal": {
     "title": "To arena",
     "info": "Put your dragon (token) on a battlefield! Other players will be able to fight with your dragon.",

@@ -17,6 +17,7 @@ import { FightsModal } from 'components/modals/fight';
 import { BreedModal } from 'components/modals/breed';
 import { SuicideModal } from 'components/modals/suicide';
 import { HatchEggModal } from 'components/modals/hatch-egg';
+import { NameModal } from 'components/modals/name';
 import { NoCache } from 'components/no-cache';
 
 import { DragonAPI, DragonObject } from 'lib/api';
@@ -66,6 +67,7 @@ export const Dragon: NextPage<prop> = (props) => {
   const [breed, setBreed] = React.useState(false);
   const [suicide, setSuicide] = React.useState(false);
   const [hatchEgg, setHatchEgg] = React.useState(false);
+  const [nameModal, setNameModal] = React.useState(false);
   const [dragon, setDragon] = React.useState<DragonObject | null>(props.dragon);
 
   const currentAction = React.useMemo(() => {
@@ -184,6 +186,7 @@ export const Dragon: NextPage<prop> = (props) => {
           fight={() => setArena(true)}
           breed={() => setBreed(true)}
           suicide={() => setSuicide(true)}
+          onChangeName={() => setNameModal(true)}
         />
       ) : null}
       {dragon && rarity ? (
@@ -240,6 +243,11 @@ export const Dragon: NextPage<prop> = (props) => {
         id={dragon?.id || ''}
         stage={dragon?.stage || 0}
         onClose={() => setSale(false)}
+      />
+      <NameModal
+        show={nameModal}
+        dragon={dragon}
+        onClose={() => setNameModal(false)}
       />
       <FightsModal
         show={arena}

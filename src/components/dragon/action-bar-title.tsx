@@ -11,6 +11,10 @@ import { trim } from 'lib/trim';
 import { viewAddress } from 'lib/viewblock';
 import { RARITY } from 'lib/rarity';
 
+type Textbutton = {
+  isOwner: boolean;
+}
+
 const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -27,9 +31,28 @@ const InfoText = styled(Text)`
   margin: 0;
 `;
 const LinkText = styled(Text)`
-  text-indent: 6px;
+  padding: 0 10px 0 10px;
   margin: 0;
   color: ${Colors.White};
+`;
+const Textbutton = styled(Text)`
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  padding: 0 10px 0 10px;
+  margin: 0;
+
+  ${(p: Textbutton) => 
+    p.isOwner ? `
+      cursor: pointer;
+      user-select: none;
+
+      :hover {
+        border: 1px solid ${Colors.Darker};
+        background: ${Colors.Darker};
+      } 
+    ` : ''
+  }
 `;
 
 type Prop = {
@@ -37,13 +60,17 @@ type Prop = {
   isOwner: boolean;
   color: string | Colors;
   price?: string | number;
+  name?: string;
+  onChangeName?: () => void;
 };
 
 export const ActionBarTitle: React.FC<Prop> = ({
   dragon,
   color,
   isOwner,
-  price
+  price,
+  name,
+  onChangeName = () => null
 }) => {
   const commonLocale = useTranslation('common');
 
@@ -76,10 +103,22 @@ export const ActionBarTitle: React.FC<Prop> = ({
       >
         {commonLocale.t('rarity')}:&#160;<Text
           fontColors={color}
-          css="margin: 0;"
+          css="margin: 0;padding: 0 10px 0 10px;"
         >
           {RARITY[dragon.rarity].name}
         </Text>
+      </InfoText>
+      <InfoText
+        fontColors={Colors.Muted}
+        fontVariant={StyleFonts.FiraSansRegular}
+      >
+        {commonLocale.t('dragon_name')}:&#160;<Textbutton
+          fontColors={color}
+          isOwner={isOwner}
+          onClick={onChangeName}
+        >
+          {name ? name : commonLocale.t('no_name')}
+        </Textbutton>
       </InfoText>
       {price ? (
         <InfoText
@@ -88,7 +127,7 @@ export const ActionBarTitle: React.FC<Prop> = ({
         >
           {commonLocale.t('price')}:&#160;<Text
             fontColors={color}
-            css="margin: 0;"
+            css="margin: 0;padding: 0 10px 0 10px;"
           >
             {price}
           </Text>

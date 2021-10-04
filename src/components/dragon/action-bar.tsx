@@ -110,6 +110,7 @@ type Prop = {
   fight: () => void;
   breed: () => void;
   suicide: () => void;
+  onChangeName: () => void;
 };
 
 export const ActionBar: React.FC<Prop> = ({
@@ -126,7 +127,8 @@ export const ActionBar: React.FC<Prop> = ({
   mutate,
   fight,
   breed,
-  suicide
+  suicide,
+  onChangeName
 }) => {
   const commonLocale = useTranslation('common');
   const dragonLocale = useTranslation('dragon');
@@ -189,7 +191,6 @@ export const ActionBar: React.FC<Prop> = ({
     setModalShow(false);
   }, []);
 
-
   return (
     <Container>
       <ActionBarTitle
@@ -197,6 +198,7 @@ export const ActionBar: React.FC<Prop> = ({
         dragon={dragon}
         color={color}
         price={price}
+        onChangeName={onChangeName}
       />
       <ActionsForNotFree>
         {currentAction === 1 ? (

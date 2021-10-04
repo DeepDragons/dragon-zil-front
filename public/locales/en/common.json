@@ -1,5 +1,7 @@
 {
   "name": "DragonZIL",
+  "dragon_name": "Name",
+  "no_name": "No name",
   "store": "Store",
   "my_dragons": "My dragons",
   "fights": "Fights",
