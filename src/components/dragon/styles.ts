@@ -54,6 +54,7 @@ export const Wrapper = styled.div`
   @media (max-width: 947px) {
     align-items: center;
     justify-content: center;
+    padding: 0;
   }
 `;
 export const PageTitle = styled(Text)`

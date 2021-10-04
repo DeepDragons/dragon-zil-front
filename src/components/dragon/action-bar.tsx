@@ -68,6 +68,13 @@ const ActionButton = styled.button`
   :disabled {
     opacity: 0.3;
   }
+
+  @media (max-width: 900px) {
+    margin: 0;
+    width: 80%;
+    margin: 16px;
+    padding: 0;
+  }
 `;
 const MobileButton = styled.button`
   position: fixed;

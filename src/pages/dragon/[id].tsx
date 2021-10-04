@@ -30,6 +30,7 @@ import { getMarketOrder, getMarketPrice } from 'lib/get-action';
 import { ZIlPayToken } from '@/mixin/zilpay-token';
 import { NameDragons } from '@/mixin/name';
 import { genParse } from '@/lib/gen-parse';
+import { isMobile } from 'react-device-detect';
 
 const RarityImage = dynamic(import('components/rarity-image'));
 const CombatGens = dynamic(import('components/dragon/combat-gens'));
@@ -206,7 +207,7 @@ export const Dragon: NextPage<prop> = (props) => {
         <Wrapper>
           <RarityImage
             width={500}
-            height={500}
+            height={isMobile ? 300 : 500}
             id={dragon.id}
             rarity={dragon.rarity}
             url={dragon.url}

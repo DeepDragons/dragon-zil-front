@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { useStore } from 'effector-react';
-import { BrowserView, MobileView } from 'react-device-detect';
+import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { NextPage, GetServerSidePropsContext } from 'next';
@@ -142,7 +142,7 @@ export const GenLabPage: NextPage<Prop> = (props) => {
         <Wrapper>
           <RarityImage
             width={500}
-            height={500}
+            height={isMobile ? 300 : 500}
             id={dragon.id}
             rarity={dragon.rarity}
             url={dragon.url}
