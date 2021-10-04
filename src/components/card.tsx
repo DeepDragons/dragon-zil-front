@@ -4,18 +4,16 @@ import styled from 'styled-components';
 import { RarityImage } from './rarity-image';
 
 import { Colors } from 'config/colors';
+import { DragonObject } from '@/lib/api';
 
 type Prop = {
-  dragon: {
-    url: string;
-    id: string;
-    rarity: number;
-  };
+  dragon: DragonObject;
   onSelect?: () => void;
 };
 
-type ImageProp = {
-  color?: string | Colors;
+
+type ContainerProp = {
+  color: string | Colors;
 }
 
 export const Container = styled.div`
@@ -31,17 +29,13 @@ export const Container = styled.div`
   border-radius: 16px;
   
   background: ${Colors.Darker};
-`;
-export const Image = styled.img`
-  border-radius: 100%;
-  background: ${Colors.Black};
 
   animation: fadeInFromNone 0.5s ease-out;
 
   transition: .3s;
 
   :hover {
-    box-shadow: inset 0 0 40px ${(p: ImageProp) => p.color};
+    box-shadow: inset 0 0 100px ${Colors.Dark};
   }
 `;
 export const Empety = styled.div`
@@ -49,12 +43,6 @@ export const Empety = styled.div`
   background: ${Colors.Dark};
   height: 250px;
   width: 250px;
-
-  transition: .3s;
-
-  :hover {
-    box-shadow: inset 0 0 40px ${(p: ImageProp) => p.color};
-  }
 `;
 
 export const Card: React.FC<Prop> = ({

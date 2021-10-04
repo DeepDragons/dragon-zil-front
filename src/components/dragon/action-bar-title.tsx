@@ -70,7 +70,7 @@ export const ActionBarTitle: React.FC<Prop> = ({
   isOwner,
   price,
   name,
-  onChangeName = () => null
+  onChangeName
 }) => {
   const commonLocale = useTranslation('common');
 
@@ -114,7 +114,7 @@ export const ActionBarTitle: React.FC<Prop> = ({
       >
         {commonLocale.t('dragon_name')}:&#160;<Textbutton
           fontColors={Colors.Pink}
-          isOwner={isOwner}
+          isOwner={Boolean(isOwner && onChangeName)}
           onClick={onChangeName}
         >
           {name ? name : commonLocale.t('no_name')}
