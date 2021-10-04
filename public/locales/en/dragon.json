@@ -29,8 +29,11 @@
   },
   "name": {
     "title": "Name changes",
-    "info": "You can change name your {{dragonStage}} (token).",
-    "placeholder": "Input a new name."
+    "info": "You can change name your {{dragonStage}} (token) for {{price}} $ZLP.",
+    "placeholder": "Input a new name.",
+    "info_approve": "For change name you need spent {{price}} $ZLP, Approve name contract and change your {{dragonStage}} (token) name.",
+    "btn_approve": "Approve",
+    "btn_change": "Change"
   },
   "fights_modal": {
     "title": "To arena",

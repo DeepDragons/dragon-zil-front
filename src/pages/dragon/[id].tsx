@@ -28,6 +28,7 @@ import { MarketPlace } from 'mixin/market-place';
 import { StyleFonts } from '@/config/fonts';
 import { getMarketOrder, getMarketPrice } from 'lib/get-action';
 import { ZIlPayToken } from '@/mixin/zilpay-token';
+import { NameDragons } from '@/mixin/name';
 import { genParse } from '@/lib/gen-parse';
 
 const RarityImage = dynamic(import('components/rarity-image'));
@@ -55,6 +56,7 @@ const Wrapper = styled.div`
 const backend = new DragonAPI();
 const breedPlace = new BreedPlace();
 const marketPlace = new MarketPlace();
+const dragonsName = new NameDragons();
 
 export const Dragon: NextPage<prop> = (props) => {
   const commonLocale = useTranslation('common');
@@ -149,7 +151,18 @@ export const Dragon: NextPage<prop> = (props) => {
       if (d) {
         setDragon(d);
       }
-    });
+
+      return dragonsName.getName(String(router.query.id));
+    })
+    .then((name) => {
+      if (name && dragon) {
+        setDragon({
+          ...dragon,
+          name
+        });
+      }
+    })
+    .catch(console.error);
   }, [router]);
 
   return (

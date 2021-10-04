@@ -51,7 +51,6 @@ export class Necropolis {
   public zilpay = new ZilPayBase();
 
   private _getAGen(gens: bigint, f: bigint, s: bigint, last: bigint) {
-    console.log(gens, f, s);
     return (gens % f) / (f / s) + last;
   }
 

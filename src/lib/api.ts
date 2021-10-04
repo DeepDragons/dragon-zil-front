@@ -18,6 +18,7 @@ export interface DragonObject {
   rarity: number;
   stage: number;
   url: string;
+  name?: string;
 }
 
 export interface QueryParams {

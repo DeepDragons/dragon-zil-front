@@ -197,6 +197,7 @@ export const ActionBar: React.FC<Prop> = ({
         isOwner={isOwner}
         dragon={dragon}
         color={color}
+        name={dragon.name}
         price={price}
         onChangeName={onChangeName}
       />

@@ -10,6 +10,9 @@ import { ModalTitle, ButtonsWrapper, ModalButton } from './style';
 
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
+import { ZIlPayToken } from 'mixin/zilpay-token';
+import { Contracts } from '@/config/contracts';
+import { NameDragons } from '@/mixin/name';
 import { DragonObject } from '@/lib/api';
 
 const Container = styled.div`
@@ -22,6 +25,8 @@ type Prop = {
   onClose: () => void;
 };
 
+const dragonsName = new NameDragons();
+const zilPayToken = new ZIlPayToken();
 let load = false;
 export const NameModal: React.FC<Prop> = ({
   show,
@@ -30,25 +35,75 @@ export const NameModal: React.FC<Prop> = ({
 }) => {
   const commonLocale = useTranslation('common');
   const dragonLocale = useTranslation('dragon');
+
   const [error, setError] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+  const [name, setName] = React.useState(dragon?.name || '');
+  const [changePrice, setChangePrice] = React.useState(10);
+  const [needApprove, setNeedApprove] = React.useState(true);
+
   const dragonStage = React.useMemo(
     () => dragon && dragon.stage === 0 ? 'egg' : 'dragon',
     [dragon]
   );
 
-  const hanldeTransfer = React.useCallback(async() => {
+  const btnText = React.useMemo(() => {
+    return needApprove ?
+      dragonLocale.t('name.btn_approve') : dragonLocale.t('name.btn_change');
+  }, [needApprove]);
+
+  const textInfo = React.useMemo(() => {
+    if (loading) {
+      return commonLocale.t('do_not_refresh');
+    } else if (needApprove) {
+      return dragonLocale.t('name.info_approve', {
+        dragonStage,
+        price: String(changePrice)
+      });
+    }
+
+    return dragonLocale.t('name.info', {
+      dragonStage,
+      price: String(changePrice)
+    });
+  }, [needApprove, loading, dragonStage, changePrice]);
+
+  const hanldeUpdate = React.useCallback(async() => {
+    setLoading(true);
+    try {
+      const allow = BigInt(await zilPayToken.getAllowances(Contracts.Name));
+      const price = await dragonsName.getPrice();
+
+      setChangePrice(Number(price / BigInt(ZIlPayToken.decimal)));
+      setNeedApprove(allow < price);
+    } catch {
+      ///
+    }
+    setLoading(false);
+  }, []);
+
+  const hanldeChange = React.useCallback(async() => {
+    if (!dragon) {
+      return null;
+    }
+
     setLoading(true);
     load = true;
     try {
-      // await dragonZIL.transfer(bech32, id);
+      if (needApprove) {
+        await zilPayToken.increaseAllowance(Contracts.Name);
+        setNeedApprove(false);
+      } else {
+        await dragonsName.setName(name, dragon.id);
+        onClose();
+      }
       onClose();
     } catch (err) {
       setError((err as Error).message);
     }
     setLoading(false);
     load = false;
-  }, [dragon]);
+  }, [dragon, name]);
   const hanldeClose = React.useCallback(() => {
     if (load) {
       return null;
@@ -56,6 +111,12 @@ export const NameModal: React.FC<Prop> = ({
 
     onClose();
   }, []);
+
+  React.useEffect(() => {
+    if (dragon && show) {
+      hanldeUpdate();
+    }
+  }, [show, dragon]);
 
   return (
     <Modal
@@ -76,34 +137,34 @@ export const NameModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          {loading ?
-            commonLocale.t('do_not_refresh') : dragonLocale.t('name.info', {
-              dragonStage
-            })}
+          {textInfo}
         </Text>
-        {loading ? null : (
+        {!dragon || loading || needApprove ? null : (
           <Input
             fontColors={error ? Colors.Danger : Colors.Pink}
             placeholder={dragonLocale.t('name.placeholder')}
             maxLength={15}
+            defaultValue={name}
             border="2"
             css="text-align: center;"
+            onInput={(e) => setName(String(e.currentTarget.value))}
           />
         )}
         <ButtonsWrapper>
           <ModalButton
             disabled={Boolean(loading || error)}
-            color={Colors.Pink}
-            onClick={hanldeTransfer}
+            color={needApprove ? Colors.Warning : Colors.Pink}
+            fontColors={Colors.Dark}
+            onClick={hanldeChange}
           >
             {loading ? (
                 <Loader
                   type="ThreeDots"
-                  color={Colors.Pink}
+                  color={Colors.Darker}
                   height={10}
                   width={40}
                 />
-              ) : 'Change'}
+              ) : btnText}
           </ModalButton>
           <ModalButton
             color={Colors.Dark}
