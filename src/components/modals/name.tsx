@@ -18,7 +18,7 @@ const Container = styled.div`
 
 type Prop = {
   show: boolean;
-  dragon?: DragonObject;
+  dragon: DragonObject | null;
   onClose: () => void;
 };
 
@@ -85,6 +85,7 @@ export const NameModal: React.FC<Prop> = ({
           <Input
             fontColors={error ? Colors.Danger : Colors.Pink}
             placeholder={dragonLocale.t('name.placeholder')}
+            maxLength={15}
             border="2"
             css="text-align: center;"
           />
