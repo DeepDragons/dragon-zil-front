@@ -11,11 +11,6 @@ type Prop = {
   onSelect?: () => void;
 };
 
-
-type ContainerProp = {
-  color: string | Colors;
-}
-
 export const Container = styled.div`
   cursor: pointer;
 
