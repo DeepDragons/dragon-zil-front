@@ -99,6 +99,7 @@ export const TransferModal: React.FC<Prop> = ({
             onInput={hanldeInputAddress}
           />
         )}
+        <input type="text" />
         <ButtonsWrapper>
           <ModalButton
             disabled={Boolean(loading || !bech32 || error)}

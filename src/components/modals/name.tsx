@@ -150,7 +150,6 @@ export const NameModal: React.FC<Prop> = ({
             onInput={(e) => setName(String(e.currentTarget.value))}
           />
         )}
-        <input type="text" />
         <ButtonsWrapper>
           <ModalButton
             disabled={Boolean(loading || error)}
