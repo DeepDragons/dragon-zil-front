@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Link from 'next/link';
 
 import { Text } from 'components/text';
-import { Image } from 'components/card';
 
 import { StyleFonts } from '@/config/fonts';
 
@@ -14,7 +13,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const ParentImage = styled(Image)`
+const ParentImage = styled.img`
   cursor: pointer;
 `;
 const ImageWrapper = styled.div`
