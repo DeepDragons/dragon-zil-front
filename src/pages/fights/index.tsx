@@ -14,6 +14,7 @@ import { Wrapper } from 'components/pages/wrapper';
 import { FilterBar } from '@/components/filter-bar';
 import { Card } from '@/components/card';
 import { Text } from '@/components/text';
+import { CardText } from 'components/dragon/card-text';
 import Loader from 'react-loader-spinner';
 
 import { CardContainer } from 'components/dragon/styles';
@@ -132,13 +133,15 @@ export const FightPage: NextPage = () => {
                 onSelect={() => handleSelect(dragon)}
               >
                 <CardContainer>
-                  <Text
+                  <CardText
                     fontVariant={StyleFonts.FiraSansSemiBold}
                     fontColors={RARITY[dragon.rarity].color}
                     size="16px"
                   >
-                    #{dragon.id}
-                  </Text>
+                    #{dragon.id} <span>
+                      {dragon.name ? `- ${dragon.name}` : ''}
+                    </span>
+                  </CardText>
                   <Text
                     fontVariant={StyleFonts.FiraSansSemiBold}
                     fontColors={Colors.Blue}

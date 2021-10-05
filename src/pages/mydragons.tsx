@@ -17,6 +17,7 @@ import { Wrapper } from 'components/pages/wrapper';
 import { Button } from '@/components/button';
 import { ErrorModal } from 'components/modals/error';
 import { CardContainer } from 'components/dragon/styles';
+import { CardText } from 'components/dragon/card-text';
 
 import { $wallet } from 'store/wallet';
 import { $myDragons, contctDragons, resetDragons, updateDragons } from 'store/my-dragons';
@@ -175,13 +176,15 @@ export const MyDragons: NextPage = () => {
                 <div>
                   <Card dragon={dragon}>
                     <CardContainer>
-                      <Text
+                      <CardText
                         fontVariant={StyleFonts.FiraSansSemiBold}
                         fontColors={RARITY[dragon.rarity].color}
                         size="16px"
                       >
-                        #{dragon.id}, {RARITY[dragon.rarity].name} {getAction(dragon.actions)}
-                      </Text>
+                        #{dragon.id}, {RARITY[dragon.rarity].name} {getAction(dragon.actions)} <span>
+                          {dragon.name ? `- ${dragon.name}` : ''}
+                        </span>
+                      </CardText>
                     </CardContainer>
                   </Card>
                 </div>

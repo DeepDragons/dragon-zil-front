@@ -97,7 +97,6 @@ export const NameModal: React.FC<Prop> = ({
         await dragonsName.setName(name, dragon.id);
         onClose();
       }
-      onClose();
     } catch (err) {
       setError((err as Error).message);
     }
@@ -141,7 +140,7 @@ export const NameModal: React.FC<Prop> = ({
         </Text>
         {!dragon || loading || needApprove ? null : (
           <Input
-            fontColors={error ? Colors.Danger : Colors.Pink}
+            fontColors={error ? Colors.Danger : Colors.Success}
             placeholder={dragonLocale.t('name.placeholder')}
             maxLength={15}
             defaultValue={name}
@@ -153,7 +152,7 @@ export const NameModal: React.FC<Prop> = ({
         <ButtonsWrapper>
           <ModalButton
             disabled={Boolean(loading || error)}
-            color={needApprove ? Colors.Warning : Colors.Pink}
+            color={needApprove ? Colors.Warning : Colors.Success}
             fontColors={Colors.Dark}
             onClick={hanldeChange}
           >

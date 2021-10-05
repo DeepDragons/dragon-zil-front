@@ -113,7 +113,7 @@ export const ActionBarTitle: React.FC<Prop> = ({
         fontVariant={StyleFonts.FiraSansRegular}
       >
         {commonLocale.t('dragon_name')}:&#160;<Textbutton
-          fontColors={Colors.Pink}
+          fontColors={Colors.Success}
           isOwner={Boolean(isOwner && onChangeName)}
           onClick={onChangeName}
         >

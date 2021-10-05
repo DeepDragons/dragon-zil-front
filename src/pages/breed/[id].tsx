@@ -48,6 +48,14 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
   const [needApprove, setNeedApprove] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
 
+  const loverName = React.useMemo(() => {
+    if (!lover || !lover.name) {
+      return '';
+    }
+
+    return `- ${lover.name}`;
+  }, [lover]);
+
   const handleStartBreed = React.useCallback(async() => {
     if (!lover || !myDragon) {
       return null;
@@ -106,7 +114,7 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
         </title>
         <OpenGraph
           url={`https://dragonzil.xyz/breed/${lover?.id}`}
-          title={`${breedingLocale.t('title')} #${lover?.id} for ${Number(amount) / 10**18} $ZLP`}
+          title={`${breedingLocale.t('title')} #${lover?.id} ${loverName} for ${Number(amount) / 10**18} $ZLP`}
           description={`Rarity #${lover?.id}: ${rarityLover?.name}`}
           img={lover?.url}
           alt={`Dragon ID #${lover?.id}`}

@@ -130,6 +130,13 @@ export const Dragon: NextPage<prop> = (props) => {
 
     return undefined;
   }, [dragon]);
+  const dragonName = React.useMemo(() => {
+    if (!dragon || !dragon.name) {
+      return '';
+    }
+
+    return `- ${dragon.name}`;
+  }, [dragon]);
   const descriptionOpenGraph = React.useMemo(() => {
     if (currentAction === 3) {
       return `Rarity ${rarity?.name}, ${commonLocale.t('buy')} for ${price}`;
@@ -174,7 +181,7 @@ export const Dragon: NextPage<prop> = (props) => {
         </title>
         <OpenGraph
           url={`https://dragonzil.xyz/dragon/${dragon?.id}`}
-          title={`${commonLocale.t('name')} | ${stageType} #${dragon?.id}`}
+          title={`${commonLocale.t('name')} | ${stageType} #${dragon?.id} ${dragonName}`}
           description={descriptionOpenGraph}
           img={dragon?.url}
           alt={`Dragon ID #${dragon?.id}`}

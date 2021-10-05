@@ -15,6 +15,7 @@ import { FilterBar } from '@/components/filter-bar';
 import { Card } from '@/components/card';
 import { Text } from '@/components/text';
 import { Button } from 'components/button';
+import { CardText } from 'components/dragon/card-text';
 import Loader from 'react-loader-spinner';
 
 import { $wallet } from 'store/wallet';
@@ -194,13 +195,15 @@ export const TradePage: NextPage = () => {
                 onSelect={() => router.push(`/dragon/${dragon.id}`)}
               >
                 <CardContainer>
-                  <Text
+                  <CardText
                     fontVariant={StyleFonts.FiraSansSemiBold}
                     fontColors={RARITY[dragon.rarity].color}
                     size="16px"
                   >
-                    #{dragon.id}, {RARITY[dragon.rarity].name}
-                  </Text>
+                    #{dragon.id}, {RARITY[dragon.rarity].name} <span>
+                      {dragon.name ? `- ${dragon.name}` : ''}
+                    </span>
+                  </CardText>
                   <Text
                     fontVariant={StyleFonts.FiraSansSemiBold}
                     fontColors={Colors.Blue}

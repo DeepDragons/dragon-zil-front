@@ -46,6 +46,13 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
   const amount = React.useMemo(() => {
     return getPrice(defended?.actions);
   }, [defended]);
+  const defendedName = React.useMemo(() => {
+    if (!defended || !defended.name) {
+      return '';
+    }
+
+    return `- ${defended.name}`;
+  }, [defended]);
 
   const hanldeUpdate = React.useCallback(async() => {
     setLoading(true);
@@ -90,7 +97,7 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
         </title>
         <OpenGraph
           url={`https://dragonzil.xyz/fights/${defended?.id}`}
-          title={`${arenaLocale.t('title')} #${defended?.id}`}
+          title={`${arenaLocale.t('title')} #${defended?.id} ${defendedName}`}
           description={`Fight with Dragon #${defended?.id} for ${Number(amount) / 10**18} $ZLP`}
           img={defended?.url}
           alt={`Dragon ID #${defended?.url}`}
