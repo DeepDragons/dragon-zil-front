@@ -91,14 +91,20 @@ export const TransferModal: React.FC<Prop> = ({
             })}
         </Text>
         {loading ? null : (
-          <Input
-            fontColors={error ? Colors.Danger : Colors.LightBlue}
-            placeholder="zil1wl38cwww2u3g8wzgutxlxtxwwc0rf7jf27zace"
-            border="2"
+          <input
             type="text"
-            css="text-align: center;"
+            className="input"
+            placeholder="zil1wl38cwww2u3g8wzgutxlxtxwwc0rf7jf27zace"
             onInput={hanldeInputAddress}
           />
+          // <Input
+          //   fontColors={error ? Colors.Danger : Colors.LightBlue}
+          //   placeholder="zil1wl38cwww2u3g8wzgutxlxtxwwc0rf7jf27zace"
+          //   border="2"
+          //   type="text"
+          //   css="text-align: center;"
+          //   onInput={hanldeInputAddress}
+          // />
         )}
         <ButtonsWrapper>
           <ModalButton

@@ -30,6 +30,28 @@ export const BaseStyles = createGlobalStyle`
     box-sizing: inherit;
   }
 
+  .input {
+    text-align: center;
+    background: transparent;
+    border: 0;
+    outline: none;
+    color: ${Colors.Primary};
+    font-size: 18px;
+    font-family: ${StyleFonts.FiraSansRegular};
+    color: ${Colors.Primary};
+    border: 0px solid;
+  
+    height: 50px;
+    width: 100%;
+  
+    border-radius: 10px;
+    user-select: none;
+  
+    @media (max-width: 500px) {
+      font-size: 13px;
+    }  
+  }
+
   @keyframes load {
     from {
         left: -150px;
