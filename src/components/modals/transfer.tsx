@@ -95,11 +95,11 @@ export const TransferModal: React.FC<Prop> = ({
             fontColors={error ? Colors.Danger : Colors.LightBlue}
             placeholder="zil1wl38cwww2u3g8wzgutxlxtxwwc0rf7jf27zace"
             border="2"
+            type="text"
             css="text-align: center;"
             onInput={hanldeInputAddress}
           />
         )}
-        <input type="text" />
         <ButtonsWrapper>
           <ModalButton
             disabled={Boolean(loading || !bech32 || error)}
