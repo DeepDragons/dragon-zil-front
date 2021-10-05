@@ -25,7 +25,6 @@ export const Input = styled.input`
   width: 100%;
 
   border-radius: 10px;
-  // user-select: none;
 
   @media (max-width: 500px) {
     font-size: ${(props: Prop) => Number(String(props.size).split('px')[0]) / 1.5}px;
