@@ -13,18 +13,18 @@ type Prop = {
 
 export const Input = styled.input`
   background: transparent;
-  // border: 0;
-  // outline: none;
+  border: 0;
+  outline: none;
   color: ${Colors.White};
   font-size: ${(props: Prop) => props.size}px;
   font-family: ${(props: Prop) => props.fontVariant};
-  // color: ${(props: Prop) => props.fontColors};
-  // border: ${(props: Prop) => props.border}px solid;
+  color: ${(props: Prop) => props.fontColors};
+  border: ${(props: Prop) => props.border}px solid;
 
   height: 50px;
   width: 100%;
 
-  // border-radius: 10px;
+  border-radius: 10px;
   // user-select: none;
 
   @media (max-width: 500px) {
