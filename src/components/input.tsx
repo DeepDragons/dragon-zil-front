@@ -31,6 +31,14 @@ export const Input = styled.input`
     font-size: ${(props: Prop) => Number(String(props.size).split('px')[0]) / 1.5}px;
   }
 
+  :before, :after {
+    -webkit-user-select: initial;
+    -khtml-user-select: initial;
+    -moz-user-select: initial;
+    -ms-user-select: initial;
+    user-select: initial;
+  }
+
   ${(props: Prop) => props.css}
 `;
 
