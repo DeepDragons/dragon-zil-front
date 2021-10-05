@@ -12,12 +12,12 @@ type Prop = {
 };
 
 export const Input = styled.input`
-  // background: transparent;
+  background: transparent;
   // border: 0;
   // outline: none;
-  // color: ${Colors.White};
-  // font-size: ${(props: Prop) => props.size}px;
-  // font-family: ${(props: Prop) => props.fontVariant};
+  color: ${Colors.White};
+  font-size: ${(props: Prop) => props.size}px;
+  font-family: ${(props: Prop) => props.fontVariant};
   // color: ${(props: Prop) => props.fontColors};
   // border: ${(props: Prop) => props.border}px solid;
 
