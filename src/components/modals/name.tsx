@@ -145,10 +145,12 @@ export const NameModal: React.FC<Prop> = ({
             maxLength={15}
             defaultValue={name}
             border="2"
+            type="text"
             css="text-align: center;"
             onInput={(e) => setName(String(e.currentTarget.value))}
           />
         )}
+        <input type="text" />
         <ButtonsWrapper>
           <ModalButton
             disabled={Boolean(loading || error)}
