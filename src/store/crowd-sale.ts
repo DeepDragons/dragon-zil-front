@@ -4,10 +4,10 @@ import { Contracts } from 'config/contracts';
 let crowdSaleState = {
   maxReferralPercent: "50",
   startReferralPercent: "10",
-  zilIncrementer: "1000000000000",
-  zilPrice: "529000000000000",
-  zlpIncrementer: "10000000000000000",
-  zlpPrice: "11240000000000000000"
+  zilIncrementer: "10000000000000",
+  zilPrice: "1502000000000000",
+  zlpIncrementer: "5000000000000000000",
+  zlpPrice: "355940000000000000000"
 };
 if (process.browser) {
   const catche = window.localStorage.getItem(Contracts.Distributer);
