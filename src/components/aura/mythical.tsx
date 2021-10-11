@@ -62,7 +62,7 @@ export const MythicalAura: React.FC<Prop> = ({
         >
           <use
             xlinkHref={`#dragon-${id}`}
-            transform="scale(0.0005)"
+            transform="scale(0.0022)"
           />
         </pattern>
         <ProgressiveImage

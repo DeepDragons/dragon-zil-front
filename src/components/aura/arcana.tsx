@@ -66,7 +66,7 @@ export const ArcanaAura: React.FC<Prop> = ({
         >
           <use
             xlinkHref={`#dragon-${id}`}
-            transform="scale(0.0005)"
+            transform="scale(0.00229)"
           />
         </pattern>
         <ProgressiveImage

@@ -67,7 +67,7 @@ export const ImmortalAura: React.FC<Prop> = ({
         >
           <use
             xlinkHref={`#dragon-${id}`}
-            transform="translate(-0.126239 -0.0698607) scale(0.000626239)"
+            transform="translate(-0.126239 -0.0698607) scale(0.0027)"
           />
         </pattern>
         <ProgressiveImage

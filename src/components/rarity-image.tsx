@@ -34,10 +34,19 @@ export const RarityImage: React.FC<Prop> = ({
     return RARITY[rarity];
   }, [rarity]);
 
+  const uri = React.useMemo(() => {
+    const list = url.split('/');
+    const name = list.pop();
+
+    list.push('c_scale,w_450');
+    list.push(String(name));
+    return list.join('/');
+  }, [url]);
+
   return [
     <CommonAura
       id={id}
-      url={url}
+      url={uri}
       width={width}
       height={height}
       color={rarityInfo.color}
@@ -45,7 +54,7 @@ export const RarityImage: React.FC<Prop> = ({
     />,
     <UncommonAura
       id={id}
-      url={url}
+      url={uri}
       width={width}
       height={height}
       color={rarityInfo.color}
@@ -53,7 +62,7 @@ export const RarityImage: React.FC<Prop> = ({
     />,
     <RareAura
       id={id}
-      url={url}
+      url={uri}
       width={width}
       height={height}
       color={rarityInfo.color}
@@ -61,7 +70,7 @@ export const RarityImage: React.FC<Prop> = ({
     />,
     <MythicalAura
       id={id}
-      url={url}
+      url={uri}
       width={width}
       height={height}
       color={rarityInfo.color}
@@ -69,7 +78,7 @@ export const RarityImage: React.FC<Prop> = ({
     />,
     <LegendaryAura
       id={id}
-      url={url}
+      url={uri}
       width={width}
       height={height}
       color={rarityInfo.color}
@@ -77,7 +86,7 @@ export const RarityImage: React.FC<Prop> = ({
     />,
     <ImmortalAura
       id={id}
-      url={url}
+      url={uri}
       width={width}
       height={height}
       color={rarityInfo.color}
@@ -85,7 +94,7 @@ export const RarityImage: React.FC<Prop> = ({
     />,
     <ArcanaAura
       id={id}
-      url={url}
+      url={uri}
       width={width}
       height={height}
       color={rarityInfo.color}
@@ -93,7 +102,7 @@ export const RarityImage: React.FC<Prop> = ({
     />,
     <AncientAura
       id={id}
-      url={url}
+      url={uri}
       width={width}
       height={height}
       color={rarityInfo.color}
