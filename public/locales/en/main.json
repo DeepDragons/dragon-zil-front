@@ -1,45 +1,45 @@
 {
   "title": "Introduction",
-  "description": "Here is a NFT marketplace, where you can buy, trade, upgrade, and breed your dragons - simply install the ZilPay browser extension. ",
-  "buy": "Give Eggs",
+  "description": "Welcome to The NFT game where you collect, breed and battle blockchain Dragons",
+  "buy": "Get eggs",
   "section_1": {
     "title": "What's going on here?",
     "form_0": {
       "title": "DragonZIL is...",
-      "description": "An investment game based on Zilliqa smart contracts. Each Dragon is an ZRC1 token protected by blockchain. You know everything there is to know about blockchain, so, let’s hold back from spoon-feeding."
+      "description": "An investment game based on Zilliqa smart contracts. Each Dragon is an ZRC1 token protected by the Blockchain."
     },
     "form_1": {
-      "title": "Everyone buys Eggs",
-      "description": "Everyone buys Eggs. You can hatch from an Egg that can be bought by a single movement of your hand – simply install the ZilPay browser extension."
+      "title": "What are Eggs?",
+      "description": "Anyone can buy eggs, forever. You can hatch them right away or sell them for profit on The Dragon Marketplace"
     }
   },
   "section_2": {
     "title": "How does it work?",
     "form_0": {
-      "title": "What s a Dragon?",
-      "description_0": "Who the hell knows. 20 battle and 10 visual genes, 256 colour schemes with some truly rare combinations that give your Dragon a unique appearance and a supernatural power.",
+      "title": "What are Dragons?",
+      "description_0": "Randomly Generated from 20 battle and 10 visual genes and 256 colour schemes some truly rare combinations appear that with unique appearance and a supernatural powers.",
       "description_1": "But there is no guarantee that your Egg will hatch into a battle unit capable of breeding and fighting. Buy more Eggs and pray for good luck."
     },
     "form_1": {
-      "title": "And what to do with it?",
-      "description_0": "First of all, wait until it hatch. Then evaluate its potential: visual and battle characteristics. If it turns out to be quite a Dragon, propose it for a fight.",
-      "description_1": "A Dragon is born for a good fight. The outcome of a fight is defined by your Dragon’s strength. After each fight you get a mutagen. When you win – a whole lot of mutagen, when you lose – just a bit of it."
+      "title": "How to use them?",
+      "description_0": "After hatching, evaluate its potential: visual and battle characteristics. If it turns out to be quite a Dragon, check out the Arena",
+      "description_1": "If you have rare Body Parts, try our Breeding page"
     },
     "form_2": {
-      "title": "How to mutate?",
+      "title": "What about $ZLP?",
       "description_0": "Feed ZLP to your dragon and watch it mutate.",
       "description_1": "Mutation is the process of your Dragon’s DNA change (yes, the token itself). Your unique beast reborn into something different or even more unique.",
       "description_2": "If your Dragon is weak but attractive, then go to the gene laboratory. There, you may exchange anything for money."
     },
     "form_3": {
       "title": "Okay, what else?",
-      "description_0": "When your Dragon gets older, it may breed during breaks between fights.",
+      "description_0": "When buying eggs you have a chance to uncover undiscovered before body parts and colors",
       "description_1": "Yes, you always have to pay for sex. Yes, it’s possible to sex while being high on mutagen. No, you can’t always take the kiddoes."
     }
   },
   "section_3": {
     "title": "If you have friends...",
-    "sub_title": "why don't you make money on them?",
+    "sub_title": "Play together and earn passively, using the referral link",
     "link_name": "There is a magic link.",
     "btn": "GET A REFERRAL LINK",
     "description": "If you share it with your friends and they follow it, then we will return 50% of the purchase amount to your wallet."
