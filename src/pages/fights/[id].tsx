@@ -23,7 +23,7 @@ import { ZIlPayToken } from 'mixin/zilpay-token';
 import { getPrice } from 'lib/get-price';
 import { Contracts } from '@/config/contracts';
 import { $wallet } from 'store/wallet';
-import { $arena, updateArena } from '@/store/arena';
+import { $arena, updateArena, resetArena } from '@/store/arena';
 
 const CompareCombatGens = dynamic(import('components/dragon/compare-combat-gens'));
 const ChoiceWith = dynamic(import('components/dragon/choice-with'));
@@ -83,6 +83,7 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
         setNeedApprove(false);
       } else {
         const hash = await figthPlace.startFight(defended.id, attacked.id);
+        resetArena();
         updateArena({
           hash,
           amount,
@@ -91,7 +92,8 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
         });
       }
     } catch {
-      //
+      resetArena();
+      setWaitResult(false);
     }
     setLoading(false);
   }, [defended, attacked, needApprove]);
@@ -102,7 +104,7 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
 
   return (
     <Container>
-      {defended ? (
+      {defended && arena && waitResult ? (
         <WaitFightModal
           show={waitResult}
           defended={defended}
