@@ -3,5 +3,9 @@
   "keywords": "Dragons, Fighting, Arena",
   "sub_title": "Battle with",
   "start_btn": "Start fighting",
-  "approve": "Approve ZLP"
+  "approve": "Approve ZLP",
+  "modal": {
+    "title0": "Wait until fight have done.",
+    "title1": "Fight winner {{win}}."
+  }
 }

@@ -25,9 +25,6 @@ const Container = styled.div`
     margin-top: 10px;
   }
 `;
-const ModalContainer = styled.div`
-  padding: 30px;
-`;
 export const Logo = styled.div`
   display: flex;
   cursor: pointer;

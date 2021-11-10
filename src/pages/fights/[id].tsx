@@ -1,5 +1,5 @@
 import React from 'react';
-import { GetServerSidePropsContext, NextPage, NextPageContext } from 'next';
+import { GetServerSidePropsContext, NextPage } from 'next';
 import Loader from "react-loader-spinner";
 import { useStore } from 'effector-react';
 import Head from 'next/head';
@@ -13,6 +13,7 @@ import { Navbar } from 'components/nav-bar';
 import { Container } from 'components/pages/container';
 import { Wrapper, PageTitle } from 'components/dragon/styles';
 import { NoCache } from 'components/no-cache';
+import { WaitFightModal } from 'components/modals/wait-fight-result';
 
 import { DragonAPI, DragonObject } from 'lib/api';
 import { FigthPlace } from 'mixin/fight-place';
@@ -22,6 +23,7 @@ import { ZIlPayToken } from 'mixin/zilpay-token';
 import { getPrice } from 'lib/get-price';
 import { Contracts } from '@/config/contracts';
 import { $wallet } from 'store/wallet';
+import { $arena, updateArena } from '@/store/arena';
 
 const CompareCombatGens = dynamic(import('components/dragon/compare-combat-gens'));
 const ChoiceWith = dynamic(import('components/dragon/choice-with'));
@@ -39,9 +41,11 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
   const router = useRouter();
 
   const wallet = useStore($wallet);
+  const arena = useStore($arena);
   const [attacked, setAttacked] = React.useState<DragonObject | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [needApprove, setNeedApprove] = React.useState(true);
+  const [waitResult, setWaitResult] = React.useState(arena?.with === defended?.id);
 
   const amount = React.useMemo(() => {
     return getPrice(defended?.actions);
@@ -69,6 +73,7 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
     if (!attacked || !defended) {
       return null;
     }
+    setWaitResult(true);
     setLoading(true);
 
     try {
@@ -77,7 +82,13 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
 
         setNeedApprove(false);
       } else {
-        await figthPlace.startFight(defended.id, attacked.id);
+        const hash = await figthPlace.startFight(defended.id, attacked.id);
+        updateArena({
+          hash,
+          amount,
+          who: String(attacked.id),
+          with: String(defended.id),
+        });
       }
     } catch {
       //
@@ -91,6 +102,13 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
 
   return (
     <Container>
+      {defended ? (
+        <WaitFightModal
+          show={waitResult}
+          defended={defended}
+          onClose={() => router.push('/fights')}
+        />
+      ) : null}
       <Head>
         <title>
           {commonLocale.t('name')} | {arenaLocale.t('title')} #{defended?.id}

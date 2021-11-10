@@ -17,6 +17,8 @@ import { $wallet, updateAddress, Wallet } from 'store/wallet';
 import { $transactions, updateTxList, clearTxList, writeNewList } from 'store/transactions';
 import { updateNet, $net } from 'store/wallet-netwrok';
 import { Block, Net } from '@/types/zil-pay';
+import { $arena, updateArena, resetArena } from '@/store/arena';
+import { Blockchain } from 'mixin/custom-fetch';
 
 type ConnectZIlPayButtonProp = {
   color: Colors | string;
@@ -46,6 +48,7 @@ const ConnectZIlPayButton = styled.button`
 let observer: any = null;
 let observerNet: any = null;
 let observerBlock: any = null;
+const blockchain = new Blockchain();
 export const ConnectZIlPay: React.FC = () => {
   const address = useStore($wallet);
   const net = useStore($net);
@@ -96,49 +99,47 @@ export const ConnectZIlPay: React.FC = () => {
 
     observerBlock = zp.wallet.observableBlock().subscribe(async(block: Block) => {
       let list = $transactions.getState();
-      for (let index = 0; index < block.TxHashes.length; index++) {
-        const element = block.TxHashes[index];
+      const arena = $arena.getState();
 
-        for (let i = 0; i < list.length; i++) {
-          const tx = list[i];
+      const params = list.filter((tx) => !tx.confirmed).map((tx) => tx.hash);
 
-          if (tx.confirmed) {
-            continue;
-          }
+      if (params.length === 0) {
+        return null;
+      }
 
-          if (element.includes(tx.hash)) {
+      const res = await blockchain.getTransaction(...params);
+      list = list.map((tx) => {
+        try {
+          const found = res.find((r: any) => r.result.ID === tx.hash);
+
+          if (found) {
+            const { success, errors } = found.result.receipt;
+            tx.confirmed = true;
+  
+            if (!success && errors) {
+              tx.error = true;
+            }
+
             try {
-              const res = await zp.blockchain.getTransaction(tx.hash);
-              if (res && res.receipt && res.receipt.errors) {
-                tx.error = true;
+              if (arena?.hash === found.result.ID && arena) {
+                const [afterFightWinLose] = found.result.receipt.event_logs;
+                const [won] = afterFightWinLose.params;
+                updateArena({
+                  ...arena,
+                  winner: won.value
+                });
               }
-              list[i].confirmed = true;
-            } catch {
-              continue;
+            } catch (err) {
+              console.log('arena', err);
+              resetArena();
             }
           }
-        }
-      }
-      const listOrPromises = list.map(async(tx) => {
-        if (tx.confirmed) {
-          return tx;
+        } catch (err) {
+          console.log('check txns', err);
         }
 
-        try {
-          const res = await zp.blockchain.getTransaction(tx.hash);
-
-          if (res && res.receipt && res.receipt.errors) {
-            tx.error = true;
-          }
-
-          tx.confirmed = true;
-          return tx;
-        } catch {
-          return tx;
-        }
+        return tx;
       });
-
-      list = await Promise.all(listOrPromises);
       writeNewList(list);
     });
 
