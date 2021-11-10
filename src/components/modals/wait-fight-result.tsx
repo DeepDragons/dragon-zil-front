@@ -119,7 +119,7 @@ export const WaitFightModal: React.FC<Prop> = ({
             >
               #{winner.id} Won, <b style={{
                 color: isWon ? Colors.Success : Colors.Danger
-              }}>{wonAmount}</b>
+              }}> {commonLocale.t('you')} {wonAmount}</b>
             </Text>
           </Card>
         ) : null}

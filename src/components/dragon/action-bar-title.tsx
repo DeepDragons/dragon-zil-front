@@ -99,7 +99,7 @@ export const ActionBarTitle: React.FC<Prop> = ({
           target='_blank'
         >
           <LinkText>
-            {isOwner ? 'You' : trim(dragon.owner)}
+            {isOwner ? commonLocale.t('you') : trim(dragon.owner)}
           </LinkText>
         </a>
       </InfoText>
