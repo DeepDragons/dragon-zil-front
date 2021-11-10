@@ -75,6 +75,7 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
     }
     setWaitResult(true);
     setLoading(true);
+    resetArena();
 
     try {
       if (needApprove) {
@@ -83,7 +84,6 @@ export const FightStart: NextPage<Prop> = ({ defended }) => {
         setNeedApprove(false);
       } else {
         const hash = await figthPlace.startFight(defended.id, attacked.id);
-        resetArena();
         updateArena({
           hash,
           amount,
