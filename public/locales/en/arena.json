@@ -5,7 +5,7 @@
   "start_btn": "Start fighting",
   "approve": "Approve ZLP",
   "modal": {
-    "title0": "Wait until fight have done.",
+    "title0": "Wait until the fight has finished",
     "title1": "Fight winner {{win}}."
   }
 }
