@@ -82,11 +82,6 @@ export const SuicideModal: React.FC<Prop> = ({
       priceMultiplicator = Number(priceMultiplicator);
       useCount = Number(useCount);
       startPrice = BigInt(String(startPrice));
-      const gl = necropolis.calcGenLab(
-        startPrice,
-        useCount,
-        priceMultiplicator
-      );
       const {
         faceCurve,
         combatCurve,
@@ -100,7 +95,6 @@ export const SuicideModal: React.FC<Prop> = ({
         combat: dragon.gen_fight,
         face: dragon.gen_image,
         tokenid: id,
-        genLab: String(gl),
         max: maxCurve,
         faceCurve: faceCurve,
         combatCurve: combatCurve,

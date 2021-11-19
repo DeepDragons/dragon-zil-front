@@ -1,7 +1,6 @@
 import { ZilPayBase } from 'mixin/zilpay-base';
 import { Contracts } from 'config/contracts';
 import { pushToList } from '@/store/transactions';
-import { ZIlPayToken } from './zilpay-token';
 
 export interface RewardsParams {
   combat: string;
@@ -9,7 +8,6 @@ export interface RewardsParams {
   zlp: string;
   supply: string;
   tokenid: string;
-  genLab: string;
   max: string;
   combatCurve: string;
   faceCurve: string;
@@ -106,7 +104,6 @@ export class Necropolis {
     const zlp = BigInt(params.zlp);
     const supply = BigInt(params.supply);
     const tokenid = BigInt(params.tokenid);
-    const genLab = BigInt(params.genLab);
     const max = BigInt(params.max);
     const supplyCurve = BigInt(params.supplyCurve);
     const faceCurve = BigInt(params.faceCurve);
@@ -119,7 +116,7 @@ export class Necropolis {
       return max;
     }
 
-    return amount + combatAmount + faceAmount + genLab;
+    return amount + combatAmount + faceAmount;
   }
 
   public async getCurve() {
@@ -133,17 +130,6 @@ export class Necropolis {
       maxCurve,
       supplyCurve
     };
-  }
-
-  public calcGenLab(price: bigint, count: number, multiplicator: number) {
-    if (count === 0) {
-      return f0;
-    }
-
-    const two = BigInt(2);
-    let m = BigInt(multiplicator ** count);
-
-    return m * (price / two);
   }
 
   public async burnForRewards(tokenid: string) {

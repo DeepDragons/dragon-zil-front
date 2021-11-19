@@ -103,7 +103,7 @@ export const MobileUpgradeGens: React.FC<Prop> = ({
         <Button
           color={Colors.Success}
           css="padding: 20px 45px 20px 45px;"
-          onClick={() => onSelect(gen - 1, gensChain[selected === 0 ? gen - 1 : gen + 9], genName)}
+          onClick={() => onSelect(selected === 0 ? gen - 1 : gen + 9, gensChain[selected === 0 ? gen - 1 : gen + 9], genName)}
         >
           {mutateLocale.t('upgrade_for')} {price} $ZLP
         </Button>
