@@ -40,7 +40,7 @@ export const NameModal: React.FC<Prop> = ({
   const [loading, setLoading] = React.useState(false);
   const [name, setName] = React.useState(dragon?.name || '');
   const [changePrice, setChangePrice] = React.useState(10);
-  const [needApprove, setNeedApprove] = React.useState(true);
+  const [needApprove, setNeedApprove] = React.useState(false);
 
   const dragonStage = React.useMemo(
     () => dragon && dragon.stage === 0 ? 'egg' : 'dragon',
@@ -90,13 +90,15 @@ export const NameModal: React.FC<Prop> = ({
     setLoading(true);
     load = true;
     try {
-      if (needApprove) {
-        await zilPayToken.increaseAllowance(Contracts.Name);
-        setNeedApprove(false);
-      } else {
-        await dragonsName.setName(name, dragon.id);
-        onClose();
-      }
+      await dragonsName.setName(name, dragon.id);
+      onClose();
+      // if (needApprove) {
+      //   await zilPayToken.increaseAllowance(Contracts.Name);
+      //   setNeedApprove(false);
+      // } else {
+      //   await dragonsName.setName(name, dragon.id);
+      //   onClose();
+      // }
     } catch (err) {
       setError((err as Error).message);
     }
@@ -113,7 +115,7 @@ export const NameModal: React.FC<Prop> = ({
 
   React.useEffect(() => {
     if (dragon && show) {
-      hanldeUpdate();
+      // hanldeUpdate();
     }
   }, [show, dragon]);
 

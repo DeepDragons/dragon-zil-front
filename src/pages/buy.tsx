@@ -104,7 +104,8 @@ export const BuyPage: NextPage = () => {
       } else {
         await crowdSale.buyForZLP(eggs);
       }
-    } catch {
+    } catch (err) {
+      console.error(err);
       ///
     }
     setLoading(false);
