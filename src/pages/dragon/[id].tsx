@@ -153,24 +153,26 @@ export const Dragon: NextPage<prop> = (props) => {
   }, [dragon]);
 
   React.useEffect(() => {
-    backend
-    .getDragon(String(router.query.id))
-    .then((d) => {
-      if (d) {
-        setDragon(d);
-      }
-
-      return dragonsName.getName(String(router.query.id));
-    })
-    .then((name) => {
-      if (name && dragon) {
-        setDragon({
-          ...dragon,
-          name
-        });
-      }
-    })
-    .catch(console.error);
+    if (router.query.id) {
+      backend
+      .getDragon(String(router.query.id))
+      .then((d) => {
+        if (d) {
+          setDragon(d);
+        }
+  
+        return dragonsName.getName(String(router.query.id));
+      })
+      .then((name) => {
+        if (name && dragon) {
+          setDragon({
+            ...dragon,
+            name
+          });
+        }
+      })
+      .catch(console.error);
+    }
   }, [router]);
 
   return (

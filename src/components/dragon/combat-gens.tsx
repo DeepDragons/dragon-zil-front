@@ -11,7 +11,6 @@ import { DefenceIcon } from 'components/icons/defence';
 import { Colors } from 'config/colors';
 import { StyleFonts } from '@/config/fonts';
 import { radar } from 'lib/radar';
-import { genParse } from 'lib/gen-parse';
 import { chunkArray } from 'lib/chunks';
 
 import { Container, Seporate } from './styles';
@@ -85,7 +84,7 @@ export const CombatGens: React.FC<Prop> = ({
         radar(gensArray, ctx);
       }
     } catch {
-      setSelected(0);
+      ///
     }
   }, [gensArray, selected]);
 
