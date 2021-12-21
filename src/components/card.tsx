@@ -5,10 +5,15 @@ import { RarityImage } from './rarity-image';
 
 import { Colors } from 'config/colors';
 import { DragonObject } from '@/lib/api';
+import { RARITY } from '@/lib/rarity';
 
 type Prop = {
   dragon: DragonObject;
   onSelect?: () => void;
+};
+
+type ContainerProp = {
+  color: string | Colors;
 };
 
 export const Container = styled.div`
@@ -20,17 +25,18 @@ export const Container = styled.div`
   text-align: center;
 
   padding: 16px;
-  margin: 16px;
+  margin: 15px;
   border-radius: 16px;
   
   background: ${Colors.Darker};
+  border: 1px solid transparent;
 
   animation: fadeInFromNone 0.5s ease-out;
 
   transition: .3s;
 
   :hover {
-    box-shadow: inset 0 0 100px ${Colors.Dark};
+    border: 1px solid ${(p: ContainerProp) => p.color};
   }
 `;
 export const Empety = styled.div`
@@ -45,9 +51,8 @@ export const Card: React.FC<Prop> = ({
   children,
   onSelect = () => null
 }) => {
-
   return (
-    <Container>
+    <Container color={RARITY[dragon.rarity].color}>
       <RarityImage
         id={dragon.id}
         rarity={dragon.rarity}

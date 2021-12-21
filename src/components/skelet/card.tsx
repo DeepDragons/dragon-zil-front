@@ -27,7 +27,7 @@ const Content = styled.div`
 
 export const SkeletCard: React.FC = () => {
   return (
-    <Wrapper>
+    <Wrapper color="transparent">
       <Empety />
       <Content />
     </Wrapper>
