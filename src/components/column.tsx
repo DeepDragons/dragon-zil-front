@@ -9,7 +9,7 @@ type BarProp = {
 };
 
 const Container = styled.div`
-  display: inline-table;
+  // display: inline-table;
   background: #2A3F5A;
   z-index: 1;
   height: 100%;
