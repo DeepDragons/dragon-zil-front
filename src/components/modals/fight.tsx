@@ -1,24 +1,21 @@
 import Loader from "react-loader-spinner";
-import { useTranslation } from 'next-i18next';
-import React from 'react';
+import { useTranslation } from "next-i18next";
+import React from "react";
 
-import { Modal } from 'components/modal';
-import { Text } from 'components/text';
-import { useStore } from 'effector-react';
-import { IntInput } from 'components/int-input';
+import { Modal } from "components/modal";
+import { Text } from "components/text";
+import { useStore } from "effector-react";
+import { IntInput } from "components/int-input";
+
+import { Colors } from "config/colors";
+import { ZIlPayToken } from "mixin/zilpay-token";
+import { FigthPlace } from "mixin/fight-place";
+import { $wallet } from "store/wallet";
+import { Contracts } from "@/config/contracts";
+import { StyleFonts } from "@/config/fonts";
 import {
-  ModalTitle,
-  ButtonsWrapper,
-  ModalButton,
-  Container
-} from './style';
-
-import { Colors } from 'config/colors';
-import { StyleFonts } from '@/config/fonts';
-import { ZIlPayToken } from 'mixin/zilpay-token';
-import { FigthPlace } from 'mixin/fight-place';
-import { Contracts } from '@/config/contracts';
-import { $wallet } from 'store/wallet';
+  ModalTitle, ButtonsWrapper, ModalButton, Container,
+} from "./style";
 
 type Prop = {
   show: boolean;
@@ -29,24 +26,22 @@ type Prop = {
 const zilPayToken = new ZIlPayToken();
 const figthPlace = new FigthPlace();
 let load = false;
-export const FightsModal: React.FC<Prop> = ({
-  show,
-  id,
-  onClose
-}) => {
-  const commonLocale = useTranslation('common');
-  const dragonLocale = useTranslation('dragon');
+export var FightsModal: React.FC<Prop> = function ({ show, id, onClose }) {
+  const commonLocale = useTranslation(`common`);
+  const dragonLocale = useTranslation(`dragon`);
   const address = useStore($wallet);
   const [loading, setLoading] = React.useState(true);
   const [zlp, setZLP] = React.useState(500);
   const [needApprove, setNeedApprove] = React.useState(true);
 
-  const btnText = React.useMemo(() => {
-    return needApprove ?
-      dragonLocale.t('fights_modal.btn_approve') : dragonLocale.t('fights_modal.btn_start');
-  }, [needApprove]);
+  const btnText = React.useMemo(
+    () => (needApprove
+      ? dragonLocale.t(`fights_modal.btn_approve`)
+      : dragonLocale.t(`fights_modal.btn_start`)),
+    [needApprove],
+  );
 
-  const hanldeUpdate = React.useCallback(async() => {
+  const hanldeUpdate = React.useCallback(async () => {
     setLoading(true);
     try {
       const allow = await zilPayToken.getAllowances(Contracts.FightPlace);
@@ -58,7 +53,7 @@ export const FightsModal: React.FC<Prop> = ({
     setLoading(false);
   }, [zlp]);
 
-  const hanldeSubmit = React.useCallback(async() => {
+  const hanldeSubmit = React.useCallback(async () => {
     setLoading(true);
     load = true;
     try {
@@ -93,31 +88,25 @@ export const FightsModal: React.FC<Prop> = ({
   return (
     <Modal
       title={(
-        <ModalTitle
-          fontVariant={StyleFonts.FiraSansBold}
-          size="32px"
-        >
-          {dragonLocale.t('fights_modal.title')} #{id}
+        <ModalTitle fontVariant={StyleFonts.FiraSansBold} size="32px">
+          {dragonLocale.t(`fights_modal.title`)}
+          {` `}
+          #
+          {id}
         </ModalTitle>
       )}
       show={show}
       onClose={hanldeClose}
     >
       <Container>
-        <Text
-          fontColors={Colors.Muted}
-          size="22px"
-          css="text-align: center;"
-        >
-          {loading ? commonLocale.t('do_not_refresh') : dragonLocale.t('fights_modal.info')}
+        <Text fontColors={Colors.Muted} size="22px" css="text-align: center;">
+          {loading
+            ? commonLocale.t(`do_not_refresh`)
+            : dragonLocale.t(`fights_modal.info`)}
         </Text>
         {!loading ? (
-          <IntInput
-            value={zlp}
-            bg={Colors.Dark}
-            onInput={setZLP}
-          >
-            {dragonLocale.t('fights_modal.set_price')}
+          <IntInput value={zlp} bg={Colors.Dark} onInput={setZLP}>
+            {dragonLocale.t(`fights_modal.set_price`)}
           </IntInput>
         ) : null}
         <ButtonsWrapper>
@@ -134,14 +123,16 @@ export const FightsModal: React.FC<Prop> = ({
                 height={10}
                 width={40}
               />
-            ) : btnText}
+            ) : (
+              btnText
+            )}
           </ModalButton>
           <ModalButton
             color={Colors.Dark}
             disabled={loading}
             onClick={hanldeClose}
           >
-            {commonLocale.t('cancel')}
+            {commonLocale.t(`cancel`)}
           </ModalButton>
         </ButtonsWrapper>
       </Container>

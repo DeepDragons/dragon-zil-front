@@ -1,11 +1,14 @@
-import React from 'react';
+import React from "react";
 
-export const NoCache: React.FC = () => {
+export var NoCache: React.FC = function () {
   return (
     <>
-      <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-      <meta httpEquiv="Pragma" content="no-cache"/>
-      <meta httpEquiv="Expires" content="0"/>
+      <meta
+        httpEquiv="Cache-Control"
+        content="no-cache, no-store, must-revalidate"
+      />
+      <meta httpEquiv="Pragma" content="no-cache" />
+      <meta httpEquiv="Expires" content="0" />
     </>
   );
 };

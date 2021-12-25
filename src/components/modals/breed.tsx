@@ -1,20 +1,17 @@
-import React from 'react';
+import React from "react";
 import Loader from "react-loader-spinner";
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from "next-i18next";
 
-import { Modal } from 'components/modal';
-import { Text } from 'components/text';
+import { Modal } from "components/modal";
+import { Text } from "components/text";
+import { Colors } from "config/colors";
+import { BreedPlace } from "mixin/breed";
+
+import { StyleFonts } from "@/config/fonts";
+import { ZIlPayToken } from "@/mixin/zilpay-token";
 import {
-  ModalTitle,
-  ButtonsWrapper,
-  ModalButton,
-  Container
-} from './style';
-
-import { Colors } from 'config/colors';
-import { StyleFonts } from '@/config/fonts';
-import { BreedPlace } from 'mixin/breed';
-import { ZIlPayToken } from '@/mixin/zilpay-token';
+  ModalTitle, ButtonsWrapper, ModalButton, Container,
+} from "./style";
 
 type Prop = {
   show: boolean;
@@ -26,19 +23,19 @@ type Prop = {
 
 const breedPlace = new BreedPlace();
 let load = false;
-export const BreedModal: React.FC<Prop> = ({
+export var BreedModal: React.FC<Prop> = function ({
   show,
   id,
   faceCounter,
   combatGenes,
-  onClose
-}) => {
-  const commonLocale = useTranslation('common');
-  const dragonLocale = useTranslation('dragon');
+  onClose,
+}) {
+  const commonLocale = useTranslation(`common`);
+  const dragonLocale = useTranslation(`dragon`);
   const [loading, setLoading] = React.useState(false);
   const [price, setPrice] = React.useState(0);
-  
-  const handleUpdate = React.useCallback(async() => {
+
+  const handleUpdate = React.useCallback(async () => {
     load = true;
     setLoading(true);
 
@@ -47,22 +44,24 @@ export const BreedModal: React.FC<Prop> = ({
 
       for (let index = 0; index < combatGenes.length; index++) {
         const element = combatGenes[index];
-  
+
         combatCounter += Number(element);
       }
-  
-      const value =  faceCounter + (combatCounter / 2);
+
+      const value = faceCounter + combatCounter / 2;
       const rounded = Math.round(value);
       const curve = await breedPlace.getCurve();
-  
-      setPrice(Number((curve * BigInt(rounded)) / BigInt(ZIlPayToken.decimal)) * 0.5);
+
+      setPrice(
+        Number((curve * BigInt(rounded)) / BigInt(ZIlPayToken.decimal)) * 0.5,
+      );
     } catch {
       ///
     }
     load = false;
     setLoading(false);
   }, [combatGenes, faceCounter]);
-  const handlePlace = React.useCallback(async() => {
+  const handlePlace = React.useCallback(async () => {
     load = true;
     setLoading(true);
     try {
@@ -92,23 +91,21 @@ export const BreedModal: React.FC<Prop> = ({
   return (
     <Modal
       title={(
-        <ModalTitle
-          fontVariant={StyleFonts.FiraSansBold}
-          size="32px"
-        >
-          {dragonLocale.t('breed_modal.title')} #{id}
+        <ModalTitle fontVariant={StyleFonts.FiraSansBold} size="32px">
+          {dragonLocale.t(`breed_modal.title`)}
+          {` `}
+          #
+          {id}
         </ModalTitle>
       )}
       show={show}
       onClose={hanldeClose}
     >
       <Container>
-        <Text
-          fontColors={Colors.Muted}
-          size="22px"
-          css="text-align: center;"
-        >
-          {loading ? commonLocale.t('do_not_refresh') : dragonLocale.t('breed_modal.info', { price })}
+        <Text fontColors={Colors.Muted} size="22px" css="text-align: center;">
+          {loading
+            ? commonLocale.t(`do_not_refresh`)
+            : dragonLocale.t(`breed_modal.info`, { price })}
         </Text>
         <ButtonsWrapper>
           <ModalButton
@@ -123,23 +120,22 @@ export const BreedModal: React.FC<Prop> = ({
                 height={10}
                 width={40}
               />
-            ) : dragonLocale.t('breed_modal.btn')}
+            ) : (
+              dragonLocale.t(`breed_modal.btn`)
+            )}
           </ModalButton>
           <ModalButton
             color={Colors.Dark}
             disabled={loading}
             onClick={hanldeClose}
           >
-            {commonLocale.t('cancel')}
+            {commonLocale.t(`cancel`)}
           </ModalButton>
         </ButtonsWrapper>
         {load ? null : (
-          <Text
-            fontColors={Colors.Muted}
-            size="16px"
-            css="text-align: center;"
-          >
-            The price is based on the rarity and combat effectiveness of your dragon!
+          <Text fontColors={Colors.Muted} size="16px" css="text-align: center;">
+            The price is based on the rarity and combat effectiveness of your
+            dragon!
           </Text>
         )}
       </Container>

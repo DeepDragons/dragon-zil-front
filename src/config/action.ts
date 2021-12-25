@@ -1,6 +1,1 @@
-export const ACTION = [
-  '',
-  'Battle',
-  'Breed',
-  'Market'
-];
+export const ACTION = [``, `Battle`, `Breed`, `Market`];

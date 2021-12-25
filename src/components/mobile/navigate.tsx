@@ -1,23 +1,23 @@
-import React from 'react';
-import Link from 'next/link';
-import { useStore } from 'effector-react';
-import { useRouter } from 'next/router';
-import { useTranslation } from 'next-i18next';
-import styled from 'styled-components';
+import React from "react";
+import Link from "next/link";
+import { useStore } from "effector-react";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import styled from "styled-components";
 
-import { Text } from 'components/text';
-import { ScreenModal } from '../screen-modal';
-import { Logo, links } from 'components/nav-bar';
-import { CloseIcon } from 'components/icons/close';
-import { TxCard } from 'components/tx-card';
-import { AccountCard } from 'components/account-card';
+import { Text } from "components/text";
+import { Logo, links } from "components/nav-bar";
+import { CloseIcon } from "components/icons/close";
+import { TxCard } from "components/tx-card";
+import { AccountCard } from "components/account-card";
 
-import { StyleFonts } from '@/config/fonts';
-import { Colors } from '@/config/colors';
-import Loader from 'react-loader-spinner';
-import { trim } from '@/lib/trim';
-import { Wallet } from '@/store/wallet';
-import { $transactions, resetTxList } from 'store/transactions';
+import Loader from "react-loader-spinner";
+import { $transactions, resetTxList } from "store/transactions";
+import { StyleFonts } from "@/config/fonts";
+import { Colors } from "@/config/colors";
+import { trim } from "@/lib/trim";
+import { Wallet } from "@/store/wallet";
+import { ScreenModal } from "../screen-modal";
 
 type Prop = {
   show: boolean;
@@ -28,7 +28,7 @@ type Prop = {
 };
 
 const Container = styled.div`
-  background: #14161C;
+  background: #14161c;
   justify-content: space-between;
   padding-bottom: 30px;
 `;
@@ -62,8 +62,7 @@ const Item = styled.li`
   margin: 16px;
 
   border-bottom: 2px solid
-    ${(props: { selected: boolean }) =>
-      props.selected ? Colors.Info : '#14161C'};
+    ${(props: { selected: boolean }) => (props.selected ? Colors.Info : `#14161C`)};
 `;
 const HeaderTxns = styled.div`
   display: flex;
@@ -71,26 +70,26 @@ const HeaderTxns = styled.div`
   padding: 16px;
 `;
 
-export const MobileNavigate: React.FC<Prop> = ({
+export var MobileNavigate: React.FC<Prop> = function ({
   show,
   loading,
   onConnect,
   wallet,
-  onClose
-}) => {
-  const common = useTranslation('common');
+  onClose,
+}) {
+  const common = useTranslation(`common`);
   const router = useRouter();
   const txList = useStore($transactions);
   const [showMenu, setShowMenu] = React.useState(false);
 
   const connectText = React.useMemo(() => {
     if (showMenu && wallet) {
-      return common.t('cancel');
+      return common.t(`cancel`);
     }
     if (wallet) {
       return trim(wallet.bech32);
     }
-    return common.t('connect');
+    return common.t(`connect`);
   }, [wallet, showMenu]);
 
   const hanldeNavigate = React.useCallback((path: string) => {
@@ -109,24 +108,17 @@ export const MobileNavigate: React.FC<Prop> = ({
   }, [showMenu, wallet]);
 
   return (
-    <ScreenModal
-      show={show}
-      onClose={() => null}
-    >
+    <ScreenModal show={show} onClose={() => null}>
       <Container className="modal-content">
         <Wrapper>
           <Link href="/">
             <Logo>
-              <img
-                src="/icons/logo.png"
-                alt="Logo"
-                height="40"
-              />
+              <img src="/icons/logo.png" alt="Logo" height="40" />
               <Text
                 fontVariant={StyleFonts.FiraSansBold}
                 css="margin-left: 5px;"
               >
-                {common.t('name')}
+                {common.t(`name`)}
               </Text>
             </Logo>
           </Link>
@@ -134,7 +126,7 @@ export const MobileNavigate: React.FC<Prop> = ({
             <CloseIcon />
           </div>
         </Wrapper>
-        <ul style={{ display: showMenu ? 'none' : 'block' }}>
+        <ul style={{ display: showMenu ? `none` : `block` }}>
           {links.map((link, index) => (
             <Item
               key={index}
@@ -145,24 +137,20 @@ export const MobileNavigate: React.FC<Prop> = ({
             </Item>
           ))}
         </ul>
-        <div style={{ display: showMenu ? 'block' : 'none' }}>
-          <AccountCard wallet={wallet}/>
+        <div style={{ display: showMenu ? `block` : `none` }}>
+          <AccountCard wallet={wallet} />
           {txList.length === 0 ? (
             <Text
               fontVariant={StyleFonts.FiraSansRegular}
               size="20px"
               css="text-align: center;margin-top: 10px;"
             >
-              {common.t('tx_appear_here')}
+              {common.t(`tx_appear_here`)}
             </Text>
           ) : (
             <HeaderTxns>
-              <Text
-                fontVariant={StyleFonts.FiraSansRegular}
-                size="20px"
-                css=""
-              >
-                {common.t('recent_txns')}
+              <Text fontVariant={StyleFonts.FiraSansRegular} size="20px" css="">
+                {common.t(`recent_txns`)}
               </Text>
               <Text
                 fontVariant={StyleFonts.FiraSansRegular}
@@ -171,31 +159,27 @@ export const MobileNavigate: React.FC<Prop> = ({
                 css="cursor: pointer;user-select: none;"
                 onClick={() => resetTxList(String(wallet?.base16))}
               >
-                ({common.t('clear_all')})
+                (
+                {common.t(`clear_all`)}
+                )
               </Text>
             </HeaderTxns>
           )}
           {txList.map((tx) => (
-            <TxCard
-              key={tx.hash}
-              tx={tx}
-            />
+            <TxCard key={tx.hash} tx={tx} />
           ))}
         </div>
         <ConnectButton onClick={hanldeMenuOrConnect}>
           {loading ? (
             <>
-              <Loader
-                type="ThreeDots"
-                color="#fff"
-                height={10}
-                width={20}
-              />
+              <Loader type="ThreeDots" color="#fff" height={10} width={20} />
               <Text css="text-indent: 5px;margin: 0;">
-                {common.t('pending')}
+                {common.t(`pending`)}
               </Text>
             </>
-          ) : connectText}
+          ) : (
+            connectText
+          )}
         </ConnectButton>
       </Container>
     </ScreenModal>

@@ -1,6 +1,5 @@
-import { Rarity } from '@/config/rarity';
-import { createDomain } from 'effector';
-import { DragonObject } from '@/lib/api';
+import { createDomain } from "effector";
+import { DragonObject } from "@/lib/api";
 
 const dragonsDomain = createDomain();
 export const updateDragons = dragonsDomain.createEvent<DragonObject[]>();

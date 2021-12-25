@@ -1,61 +1,71 @@
-import React from 'react';
-import { NextPage, GetServerSidePropsContext } from 'next';
-import { useStore } from 'effector-react';
-import Head from 'next/head';
-import { useTranslation } from 'next-i18next';
-import Link from 'next/link';
+import React from "react";
+import { NextPage, GetServerSidePropsContext } from "next";
+import { useStore } from "effector-react";
+import Head from "next/head";
+import { useTranslation } from "next-i18next";
+import Link from "next/link";
 import Loader from "react-loader-spinner";
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import { Navbar } from 'components/nav-bar';
-import { Card } from 'components/card';
-import { Text } from 'components/text';
-import { SkeletCard } from 'components/skelet/card';
-import { FilterBar } from 'components/filter-bar';
-import { Container } from 'components/pages/container';
-import { Wrapper } from 'components/pages/wrapper';
-import { Button } from '@/components/button';
-import { ErrorModal } from 'components/modals/error';
-import { CardContainer } from 'components/dragon/styles';
-import { CardText } from 'components/dragon/card-text';
+import { Navbar } from "components/nav-bar";
+import { Card } from "components/card";
+import { Text } from "components/text";
+import { SkeletCard } from "components/skelet/card";
+import { FilterBar } from "components/filter-bar";
+import { Container } from "components/pages/container";
+import { Wrapper } from "components/pages/wrapper";
+import { ErrorModal } from "components/modals/error";
+import { CardContainer } from "components/dragon/styles";
+import { CardText } from "components/dragon/card-text";
 
-import { $wallet } from 'store/wallet';
-import { $myDragons, contctDragons, resetDragons, updateDragons } from 'store/my-dragons';
-import { DragonAPI, QueryParams } from 'lib/api';
-import { StyleFonts } from '@/config/fonts';
-import { Colors } from '@/config/colors';
-import { RARITY } from '@/lib/rarity';
-import { getAction } from '@/lib/get-action';
-import { useScrollEvent } from 'mixin/scroll';
-import { isMobile } from 'react-device-detect';
+import { $wallet } from "store/wallet";
+import {
+  $myDragons,
+  contctDragons,
+  resetDragons,
+  updateDragons,
+} from "store/my-dragons";
+import { DragonAPI, QueryParams } from "lib/api";
+import { useScrollEvent } from "mixin/scroll";
+import { isMobile } from "react-device-detect";
+import { StyleFonts } from "@/config/fonts";
+import { Colors } from "@/config/colors";
+import { RARITY } from "@/lib/rarity";
+import { getAction } from "@/lib/get-action";
+import { Button } from "@/components/button";
 
 const backend = new DragonAPI();
 const params: QueryParams = {
   limit: 9,
-  offset: 0
+  offset: 0,
 };
 let maxPage = 1;
-export const MyDragons: NextPage = () => {
+export var MyDragons: NextPage = function () {
   const refWrapper = React.useRef<HTMLDivElement | null>();
 
-  const dragonsLocale = useTranslation('dragons');
-  const commonLocale = useTranslation('common');
+  const dragonsLocale = useTranslation(`dragons`);
+  const commonLocale = useTranslation(`common`);
 
   const address = useStore($wallet);
   const dragons = useStore($myDragons);
 
   const [skelet, setSkelet] = React.useState(true);
-  const [errorCode, setErrorCode] = React.useState<number | string | null>(null);
+  const [errorCode, setErrorCode] = React.useState<number | string | null>(
+    null,
+  );
   const [sortItem, setSortItem] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
 
-  const items = React.useMemo(() => [
-    commonLocale.t('all'),
-    commonLocale.t('rarity'),
-    commonLocale.t('strong'),
-    commonLocale.t('dragons'),
-    commonLocale.t('eggs')
-  ], []);
+  const items = React.useMemo(
+    () => [
+      commonLocale.t(`all`),
+      commonLocale.t(`rarity`),
+      commonLocale.t(`strong`),
+      commonLocale.t(`dragons`),
+      commonLocale.t(`eggs`),
+    ],
+    [],
+  );
 
   const fetchData = async () => {
     const addr = $wallet.getState();
@@ -65,16 +75,16 @@ export const MyDragons: NextPage = () => {
     }
 
     params.owner = String(addr.base16).toLowerCase();
-		const result = await backend.getDragons(params);
+    const result = await backend.getDragons(params);
 
     maxPage = result.pagination.pages;
 
     contctDragons(result.list);
 
-    params.offset = params.offset + 1;
-	};
+    params.offset += 1;
+  };
 
-  const hanldeSort = React.useCallback(async(index: number) => {
+  const hanldeSort = React.useCallback(async (index: number) => {
     setSortItem(index);
     setSkelet(true);
 
@@ -95,7 +105,7 @@ export const MyDragons: NextPage = () => {
       const result = await backend.getDragons(params);
 
       maxPage = result.pagination.pages;
-  
+
       resetDragons();
       updateDragons(result.list);
     } catch {
@@ -127,7 +137,7 @@ export const MyDragons: NextPage = () => {
       return null;
     }
 
-		setLoading(true);
+    setLoading(true);
 
     try {
       await fetchData();
@@ -142,37 +152,37 @@ export const MyDragons: NextPage = () => {
     <Container>
       <Head>
         <title>
-          {commonLocale.t('name')} | {dragonsLocale.t('title')}
+          {commonLocale.t(`name`)}
+          {` `}
+          |
+          {dragonsLocale.t(`title`)}
         </title>
         <meta
           property="og:title"
-          content={`${commonLocale.t('name')} | ${dragonsLocale.t('title')}`}
+          content={`${commonLocale.t(`name`)} | ${dragonsLocale.t(`title`)}`}
           key="title"
         />
       </Head>
       <Navbar />
       <FilterBar
-        title={dragonsLocale.t('title')}
+        title={dragonsLocale.t(`title`)}
         selectedSort={sortItem}
         rarity={dragons.length !== 0}
         items={items}
         onSelectSort={hanldeSort}
       />
-      <Wrapper ref={(n) => refWrapper.current = n}>
+      <Wrapper ref={(n) => (refWrapper.current = n)}>
         {skelet ? (
           <>
-          <SkeletCard />
-          <SkeletCard />
-          <SkeletCard />
-          <SkeletCard />
+            <SkeletCard />
+            <SkeletCard />
+            <SkeletCard />
+            <SkeletCard />
           </>
         ) : (
           <>
             {dragons.map((dragon, index) => (
-              <Link
-                key={index}
-                href={`/dragon/${dragon.id}`}
-              >
+              <Link key={index} href={`/dragon/${dragon.id}`}>
                 <div>
                   <Card dragon={dragon}>
                     <CardContainer>
@@ -181,9 +191,15 @@ export const MyDragons: NextPage = () => {
                         fontColors={RARITY[dragon.rarity].color}
                         size="16px"
                       >
-                        #{dragon.id}, {RARITY[dragon.rarity].name} {getAction(dragon.actions)} <span>
-                          {dragon.name ? `- ${dragon.name}` : ''}
-                        </span>
+                        #
+                        {dragon.id}
+                        ,
+                        {` `}
+                        {RARITY[dragon.rarity].name}
+                        {` `}
+                        {getAction(dragon.actions)}
+                        {` `}
+                        <span>{dragon.name ? `- ${dragon.name}` : ``}</span>
                       </CardText>
                     </CardContainer>
                   </Card>
@@ -199,38 +215,29 @@ export const MyDragons: NextPage = () => {
             fontVariant={StyleFonts.FiraSansRegular}
             css="text-align: center;max-width: 400px;"
           >
-            {commonLocale.t('no_dragons')}
+            {commonLocale.t(`no_dragons`)}
           </Text>
           <Link href="/buy">
-            <Button>
-              {commonLocale.t('buy')}
-            </Button>
+            <Button>{commonLocale.t(`buy`)}</Button>
           </Link>
         </>
       ) : null}
       {loading ? (
-        <Loader
-          type="ThreeDots"
-          color={Colors.White}
-          height={30}
-          width={100}
-        />
+        <Loader type="ThreeDots" color={Colors.White} height={30} width={100} />
       ) : null}
       {}
-      <ErrorModal
-        show={Boolean(errorCode)}
-        code={errorCode}
-      />
+      <ErrorModal show={Boolean(errorCode)} code={errorCode} />
     </Container>
   );
-}
-
-export const getStaticProps = async (props: GetServerSidePropsContext) => {
-  return {
-    props: {
-      ...await serverSideTranslations(props.locale || 'en', ['common', 'dragons']),
-    }
-  };
 };
+
+export const getStaticProps = async (props: GetServerSidePropsContext) => ({
+  props: {
+    ...(await serverSideTranslations(props.locale || `en`, [
+      `common`,
+      `dragons`,
+    ])),
+  },
+});
 
 export default MyDragons;

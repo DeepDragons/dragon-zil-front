@@ -1,26 +1,26 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useStore } from 'effector-react';
-import { BrowserView, MobileView } from 'react-device-detect';
-import Link from 'next/link';
+import React from "react";
+import styled from "styled-components";
+import { useStore } from "effector-react";
+import { BrowserView, MobileView } from "react-device-detect";
+import Link from "next/link";
 
-import { Text } from 'components/text';
-import { Modal } from 'components/modal';
-import { useTranslation } from 'next-i18next';
-import { ModalItem } from 'components/mobile/modal-item';
-import { ActionBarTitle } from './action-bar-title';
+import { Text } from "components/text";
+import { Modal } from "components/modal";
+import { useTranslation } from "next-i18next";
+import { ModalItem } from "components/mobile/modal-item";
 
-import { Colors } from 'config/colors';
-import { DragonObject } from 'lib/api';
-import { $wallet } from 'store/wallet';
+import { Colors } from "config/colors";
+import { DragonObject } from "lib/api";
+import { $wallet } from "store/wallet";
+import { ActionBarTitle } from "./action-bar-title";
 
 type ActionButtonProp = {
   color: string;
-}
+};
 
 type ActionsRowProp = {
   show: boolean;
-}
+};
 
 const Container = styled.div`
   display: flex;
@@ -32,7 +32,7 @@ const Container = styled.div`
   width: 100%;
 `;
 const ActionsRow = styled.div`
-  display: ${(p: ActionsRowProp) => p.show ? 'flex' : 'none' };
+  display: ${(p: ActionsRowProp) => (p.show ? `flex` : `none`)};
   align-items: center;
 `;
 const ActionsForNotFree = styled.div`
@@ -82,7 +82,7 @@ const MobileButton = styled.button`
   left: 10%;
   right: 10%;
 
-  display: ${(p: ActionsRowProp) => p.show ? 'flex' : 'none' };
+  display: ${(p: ActionsRowProp) => (p.show ? `flex` : `none`)};
   align-items: center;
   justify-content: center;
 
@@ -120,7 +120,7 @@ type Prop = {
   onChangeName: () => void;
 };
 
-export const ActionBar: React.FC<Prop> = ({
+export var ActionBar: React.FC<Prop> = function ({
   dragon,
   color,
   price,
@@ -135,63 +135,65 @@ export const ActionBar: React.FC<Prop> = ({
   fight,
   breed,
   suicide,
-  onChangeName
-}) => {
-  const commonLocale = useTranslation('common');
-  const dragonLocale = useTranslation('dragon');
+  onChangeName,
+}) {
+  const commonLocale = useTranslation(`common`);
+  const dragonLocale = useTranslation(`dragon`);
   const address = useStore($wallet);
   const [modalShow, setModalShow] = React.useState(false);
 
-  const isOwner = React.useMemo(() => {
-    return dragon.owner.toLowerCase() === address?.base16.toLowerCase();
-  }, [address, dragon]);
+  const isOwner = React.useMemo(
+    () => dragon.owner.toLowerCase() === address?.base16.toLowerCase(),
+    [address, dragon],
+  );
 
-  const actionList = React.useMemo(() => {
-    return [
+  const actionList = React.useMemo(
+    () => [
       {
-        icon: 'an-egg.svg',
-        name: dragonLocale.t('actions.hatch_egg'),
+        icon: `an-egg.svg`,
+        name: dragonLocale.t(`actions.hatch_egg`),
         method: hatchEgg,
-        show: dragon.stage == 0
+        show: dragon.stage == 0,
       },
       {
-        icon: 'transfer-icon.svg',
-        name: dragonLocale.t('actions.transfer'),
+        icon: `transfer-icon.svg`,
+        name: dragonLocale.t(`actions.transfer`),
         method: transfer,
-        show: true
+        show: true,
       },
       {
-        icon: 'sale-icon.svg',
-        name: dragonLocale.t('actions.sale'),
+        icon: `sale-icon.svg`,
+        name: dragonLocale.t(`actions.sale`),
         method: sale,
-        show: true
+        show: true,
       },
       {
-        icon: 'gen-lab.svg',
-        name: dragonLocale.t('actions.mutate'),
+        icon: `gen-lab.svg`,
+        name: dragonLocale.t(`actions.mutate`),
         method: mutate,
-        show: dragon.stage > 0
+        show: dragon.stage > 0,
       },
       {
-        icon: 'arena.svg',
-        name: dragonLocale.t('actions.arena'),
+        icon: `arena.svg`,
+        name: dragonLocale.t(`actions.arena`),
         method: fight,
-        show: dragon.stage > 0
+        show: dragon.stage > 0,
       },
       {
-        icon: 'an-egg.svg',
-        name: dragonLocale.t('actions.breed'),
+        icon: `an-egg.svg`,
+        name: dragonLocale.t(`actions.breed`),
         method: breed,
-        show: dragon.stage > 0
+        show: dragon.stage > 0,
       },
       {
-        icon: 'suicide.svg',
-        name: dragonLocale.t('actions.suicide'),
+        icon: `suicide.svg`,
+        name: dragonLocale.t(`actions.suicide`),
         method: suicide,
-        show: true
+        show: true,
       },
-    ].filter((el) => el.show);
-  }, [dragon]);
+    ].filter((el) => el.show),
+    [dragon],
+  );
 
   const handleMobileActino = React.useCallback((action) => {
     action.method();
@@ -212,42 +214,24 @@ export const ActionBar: React.FC<Prop> = ({
         {currentAction === 1 ? (
           <Link href={`/fights/${dragon.id}`}>
             <ActionButton color={color}>
-              <img
-                src={`/icons/arena.svg`}
-                alt="action-icon"
-                height="38"
-              />
-              <Text size="16px">
-                {dragonLocale.t('actions.fight')}
-              </Text>
+              <img src="/icons/arena.svg" alt="action-icon" height="38" />
+              <Text size="16px">{dragonLocale.t(`actions.fight`)}</Text>
             </ActionButton>
           </Link>
         ) : null}
         {currentAction === 2 && isOwner ? (
-          <ActionButton
-            color={color}
-            onClick={RemoveBreed}
-          >
-            <img
-              src={`/icons/an-egg.svg`}
-              alt="action-icon"
-              height="38"
-            />
-            <Text size="16px">
-              {dragonLocale.t('actions.remove_breed')}
-            </Text>
+          <ActionButton color={color} onClick={RemoveBreed}>
+            <img src="/icons/an-egg.svg" alt="action-icon" height="38" />
+            <Text size="16px">{dragonLocale.t(`actions.remove_breed`)}</Text>
           </ActionButton>
         ) : null}
         {currentAction === 2 && !isOwner ? (
           <Link href={`/breed/${dragon.id}`}>
             <ActionButton color={color}>
-              <img
-                src={`/icons/an-egg.svg`}
-                alt="action-icon"
-                height="38"
-              />
-              <Text size="16px">\
-                {dragonLocale.t('actions.bread_with')}
+              <img src="/icons/an-egg.svg" alt="action-icon" height="38" />
+              <Text size="16px">
+                \
+                {dragonLocale.t(`actions.bread_with`)}
               </Text>
             </ActionButton>
           </Link>
@@ -255,16 +239,13 @@ export const ActionBar: React.FC<Prop> = ({
         {currentAction === 3 ? (
           <ActionButton
             color={color}
-            onClick={() => isOwner ? RemoveSale() : buy()}
+            onClick={() => (isOwner ? RemoveSale() : buy())}
           >
-            <img
-              src={`/icons/sale-icon.svg`}
-              alt="action-icon"
-              height="38"
-            />
+            <img src="/icons/sale-icon.svg" alt="action-icon" height="38" />
             <Text size="16px">
-              {isOwner ?
-                dragonLocale.t('actions.sale_remove') : commonLocale.t('buy')}
+              {isOwner
+                ? dragonLocale.t(`actions.sale_remove`)
+                : commonLocale.t(`buy`)}
             </Text>
           </ActionButton>
         ) : null}
@@ -283,9 +264,7 @@ export const ActionBar: React.FC<Prop> = ({
                   alt="action-icon"
                   height="38"
                 />
-                <Text size="16px">
-                  {action.name}
-                </Text>
+                <Text size="16px">{action.name}</Text>
               </ActionButton>
             ))}
           </ActionsRow>
@@ -293,46 +272,30 @@ export const ActionBar: React.FC<Prop> = ({
       </BrowserView>
       <MobileView>
         {dragon.actions.length === 0 ? (
-          <MobileButton
-            show={isOwner}
-            onClick={() => setModalShow(true)}
-          >
+          <MobileButton show={isOwner} onClick={() => setModalShow(true)}>
             <svg width="33" height="32" viewBox="0 0 33 32" fill="none">
               <path
                 d="M16.5 5L19.9914 11.1944L26.9616 12.6008L22.1493 17.8356L22.9656 24.8992L16.5 21.94L10.0344 24.8992L10.8507 17.8356L6.03838 12.6008L13.0086 11.1944L16.5 5Z"
                 fill={Colors.White}
               />
             </svg>
-            <Text>
-              {dragonLocale.t('actions.name')}
-            </Text>
+            <Text>{dragonLocale.t(`actions.name`)}</Text>
           </MobileButton>
         ) : null}
-        <Modal
-          show={modalShow}
-          onClose={() => setModalShow(false)}
-        >
+        <Modal show={modalShow} onClose={() => setModalShow(false)}>
           <ul>
             {actionList.map((action, index) => (
-              <ModalItem
-                key={index}
-                onClick={() => handleMobileActino(action)}
-              >
+              <ModalItem key={index} onClick={() => handleMobileActino(action)}>
                 <img
                   src={`/icons/${action.icon}`}
                   alt="action-icon"
                   height="25"
                 />
-                <Text css="margin-left: 10px;">
-                  {action.name}
-                </Text>
+                <Text css="margin-left: 10px;">{action.name}</Text>
               </ModalItem>
             ))}
-            <ModalItem
-              last
-              onClick={() => setModalShow(false)}
-            >
-              {commonLocale.t('cancel')}
+            <ModalItem last onClick={() => setModalShow(false)}>
+              {commonLocale.t(`cancel`)}
             </ModalItem>
           </ul>
         </Modal>

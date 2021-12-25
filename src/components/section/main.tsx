@@ -1,13 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useTranslation } from 'next-i18next';
-import Link from 'next/link';
+import React from "react";
+import styled from "styled-components";
+import { useTranslation } from "next-i18next";
+import Link from "next/link";
 
-import { Text } from 'components/text';
-import { Button } from 'components/button';
+import { Text } from "components/text";
+import { Button } from "components/button";
 
-import { Colors } from '@/config/colors';
-import { StyleFonts } from '@/config/fonts';
+import { Colors } from "@/config/colors";
+import { StyleFonts } from "@/config/fonts";
 
 const Container = styled.section`
   display: flex;
@@ -29,8 +29,13 @@ const Title = styled(Text)`
 const BuyButton = styled(Button)`
   margin-top: 30px;
   margin-bottom: 200px;
-  background-image: linear-gradient(90deg ,${Colors.Primary},#a621a3 50%,#870f84);
-  font-family: 'Fira Sans';
+  background-image: linear-gradient(
+    90deg,
+    ${Colors.Primary},
+    #a621a3 50%,
+    #870f84
+  );
+  font-family: "Fira Sans";
   font-size: 18px;
   line-height: 28px;
   font-weight: 600;
@@ -40,11 +45,11 @@ const BuyButton = styled(Button)`
 const FirstDragon = styled.div`
   @keyframes move_01 {
     from {
-      background-position-x: 0
+      background-position-x: 0;
     }
 
     to {
-      background-position-x: -41000px
+      background-position-x: -41000px;
     }
   }
 
@@ -67,11 +72,11 @@ const FirstDragon = styled.div`
 const SecondDragon = styled.div`
   @keyframes move_02 {
     from {
-      background-position-x: 0
+      background-position-x: 0;
     }
 
     to {
-      background-position-x: -24320px
+      background-position-x: -24320px;
     }
   }
 
@@ -93,33 +98,28 @@ const SecondDragon = styled.div`
   }
 `;
 
-export const MainSection: React.FC = () => {
-  const mainLocale = useTranslation('main');
-  const commonLocale = useTranslation('common');
+export var MainSection: React.FC = function () {
+  const mainLocale = useTranslation(`main`);
+  const commonLocale = useTranslation(`common`);
 
   return (
     <Container>
       <FirstDragon />
       <SecondDragon />
-      <Title
-        fontColors={Colors.White}
-        fontVariant={StyleFonts.FiraSansBold}
-      >
-        {commonLocale.t('name')}
+      <Title fontColors={Colors.White} fontVariant={StyleFonts.FiraSansBold}>
+        {commonLocale.t(`name`)}
       </Title>
       <Text
         fontVariant={StyleFonts.FiraSansRegular}
         css="text-align: center;max-width: 400px;"
       >
-        {mainLocale.t('description')}
+        {mainLocale.t(`description`)}
       </Text>
       <Link href="/buy">
-        <BuyButton>
-          {mainLocale.t('buy')}
-        </BuyButton>
+        <BuyButton>{mainLocale.t(`buy`)}</BuyButton>
       </Link>
     </Container>
   );
-}
+};
 
 export default MainSection;

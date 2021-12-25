@@ -1,8 +1,8 @@
-import React from 'react';
-import ProgressiveImage from 'react-progressive-graceful-image';
+import React from "react";
+import ProgressiveImage from "react-progressive-graceful-image";
 
-import { EMPTY } from 'config/emty';
-import { Colors } from '@/config/colors';
+import { EMPTY } from "config/emty";
+import { Colors } from "@/config/colors";
 
 type Prop = {
   id: string;
@@ -13,29 +13,19 @@ type Prop = {
   onClick?: () => void;
 };
 
-export const LegendaryAura: React.FC<Prop> = ({
+export var LegendaryAura: React.FC<Prop> = function ({
   id,
   color,
   url,
   width = 250,
   height = 250,
-  onClick = () => null
-}) => {
+  onClick = () => null,
+}) {
   const [loadError, setLoadError] = React.useState(false);
 
   return (
-    <svg
-      width={width}
-      height={height}
-      viewBox="0 0 265 274"
-      fill="none"
-    >
-      <circle
-        cx="130.986"
-        cy="137"
-        r="116"
-        fill={Colors.Black}
-      />
+    <svg width={width} height={height} viewBox="0 0 265 274" fill="none">
+      <circle cx="130.986" cy="137" r="116" fill={Colors.Black} />
       <circle
         cx="130.986"
         cy="137"
@@ -49,30 +39,24 @@ export const LegendaryAura: React.FC<Prop> = ({
         strokeWidth="2"
       />
       <defs>
-      <pattern
-        id={`pattern-${id}`}
-        patternContentUnits="objectBoundingBox"
-        width="1"
-        height="1"
-      >
-        <use
-          xlinkHref={`#dragon-${id}`}
-          transform="scale(0.0022)"
-        />
-      </pattern>
-        <ProgressiveImage
-            src={url}
-            placeholder={url}
-          >
-            {(src: string) => (
-              <image
-                id={`dragon-${id}`}
-                xlinkHref={loadError ? EMPTY : src}
-                color={color}
-                onError={() => setLoadError(true)}
-              />
-            )}
-          </ProgressiveImage>
+        <pattern
+          id={`pattern-${id}`}
+          patternContentUnits="objectBoundingBox"
+          width="1"
+          height="1"
+        >
+          <use xlinkHref={`#dragon-${id}`} transform="scale(0.0022)" />
+        </pattern>
+        <ProgressiveImage src={url} placeholder={url}>
+          {(src: string) => (
+            <image
+              id={`dragon-${id}`}
+              xlinkHref={loadError ? EMPTY : src}
+              color={color}
+              onError={() => setLoadError(true)}
+            />
+          )}
+        </ProgressiveImage>
       </defs>
     </svg>
   );

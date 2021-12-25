@@ -6,5 +6,5 @@ export enum Rarity {
   Legendary,
   Immortal,
   Arcana,
-  Ancient
+  Ancient,
 }

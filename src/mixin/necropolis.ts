@@ -1,6 +1,6 @@
-import { ZilPayBase } from 'mixin/zilpay-base';
-import { Contracts } from 'config/contracts';
-import { pushToList } from '@/store/transactions';
+import { ZilPayBase } from "mixin/zilpay-base";
+import { Contracts } from "config/contracts";
+import { pushToList } from "@/store/transactions";
 
 export interface RewardsParams {
   combat: string;
@@ -14,36 +14,36 @@ export interface RewardsParams {
   supplyCurve: string;
 }
 
-const f0 = BigInt('0');
-const f1 = BigInt('10');
-const f2 = BigInt('100');
-const f4 = BigInt('10000');
-const f7 = BigInt('1000000');
-const f6 = BigInt('10000000');
-const f9 = BigInt('100000000');
-const f11 = BigInt('10000000000');
-const f12 = BigInt('100000000000');
-const f13 = BigInt('1000000000000');
-const f15 = BigInt('100000000000000');
-const f16 = BigInt('1000000000000000');
-const f17 = BigInt('10000000000000000');
-const f18 = BigInt('100000000000000000');
-const f19 = BigInt('1000000000000000000');
-const f20 = BigInt('10000000000000000000');
-const f21 = BigInt('100000000000000000000');
-const f23 = BigInt('10000000000000000000000');
-const f22 = BigInt('100000000000000000000000');
-const f25 = BigInt('1000000000000000000000000');
-const f26 = BigInt('10000000000000000000000000');
-const f27 = BigInt('100000000000000000000000000');
-const f29 = BigInt('10000000000000000000000000000');
-const f31 = BigInt('1000000000000000000000000000000');
-const f33 = BigInt('100000000000000000000000000000000');
-const f35 = BigInt('10000000000000000000000000000000000');
-const f37 = BigInt('1000000000000000000000000000000000000');
-const f39 = BigInt('100000000000000000000000000000000000000');
-const f41 = BigInt('10000000000000000000000000000000000000000');
-const f43 = BigInt('1000000000000000000000000000000000000000000');
+const f0 = BigInt(`0`);
+const f1 = BigInt(`10`);
+const f2 = BigInt(`100`);
+const f4 = BigInt(`10000`);
+const f7 = BigInt(`1000000`);
+const f6 = BigInt(`10000000`);
+const f9 = BigInt(`100000000`);
+const f11 = BigInt(`10000000000`);
+const f12 = BigInt(`100000000000`);
+const f13 = BigInt(`1000000000000`);
+const f15 = BigInt(`100000000000000`);
+const f16 = BigInt(`1000000000000000`);
+const f17 = BigInt(`10000000000000000`);
+const f18 = BigInt(`100000000000000000`);
+const f19 = BigInt(`1000000000000000000`);
+const f20 = BigInt(`10000000000000000000`);
+const f21 = BigInt(`100000000000000000000`);
+const f23 = BigInt(`10000000000000000000000`);
+const f22 = BigInt(`100000000000000000000000`);
+const f25 = BigInt(`1000000000000000000000000`);
+const f26 = BigInt(`10000000000000000000000000`);
+const f27 = BigInt(`100000000000000000000000000`);
+const f29 = BigInt(`10000000000000000000000000000`);
+const f31 = BigInt(`1000000000000000000000000000000`);
+const f33 = BigInt(`100000000000000000000000000000000`);
+const f35 = BigInt(`10000000000000000000000000000000000`);
+const f37 = BigInt(`1000000000000000000000000000000000000`);
+const f39 = BigInt(`100000000000000000000000000000000000000`);
+const f41 = BigInt(`10000000000000000000000000000000000000000`);
+const f43 = BigInt(`1000000000000000000000000000000000000000000`);
 
 export class Necropolis {
   public zilpay = new ZilPayBase();
@@ -120,7 +120,7 @@ export class Necropolis {
   }
 
   public async getCurve() {
-    const field = 'curve';
+    const field = `curve`;
     const res = await this.zilpay.getSubState(Contracts.Necropolis, field);
     const [faceCurve, combatCurve, maxCurve, supplyCurve] = res.arguments;
 
@@ -128,37 +128,40 @@ export class Necropolis {
       faceCurve,
       combatCurve,
       maxCurve,
-      supplyCurve
+      supplyCurve,
     };
   }
 
   public async burnForRewards(tokenid: string) {
     const params = [
       {
-        vname: 'token_id',
-        type: 'Uint256',
-        value: tokenid
-      }
+        vname: `token_id`,
+        type: `Uint256`,
+        value: tokenid,
+      },
     ];
     const gas = {
-      gasPrice: '2000',
-      gaslimit: String(5000)
+      gasPrice: `2000`,
+      gaslimit: String(5000),
     };
-    const transition = 'CallRewards';
+    const transition = `CallRewards`;
 
-    const res = await this.zilpay.call({
-      transition,
-      params,
-      amount: '0',
-      contractAddress: Contracts.Necropolis,
-    }, gas);
+    const res = await this.zilpay.call(
+      {
+        transition,
+        params,
+        amount: `0`,
+        contractAddress: Contracts.Necropolis,
+      },
+      gas,
+    );
 
     pushToList({
       timestamp: new Date().getTime(),
       name: `Burn Dragon (#${tokenid}) for rewards.`,
       confirmed: false,
       hash: res.ID,
-      from: res.from
+      from: res.from,
     });
 
     return String(res.ID);

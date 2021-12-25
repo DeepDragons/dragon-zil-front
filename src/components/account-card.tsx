@@ -1,19 +1,19 @@
-import React from 'react';
-import copy from 'clipboard-copy';
-import { useStore } from 'effector-react';
-import { useTranslation } from 'next-i18next';
-import styled from 'styled-components';
+import React from "react";
+import copy from "clipboard-copy";
+import { useStore } from "effector-react";
+import { useTranslation } from "next-i18next";
+import styled from "styled-components";
 
-import { Text } from 'components/text';
-import { CopyIcon } from 'components/icons/copy';
-import { ViewIcon } from 'components/icons/view';
+import { Text } from "components/text";
+import { CopyIcon } from "components/icons/copy";
+import { ViewIcon } from "components/icons/view";
 
-import { Colors } from 'config/colors';
-import { StyleFonts } from '@/config/fonts';
-import { trim } from '@/lib/trim';
-import { viewAddress } from '@/lib/viewblock';
-import { Wallet } from '@/store/wallet';
-import { $net } from 'store/wallet-netwrok';
+import { Colors } from "config/colors";
+import { $net } from "store/wallet-netwrok";
+import { StyleFonts } from "@/config/fonts";
+import { trim } from "@/lib/trim";
+import { viewAddress } from "@/lib/viewblock";
+import { Wallet } from "@/store/wallet";
 
 const AccountContainer = styled.div`
   margin: 16px;
@@ -51,17 +51,16 @@ const CopyContainer = styled.a`
 
 type Prop = {
   wallet: Wallet | null;
-}
+};
 
-export const AccountCard: React.FC<Prop> = ({
-  wallet
-}) => {
-  const common = useTranslation('common');
+export var AccountCard: React.FC<Prop> = function ({ wallet }) {
+  const common = useTranslation(`common`);
   const netwrok = useStore($net);
 
-  const netColor = React.useMemo(() => {
-    return netwrok === 'mainnet' ? Colors.Muted : Colors.Danger;
-  }, [netwrok]);
+  const netColor = React.useMemo(
+    () => (netwrok === `mainnet` ? Colors.Muted : Colors.Danger),
+    [netwrok],
+  );
 
   return (
     <AccountContainer>
@@ -71,13 +70,13 @@ export const AccountCard: React.FC<Prop> = ({
         css="margin: 0;"
         size="16px"
       >
-        {common.t('connected_via')} {netwrok}.
+        {common.t(`connected_via`)}
+        {` `}
+        {netwrok}
+        .
       </Text>
-      <Text
-        fontVariant={StyleFonts.FiraSansMedium}
-        size="20px"
-      >
-        {wallet ? trim(wallet.bech32, 8) : ''}
+      <Text fontVariant={StyleFonts.FiraSansMedium} size="20px">
+        {wallet ? trim(wallet.bech32, 8) : ``}
       </Text>
       <Row>
         <CopyContainer onClick={() => copy(String(wallet?.bech32))}>
@@ -88,12 +87,12 @@ export const AccountCard: React.FC<Prop> = ({
             css="margin: 0;text-indent: 5px;"
             size="16px"
           >
-            {common.t('copy_adr')}
+            {common.t(`copy_adr`)}
           </Text>
         </CopyContainer>
         <CopyContainer
           className="second"
-          href={wallet ? viewAddress(String(wallet?.bech32)) : ''}
+          href={wallet ? viewAddress(String(wallet?.bech32)) : ``}
           target="_blank"
         >
           <ViewIcon />
@@ -103,7 +102,7 @@ export const AccountCard: React.FC<Prop> = ({
             css="margin: 0;text-indent: 5px;"
             size="16px"
           >
-            {common.t('view_explorer')}
+            {common.t(`view_explorer`)}
           </Text>
         </CopyContainer>
       </Row>

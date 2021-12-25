@@ -1,36 +1,38 @@
-import React from 'react';
-import { GetServerSidePropsContext, NextPage, NextPageContext } from 'next';
-import styled from 'styled-components';
-import { useTranslation } from 'next-i18next';
-import { useStore } from 'effector-react';
+import React from "react";
+import { GetServerSidePropsContext, NextPage, NextPageContext } from "next";
+import styled from "styled-components";
+import { useTranslation } from "next-i18next";
+import { useStore } from "effector-react";
 import Loader from "react-loader-spinner";
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import dynamic from 'next/dynamic';
-import Head from 'next/head';
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import dynamic from "next/dynamic";
+import Head from "next/head";
 
-import { Navbar } from 'components/nav-bar';
-import { Container } from 'components/pages/container';
-import { OpenGraph } from 'components/open-graph';
-import { BreadGensForm } from 'components/dragon/breed-gens';
-import { NoCache } from 'components/no-cache';
+import { Navbar } from "components/nav-bar";
+import { Container } from "components/pages/container";
+import { OpenGraph } from "components/open-graph";
+import { BreadGensForm } from "components/dragon/breed-gens";
+import { NoCache } from "components/no-cache";
 
-import { DragonAPI, DragonObject } from 'lib/api';
-import { BreedPlace } from 'mixin/breed';
-import { getRarity } from 'lib/rarity';
-import { ZIlPayToken } from 'mixin/zilpay-token';
-import { StyleFonts } from '@/config/fonts';
-import { Colors } from '@/config/colors';
-import { Wrapper, PageTitle } from 'components/dragon/styles';
-import { getPrice } from '@/lib/get-price';
-import { Contracts } from '@/config/contracts';
-import { $wallet } from 'store/wallet';
+import { DragonAPI, DragonObject } from "lib/api";
+import { BreedPlace } from "mixin/breed";
+import { getRarity } from "lib/rarity";
+import { ZIlPayToken } from "mixin/zilpay-token";
+import { Wrapper, PageTitle } from "components/dragon/styles";
+import { $wallet } from "store/wallet";
+import { StyleFonts } from "@/config/fonts";
+import { Colors } from "@/config/colors";
+import { getPrice } from "@/lib/get-price";
+import { Contracts } from "@/config/contracts";
 
-const CompareCombatGens = dynamic(import('components/dragon/compare-combat-gens'));
-const ChoiceWith = dynamic(import('components/dragon/choice-with'));
+const CompareCombatGens = dynamic(
+  import(`components/dragon/compare-combat-gens`),
+);
+const ChoiceWith = dynamic(import(`components/dragon/choice-with`));
 
 type Prop = {
   lover: DragonObject | null;
-}
+};
 
 const Column = styled.div`
   display: flex;
@@ -39,9 +41,9 @@ const Column = styled.div`
 const backend = new DragonAPI();
 const zilPayToken = new ZIlPayToken();
 const breedPlace = new BreedPlace();
-export const BreedStart: NextPage<Prop> = ({ lover }) => {
-  const breedingLocale = useTranslation('breeding');
-  const commonLocale = useTranslation('common');
+export var BreedStart: NextPage<Prop> = function ({ lover }) {
+  const breedingLocale = useTranslation(`breeding`);
+  const commonLocale = useTranslation(`common`);
 
   const wallet = useStore($wallet);
   const [myDragon, setMyDragon] = React.useState<DragonObject | null>(null);
@@ -50,13 +52,13 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
 
   const loverName = React.useMemo(() => {
     if (!lover || !lover.name) {
-      return '';
+      return ``;
     }
 
     return `- ${lover.name}`;
   }, [lover]);
 
-  const handleStartBreed = React.useCallback(async() => {
+  const handleStartBreed = React.useCallback(async () => {
     if (!lover || !myDragon) {
       return null;
     }
@@ -87,11 +89,9 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
     }
     return getRarity(myDragon.rarity, myDragon.gen_image);
   }, [myDragon]);
-  const amount = React.useMemo(() => {
-    return getPrice(lover?.actions);
-  }, [lover]);
+  const amount = React.useMemo(() => getPrice(lover?.actions), [lover]);
 
-  const hanldeUpdate = React.useCallback(async() => {
+  const hanldeUpdate = React.useCallback(async () => {
     setLoading(true);
     try {
       const allow = await zilPayToken.getAllowances(Contracts.Breed);
@@ -110,11 +110,25 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
     <Container>
       <Head>
         <title>
-          {commonLocale.t('name')} | {breedingLocale.t('title')} #{lover?.id} for {Number(amount) / 10**18} $ZLP
+          {commonLocale.t(`name`)}
+          {` `}
+          |
+          {breedingLocale.t(`title`)}
+          {` `}
+          #
+          {lover?.id}
+          {` `}
+          for
+          {` `}
+          {Number(amount) / 10 ** 18}
+          {` `}
+          $ZLP
         </title>
         <OpenGraph
           url={`https://dragonzil.xyz/breed/${lover?.id}`}
-          title={`${breedingLocale.t('title')} #${lover?.id} ${loverName} for ${Number(amount) / 10**18} $ZLP`}
+          title={`${breedingLocale.t(`title`)} #${lover?.id} ${loverName} for ${
+            Number(amount) / 10 ** 18
+          } $ZLP`}
           description={`Rarity #${lover?.id}: ${rarityLover?.name}`}
           img={lover?.url}
           alt={`Dragon ID #${lover?.id}`}
@@ -125,17 +139,20 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
       </Head>
       <Navbar />
       <Wrapper>
-        <PageTitle
-          fontVariant={StyleFonts.FiraSansBold}
-          size="56px"
-        >
-          {breedingLocale.t('title')} #{lover?.id}
+        <PageTitle fontVariant={StyleFonts.FiraSansBold} size="56px">
+          {breedingLocale.t(`title`)}
+          {` `}
+          #
+          {lover?.id}
         </PageTitle>
-        <PageTitle
-          fontVariant={StyleFonts.FiraSansMedium}
-          size="21px"
-        >
-          {commonLocale.t('price')} <span>{Number(amount) / 10**18} $ZLP</span>
+        <PageTitle fontVariant={StyleFonts.FiraSansMedium} size="21px">
+          {commonLocale.t(`price`)}
+          {` `}
+          <span>
+            {Number(amount) / 10 ** 18}
+            {` `}
+            $ZLP
+          </span>
         </PageTitle>
       </Wrapper>
       {lover && rarityLover ? (
@@ -156,8 +173,11 @@ export const BreedStart: NextPage<Prop> = ({ lover }) => {
                 height={10}
                 width={40}
               />
-            ) : needApprove ?
-              breedingLocale.t('approve') : breedingLocale.t('start_btn')}
+            ) : needApprove ? (
+              breedingLocale.t(`approve`)
+            ) : (
+              breedingLocale.t(`start_btn`)
+            )}
           </ChoiceWith>
           {myDragon && rarityMyDragon && rarityLover ? (
             <Column>
@@ -184,7 +204,7 @@ export const getStaticProps = async (props: GetServerSidePropsContext) => {
   if (props.res) {
     // res available only at server
     // no-store disable bfCache for any browser. So your HTML will not be cached
-    props.res.setHeader('Cache-Control', 'no-store');
+    props.res.setHeader(`Cache-Control`, `no-store`);
   }
 
   const dragonId = String(props.params && props.params.id);
@@ -193,19 +213,20 @@ export const getStaticProps = async (props: GetServerSidePropsContext) => {
   return {
     props: {
       lover,
-      ...await serverSideTranslations(props.locale || 'en', ['common', 'breeding'])
+      ...(await serverSideTranslations(props.locale || `en`, [
+        `common`,
+        `breeding`,
+      ])),
     },
-    revalidate: 1
+    revalidate: 1,
   };
 };
 
 export async function getStaticPaths() {
   return {
-    paths: [
-      '/breed/id',
-    ],
-    fallback: true
-  }
+    paths: [`/breed/id`],
+    fallback: true,
+  };
 }
 
 export default BreedStart;

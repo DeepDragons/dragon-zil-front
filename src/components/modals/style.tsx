@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { Text } from 'components/text';
-import { Button } from 'components/button';
+import { Text } from "components/text";
+import { Button } from "components/button";
 
 export const ModalTitle = styled(Text)`
   padding: 20px;

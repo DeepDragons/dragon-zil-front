@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { RarityImage } from './rarity-image';
+import { Colors } from "config/colors";
 
-import { Colors } from 'config/colors';
-import { DragonObject } from '@/lib/api';
-import { RARITY } from '@/lib/rarity';
+import { DragonObject } from "@/lib/api";
+import { RARITY } from "@/lib/rarity";
+import { RarityImage } from "./rarity-image";
 
 type Prop = {
   dragon: DragonObject;
@@ -13,7 +13,7 @@ type Prop = {
 };
 
 type ContainerProp = {
-  color: string | Colors;
+  color?: string | Colors;
 };
 
 export const Container = styled.div`
@@ -27,13 +27,13 @@ export const Container = styled.div`
   padding: 16px;
   margin: 15px;
   border-radius: 16px;
-  
+
   background: ${Colors.Darker};
   border: 1px solid transparent;
 
   animation: fadeInFromNone 0.5s ease-out;
 
-  transition: .3s;
+  transition: 0.3s;
 
   :hover {
     border: 1px solid ${(p: ContainerProp) => p.color};
@@ -46,11 +46,11 @@ export const Empety = styled.div`
   width: 250px;
 `;
 
-export const Card: React.FC<Prop> = ({
+export var Card: React.FC<Prop> = function ({
   dragon,
   children,
-  onSelect = () => null
-}) => {
+  onSelect = () => null,
+}) {
   return (
     <Container color={RARITY[dragon.rarity].color}>
       <RarityImage
@@ -62,4 +62,8 @@ export const Card: React.FC<Prop> = ({
       {children}
     </Container>
   );
+};
+
+Container.defaultProps = {
+  color: `transparent`,
 };

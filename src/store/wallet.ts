@@ -1,4 +1,4 @@
-import { createDomain } from 'effector';
+import { createDomain } from "effector";
 
 export interface Wallet {
   base16: string;

@@ -1,18 +1,18 @@
-import React from 'react';
-import { useStore } from 'effector-react';
-import { useTranslation } from 'next-i18next';
-import styled from 'styled-components';
+import React from "react";
+import { useStore } from "effector-react";
+import { useTranslation } from "next-i18next";
+import styled from "styled-components";
 
-import { Modal } from 'components/modal';
-import { Text } from 'components/text';
-import { CloseIcon } from 'components/icons/close';
-import { TxCard } from 'components/tx-card';
-import { AccountCard } from '@/components/account-card';
+import { Modal } from "components/modal";
+import { Text } from "components/text";
+import { CloseIcon } from "components/icons/close";
+import { TxCard } from "components/tx-card";
+import { Colors } from "config/colors";
+import { $transactions, resetTxList } from "store/transactions";
+import { AccountCard } from "@/components/account-card";
 
-import { Colors } from 'config/colors';
-import { StyleFonts } from '@/config/fonts';
-import { $transactions, resetTxList } from 'store/transactions';
-import { Wallet } from '@/store/wallet';
+import { StyleFonts } from "@/config/fonts";
+import { Wallet } from "@/store/wallet";
 
 type Prop = {
   show: boolean;
@@ -44,7 +44,7 @@ const Between = styled.div`
 
   span {
     cursor: pointer;
-    padding:16px;
+    padding: 16px;
 
     :hover {
       svg > path {
@@ -54,12 +54,12 @@ const Between = styled.div`
   }
 `;
 
-export const AccountModal: React.FC<Prop> = ({
+export var AccountModal: React.FC<Prop> = function ({
   show,
   onClose,
-  address
-}) => {
-  const common = useTranslation('common');
+  address,
+}) {
+  const common = useTranslation(`common`);
   const txList = useStore($transactions);
 
   return (
@@ -67,9 +67,7 @@ export const AccountModal: React.FC<Prop> = ({
       show={show}
       title={(
         <Between>
-          <Text css="padding: 0 16px;">
-            {common.t('account')}
-          </Text>
+          <Text css="padding: 0 16px;">{common.t(`account`)}</Text>
           <span onClick={onClose}>
             <CloseIcon />
           </span>
@@ -78,7 +76,7 @@ export const AccountModal: React.FC<Prop> = ({
       width="450px"
       onClose={onClose}
     >
-      <AccountCard wallet={address}/>
+      <AccountCard wallet={address} />
       <TxContainer>
         {txList.length === 0 ? (
           <Text
@@ -86,17 +84,13 @@ export const AccountModal: React.FC<Prop> = ({
             size="16px"
             css="text-align: center;margin-top: 10px;"
           >
-            {common.t('tx_appear_here')}
+            {common.t(`tx_appear_here`)}
           </Text>
         ) : (
           <div>
             <div className="header">
-              <Text
-                fontVariant={StyleFonts.FiraSansRegular}
-                size="16px"
-                css=""
-              >
-                {common.t('recent_txns')}
+              <Text fontVariant={StyleFonts.FiraSansRegular} size="16px" css="">
+                {common.t(`recent_txns`)}
               </Text>
               <Text
                 fontVariant={StyleFonts.FiraSansRegular}
@@ -105,14 +99,13 @@ export const AccountModal: React.FC<Prop> = ({
                 css="cursor: pointer;user-select: none;"
                 onClick={() => resetTxList(String(address?.base16))}
               >
-                ({common.t('clear_all')})
+                (
+                {common.t(`clear_all`)}
+                )
               </Text>
             </div>
             {txList.map((tx) => (
-              <TxCard
-                key={tx.hash}
-                tx={tx}
-              />
+              <TxCard key={tx.hash} tx={tx} />
             ))}
           </div>
         )}

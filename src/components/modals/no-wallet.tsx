@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import Image from 'next/image';
+import React from "react";
+import styled from "styled-components";
+import Image from "next/image";
 
-import { Modal } from 'components/modal';
-import { Text } from 'components/text';
-import { CloseIcon } from 'components/icons/close';
+import { Modal } from "components/modal";
+import { Text } from "components/text";
+import { CloseIcon } from "components/icons/close";
 
-import { Colors } from 'config/colors';
+import { Colors } from "config/colors";
 
 type Prop = {
   show: boolean;
@@ -30,7 +30,7 @@ const Between = styled.div`
 
   span {
     cursor: pointer;
-    padding:16px;
+    padding: 16px;
 
     :hover {
       svg > path {
@@ -40,25 +40,21 @@ const Between = styled.div`
   }
 `;
 
-export const WalletErrorModal: React.FC<Prop> = ({
+export var WalletErrorModal: React.FC<Prop> = function ({
   show,
   message,
-  onClose
-}) => {
-
+  onClose,
+}) {
   return (
     <Modal
       show={show}
       title={(
         <Between>
-          <Text
-            fontColors={Colors.Warning}
-            css="padding: 0 16px;"
-          >
+          <Text fontColors={Colors.Warning} css="padding: 0 16px;">
             {message}
           </Text>
           <span onClick={onClose}>
-            <CloseIcon color={Colors.Warning}/>
+            <CloseIcon color={Colors.Warning} />
           </span>
         </Between>
       )}
@@ -66,12 +62,10 @@ export const WalletErrorModal: React.FC<Prop> = ({
     >
       <Container>
         <Text>
-          For playing this NFT game, you need install the best ZIlliqa wallet (ZIlPay).
+          For playing this NFT game, you need install the best ZIlliqa wallet
+          (ZIlPay).
         </Text>
-        <a
-          href="https://zilpay.io/"
-          target="_blank"
-        >
+        <a href="https://zilpay.io/" target="_blank" rel="noreferrer">
           <Image
             src="/imgs/zil-pay-logo.png"
             width="150"

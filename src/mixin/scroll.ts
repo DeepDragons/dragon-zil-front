@@ -1,7 +1,10 @@
-import { useEffect } from "react"
+import { useEffect } from "react";
 
-export function useScrollEvent(listener: EventListenerOrEventListenerObject, passive = false) {
-  const event = 'scroll';
+export function useScrollEvent(
+  listener: EventListenerOrEventListenerObject,
+  passive = false,
+) {
+  const event = `scroll`;
 
   useEffect(() => {
     // initiate the event handler
@@ -10,6 +13,6 @@ export function useScrollEvent(listener: EventListenerOrEventListenerObject, pas
     // this will clean up the event every time the component is re-rendered
     return function cleanup() {
       window.removeEventListener(event, listener);
-    }
+    };
   });
 }

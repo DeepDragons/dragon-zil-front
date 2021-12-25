@@ -1,20 +1,20 @@
-import Loader from 'react-loader-spinner';
-import React from 'react';
-import styled from 'styled-components';
-import { Colors } from 'config/colors';
-import { Tx } from 'store/transactions';
-import { viewTransaction } from 'lib/viewblock';
-import { SuccessIcon } from 'components/icons/success';
-import { RejectIcon } from 'components/icons/reject';
+import Loader from "react-loader-spinner";
+import React from "react";
+import styled from "styled-components";
+import { Colors } from "config/colors";
+import { Tx } from "store/transactions";
+import { viewTransaction } from "lib/viewblock";
+import { SuccessIcon } from "components/icons/success";
+import { RejectIcon } from "components/icons/reject";
 
 type Prop = {
   tx: Tx;
-}
+};
 
 type StatusIconProp = {
   rejected?: boolean;
   loading: boolean;
-}
+};
 
 const Transaction = styled.a`
   cursor: pointer;
@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   font-weight: 500;
   font-size: 0.825rem;
   color: ${Colors.LightBlue};
-  text-decoration-thickness: .125em;
+  text-decoration-thickness: 0.125em;
   text-underline-offset: 1.5px;
   text-decoration: none;
 
@@ -44,49 +44,29 @@ const TextWrapper = styled.div`
   font-size: 0.825rem;
 `;
 
-const StatusIcon :React.FC<StatusIconProp> = ({
-  rejected,
-  loading
-}) => {
+const StatusIcon: React.FC<StatusIconProp> = function ({ rejected, loading }) {
   if (rejected && !loading) {
-    return (
-      <RejectIcon />
-    );
+    return <RejectIcon />;
   }
 
   if (!rejected && !loading) {
-    return (
-      <SuccessIcon />
-    );
+    return <SuccessIcon />;
   }
 
-  return (
-    <Loader
-      type="Puff"
-      color={Colors.LightBlue}
-      height={16}
-      width={16}
-    />
-  );
-}
+  return <Loader type="Puff" color={Colors.LightBlue} height={16} width={16} />;
+};
 
-export const TxCard: React.FC<Prop> = ({
-  tx
-}) => {
+export var TxCard: React.FC<Prop> = function ({ tx }) {
   return (
-    <Transaction
-      href={viewTransaction(tx.hash)}
-      target="_blank"
-    >
+    <Transaction href={viewTransaction(tx.hash)} target="_blank">
       <Wrapper>
         <TextWrapper>
-          {tx.name} ↗
+          {tx.name}
+          {` `}
+          ↗
         </TextWrapper>
       </Wrapper>
-      <StatusIcon
-        rejected={tx.error}
-        loading={!tx.confirmed}
-      />
+      <StatusIcon rejected={tx.error} loading={!tx.confirmed} />
     </Transaction>
   );
 };

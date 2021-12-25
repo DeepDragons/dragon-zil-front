@@ -1,5 +1,5 @@
-import React from 'react';
-import { Colors } from 'config/colors';
+import React from "react";
+import { Colors } from "config/colors";
 
 type Prop = {
   color?: string | Colors;
@@ -7,18 +7,13 @@ type Prop = {
   height?: number | string;
 };
 
-export const SpotsIcon: React.FC<Prop> = ({
+export var SpotsIcon: React.FC<Prop> = function ({
   color = Colors.Muted,
   width = 32,
-  height = 32
-}) => {
+  height = 32,
+}) {
   return (
-    <svg
-      width={width}
-      height={height}
-      viewBox="0 0 35 35"
-      fill="none"
-    >
+    <svg width={width} height={height} viewBox="0 0 35 35" fill="none">
       <path
         d="M16.0625 9.5C16.0625 11.9853 13.754 14 10.9062 14C8.05853 14 5.75 11.9853 5.75 9.5C5.75 7.01472 8.05853 5 10.9062 5C13.754 5 16.0625 7.01472 16.0625 9.5Z"
         fill={color}

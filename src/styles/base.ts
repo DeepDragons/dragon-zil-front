@@ -1,6 +1,5 @@
-import { createGlobalStyle } from 'styled-components';
-import { StyleFonts } from 'config/fonts';
-import { Colors } from 'config/colors';
+import { createGlobalStyle } from "styled-components";
+import { Colors } from "config/colors";
 
 export const BaseStyles = createGlobalStyle`
   ul {

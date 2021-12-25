@@ -1,8 +1,8 @@
-import React from 'react';
-import ProgressiveImage from 'react-progressive-graceful-image';
+import React from "react";
+import ProgressiveImage from "react-progressive-graceful-image";
 
-import { EMPTY } from 'config/emty';
-import { Colors } from '@/config/colors';
+import { EMPTY } from "config/emty";
+import { Colors } from "@/config/colors";
 
 type Prop = {
   id: string;
@@ -13,23 +13,18 @@ type Prop = {
   onClick?: () => void;
 };
 
-export const MythicalAura: React.FC<Prop> = ({
+export var MythicalAura: React.FC<Prop> = function ({
   id,
   color,
   url,
   width = 250,
   height = 250,
-  onClick = () => null
-}) => {
+  onClick = () => null,
+}) {
   const [loadError, setLoadError] = React.useState(false);
 
   return (
-    <svg
-      width={width}
-      height={height}
-      viewBox="0 0 275 265"
-      fill="none"
-    >
+    <svg width={width} height={height} viewBox="0 0 275 265" fill="none">
       <path
         d="M141.435 7.93856L181.378 71.8994L256.742 74.511L221.322 141.083L256.742 207.656L181.378 210.268L141.435 274.228L101.491 210.268L26.128 207.656L61.5479 141.083L26.128 74.511L101.491 71.8994L141.435 7.93856Z"
         stroke={color}
@@ -40,12 +35,7 @@ export const MythicalAura: React.FC<Prop> = ({
         stroke={color}
         strokeWidth="2"
       />
-      <circle
-        cx="140.934"
-        cy="141.083"
-        r="116"
-        fill={Colors.Black}
-      />
+      <circle cx="140.934" cy="141.083" r="116" fill={Colors.Black} />
       <circle
         cx="140.934"
         cy="141.083"
@@ -60,15 +50,9 @@ export const MythicalAura: React.FC<Prop> = ({
           width="1"
           height="1"
         >
-          <use
-            xlinkHref={`#dragon-${id}`}
-            transform="scale(0.0022)"
-          />
+          <use xlinkHref={`#dragon-${id}`} transform="scale(0.0022)" />
         </pattern>
-        <ProgressiveImage
-          src={url}
-          placeholder={url}
-        >
+        <ProgressiveImage src={url} placeholder={url}>
           {(src: string) => (
             <image
               id={`dragon-${id}`}

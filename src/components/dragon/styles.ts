@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import { Colors } from 'config/colors';
-import { Text } from 'components/text';
+import styled from "styled-components";
+import { Colors } from "config/colors";
+import { Text } from "components/text";
 
 type ContainerProp = {
   color: string;
-}
+};
 
 export const Container = styled.div`
   background: ${Colors.Secondary};
@@ -26,12 +26,13 @@ export const TitleRow = styled.div`
   display: flex;
   align-items: center;
 
-  img, svg {
+  img,
+  svg {
     margin-left: 10px;
   }
 `;
 export const Seporate = styled.hr`
-  border: 1px solid #2A3F5A;
+  border: 1px solid #2a3f5a;
 `;
 
 export const CardContainer = styled.div`

@@ -1,32 +1,32 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useRouter } from 'next/router';
-import { useStore } from 'effector-react';
-import { BrowserView, isMobile, MobileView } from 'react-device-detect';
-import { useTranslation } from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { NextPage, GetServerSidePropsContext } from 'next';
-import dynamic from 'next/dynamic';
-import Head from 'next/head';
+import React from "react";
+import styled from "styled-components";
+import { useRouter } from "next/router";
+import { useStore } from "effector-react";
+import { BrowserView, isMobile, MobileView } from "react-device-detect";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { NextPage, GetServerSidePropsContext } from "next";
+import dynamic from "next/dynamic";
+import Head from "next/head";
 
-import { Container } from 'components/pages/container';
-import { Navbar } from 'components/nav-bar';
-import { ActionBarTitle } from 'components/dragon/action-bar-title';
-import { UpgradeGenModal } from 'components/modals/upgrade-gen';
-import { NoCache } from 'components/no-cache';
+import { Container } from "components/pages/container";
+import { Navbar } from "components/nav-bar";
+import { ActionBarTitle } from "components/dragon/action-bar-title";
+import { UpgradeGenModal } from "components/modals/upgrade-gen";
+import { NoCache } from "components/no-cache";
 
-import { DragonAPI, DragonObject } from '@/lib/api';
-import { getRarity } from '@/lib/rarity';
-import { $wallet } from '@/store/wallet';
-import { GenLab } from 'mixin/gen-lab';
+import { GenLab } from "mixin/gen-lab";
+import { DragonAPI, DragonObject } from "@/lib/api";
+import { getRarity } from "@/lib/rarity";
+import { $wallet } from "@/store/wallet";
 
-const UpgradeGens = dynamic(import('components/dragon/upgrade-gens'));
-const MobileUpgradeGens = dynamic(import('components/mobile/upgrade-gens'));
-const RarityImage = dynamic(import('components/rarity-image'));
+const UpgradeGens = dynamic(import(`components/dragon/upgrade-gens`));
+const MobileUpgradeGens = dynamic(import(`components/mobile/upgrade-gens`));
+const RarityImage = dynamic(import(`components/rarity-image`));
 
 type Prop = {
   dragon: DragonObject;
-}
+};
 
 const Wrapper = styled.div`
   display: flex;
@@ -52,18 +52,18 @@ const TitleWrapper = styled.div`
 
 const backend = new DragonAPI();
 const genLab = new GenLab();
-export const GenLabPage: NextPage<Prop> = (props) => {
-  const mutateLocale = useTranslation('mutate');
-  const commonLocale = useTranslation('common');
+export var GenLabPage: NextPage<Prop> = function (props) {
+  const mutateLocale = useTranslation(`mutate`);
+  const commonLocale = useTranslation(`common`);
   const router = useRouter();
   const address = useStore($wallet);
-  const [price, setPrice] = React.useState<string | null>('0');
+  const [price, setPrice] = React.useState<string | null>(`0`);
   const [dragon, setDragon] = React.useState<DragonObject | null>(props.dragon);
   const [showModal, setShowModal] = React.useState(false);
   const [genToUpgrade, setGenToUpgrade] = React.useState({
     gen: 0,
     value: 0,
-    name: ''
+    name: ``,
   });
 
   const rarity = React.useMemo(() => {
@@ -74,18 +74,21 @@ export const GenLabPage: NextPage<Prop> = (props) => {
   }, [dragon]);
 
   const isOwner = React.useMemo(() => {
-    if (!dragon) return false; 
+    if (!dragon) return false;
     return dragon.owner.toLowerCase() === address?.base16.toLowerCase();
   }, [address, dragon]);
 
-  const handleUpgrade = React.useCallback((gen: number, value: number, name: string) => {
-    setGenToUpgrade({
-      gen,
-      value,
-      name
-    });
-    setShowModal(true);
-  }, []);
+  const handleUpgrade = React.useCallback(
+    (gen: number, value: number, name: string) => {
+      setGenToUpgrade({
+        gen,
+        value,
+        name,
+      });
+      setShowModal(true);
+    },
+    [],
+  );
 
   React.useEffect(() => {
     if (dragon) {
@@ -97,20 +100,22 @@ export const GenLabPage: NextPage<Prop> = (props) => {
   }, [dragon]);
 
   React.useEffect(() => {
-    if (dragon && address &&  dragon.owner.toLowerCase() !== address.base16.toLowerCase()) {
+    if (
+      dragon
+      && address
+      && dragon.owner.toLowerCase() !== address.base16.toLowerCase()
+    ) {
       router.push(`/dragon/${dragon.id}`);
     }
   }, [dragon, address]);
 
   React.useEffect(() => {
     if (dragon) {
-      backend
-        .getDragon(String(dragon.id))
-        .then((d) => {
-          if (d) {
-            setDragon(d);
-          }
-        });
+      backend.getDragon(String(dragon.id)).then((d) => {
+        if (d) {
+          setDragon(d);
+        }
+      });
     }
   }, []);
 
@@ -118,11 +123,19 @@ export const GenLabPage: NextPage<Prop> = (props) => {
     <Container>
       <Head>
         <title>
-          {commonLocale.t('name')} | {mutateLocale.t('sub_title')} #{dragon?.id}
+          {commonLocale.t(`name`)}
+          {` `}
+          |
+          {mutateLocale.t(`sub_title`)}
+          {` `}
+          #
+          {dragon?.id}
         </title>
         <meta
           property="og:title"
-          content={`${commonLocale.t('name')} | ${mutateLocale.t('sub_title')} #${dragon?.id}`}
+          content={`${commonLocale.t(`name`)} | ${mutateLocale.t(
+            `sub_title`,
+          )} #${dragon?.id}`}
           key="title"
         />
         <NoCache />
@@ -157,7 +170,7 @@ export const GenLabPage: NextPage<Prop> = (props) => {
           <MobileView>
             <MobileUpgradeGens
               color={rarity.color}
-              price={price ? price : 0}
+              price={price || 0}
               gens={dragon.gen_fight}
               onSelect={handleUpgrade}
             />
@@ -167,19 +180,19 @@ export const GenLabPage: NextPage<Prop> = (props) => {
       <UpgradeGenModal
         gen={genToUpgrade}
         show={showModal}
-        id={dragon?.id || ''}
-        price={price ? price : 0}
+        id={dragon?.id || ``}
+        price={price || 0}
         onClose={() => setShowModal(false)}
       />
     </Container>
   );
-}
+};
 
 export const getStaticProps = async (props: GetServerSidePropsContext) => {
   if (props.res) {
     // res available only at server
     // no-store disable bfCache for any browser. So your HTML will not be cached
-    props.res.setHeader('Cache-Control', 'no-store');
+    props.res.setHeader(`Cache-Control`, `no-store`);
   }
 
   const dragonId = String(props.params && props.params.id);
@@ -188,19 +201,20 @@ export const getStaticProps = async (props: GetServerSidePropsContext) => {
   return {
     props: {
       dragon,
-      ...await serverSideTranslations(props.locale || 'en', ['common', 'mutate'])
+      ...(await serverSideTranslations(props.locale || `en`, [
+        `common`,
+        `mutate`,
+      ])),
     },
-    revalidate: 1
+    revalidate: 1,
   };
 };
 
 export async function getStaticPaths() {
   return {
-    paths: [
-      '/mutate/id',
-    ],
-    fallback: true
-  }
+    paths: [`/mutate/id`],
+    fallback: true,
+  };
 }
 
 export default GenLabPage;

@@ -1,23 +1,23 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { Text } from 'components/text';
-import { useTranslation } from 'next-i18next';
-import { LinePercent } from 'components/line-percent';
-import { TitleUpgradeGens } from './upgrade-gens-title';
+import { Text } from "components/text";
+import { useTranslation } from "next-i18next";
+import { LinePercent } from "components/line-percent";
 
-import { Colors } from 'config/colors';
-import { AuraIcon } from 'components/icons/aura';
-import { HornsIcon } from 'components/icons/horns';
-import { GrowthsIcon } from 'components/icons/growths';
-import { SpotsIcon } from 'components/icons/spots';
-import { TailIcon } from 'components/icons/tail';
-import { WingsIcon } from 'components/icons/wings';
-import { BodyIcon } from 'components/icons/body';
-import { EyesIcon } from 'components/icons/eyes';
-import { HeadIcon } from 'components/icons/head';
+import { Colors } from "config/colors";
+import { AuraIcon } from "components/icons/aura";
+import { HornsIcon } from "components/icons/horns";
+import { GrowthsIcon } from "components/icons/growths";
+import { SpotsIcon } from "components/icons/spots";
+import { TailIcon } from "components/icons/tail";
+import { WingsIcon } from "components/icons/wings";
+import { BodyIcon } from "components/icons/body";
+import { EyesIcon } from "components/icons/eyes";
+import { HeadIcon } from "components/icons/head";
+import { TitleUpgradeGens } from "./upgrade-gens-title";
 
-import { Container, Seporate } from './styles';
+import { Container, Seporate } from "./styles";
 
 const GensContainer = styled.div`
   display: flex;
@@ -51,12 +51,12 @@ const Gen = styled.div`
 
 type ARarity = {
   gensImage: {
-      max: number;
-      value: string;
+    max: number;
+    value: string;
   }[];
   color: string;
   name: string;
-}
+};
 
 type Prop = {
   loverId: string;
@@ -67,71 +67,71 @@ type Prop = {
 
 function createIcon(index: number, color: string) {
   return [
-    <AuraIcon color={color}/>,
-    <HornsIcon color={color}/>,
-    <GrowthsIcon color={color}/>,
-    <SpotsIcon color={color}/>,
-    <TailIcon color={color}/>,
-    <WingsIcon color={color}/>,
-    <BodyIcon color={color}/>,
-    <EyesIcon color={color}/>,
-    <HeadIcon color={color}/>
+    <AuraIcon color={color} />,
+    <HornsIcon color={color} />,
+    <GrowthsIcon color={color} />,
+    <SpotsIcon color={color} />,
+    <TailIcon color={color} />,
+    <WingsIcon color={color} />,
+    <BodyIcon color={color} />,
+    <EyesIcon color={color} />,
+    <HeadIcon color={color} />,
   ][index];
 }
 
-export const BreadGensForm: React.FC<Prop> = ({
+export var BreadGensForm: React.FC<Prop> = function ({
   loverId,
   myDragonId,
   lover,
-  myDragon
-}) => {
-  const commonLocale = useTranslation('common');
+  myDragon,
+}) {
+  const commonLocale = useTranslation(`common`);
 
   return (
     <Container color={Colors.Muted}>
-      <TitleUpgradeGens>
-        {commonLocale.t('body_parts')}
-      </TitleUpgradeGens>
+      <TitleUpgradeGens>{commonLocale.t(`body_parts`)}</TitleUpgradeGens>
       <GensContainer>
-      <Row>
-        <GenNameContainer>
-          <Text fontColors={lover.color}>
-            #{loverId}
-          </Text>
-        </GenNameContainer>
-        <GenNameContainer>
-          <Text fontColors={myDragon.color}>
-            #{myDragonId}
-          </Text>
-        </GenNameContainer>
-      </Row>
-      <GensWrapper>
-        <Columns>
-          {lover.gensImage.map((g, index) => (
-            <Gen key={index}>
-              {createIcon(index, lover.color)}
-              <LinePercent
-                max={g.max}
-                value={Number(g.value)}
-                color={lover.color}
-              />
-            </Gen>
-          ))}
-        </Columns>
-        <Seporate />
-        <Columns>
-          {myDragon.gensImage.map((g, index) => (
-            <Gen key={index}>
-              <LinePercent
-                max={g.max}
-                value={Number(g.value)}
-                color={myDragon.color}
-              />
-              {createIcon(index, myDragon.color)}
-            </Gen>
-          ))}
-        </Columns>
-      </GensWrapper>
+        <Row>
+          <GenNameContainer>
+            <Text fontColors={lover.color}>
+              #
+              {loverId}
+            </Text>
+          </GenNameContainer>
+          <GenNameContainer>
+            <Text fontColors={myDragon.color}>
+              #
+              {myDragonId}
+            </Text>
+          </GenNameContainer>
+        </Row>
+        <GensWrapper>
+          <Columns>
+            {lover.gensImage.map((g, index) => (
+              <Gen key={index}>
+                {createIcon(index, lover.color)}
+                <LinePercent
+                  max={g.max}
+                  value={Number(g.value)}
+                  color={lover.color}
+                />
+              </Gen>
+            ))}
+          </Columns>
+          <Seporate />
+          <Columns>
+            {myDragon.gensImage.map((g, index) => (
+              <Gen key={index}>
+                <LinePercent
+                  max={g.max}
+                  value={Number(g.value)}
+                  color={myDragon.color}
+                />
+                {createIcon(index, myDragon.color)}
+              </Gen>
+            ))}
+          </Columns>
+        </GensWrapper>
       </GensContainer>
     </Container>
   );

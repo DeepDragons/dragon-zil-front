@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { StyleFonts } from 'config/fonts';
-import { Colors } from 'config/colors';
+import styled from "styled-components";
+import { StyleFonts } from "config/fonts";
+import { Colors } from "config/colors";
 
 type Prop = {
   size?: string;
@@ -23,7 +23,7 @@ export const ModalItem = styled.li`
   font-size: ${(props: Prop) => props.size};
   color: ${(props: Prop) => props.fontColors};
 
-  ${(p: Prop) => p.last ? '' : `border-bottom: 1px solid ${Colors.Muted}`};
+  ${(p: Prop) => (p.last ? `` : `border-bottom: 1px solid ${Colors.Muted}`)};
 
   ${(props: Prop) => props.css}
 `;
@@ -32,7 +32,7 @@ ModalItem.defaultProps = {
   fontVariant: StyleFonts.FiraSansRegular,
   fontColors: Colors.White,
   upperCase: false,
-  size: '18px',
+  size: `18px`,
   last: false,
-  css: '',
+  css: ``,
 };

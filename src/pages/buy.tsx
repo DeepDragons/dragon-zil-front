@@ -1,21 +1,21 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useStore } from 'effector-react';
-import { NextPage, GetServerSidePropsContext } from 'next';
-import { useTranslation } from 'next-i18next';
-import Head from 'next/head';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import React from "react";
+import styled from "styled-components";
+import { useStore } from "effector-react";
+import { NextPage, GetServerSidePropsContext } from "next";
+import { useTranslation } from "next-i18next";
+import Head from "next/head";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import { Navbar } from 'components/nav-bar';
+import { Navbar } from "components/nav-bar";
 import Loader from "react-loader-spinner";
-import { Text } from 'components/text';
-import { Tab } from 'components/tab';
-import { IntInput } from 'components/int-input';
-import { Button } from 'components/button';
+import { Text } from "components/text";
+import { Tab } from "components/tab";
+import { IntInput } from "components/int-input";
+import { Button } from "components/button";
 
-import { Colors } from '@/config/colors';
-import { StyleFonts } from '@/config/fonts';
-import { CrowdSale } from 'mixin/crowd-sale';
+import { CrowdSale } from "mixin/crowd-sale";
+import { Colors } from "@/config/colors";
+import { StyleFonts } from "@/config/fonts";
 
 const Container = styled.div`
   display: flex;
@@ -71,18 +71,14 @@ const BuyButton = styled(Button)`
 `;
 
 const tokens = [
-  <Text fontVariant={StyleFonts.FiraSansSemiBold}>
-    ZIL
-  </Text>,
-  <Text fontVariant={StyleFonts.FiraSansSemiBold}>
-    ZLP
-  </Text>
+  <Text fontVariant={StyleFonts.FiraSansSemiBold}>ZIL</Text>,
+  <Text fontVariant={StyleFonts.FiraSansSemiBold}>ZLP</Text>,
 ];
 
 const crowdSale = new CrowdSale();
-export const BuyPage: NextPage = () => {
-  const storeLocale = useTranslation('store');
-  const commonLocale = useTranslation('common');
+export var BuyPage: NextPage = function () {
+  const storeLocale = useTranslation(`store`);
+  const commonLocale = useTranslation(`common`);
   const crowdSaleStore = useStore(crowdSale.store);
   const [selected, setSelected] = React.useState(1);
   const [eggs, setEggs] = React.useState(1);
@@ -90,13 +86,13 @@ export const BuyPage: NextPage = () => {
 
   const amount = React.useMemo(() => {
     if (selected === 0) {
-      return Number(crowdSaleStore.zilPrice) / 10**12;
+      return Number(crowdSaleStore.zilPrice) / 10 ** 12;
     }
 
-    return Number(crowdSaleStore.zlpPrice) / 10**18;
+    return Number(crowdSaleStore.zlpPrice) / 10 ** 18;
   }, [crowdSaleStore, selected]);
 
-  const handleBuyEggs = React.useCallback(async() => {
+  const handleBuyEggs = React.useCallback(async () => {
     setLoading(true);
     try {
       if (selected === 0) {
@@ -112,20 +108,21 @@ export const BuyPage: NextPage = () => {
   }, [eggs, selected]);
 
   React.useEffect(() => {
-    crowdSale
-      .update()
-      .finally(() => null)
+    crowdSale.update().finally(() => null);
   }, []);
 
   return (
     <Container>
       <Head>
         <title>
-          {commonLocale.t('name')} | {storeLocale.t('title')}
+          {commonLocale.t(`name`)}
+          {` `}
+          |
+          {storeLocale.t(`title`)}
         </title>
         <meta
           property="og:title"
-          content={storeLocale.t('title')}
+          content={storeLocale.t(`title`)}
           key="title"
         />
       </Head>
@@ -138,33 +135,20 @@ export const BuyPage: NextPage = () => {
               size="24px"
               css="margin-right: 10px;"
             >
-              {storeLocale.t('title')}
+              {storeLocale.t(`title`)}
             </Text>
-            <img
-              src="/icons/egg.svg"
-              alt="egg"
-            />
+            <img src="/icons/egg.svg" alt="egg" />
           </TitleWrapper>
           <Wrapper>
-            <Tab
-              elements={tokens}
-              selected={selected}
-              onSelected={setSelected}
-            >
-              {storeLocale.t('choose_token')}
+            <Tab elements={tokens} selected={selected} onSelected={setSelected}>
+              {storeLocale.t(`choose_token`)}
             </Tab>
             <InputWrapper>
-              <IntInput
-                value={eggs}
-                onInput={setEggs}
-              >
-                {storeLocale.t('number_of_eggs')}
+              <IntInput value={eggs} onInput={setEggs}>
+                {storeLocale.t(`number_of_eggs`)}
               </IntInput>
             </InputWrapper>
-            <BuyButton
-              disabled={loading}
-              onClick={handleBuyEggs}
-            >
+            <BuyButton disabled={loading} onClick={handleBuyEggs}>
               {loading ? (
                 <Loader
                   type="ThreeDots"
@@ -174,7 +158,12 @@ export const BuyPage: NextPage = () => {
                 />
               ) : (
                 <div>
-                  {storeLocale.t('but_for')} {Math.round(amount * eggs)} ${tokens[selected]}
+                  {storeLocale.t(`but_for`)}
+                  {` `}
+                  {Math.round(amount * eggs)}
+                  {` `}
+                  $
+                  {tokens[selected]}
                 </div>
               )}
             </BuyButton>
@@ -183,14 +172,15 @@ export const BuyPage: NextPage = () => {
       </Main>
     </Container>
   );
-}
-
-export const getStaticProps = async (props: GetServerSidePropsContext) => {
-  return {
-    props: {
-      ...await serverSideTranslations(props.locale || 'en', ['common', 'store']),
-    }
-  };
 };
+
+export const getStaticProps = async (props: GetServerSidePropsContext) => ({
+  props: {
+    ...(await serverSideTranslations(props.locale || `en`, [
+      `common`,
+      `store`,
+    ])),
+  },
+});
 
 export default BuyPage;

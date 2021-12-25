@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { Wrapper } from './card';
+import { Wrapper } from "./card";
 
 export const SkeletForm = styled(Wrapper)`
   min-width: 300px;

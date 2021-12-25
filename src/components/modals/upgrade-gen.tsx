@@ -1,17 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 import Loader from "react-loader-spinner";
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from "next-i18next";
 
-import { Modal } from 'components/modal';
-import { Text } from 'components/text';
-import { ModalTitle, ButtonsWrapper, ModalButton } from './style';
+import { Modal } from "components/modal";
+import { Text } from "components/text";
 
-import { Colors } from 'config/colors';
-import { StyleFonts } from '@/config/fonts';
-import { GenLab } from 'mixin/gen-lab';
-import { ZIlPayToken } from 'mixin/zilpay-token';
-import { Contracts } from '@/config/contracts';
+import { Colors } from "config/colors";
+import { GenLab } from "mixin/gen-lab";
+import { ZIlPayToken } from "mixin/zilpay-token";
+import { StyleFonts } from "@/config/fonts";
+import { Contracts } from "@/config/contracts";
+import { ModalTitle, ButtonsWrapper, ModalButton } from "./style";
 
 const Container = styled.div`
   padding: 24px;
@@ -37,19 +37,19 @@ type Prop = {
 const zilPayToken = new ZIlPayToken();
 const genLab = new GenLab();
 let load = false;
-export const UpgradeGenModal: React.FC<Prop> = ({
+export var UpgradeGenModal: React.FC<Prop> = function ({
   show,
   gen,
   id,
   price,
-  onClose
-}) => {
-  const mutateLocale = useTranslation('mutate');
-  const commonLocale = useTranslation('common');
+  onClose,
+}) {
+  const mutateLocale = useTranslation(`mutate`);
+  const commonLocale = useTranslation(`common`);
   const [loading, setLoading] = React.useState(false);
   const [needApprove, setNeedApprove] = React.useState(true);
 
-  const hanldeUpdate = React.useCallback(async() => {
+  const hanldeUpdate = React.useCallback(async () => {
     setLoading(true);
     try {
       const allow = await zilPayToken.getAllowances(Contracts.GenLab);
@@ -61,7 +61,7 @@ export const UpgradeGenModal: React.FC<Prop> = ({
     setLoading(false);
   }, [price]);
 
-  const handleUpgrade = React.useCallback(async() => {
+  const handleUpgrade = React.useCallback(async () => {
     setLoading(true);
     load = true;
     try {
@@ -87,7 +87,6 @@ export const UpgradeGenModal: React.FC<Prop> = ({
     onClose();
   }, []);
 
-
   React.useEffect(() => {
     if (show) {
       hanldeUpdate();
@@ -97,11 +96,11 @@ export const UpgradeGenModal: React.FC<Prop> = ({
   return (
     <Modal
       title={(
-        <ModalTitle
-          fontVariant={StyleFonts.FiraSansBold}
-          size="32px"
-        >
-          {mutateLocale.t('upgrade_btn')} #{id}
+        <ModalTitle fontVariant={StyleFonts.FiraSansBold} size="32px">
+          {mutateLocale.t(`upgrade_btn`)}
+          {` `}
+          #
+          {id}
         </ModalTitle>
       )}
       show={show}
@@ -113,31 +112,31 @@ export const UpgradeGenModal: React.FC<Prop> = ({
           size="22px"
           css="text-align: center;"
         >
-          {loading ? commonLocale.t('do_not_refresh') : mutateLocale.t('modal_sub_title')}
+          {loading
+            ? commonLocale.t(`do_not_refresh`)
+            : mutateLocale.t(`modal_sub_title`)}
         </Description>
         <br />
         {loading ? null : (
           <>
-            <Description
-              fontColors={Colors.Muted}
-              size="19px"
-              css="margin: 0;"
-            >
-              {mutateLocale.t('gen_index')}: <span>{gen.gen + 1}</span>
+            <Description fontColors={Colors.Muted} size="19px" css="margin: 0;">
+              {mutateLocale.t(`gen_index`)}
+              :
+              <span>{gen.gen + 1}</span>
             </Description>
-            <Description
-              fontColors={Colors.Muted}
-              size="19px"
-              css="margin: 0;"
-            >
-              {mutateLocale.t('current_gen')}: <span>{gen.value}</span>
+            <Description fontColors={Colors.Muted} size="19px" css="margin: 0;">
+              {mutateLocale.t(`current_gen`)}
+              :
+              <span>{gen.value}</span>
             </Description>
-            <Description
-              fontColors={Colors.Muted}
-              size="19px"
-              css="margin: 0;"
-            >
-              {commonLocale.t('price')}: <span>{price} $ZLP</span>
+            <Description fontColors={Colors.Muted} size="19px" css="margin: 0;">
+              {commonLocale.t(`price`)}
+              :
+              <span>
+                {price}
+                {` `}
+                $ZLP
+              </span>
             </Description>
           </>
         )}
@@ -155,14 +154,18 @@ export const UpgradeGenModal: React.FC<Prop> = ({
                 height={10}
                 width={40}
               />
-            ) : needApprove ? mutateLocale.t('approve') : mutateLocale.t('upgrade_btn')}
+            ) : needApprove ? (
+              mutateLocale.t(`approve`)
+            ) : (
+              mutateLocale.t(`upgrade_btn`)
+            )}
           </ModalButton>
           <ModalButton
             color={Colors.Dark}
             disabled={loading}
             onClick={hanldeClose}
           >
-            {commonLocale.t('cancel')}
+            {commonLocale.t(`cancel`)}
           </ModalButton>
         </ButtonsWrapper>
       </Container>

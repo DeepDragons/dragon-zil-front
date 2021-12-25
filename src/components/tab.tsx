@@ -1,18 +1,18 @@
-import React from 'react';
+import React from "react";
 
-import styled from 'styled-components';
-import Link from 'next/link';
+import styled from "styled-components";
+import Link from "next/link";
 
-import { Text } from 'components/text';
+import { Text } from "components/text";
 
-import { StyleFonts } from 'config/fonts';
-import { Colors } from 'config/colors';
+import { StyleFonts } from "config/fonts";
+import { Colors } from "config/colors";
 
 type Prop = {
   elements: JSX.Element[];
   selected: number;
-  onSelected: (index: number) => void
-}
+  onSelected: (index: number) => void;
+};
 
 const Container = styled.div`
   display: flex;
@@ -37,21 +37,18 @@ const Li = styled.li`
   width: fit-content;
 
   border-radius: 16px;
-  border: 1px solid ${
-    (p: { selected: boolean }) => p.selected ? Colors.White : 'transparent'
-  };
+  border: 1px solid
+    ${(p: { selected: boolean }) => (p.selected ? Colors.White : `transparent`)};
 `;
-export const Tab: React.FC<Prop> = ({
+export var Tab: React.FC<Prop> = function ({
   children,
   elements,
   selected,
-  onSelected
-}) => {
+  onSelected,
+}) {
   return (
     <Container>
-      <Text>
-        {children}
-      </Text>
+      <Text>{children}</Text>
       <Ul>
         {elements.map((el, index) => (
           <Li

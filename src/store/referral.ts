@@ -1,8 +1,8 @@
-import { createDomain } from 'effector';
-import { Contracts } from 'config/contracts';
+import { createDomain } from "effector";
+import { Contracts } from "config/contracts";
 
 const refDomain = createDomain();
-const key = 'referral';
+const key = `referral`;
 let initState = String(Contracts.NIL);
 
 if (process.browser) {

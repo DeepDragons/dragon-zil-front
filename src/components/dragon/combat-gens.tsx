@@ -1,19 +1,19 @@
-import React from 'react';
-import styled from 'styled-components';
-import { isBrowser } from 'react-device-detect';
-import { useTranslation } from 'next-i18next';
+import React from "react";
+import styled from "styled-components";
+import { isBrowser } from "react-device-detect";
+import { useTranslation } from "next-i18next";
 
-import { Text } from 'components/text';
-import { Column } from 'components/column';
-import { AttackIcon } from 'components/icons/attack';
-import { DefenceIcon } from 'components/icons/defence';
+import { Text } from "components/text";
+import { Column } from "components/column";
+import { AttackIcon } from "components/icons/attack";
+import { DefenceIcon } from "components/icons/defence";
 
-import { Colors } from 'config/colors';
-import { StyleFonts } from '@/config/fonts';
-import { radar } from 'lib/radar';
-import { chunkArray } from 'lib/chunks';
+import { Colors } from "config/colors";
+import { radar } from "lib/radar";
+import { chunkArray } from "lib/chunks";
+import { StyleFonts } from "@/config/fonts";
 
-import { Container, Seporate } from './styles';
+import { Container, Seporate } from "./styles";
 
 const TitleRow = styled.div`
   display: flex;
@@ -65,19 +65,14 @@ type Prop = {
   color: string;
 };
 
-export const CombatGens: React.FC<Prop> = ({
-  gens,
-  color
-}) => {
-  const dragonLocale = useTranslation('dragon');
+export var CombatGens: React.FC<Prop> = function ({ gens, color }) {
+  const dragonLocale = useTranslation(`dragon`);
   const [selected, setSelected] = React.useState(isBrowser ? 1 : 0);
 
-  const gensArray = React.useMemo(() => {
-    return chunkArray(gens, 10);
-  }, [gens]);
+  const gensArray = React.useMemo(() => chunkArray(gens, 10), [gens]);
 
   React.useEffect(() => {
-    const ctx = document.querySelector('#combat') as HTMLCanvasElement;
+    const ctx = document.querySelector(`#combat`) as HTMLCanvasElement;
 
     try {
       if (ctx && isBrowser) {
@@ -92,21 +87,15 @@ export const CombatGens: React.FC<Prop> = ({
     <Container color={color}>
       <TitleRow>
         <TitleRow>
-          <Text
-            fontVariant={StyleFonts.FiraSansSemiBold}
-            size="24px"
-          >
-            {dragonLocale.t('combat_gens')}
+          <Text fontVariant={StyleFonts.FiraSansSemiBold} size="24px">
+            {dragonLocale.t(`combat_gens`)}
           </Text>
-          <img
-            src="/icons/gens.svg"
-            alt="gens"
-          />
+          <img src="/icons/gens.svg" alt="gens" />
         </TitleRow>
         <TabRow>
           <TabSelector
             style={{
-              background: selected === 0 ? Colors.Darker : 'none'
+              background: selected === 0 ? Colors.Darker : `none`,
             }}
             src="/icons/graph.svg"
             alt="graph"
@@ -115,7 +104,7 @@ export const CombatGens: React.FC<Prop> = ({
           {isBrowser ? (
             <TabSelector
               style={{
-                background: selected === 1 ? Colors.Darker : 'none'
+                background: selected === 1 ? Colors.Darker : `none`,
               }}
               src="/icons/radar.svg"
               alt="radar"
@@ -126,10 +115,7 @@ export const CombatGens: React.FC<Prop> = ({
       </TitleRow>
       {selected === 1 ? (
         <div className="radar">
-          <canvas
-            id="combat"
-            height="410"
-          />
+          <canvas id="combat" height="410" />
         </div>
       ) : (
         <GensContainer>
@@ -146,20 +132,22 @@ export const CombatGens: React.FC<Prop> = ({
                   color={Colors.Success}
                   max={99}
                   value={gen}
-                  invert={true}
+                  invert
                 />
               ))}
             </GensContainer>
             <GensContainer>
-              {Array(10).fill('').map((_, index) => (
-                <GenNumber
-                  key={`id-${index}`}
-                  fontColors={Colors.Muted}
-                  size="18px"
-                >
-                  {index + 1}
-                </GenNumber>
-              ))}
+              {Array(10)
+                .fill(``)
+                .map((_, index) => (
+                  <GenNumber
+                    key={`id-${index}`}
+                    fontColors={Colors.Muted}
+                    size="18px"
+                  >
+                    {index + 1}
+                  </GenNumber>
+                ))}
             </GensContainer>
             <GensContainer>
               {gensArray[1].map((gen, index) => (

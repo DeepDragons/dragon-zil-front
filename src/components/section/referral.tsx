@@ -1,14 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useTranslation } from 'next-i18next';
-import Link from 'next/link';
+import React from "react";
+import styled from "styled-components";
+import { useTranslation } from "next-i18next";
+import Link from "next/link";
 
-import { Text } from 'components/text';
-import { Button } from 'components/button';
+import { Text } from "components/text";
+import { Button } from "components/button";
 
-import { Colors } from '@/config/colors';
-import { StyleFonts } from '@/config/fonts';
-import { BrowserView, TabletView } from 'react-device-detect';
+import { BrowserView, TabletView } from "react-device-detect";
+import { Colors } from "@/config/colors";
+import { StyleFonts } from "@/config/fonts";
 
 const Container = styled.section`
   display: flex;
@@ -19,7 +19,11 @@ const Container = styled.section`
   margin-bottom: 200px;
 `;
 const SubTitle = styled(Text)`
-  background: linear-gradient(to right, #fff 40%, rgba(163, 163, 163, 0.3) 100%);
+  background: linear-gradient(
+    to right,
+    #fff 40%,
+    rgba(163, 163, 163, 0.3) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: center;
@@ -39,43 +43,30 @@ const TextWrapper = styled.div`
   padding: 16px;
 `;
 
-export const ReferralSection: React.FC = () => {
-  const mainLocale = useTranslation('main');
-  const commonLocale = useTranslation('common');
+export var ReferralSection: React.FC = function () {
+  const mainLocale = useTranslation(`main`);
+  const commonLocale = useTranslation(`common`);
 
   return (
     <Container>
-      <SubTitle
-        size="62px"
-        css="margin: 0;"
-      >
-        {mainLocale.t('section_3.title')}
+      <SubTitle size="62px" css="margin: 0;">
+        {mainLocale.t(`section_3.title`)}
       </SubTitle>
-      <Text>
-        {mainLocale.t('section_3.sub_title')}
-      </Text>
+      <Text>{mainLocale.t(`section_3.sub_title`)}</Text>
       <Wrapper>
-        <img
-          height="300"
-          src="/imgs/ic_share_large.webp"
-          alt="ref"
-        />
+        <img height="300" src="/imgs/ic_share_large.webp" alt="ref" />
         <TextWrapper>
-          <Text>
-            {mainLocale.t('section_3.link_name')}
-          </Text>
-          <Text>
-            {mainLocale.t('section_3.description')}
-          </Text>
+          <Text>{mainLocale.t(`section_3.link_name`)}</Text>
+          <Text>{mainLocale.t(`section_3.description`)}</Text>
           <Link href="/referral">
             <Button css="margin-top: 30px;">
-              {mainLocale.t('section_3.btn')}
+              {mainLocale.t(`section_3.btn`)}
             </Button>
           </Link>
         </TextWrapper>
       </Wrapper>
     </Container>
   );
-}
+};
 
 export default ReferralSection;

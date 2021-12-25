@@ -1,4 +1,4 @@
-import { ZIlPayInject } from 'types/zil-pay';
+import { ZIlPayInject } from "types/zil-pay";
 
 type Params = {
   contractAddress: string;
@@ -9,8 +9,8 @@ type Params = {
 
 const window = global.window as any;
 const DEFAUL_GAS = {
-  gasPrice: '2000',
-  gaslimit: '5000'
+  gasPrice: `2000`,
+  gaslimit: `5000`,
 };
 export class ZilPayBase {
   public zilpay: () => Promise<ZIlPayInject>;
@@ -24,12 +24,12 @@ export class ZilPayBase {
       const i = setInterval(() => {
         if (k >= 10) {
           clearInterval(i);
-          return reject(new Error('ZIlPay is not installed.'));
+          return reject(new Error(`ZIlPay is not installed.`));
         }
 
-        if (typeof window['zilPay'] !== 'undefined') {
+        if (typeof window.zilPay !== `undefined`) {
           clearInterval(i);
-          return resolve(window['zilPay']);
+          return resolve(window.zilPay);
         }
 
         k++;
@@ -43,13 +43,11 @@ export class ZilPayBase {
     }
 
     const zilPay = await this.zilpay();
-    const res = await zilPay
-      .blockchain
-      .getSmartContractSubState(
-        contract,
-        field,
-        params
-      );
+    const res = await zilPay.blockchain.getSmartContractSubState(
+      contract,
+      field,
+      params,
+    );
 
     if (res.error) {
       throw new Error(res.error.message);
@@ -76,11 +74,7 @@ export class ZilPayBase {
       return null;
     }
     const zilPay = await this.zilpay();
-    const res = await zilPay
-      .blockchain
-      .getSmartContractState(
-        contract
-      );
+    const res = await zilPay.blockchain.getSmartContractState(contract);
 
     if (res.error) {
       throw new Error(res.error.message);
@@ -95,9 +89,7 @@ export class ZilPayBase {
     }
 
     const zilPay = await this.zilpay();
-    const { error, result } = await zilPay
-      .blockchain
-      .getBlockChainInfo();
+    const { error, result } = await zilPay.blockchain.getBlockChainInfo();
 
     if (error) {
       throw new Error(error.message);
@@ -112,16 +104,12 @@ export class ZilPayBase {
     const contract = contracts.at(data.contractAddress);
     const gasPrice = utils.units.toQa(gas.gasPrice, utils.units.Units.Li);
     const gasLimit = utils.Long.fromNumber(gas.gaslimit);
-    const amount = data.amount || '0';
+    const amount = data.amount || `0`;
 
-    return await contract.call(
-      data.transition,
-      data.params,
-      {
-        amount,
-        gasPrice,
-        gasLimit
-      }
-    );
+    return await contract.call(data.transition, data.params, {
+      amount,
+      gasPrice,
+      gasLimit,
+    });
   }
 }

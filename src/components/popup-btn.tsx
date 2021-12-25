@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { Text } from 'components/text';
-import { Button } from 'components/button';
+import { Text } from "components/text";
+import { Button } from "components/button";
 
-import { Colors } from '@/config/colors';
-import { StyleFonts } from '@/config/fonts';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from "next-i18next";
+import { Colors } from "@/config/colors";
+import { StyleFonts } from "@/config/fonts";
 
 type Prop = {
   onApply: (from: number, to: number) => void;
@@ -16,7 +16,7 @@ type MenuProp = {
   open: boolean;
 };
 
-const Container = styled.div`  
+const Container = styled.div`
   cursor: pointer;
   background: ${Colors.Darker};
   padding: 5px;
@@ -41,14 +41,14 @@ const Menu = styled.div`
   flex-direction: column;
 
   position: absolute;
-  display: ${(p: MenuProp) => p.open ? 'block' : 'none'};
+  display: ${(p: MenuProp) => (p.open ? `block` : `none`)};
   z-index: 20;
 
   border-radius: 16px;
   padding: 16px;
   min-width: 291px;
   min-height: 175px;
-  transform: translate(-52%,-26%);
+  transform: translate(-52%, -26%);
 
   background: ${Colors.Darker};
 
@@ -88,7 +88,7 @@ const Input = styled.input`
   border: 1px solid ${Colors.Muted};
 
   font-family: ${StyleFonts.FiraSansRegular};
-  
+
   outline: none;
   color: ${Colors.Muted};
   font-size: 20px;
@@ -97,34 +97,31 @@ const Input = styled.input`
   padding: 5px;
 `;
 
-export const PopUpButton: React.FC<Prop> = ({
-  children,
-  onApply
-}) => {
-  const commonLocale = useTranslation('common');
+export var PopUpButton: React.FC<Prop> = function ({ children, onApply }) {
+  const commonLocale = useTranslation(`common`);
   const [opned, setOpened] = React.useState(false);
   const [from, setFrom] = React.useState(0);
   const [to, setTo] = React.useState(0);
 
-  const disabled = React.useMemo(() => {
-    return from > to || from === 0 && to === 0;
-  }, [from, to, opned]);
+  const disabled = React.useMemo(
+    () => from > to || (from === 0 && to === 0),
+    [from, to, opned],
+  );
 
-  const handleApply = React.useCallback((event) => {
-    event.preventDefault();
-    setOpened(false);
-    onApply(from, to);
-  }, [from, to]);
+  const handleApply = React.useCallback(
+    (event) => {
+      event.preventDefault();
+      setOpened(false);
+      onApply(from, to);
+    },
+    [from, to],
+  );
 
   return (
-    <React.Fragment>
-      {opned ? (
-        <Closer onClick={() => setOpened(false)}/>
-      ) : null}
+    <>
+      {opned ? <Closer onClick={() => setOpened(false)} /> : null}
       <Container onClick={() => setOpened(true)}>
-        <Text fontVariant={StyleFonts.FiraSansMedium}>
-          {children}
-        </Text>
+        <Text fontVariant={StyleFonts.FiraSansMedium}>{children}</Text>
         <Menu open={opned}>
           <MenuWrapper onSubmit={handleApply}>
             <Row>
@@ -133,7 +130,7 @@ export const PopUpButton: React.FC<Prop> = ({
                   fontVariant={StyleFonts.FiraSansMedium}
                   fontColors={Colors.Muted}
                 >
-                  {commonLocale.t('from')}
+                  {commonLocale.t(`from`)}
                 </Text>
                 <Input
                   defaultValue={from}
@@ -142,15 +139,13 @@ export const PopUpButton: React.FC<Prop> = ({
                   onInput={(event) => setFrom(Number(event.currentTarget.value))}
                 />
               </Column>
-              <Text size="40px">
-                -
-              </Text>
+              <Text size="40px">-</Text>
               <Column>
                 <Text
                   fontVariant={StyleFonts.FiraSansMedium}
                   fontColors={Colors.Muted}
                 >
-                  {commonLocale.t('to')}
+                  {commonLocale.t(`to`)}
                 </Text>
                 <Input
                   defaultValue={to}
@@ -165,11 +160,11 @@ export const PopUpButton: React.FC<Prop> = ({
               disabled={disabled}
               css="width: 100%;"
             >
-              {commonLocale.t('apply')}
+              {commonLocale.t(`apply`)}
             </Button>
           </MenuWrapper>
         </Menu>
       </Container>
-    </React.Fragment>
+    </>
   );
 };

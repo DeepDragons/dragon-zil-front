@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { Colors } from 'config/colors';
+import { Colors } from "config/colors";
 
 const Container = styled.div`
   position: fixed;
@@ -28,7 +28,7 @@ const Container = styled.div`
       z-index: 100;
       border-radius: 16px;
       box-shadow: 0 0 8px ${Colors.Black};
-      animation: dialog-scale-start .3s ease-in-out forwards;
+      animation: dialog-scale-start 0.3s ease-in-out forwards;
     }
   }
 `;
@@ -40,37 +40,38 @@ type Prop = {
   onClose: () => void;
 };
 
-export const Modal: React.FC<Prop> = ({
+export var Modal: React.FC<Prop> = function ({
   children,
   title,
   show,
   width,
-  onClose
-}) => {
+  onClose,
+}) {
   const node = React.useRef<HTMLDivElement | null>(null);
 
-  const onToggle = React.useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (e.target == node.current) {
-      onClose();
-    }
-  }, [node]);
+  const onToggle = React.useCallback(
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      if (e.target == node.current) {
+        onClose();
+      }
+    },
+    [node],
+  );
 
   return (
     <Container
-      className={show ? 'show-dialog' : ''}
-      ref={(n) => node.current = n}
+      className={show ? `show-dialog` : ``}
+      ref={(n) => (node.current = n)}
       onClick={onToggle}
     >
       <div
         className="modal-md"
         style={{
-          width
+          width,
         }}
       >
         {title}
-        <div>
-          {children}
-        </div>
+        <div>{children}</div>
       </div>
     </Container>
   );

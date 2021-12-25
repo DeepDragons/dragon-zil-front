@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { StyleFonts } from 'config/fonts';
-import { Colors } from 'config/colors';
+import styled from "styled-components";
+import { StyleFonts } from "config/fonts";
+import { Colors } from "config/colors";
 
 type Prop = {
   size?: number | string;
@@ -27,7 +27,7 @@ export const Input = styled.input`
   border-radius: 10px;
 
   @media (max-width: 500px) {
-    font-size: ${(props: Prop) => Number(String(props.size).split('px')[0]) / 1.5}px;
+    font-size: ${(props: Prop) => Number(String(props.size).split(`px`)[0]) / 1.5}px;
   }
 
   ${(props: Prop) => props.css}
@@ -39,5 +39,5 @@ Input.defaultProps = {
   color: Colors.Primary,
   size: 18,
   border: 0,
-  css: '',
+  css: ``,
 };

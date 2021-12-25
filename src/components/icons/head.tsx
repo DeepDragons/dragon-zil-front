@@ -1,5 +1,5 @@
-import React from 'react';
-import { Colors } from 'config/colors';
+import React from "react";
+import { Colors } from "config/colors";
 
 type Prop = {
   color?: string | Colors;
@@ -7,18 +7,13 @@ type Prop = {
   height?: number | string;
 };
 
-export const HeadIcon: React.FC<Prop> = ({
+export var HeadIcon: React.FC<Prop> = function ({
   color = Colors.Muted,
   width = 30,
-  height = 30
-}) => {
+  height = 30,
+}) {
   return (
-    <svg
-      width={width}
-      height={height}
-      viewBox="0 0 35 35"
-      fill="none"
-    >
+    <svg width={width} height={height} viewBox="0 0 35 35" fill="none">
       <path
         fillRule="evenodd"
         clipRule="evenodd"

@@ -1,9 +1,9 @@
-import React from 'react';
-import { TitleUpgradeGens } from './upgrade-gens-title';
-import { useTranslation } from 'next-i18next';
-import { compareRadar } from 'lib/radar';
-import { Container } from './styles';
-import { DragonObject } from '@/lib/api';
+import React from "react";
+import { useTranslation } from "next-i18next";
+import { compareRadar } from "lib/radar";
+import { DragonObject } from "@/lib/api";
+import { TitleUpgradeGens } from "./upgrade-gens-title";
+import { Container } from "./styles";
 
 type Prop = {
   loverDragon: DragonObject;
@@ -11,23 +11,19 @@ type Prop = {
   color: string;
 };
 
-export const CompareCombatGens: React.FC<Prop> = ({
+export var CompareCombatGens: React.FC<Prop> = function ({
   loverDragon,
   myDragon,
-  color
-}) => {
-  const commonLocale = useTranslation('common');
+  color,
+}) {
+  const commonLocale = useTranslation(`common`);
 
   React.useEffect(() => {
-    const ctx = document.querySelector('#combat') as HTMLCanvasElement;
+    const ctx = document.querySelector(`#combat`) as HTMLCanvasElement;
 
     try {
       if (ctx) {
-        compareRadar(
-          loverDragon,
-          myDragon,
-          ctx
-        );
+        compareRadar(loverDragon, myDragon, ctx);
       }
     } catch {
       //
@@ -37,13 +33,10 @@ export const CompareCombatGens: React.FC<Prop> = ({
   return (
     <Container color={color}>
       <TitleUpgradeGens icon="gens.svg">
-        {commonLocale.t('compare_gens_title')}
+        {commonLocale.t(`compare_gens_title`)}
       </TitleUpgradeGens>
       <div>
-        <canvas
-          id="combat"
-          height="410"
-        />
+        <canvas id="combat" height="410" />
       </div>
     </Container>
   );

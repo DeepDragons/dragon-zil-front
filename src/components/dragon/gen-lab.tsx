@@ -1,18 +1,18 @@
-import React from 'react';
-import styled from 'styled-components';
-import { isBrowser, isMobile } from 'react-device-detect';
+import React from "react";
+import styled from "styled-components";
+import { isBrowser, isMobile } from "react-device-detect";
 
-import { Text } from 'components/text';
-import { AttackIcon } from 'components/icons/attack';
-import { DefenceIcon } from 'components/icons/defence';
+import { Text } from "components/text";
+import { AttackIcon } from "components/icons/attack";
+import { DefenceIcon } from "components/icons/defence";
 
-import { Colors } from 'config/colors';
-import { StyleFonts } from '@/config/fonts';
-import { radar } from 'lib/radar';
-import { genParse } from 'lib/gen-parse';
-import { chunkArray } from 'lib/chunks';
+import { Colors } from "config/colors";
+import { radar } from "lib/radar";
+import { genParse } from "lib/gen-parse";
+import { chunkArray } from "lib/chunks";
+import { StyleFonts } from "@/config/fonts";
 
-import { Container, Seporate } from './styles';
+import { Container, Seporate } from "./styles";
 
 const TitleRow = styled.div`
   display: flex;
@@ -47,10 +47,7 @@ type Prop = {
   color: string;
 };
 
-export const GenLabUpgrade: React.FC<Prop> = ({
-  gens,
-  color
-}) => {
+export var GenLabUpgrade: React.FC<Prop> = function ({ gens, color }) {
   const [selected, setSelected] = React.useState(0);
 
   const gensArray = React.useMemo(() => {
@@ -60,7 +57,7 @@ export const GenLabUpgrade: React.FC<Prop> = ({
   }, [gens]);
 
   React.useEffect(() => {
-    const ctx = document.querySelector('#combat') as HTMLCanvasElement;
+    const ctx = document.querySelector(`#combat`) as HTMLCanvasElement;
 
     try {
       if (ctx && isBrowser) {
@@ -75,21 +72,15 @@ export const GenLabUpgrade: React.FC<Prop> = ({
     <Container color={color}>
       <TitleRow>
         <TitleRow>
-          <Text
-            fontVariant={StyleFonts.FiraSansSemiBold}
-            size="24px"
-          >
+          <Text fontVariant={StyleFonts.FiraSansSemiBold} size="24px">
             Combat gens
           </Text>
-          <img
-            src="/icons/gens.svg"
-            alt="gens"
-          />
+          <img src="/icons/gens.svg" alt="gens" />
         </TitleRow>
         <TabRow>
           <TabSelector
             style={{
-              background: selected === 0 ? Colors.Darker : 'none'
+              background: selected === 0 ? Colors.Darker : `none`,
             }}
             src="/icons/graph.svg"
             alt="graph"
@@ -97,7 +88,7 @@ export const GenLabUpgrade: React.FC<Prop> = ({
           />
           <TabSelector
             style={{
-              background: selected === 1 ? Colors.Darker : 'none'
+              background: selected === 1 ? Colors.Darker : `none`,
             }}
             src="/icons/radar.svg"
             alt="radar"
@@ -107,10 +98,7 @@ export const GenLabUpgrade: React.FC<Prop> = ({
       </TitleRow>
       {selected === 1 ? (
         <div className="radar">
-          <canvas
-            id="combat"
-            height="410"
-          />
+          <canvas id="combat" height="410" />
         </div>
       ) : (
         <GensContainer>
@@ -119,8 +107,7 @@ export const GenLabUpgrade: React.FC<Prop> = ({
             <Seporate />
             <AttackIcon />
           </SeporateContainer>
-          <GensWrapper>
-          </GensWrapper>
+          <GensWrapper />
         </GensContainer>
       )}
     </Container>

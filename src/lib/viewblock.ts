@@ -1,9 +1,9 @@
 enum Methods {
-  Address = 'address',
-  Tx = 'tx'
+  Address = `address`,
+  Tx = `tx`,
 }
 
-const url = 'https://viewblock.io/zilliqa';
+const url = `https://viewblock.io/zilliqa`;
 
 export function viewAddress(address: string) {
   return `${url}/${Methods.Address}/${address}`;

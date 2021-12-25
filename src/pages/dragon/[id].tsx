@@ -1,45 +1,45 @@
-import React from 'react';
-import { GetServerSidePropsContext, NextPage } from 'next';
-import styled from 'styled-components';
-import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import dynamic from 'next/dynamic';
+import React from "react";
+import { GetServerSidePropsContext, NextPage } from "next";
+import styled from "styled-components";
+import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
+import Head from "next/head";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import dynamic from "next/dynamic";
 
-import { Navbar } from 'components/nav-bar';
-import { Text } from 'components/text';
-import { Container } from 'components/pages/container';
-import { TransferModal } from 'components/modals/transfer';
-import { OpenGraph } from 'components/open-graph';
-import { SaleModal } from 'components/modals/sale';
-import { FightsModal } from 'components/modals/fight';
-import { BreedModal } from 'components/modals/breed';
-import { SuicideModal } from 'components/modals/suicide';
-import { HatchEggModal } from 'components/modals/hatch-egg';
-import { NameModal } from 'components/modals/name';
-import { NoCache } from 'components/no-cache';
+import { Navbar } from "components/nav-bar";
+import { Text } from "components/text";
+import { Container } from "components/pages/container";
+import { TransferModal } from "components/modals/transfer";
+import { OpenGraph } from "components/open-graph";
+import { SaleModal } from "components/modals/sale";
+import { FightsModal } from "components/modals/fight";
+import { BreedModal } from "components/modals/breed";
+import { SuicideModal } from "components/modals/suicide";
+import { HatchEggModal } from "components/modals/hatch-egg";
+import { NameModal } from "components/modals/name";
+import { NoCache } from "components/no-cache";
 
-import { DragonAPI, DragonObject } from 'lib/api';
-import { getRarity } from 'lib/rarity';
-import { updateCache } from 'store/cache-dragon';
-import { BreedPlace } from 'mixin/breed';
-import { MarketPlace } from 'mixin/market-place';
-import { StyleFonts } from '@/config/fonts';
-import { getMarketOrder, getMarketPrice } from 'lib/get-action';
-import { ZIlPayToken } from '@/mixin/zilpay-token';
-import { NameDragons } from '@/mixin/name';
-import { genParse } from '@/lib/gen-parse';
-import { isMobile } from 'react-device-detect';
+import { DragonAPI, DragonObject } from "lib/api";
+import { getRarity } from "lib/rarity";
+import { updateCache } from "store/cache-dragon";
+import { BreedPlace } from "mixin/breed";
+import { MarketPlace } from "mixin/market-place";
+import { getMarketOrder, getMarketPrice } from "lib/get-action";
+import { isMobile } from "react-device-detect";
+import { StyleFonts } from "@/config/fonts";
+import { ZIlPayToken } from "@/mixin/zilpay-token";
+import { NameDragons } from "@/mixin/name";
+import { genParse } from "@/lib/gen-parse";
 
-const RarityImage = dynamic(import('components/rarity-image'));
-const CombatGens = dynamic(import('components/dragon/combat-gens'));
-const BodyParts = dynamic(import('components/dragon/body-parts'));
-const ActionBar = dynamic(import('components/dragon/action-bar'));
+const RarityImage = dynamic(import(`components/rarity-image`));
+const CombatGens = dynamic(import(`components/dragon/combat-gens`));
+const BodyParts = dynamic(import(`components/dragon/body-parts`));
+const ActionBar = dynamic(import(`components/dragon/action-bar`));
 
 type prop = {
   dragon: DragonObject | null;
-}
+};
 
 const Wrapper = styled.div`
   display: flex;
@@ -59,9 +59,9 @@ const breedPlace = new BreedPlace();
 const marketPlace = new MarketPlace();
 const dragonsName = new NameDragons();
 
-export const Dragon: NextPage<prop> = (props) => {
-  const commonLocale = useTranslation('common');
-  const dragonLocale = useTranslation('dragon');
+export var Dragon: NextPage<prop> = function (props) {
+  const commonLocale = useTranslation(`common`);
+  const dragonLocale = useTranslation(`dragon`);
   const router = useRouter();
 
   const [transfer, setTransfer] = React.useState(false);
@@ -82,10 +82,12 @@ export const Dragon: NextPage<prop> = (props) => {
   }, [dragon]);
   const stageType = React.useMemo(() => {
     if (!dragon) {
-      return dragonLocale.t('dragon');
+      return dragonLocale.t(`dragon`);
     }
 
-    return dragon?.stage === 0 ? dragonLocale.t('egg') : dragonLocale.t('dragon');
+    return dragon?.stage === 0
+      ? dragonLocale.t(`egg`)
+      : dragonLocale.t(`dragon`);
   }, [dragon]);
   const rarity = React.useMemo(() => {
     if (!dragon) {
@@ -121,7 +123,7 @@ export const Dragon: NextPage<prop> = (props) => {
     }
 
     if (currentAction === 3) {
-      return `${p / 10**12} $ZIL`;
+      return `${p / 10 ** 12} $ZIL`;
     }
 
     if (currentAction === 2 || currentAction === 1) {
@@ -132,14 +134,14 @@ export const Dragon: NextPage<prop> = (props) => {
   }, [dragon]);
   const dragonName = React.useMemo(() => {
     if (!dragon || !dragon.name) {
-      return '';
+      return ``;
     }
 
     return `- ${dragon.name}`;
   }, [dragon]);
   const descriptionOpenGraph = React.useMemo(() => {
     if (currentAction === 3) {
-      return `Rarity ${rarity?.name}, ${commonLocale.t('buy')} for ${price}`;
+      return `Rarity ${rarity?.name}, ${commonLocale.t(`buy`)} for ${price}`;
     }
 
     return `Rarity ${rarity?.name}`;
@@ -155,23 +157,23 @@ export const Dragon: NextPage<prop> = (props) => {
   React.useEffect(() => {
     if (router.query.id) {
       backend
-      .getDragon(String(router.query.id))
-      .then((d) => {
-        if (d) {
-          setDragon(d);
-        }
-  
-        return dragonsName.getName(String(router.query.id));
-      })
-      .then((name) => {
-        if (name && dragon) {
-          setDragon({
-            ...dragon,
-            name
-          });
-        }
-      })
-      .catch(console.error);
+        .getDragon(String(router.query.id))
+        .then((d) => {
+          if (d) {
+            setDragon(d);
+          }
+
+          return dragonsName.getName(String(router.query.id));
+        })
+        .then((name) => {
+          if (name && dragon) {
+            setDragon({
+              ...dragon,
+              name,
+            });
+          }
+        })
+        .catch(console.error);
     }
   }, [router]);
 
@@ -179,11 +181,19 @@ export const Dragon: NextPage<prop> = (props) => {
     <Container>
       <Head>
         <title>
-          {commonLocale.t('name')} | {stageType} #{dragon?.id}
+          {commonLocale.t(`name`)}
+          {` `}
+          |
+          {stageType}
+          {` `}
+          #
+          {dragon?.id}
         </title>
         <OpenGraph
           url={`https://dragonzil.xyz/dragon/${dragon?.id}`}
-          title={`${commonLocale.t('name')} | ${stageType} #${dragon?.id} ${dragonName}`}
+          title={`${commonLocale.t(`name`)} | ${stageType} #${
+            dragon?.id
+          } ${dragonName}`}
           description={descriptionOpenGraph}
           img={dragon?.url}
           alt={`Dragon ID #${dragon?.id}`}
@@ -204,7 +214,10 @@ export const Dragon: NextPage<prop> = (props) => {
           sale={() => setSale(true)}
           RemoveBreed={() => breedPlace.cancelBreed(String(router.query.id))}
           RemoveSale={() => marketPlace.cancel(getMarketOrder(dragon?.actions))}
-          buy={() => marketPlace.purchase(getMarketOrder(dragon?.actions), getMarketPrice(dragon?.actions))}
+          buy={() => marketPlace.purchase(
+            getMarketOrder(dragon?.actions),
+            getMarketPrice(dragon?.actions),
+          )}
           mutate={hanldeMutate}
           fight={() => setArena(true)}
           breed={() => setBreed(true)}
@@ -222,14 +235,8 @@ export const Dragon: NextPage<prop> = (props) => {
             url={dragon.url}
           />
           <div>
-            <CombatGens
-              gens={genes}
-              color={rarity.color}
-            />
-            <BodyParts
-              gens={rarity.gensImage}
-              color={rarity.color}
-            />
+            <CombatGens gens={genes} color={rarity.color} />
+            <BodyParts gens={rarity.gensImage} color={rarity.color} />
             {/* <BattlesSection
               color={rarity.color}
               win={dragon.fight_win}
@@ -247,23 +254,23 @@ export const Dragon: NextPage<prop> = (props) => {
       ) : null}
       {!dragon ? (
         <Wrapper>
-          <Text
-            fontVariant={StyleFonts.FiraSansBold}
-            size="50px"
-          >
-            {dragonLocale.t('not_found')} #{router.query.id}
+          <Text fontVariant={StyleFonts.FiraSansBold} size="50px">
+            {dragonLocale.t(`not_found`)}
+            {` `}
+            #
+            {router.query.id}
           </Text>
         </Wrapper>
       ) : null}
       <TransferModal
         show={transfer}
-        id={dragon?.id || ''}
+        id={dragon?.id || ``}
         stage={dragon?.stage || 0}
         onClose={() => setTransfer(false)}
       />
       <SaleModal
         show={sale}
-        id={dragon?.id || ''}
+        id={dragon?.id || ``}
         stage={dragon?.stage || 0}
         onClose={() => setSale(false)}
       />
@@ -274,12 +281,12 @@ export const Dragon: NextPage<prop> = (props) => {
       />
       <FightsModal
         show={arena}
-        id={dragon?.id || ''}
+        id={dragon?.id || ``}
         onClose={() => setArena(false)}
       />
       <BreedModal
         show={breed}
-        id={dragon?.id || ''}
+        id={dragon?.id || ``}
         combatGenes={genes}
         faceCounter={faceGenesCounter}
         onClose={() => setBreed(false)}
@@ -287,7 +294,7 @@ export const Dragon: NextPage<prop> = (props) => {
       <SuicideModal
         show={suicide}
         dragon={dragon}
-        id={dragon?.id || ''}
+        id={dragon?.id || ``}
         stage={dragon?.stage || 0}
         onClose={() => setSuicide(false)}
       />
@@ -306,7 +313,7 @@ export const getStaticProps = async (props: GetServerSidePropsContext) => {
   if (props.res) {
     // res available only at server
     // no-store disable bfCache for any browser. So your HTML will not be cached
-    props.res.setHeader('Cache-Control', 'no-store');
+    props.res.setHeader(`Cache-Control`, `no-store`);
   }
 
   const dragonId = String(props.params && props.params.id);
@@ -315,19 +322,20 @@ export const getStaticProps = async (props: GetServerSidePropsContext) => {
   return {
     props: {
       dragon,
-      ...await serverSideTranslations(props.locale || 'en', ['common', 'dragon'])
+      ...(await serverSideTranslations(props.locale || `en`, [
+        `common`,
+        `dragon`,
+      ])),
     },
-    revalidate: 1
+    revalidate: 1,
   };
 };
 
 export async function getStaticPaths() {
   return {
-    paths: [
-      '/dragon/id',
-    ],
-    fallback: true
-  }
+    paths: [`/dragon/id`],
+    fallback: true,
+  };
 }
 
 export default Dragon;

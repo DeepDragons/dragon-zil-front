@@ -1,8 +1,8 @@
-import React from 'react';
-import ProgressiveImage from 'react-progressive-graceful-image';
+import React from "react";
+import ProgressiveImage from "react-progressive-graceful-image";
 
-import { EMPTY } from 'config/emty';
-import { Colors } from '@/config/colors';
+import { EMPTY } from "config/emty";
+import { Colors } from "@/config/colors";
 
 type Prop = {
   id: string;
@@ -13,23 +13,18 @@ type Prop = {
   onClick?: () => void;
 };
 
-export const ImmortalAura: React.FC<Prop> = ({
+export var ImmortalAura: React.FC<Prop> = function ({
   id,
   color,
   url,
   width = 250,
   height = 250,
-  onClick = () => null
-}) => {
+  onClick = () => null,
+}) {
   const [loadError, setLoadError] = React.useState(false);
 
   return (
-    <svg
-      width={width}
-      height={height}
-      viewBox="50 50 240 275"
-      fill="none"
-    >
+    <svg width={width} height={height} viewBox="50 50 240 275" fill="none">
       <path
         d="M162.971 315.21L164.962 307.779C196.417 308.975 226.659 298.264 250.156 278.84L245.534 267.828"
         stroke={color}
@@ -45,12 +40,7 @@ export const ImmortalAura: React.FC<Prop> = ({
         stroke={color}
         strokeWidth="2"
       />
-      <circle
-        cx="169.998"
-        cy="180.307"
-        r="116"
-        fill={Colors.Black}
-      />
+      <circle cx="169.998" cy="180.307" r="116" fill={Colors.Black} />
       <circle
         cx="169.998"
         cy="180.307"
@@ -70,10 +60,7 @@ export const ImmortalAura: React.FC<Prop> = ({
             transform="translate(-0.126239 -0.0698607) scale(0.0027)"
           />
         </pattern>
-        <ProgressiveImage
-          src={url}
-          placeholder={url}
-        >
+        <ProgressiveImage src={url} placeholder={url}>
           {(src: string) => (
             <image
               id={`dragon-${id}`}

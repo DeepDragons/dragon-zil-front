@@ -1,18 +1,34 @@
 abstract class TypeChecker {
-  private _args: Array | string | symbol | number | undefined | null | object | Function;
+  private _args:
+    | Array
+    | string
+    | symbol
+    | number
+    | undefined
+    | null
+    | object
+    | Function;
 
   abstract get isUndefined(): boolean;
+
   abstract get isInt(): boolean;
+
   abstract get isFloat(): boolean;
+
   abstract get isArray(): boolean;
+
   abstract get isString(): boolean;
+
   abstract get isObject(): boolean;
+
   abstract get isBoolean(): boolean;
+
   abstract get isFunction(): boolean;
+
   abstract get isSymbol(): boolean;
 
-  abstract constructor(...args) {
-    this._args = args
+  abstract constructor (...args) {
+    this._args = args;
   }
 }
 
@@ -40,16 +56,18 @@ export interface ZIlpayResponse<T> {
   error?: {
     code: number;
     message: string;
-  }
+  };
 }
 
-export type Net = 'mainnet' | 'testnet' | 'private';
+export type Net = "mainnet" | "testnet" | "private";
 
 export interface ZIlPayBlockchain {
-  getBalance: (address: string) => Promise<ZIlpayResponse<{
-    balance: string;
-    nonce: number;
-  }>>;
+  getBalance: (address: string) => Promise<
+    ZIlpayResponse<{
+      balance: string;
+      nonce: number;
+    }>
+  >;
   createTransaction: (tx) => Promise<ZIlpayResponse<any>>;
   getBlockChainInfo: () => Promise<ZIlpayResponse<any>>;
   getCurrentDSEpoch: () => Promise<ZIlpayResponse<any>>;
@@ -69,7 +87,11 @@ export interface ZIlPayBlockchain {
   getSmartContractCode: (address: string) => Promise<ZIlpayResponse<any>>;
   getSmartContractInit: (address: string) => Promise<ZIlpayResponse<any>>;
   getSmartContractState: (address: string) => Promise<ZIlpayResponse<any>>;
-  getSmartContractSubState: (address: string, field: string, params: string[]) => Promise<ZIlpayResponse<any>>;
+  getSmartContractSubState: (
+    address: string,
+    field: string,
+    params: string[]
+  ) => Promise<ZIlpayResponse<any>>;
   getSmartContracts: (address: string) => Promise<ZIlpayResponse<any>>;
   getTotalCoinSupply: () => Promise<ZIlpayResponse<any>>;
   getTransaction: (id: string) => Promise<ZIlpayResponse<any>>;
@@ -128,5 +150,5 @@ export interface ZIlPayInject {
     observableNetwork: () => any;
     observableTransaction: () => any;
     sign: (prams: any) => Promise<any>;
-  }
+  };
 }

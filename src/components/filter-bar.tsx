@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import { Text } from 'components/text';
-import { DropDown } from 'components/drop-down';
-import { PopUpButton } from 'components/popup-btn';
+import { Text } from "components/text";
+import { DropDown } from "components/drop-down";
+import { PopUpButton } from "components/popup-btn";
 
-import { StyleFonts } from 'config/fonts';
-import { useTranslation } from 'next-i18next';
+import { StyleFonts } from "config/fonts";
+import { useTranslation } from "next-i18next";
 
 type Prop = {
   title: string;
@@ -17,7 +17,7 @@ type Prop = {
   selectedSort?: number;
   onSelectSort?: (index: number) => void;
   onFilter?: (from: number, to: number) => void;
-}
+};
 
 const Container = styled.div`
   display: flex;
@@ -41,23 +41,20 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-export const FilterBar: React.FC<Prop> = ({
+export var FilterBar: React.FC<Prop> = function ({
   title,
   price = false,
   items = [],
   selectedSort = 0,
   onSelectSort = () => null,
-  onFilter = () => null
-}) => {
-  const commonLocale = useTranslation('common');
+  onFilter = () => null,
+}) {
+  const commonLocale = useTranslation(`common`);
   const [showSort, setShowSort] = React.useState(false);
 
   return (
     <Container>
-      <Text
-        fontVariant={StyleFonts.FiraSansBold}
-        size="30px"
-      >
+      <Text fontVariant={StyleFonts.FiraSansBold} size="30px">
         {title}
       </Text>
       <Wrapper>
@@ -73,7 +70,7 @@ export const FilterBar: React.FC<Prop> = ({
         ) : null}
         {price ? (
           <PopUpButton onApply={onFilter}>
-            {commonLocale.t('price')}
+            {commonLocale.t(`price`)}
           </PopUpButton>
         ) : null}
       </Wrapper>

@@ -1,11 +1,11 @@
-import { ACTION } from 'config/action';
+import { ACTION } from "config/action";
 
 export function getAction(actinos?: Array<string[]>) {
   if (actinos && actinos.length > 0 && actinos[0][0]) {
     return ACTION[Number(actinos[0][0])];
   }
 
-  return '';
+  return ``;
 }
 
 export function getMarketOrder(actinos?: Array<string[]>) {
@@ -13,7 +13,7 @@ export function getMarketOrder(actinos?: Array<string[]>) {
     return String(actinos[1][1]);
   }
 
-  return 'incorect order';
+  return `incorect order`;
 }
 
 export function getMarketPrice(actinos?: Array<string[]>) {
@@ -21,5 +21,5 @@ export function getMarketPrice(actinos?: Array<string[]>) {
     return String(actinos[0][1]);
   }
 
-  return '0';
+  return `0`;
 }

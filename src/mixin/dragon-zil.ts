@@ -1,8 +1,8 @@
-import { ZilPayBase } from 'mixin/zilpay-base';
-import { Contracts } from 'config/contracts';
-import { pushToList } from '@/store/transactions';
-import { getKeyByValue } from '@/lib/key-by-value';
-import { trim } from 'lib/trim';
+import { ZilPayBase } from "mixin/zilpay-base";
+import { Contracts } from "config/contracts";
+import { trim } from "lib/trim";
+import { pushToList } from "@/store/transactions";
+import { getKeyByValue } from "@/lib/key-by-value";
 
 export class DragonZIL {
   public zilpay = new ZilPayBase();
@@ -10,27 +10,27 @@ export class DragonZIL {
   public async transfer(to: string, tokenId: string) {
     const zilpay = await this.zilpay.zilpay();
     if (!zilpay.utils.validation.isBech32(to)) {
-      throw new Error('Address should be bech32 format');
+      throw new Error(`Address should be bech32 format`);
     }
     const address = zilpay.crypto.toChecksumAddress(to);
     const params = [
       {
-        vname: 'to',
-        type: 'ByStr20',
-        value: address
+        vname: `to`,
+        type: `ByStr20`,
+        value: address,
       },
       {
-        vname: 'token_id',
-        type: 'Uint256',
-        value: tokenId
-      }
+        vname: `token_id`,
+        type: `Uint256`,
+        value: tokenId,
+      },
     ];
-    const transition = 'Transfer';
+    const transition = `Transfer`;
     const res = await this.zilpay.call({
       transition,
       params,
-      amount: '0',
-      contractAddress: Contracts.Main
+      amount: `0`,
+      contractAddress: Contracts.Main,
     });
 
     pushToList({
@@ -38,7 +38,7 @@ export class DragonZIL {
       name: `Transfer a dragon #${tokenId} to ${trim(to)}`,
       confirmed: false,
       hash: res.ID,
-      from: res.from
+      from: res.from,
     });
 
     return String(res.ID);
@@ -47,22 +47,22 @@ export class DragonZIL {
   public async setApprove(tokenId: string, to: Contracts) {
     const params = [
       {
-        vname: 'to',
-        type: 'ByStr20',
-        value: to
+        vname: `to`,
+        type: `ByStr20`,
+        value: to,
       },
       {
-        vname: 'token_id',
-        type: 'Uint256',
-        value: tokenId
-      }
+        vname: `token_id`,
+        type: `Uint256`,
+        value: tokenId,
+      },
     ];
-    const transition = 'SetApprove';
+    const transition = `SetApprove`;
     const res = await this.zilpay.call({
       transition,
       params,
-      amount: '0',
-      contractAddress: Contracts.Main
+      amount: `0`,
+      contractAddress: Contracts.Main,
     });
 
     pushToList({
@@ -70,25 +70,23 @@ export class DragonZIL {
       name: `Approve a dragon #${tokenId} for ${getKeyByValue(Contracts, to)}`,
       confirmed: false,
       hash: res.ID,
-      from: res.from
+      from: res.from,
     });
 
     return String(res.ID);
   }
 
   public async getTokenApprovals(tokenId: string, contract: Contracts) {
-    const field = 'token_approvals';
-    const result = await this.zilpay.getSubState(
-      Contracts.Main,
-      field,
-      [tokenId]
-    );
+    const field = `token_approvals`;
+    const result = await this.zilpay.getSubState(Contracts.Main, field, [
+      tokenId,
+    ]);
 
     return result === contract;
   }
 
   public async getTokenSupply() {
-    const field = 'total_supply';
+    const field = `total_supply`;
     const res = await this.zilpay.getSubState(Contracts.Main, field);
 
     return res;
@@ -97,17 +95,17 @@ export class DragonZIL {
   public async hatchEgg(tokenId: string) {
     const params = [
       {
-        vname: 'token_id',
-        type: 'Uint256',
-        value: tokenId
-      }
+        vname: `token_id`,
+        type: `Uint256`,
+        value: tokenId,
+      },
     ];
-    const transition = 'UpStage';
+    const transition = `UpStage`;
     const res = await this.zilpay.call({
       transition,
       params,
-      amount: '0',
-      contractAddress: Contracts.Main
+      amount: `0`,
+      contractAddress: Contracts.Main,
     });
 
     pushToList({
@@ -115,7 +113,7 @@ export class DragonZIL {
       name: `Hatch an egg #${tokenId}`,
       confirmed: false,
       hash: res.ID,
-      from: res.from
+      from: res.from,
     });
 
     return String(res.ID);
@@ -124,17 +122,17 @@ export class DragonZIL {
   public async burn(tokenId: string) {
     const params = [
       {
-        vname: 'token_id',
-        type: 'Uint256',
-        value: tokenId
-      }
+        vname: `token_id`,
+        type: `Uint256`,
+        value: tokenId,
+      },
     ];
-    const transition = 'Burn';
+    const transition = `Burn`;
     const res = await this.zilpay.call({
       transition,
       params,
-      amount: '0',
-      contractAddress: Contracts.Main
+      amount: `0`,
+      contractAddress: Contracts.Main,
     });
 
     pushToList({
@@ -142,7 +140,7 @@ export class DragonZIL {
       name: `Kill a dragon #${tokenId}`,
       confirmed: false,
       hash: res.ID,
-      from: res.from
+      from: res.from,
     });
 
     return String(res.ID);

@@ -1,15 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 import Loader from "react-loader-spinner";
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from "next-i18next";
 
-import { Modal } from 'components/modal';
-import { Text } from 'components/text';
-import { ModalTitle, ButtonsWrapper, ModalButton } from './style';
-
-import { Colors } from 'config/colors';
-import { StyleFonts } from '@/config/fonts';
-import { DragonZIL } from 'mixin/dragon-zil';
+import { Modal } from "components/modal";
+import { Text } from "components/text";
+import { Colors } from "config/colors";
+import { DragonZIL } from "mixin/dragon-zil";
+import { StyleFonts } from "@/config/fonts";
+import { ModalTitle, ButtonsWrapper, ModalButton } from "./style";
 
 const Container = styled.div`
   padding: 24px;
@@ -22,16 +21,12 @@ type Prop = {
 };
 
 const dragonZIL = new DragonZIL();
-export const HatchEggModal: React.FC<Prop> = ({
-  show,
-  id,
-  onClose
-}) => {
-  const commonLocale = useTranslation('common');
-  const dragonLocale = useTranslation('dragon');
+export var HatchEggModal: React.FC<Prop> = function ({ show, id, onClose }) {
+  const commonLocale = useTranslation(`common`);
+  const dragonLocale = useTranslation(`dragon`);
   const [loading, setLoading] = React.useState(false);
 
-  const handleHatch = React.useCallback(async() => {
+  const handleHatch = React.useCallback(async () => {
     setLoading(true);
     try {
       await dragonZIL.hatchEgg(id);
@@ -45,23 +40,19 @@ export const HatchEggModal: React.FC<Prop> = ({
   return (
     <Modal
       title={(
-        <ModalTitle
-          fontVariant={StyleFonts.FiraSansBold}
-          size="32px"
-        >
-          {dragonLocale.t('hatch_egg.title')} #{id}
+        <ModalTitle fontVariant={StyleFonts.FiraSansBold} size="32px">
+          {dragonLocale.t(`hatch_egg.title`)}
+          {` `}
+          #
+          {id}
         </ModalTitle>
       )}
       show={show}
       onClose={onClose}
     >
       <Container>
-        <Text
-          fontColors={Colors.Muted}
-          size="22px"
-          css="text-align: center;"
-        >
-          {dragonLocale.t('hatch_egg.info')}
+        <Text fontColors={Colors.Muted} size="22px" css="text-align: center;">
+          {dragonLocale.t(`hatch_egg.info`)}
         </Text>
         <ButtonsWrapper>
           <ModalButton
@@ -76,13 +67,12 @@ export const HatchEggModal: React.FC<Prop> = ({
                 height={10}
                 width={40}
               />
-            ) : dragonLocale.t('hatch_egg.btn')}
+            ) : (
+              dragonLocale.t(`hatch_egg.btn`)
+            )}
           </ModalButton>
-          <ModalButton
-            color={Colors.Dark}
-            onClick={onClose}
-          >
-            {commonLocale.t('cancel')}
+          <ModalButton color={Colors.Dark} onClick={onClose}>
+            {commonLocale.t(`cancel`)}
           </ModalButton>
         </ButtonsWrapper>
       </Container>

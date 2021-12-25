@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { Text } from 'components/text';
-import { StyleFonts } from '@/config/fonts';
+import { Text } from "components/text";
+import { StyleFonts } from "@/config/fonts";
 
 const TitleRow = styled.div`
   display: flex;
@@ -12,12 +12,12 @@ const TitleRow = styled.div`
 
 type Prop = {
   icon?: string;
-}
+};
 
-export const TitleUpgradeGens: React.FC<Prop> = ({
+export var TitleUpgradeGens: React.FC<Prop> = function ({
   children,
-  icon = 'body.svg'
-}) => {
+  icon = `body.svg`,
+}) {
   return (
     <TitleRow>
       <TitleRow>
@@ -28,10 +28,7 @@ export const TitleUpgradeGens: React.FC<Prop> = ({
         >
           {children}
         </Text>
-        <img
-          src={`/icons/${icon}`}
-          alt="gens"
-        />
+        <img src={`/icons/${icon}`} alt="gens" />
       </TitleRow>
     </TitleRow>
   );

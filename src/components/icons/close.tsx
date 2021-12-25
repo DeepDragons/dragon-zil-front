@@ -1,5 +1,5 @@
-import React from 'react';
-import { Colors } from 'config/colors';
+import React from "react";
+import { Colors } from "config/colors";
 
 type Prop = {
   color?: string | Colors;
@@ -7,18 +7,13 @@ type Prop = {
   height?: number | string;
 };
 
-export const CloseIcon: React.FC<Prop> = ({
+export var CloseIcon: React.FC<Prop> = function ({
   color = Colors.White,
   width = 26,
-  height = 26
-}) => {
+  height = 26,
+}) {
   return (
-    <svg
-      width={width}
-      height={height}
-      viewBox="0 0 26 26"
-      fill="none"
-    >
+    <svg width={width} height={height} viewBox="0 0 26 26" fill="none">
       <path
         d="M1.68555 1.68652L24.313 24.3139"
         stroke={color}

@@ -1,50 +1,50 @@
-import React from 'react';
-import { useRouter } from 'next/router';
-import { isMobile } from 'react-device-detect';
-import { NextPage, GetServerSidePropsContext } from 'next';
-import Head from 'next/head';
-import { useStore } from 'effector-react';
-import { useTranslation } from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import React from "react";
+import { useRouter } from "next/router";
+import { isMobile } from "react-device-detect";
+import { NextPage, GetServerSidePropsContext } from "next";
+import Head from "next/head";
+import { useStore } from "effector-react";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import { Navbar } from 'components/nav-bar';
-import { SkeletCard } from '@/components/skelet/card';
-import { Container } from 'components/pages/container';
-import { Wrapper } from 'components/pages/wrapper';
-import { FilterBar } from '@/components/filter-bar';
-import { Card } from '@/components/card';
-import { Text } from '@/components/text';
-import { Button } from 'components/button';
-import { CardText } from 'components/dragon/card-text';
-import Loader from 'react-loader-spinner';
+import { Navbar } from "components/nav-bar";
+import { Container } from "components/pages/container";
+import { Wrapper } from "components/pages/wrapper";
+import { Button } from "components/button";
+import { CardText } from "components/dragon/card-text";
+import Loader from "react-loader-spinner";
 
-import { $wallet } from 'store/wallet';
+import { $wallet } from "store/wallet";
 import {
   $marketDragons,
   contactMarketDragons,
-  resetMarketDragons
-} from 'store/market';
-import { RARITY } from 'lib/rarity';
-import { DragonAPI, QueryParams } from '@/lib/api';
-import { getMarketOrder, getMarketPrice } from 'lib/get-action';
-import { StyleFonts } from '@/config/fonts';
-import { CardContainer } from 'components/dragon/styles';
-import { Colors } from '@/config/colors';
-import { useScrollEvent } from '@/mixin/scroll';
-import { MarketPlace } from 'mixin/market-place';
+  resetMarketDragons,
+} from "store/market";
+import { RARITY } from "lib/rarity";
+import { getMarketOrder, getMarketPrice } from "lib/get-action";
+import { CardContainer } from "components/dragon/styles";
+import { MarketPlace } from "mixin/market-place";
+import { DragonAPI, QueryParams } from "@/lib/api";
+import { StyleFonts } from "@/config/fonts";
+import { Colors } from "@/config/colors";
+import { useScrollEvent } from "@/mixin/scroll";
+import { Text } from "@/components/text";
+import { Card } from "@/components/card";
+import { FilterBar } from "@/components/filter-bar";
+import { SkeletCard } from "@/components/skelet/card";
 
 const params: QueryParams = {
   limit: 9,
-  offset: 0
+  offset: 0,
 };
 let maxPage = 1;
 const backend = new DragonAPI();
 const marketPlace = new MarketPlace();
-export const TradePage: NextPage = () => {
+export var TradePage: NextPage = function () {
   const refWrapper = React.useRef<HTMLDivElement | null>();
 
-  const tradeLocale = useTranslation('trade');
-  const commonLocale = useTranslation('common');
+  const tradeLocale = useTranslation(`trade`);
+  const commonLocale = useTranslation(`common`);
 
   const router = useRouter();
   const address = useStore($wallet);
@@ -54,14 +54,17 @@ export const TradePage: NextPage = () => {
   const [skelet, setSkelet] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
 
-  const items = React.useMemo(() => [
-    commonLocale.t('all'),
-    commonLocale.t('rarity'),
-    commonLocale.t('strong'),
-    commonLocale.t('price'),
-    commonLocale.t('dragons'),
-    commonLocale.t('eggs')
-  ], []);
+  const items = React.useMemo(
+    () => [
+      commonLocale.t(`all`),
+      commonLocale.t(`rarity`),
+      commonLocale.t(`strong`),
+      commonLocale.t(`price`),
+      commonLocale.t(`dragons`),
+      commonLocale.t(`eggs`),
+    ],
+    [],
+  );
 
   const fetchData = async () => {
     const addr = $wallet.getState();
@@ -70,35 +73,38 @@ export const TradePage: NextPage = () => {
       return null;
     }
 
-		const result = await backend.getDragonsFromMarket(params);
+    const result = await backend.getDragonsFromMarket(params);
 
     maxPage = result.pagination.pages;
 
     contactMarketDragons(result.list);
 
-    params.offset = params.offset + 1;
-	};
+    params.offset += 1;
+  };
 
-  const handleFiltred = React.useCallback(async(startPrice: number, endPrice: number) => {
-    setSkelet(true);
+  const handleFiltred = React.useCallback(
+    async (startPrice: number, endPrice: number) => {
+      setSkelet(true);
 
-    params.offset = 0;
-    params.startPrice = startPrice;
-    params.endPrice = endPrice;
+      params.offset = 0;
+      params.startPrice = startPrice;
+      params.endPrice = endPrice;
 
-    try {
-      const result = await backend.getDragonsFromMarket(params);
+      try {
+        const result = await backend.getDragonsFromMarket(params);
 
-      maxPage = result.pagination.pages;
-  
-      resetMarketDragons();
-      contactMarketDragons(result.list);
-    } catch {
-      //
-    }
-    setSkelet(false);
-  }, []);
-  const hanldeSort = React.useCallback(async(index: number) => {
+        maxPage = result.pagination.pages;
+
+        resetMarketDragons();
+        contactMarketDragons(result.list);
+      } catch {
+        //
+      }
+      setSkelet(false);
+    },
+    [],
+  );
+  const hanldeSort = React.useCallback(async (index: number) => {
     setSortItem(index);
     setSkelet(true);
 
@@ -119,7 +125,7 @@ export const TradePage: NextPage = () => {
       const result = await backend.getDragonsFromMarket(params);
 
       maxPage = result.pagination.pages;
-  
+
       resetMarketDragons();
       contactMarketDragons(result.list);
     } catch {
@@ -146,7 +152,7 @@ export const TradePage: NextPage = () => {
       return null;
     }
 
-		setLoading(true);
+    setLoading(true);
 
     try {
       await fetchData();
@@ -161,36 +167,39 @@ export const TradePage: NextPage = () => {
     <Container>
       <Head>
         <title>
-          {commonLocale.t('name')} | {tradeLocale.t('title')}
+          {commonLocale.t(`name`)}
+          {` `}
+          |
+          {tradeLocale.t(`title`)}
         </title>
         <meta
           property="og:title"
-          content={`${commonLocale.t('name')} | ${tradeLocale.t('title')}`}
+          content={`${commonLocale.t(`name`)} | ${tradeLocale.t(`title`)}`}
           key="title"
         />
       </Head>
       <Navbar />
       <FilterBar
-        title={tradeLocale.t('title')}
+        title={tradeLocale.t(`title`)}
         selectedSort={sortItem}
         items={items}
         price
         onFilter={handleFiltred}
         onSelectSort={hanldeSort}
       />
-      <Wrapper ref={(n) => refWrapper.current = n}>
+      <Wrapper ref={(n) => (refWrapper.current = n)}>
         {skelet ? (
           <>
-          <SkeletCard />
-          <SkeletCard />
-          <SkeletCard />
-          <SkeletCard />
+            <SkeletCard />
+            <SkeletCard />
+            <SkeletCard />
+            <SkeletCard />
           </>
         ) : (
           <>
-            {dragons.map((dragon, index) => (
+            {dragons.map((dragon) => (
               <Card
-                key={index}
+                key={dragon.id}
                 dragon={dragon}
                 onSelect={() => router.push(`/dragon/${dragon.id}`)}
               >
@@ -200,32 +209,42 @@ export const TradePage: NextPage = () => {
                     fontColors={RARITY[dragon.rarity].color}
                     size="16px"
                   >
-                    #{dragon.id}, {RARITY[dragon.rarity].name} <span>
-                      {dragon.name ? `- ${dragon.name}` : ''}
-                    </span>
+                    #
+                    {dragon.id}
+                    ,
+                    {` `}
+                    {RARITY[dragon.rarity].name}
+                    {` `}
+                    <span>{dragon.name ? `- ${dragon.name}` : ``}</span>
                   </CardText>
                   <Text
                     fontVariant={StyleFonts.FiraSansSemiBold}
                     fontColors={Colors.Blue}
                     size="18px"
                   >
-                    {(Number(dragon.actions[0][1]) / 10**12).toLocaleString()} $ZIL
+                    {(Number(dragon.actions[0][1]) / 10 ** 12).toLocaleString()}
+                    {` `}
+                    $ZIL
                   </Text>
-                  {dragon.owner.toLowerCase() !== String(address?.base16).toLowerCase() ? (
+                  {dragon.owner.toLowerCase()
+                  !== String(address?.base16).toLowerCase() ? (
                     <Button
                       color={Colors.LightBlue}
-                      onClick={() => marketPlace.purchase(getMarketOrder(dragon.actions), getMarketPrice(dragon.actions))}
+                      onClick={() => marketPlace.purchase(
+                        getMarketOrder(dragon.actions),
+                        getMarketPrice(dragon.actions),
+                      )}
                     >
-                      {commonLocale.t('buy')}
+                      {commonLocale.t(`buy`)}
                     </Button>
-                  ) : (
-                    <Button
-                      color={Colors.Info}
-                      onClick={() => marketPlace.cancel(getMarketOrder(dragon.actions))}
-                    >
-                      {commonLocale.t('get_back')}
-                    </Button>
-                  )}
+                    ) : (
+                      <Button
+                        color={Colors.Info}
+                        onClick={() => marketPlace.cancel(getMarketOrder(dragon.actions))}
+                      >
+                        {commonLocale.t(`get_back`)}
+                      </Button>
+                    )}
                 </CardContainer>
               </Card>
             ))}
@@ -242,14 +261,15 @@ export const TradePage: NextPage = () => {
       ) : null}
     </Container>
   );
-}
-
-export const getStaticProps = async (props: GetServerSidePropsContext) => {
-  return {
-    props: {
-      ...await serverSideTranslations(props.locale || 'en', ['common', 'trade'])
-    }
-  };
 };
+
+export const getStaticProps = async (props: GetServerSidePropsContext) => ({
+  props: {
+    ...(await serverSideTranslations(props.locale || `en`, [
+      `common`,
+      `trade`,
+    ])),
+  },
+});
 
 export default TradePage;

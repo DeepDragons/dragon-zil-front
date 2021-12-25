@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 import {
   RareAura,
@@ -8,10 +8,10 @@ import {
   LegendaryAura,
   ImmortalAura,
   ArcanaAura,
-  AncientAura
-} from 'components/aura';
+  AncientAura,
+} from "components/aura";
 
-import { RARITY } from 'lib/rarity';
+import { RARITY } from "lib/rarity";
 
 type Prop = {
   id: string;
@@ -22,25 +22,23 @@ type Prop = {
   onClick?: () => void;
 };
 
-export const RarityImage: React.FC<Prop> = ({
+export var RarityImage: React.FC<Prop> = function ({
   id,
   rarity,
   url,
   width,
   height,
-  onClick = () => null
-}) => {
-  const rarityInfo = React.useMemo(() => {
-    return RARITY[rarity];
-  }, [rarity]);
+  onClick = () => null,
+}) {
+  const rarityInfo = React.useMemo(() => RARITY[rarity], [rarity]);
 
   const uri = React.useMemo(() => {
-    const list = url.split('/');
+    const list = url.split(`/`);
     const name = list.pop();
 
-    list.push('c_scale,w_450');
+    list.push(`c_scale,w_450`);
     list.push(String(name));
-    return list.join('/');
+    return list.join(`/`);
   }, [url]);
 
   return [
@@ -107,7 +105,7 @@ export const RarityImage: React.FC<Prop> = ({
       height={height}
       color={rarityInfo.color}
       onClick={onClick}
-    />
+    />,
   ][rarity];
 };
 

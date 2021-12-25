@@ -1,5 +1,5 @@
-import { createDomain } from 'effector';
-import { DragonObject } from 'lib/api';
+import { createDomain } from "effector";
+import { DragonObject } from "lib/api";
 
 const breedDragonsDomain = createDomain();
 export const updateBreedDragons = breedDragonsDomain.createEvent<DragonObject[]>();

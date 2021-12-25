@@ -1,5 +1,5 @@
-import React from 'react';
-import { Colors } from 'config/colors';
+import React from "react";
+import { Colors } from "config/colors";
 
 type Prop = {
   color?: string | Colors;
@@ -7,11 +7,11 @@ type Prop = {
   height?: number | string;
 };
 
-export const SuccessIcon: React.FC<Prop> = ({
+export var SuccessIcon: React.FC<Prop> = function ({
   color = Colors.Success,
   width = 16,
-  height = 16
-}) => {
+  height = 16,
+}) {
   return (
     <svg
       width={width}

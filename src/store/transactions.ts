@@ -1,4 +1,4 @@
-import { createDomain } from 'effector';
+import { createDomain } from "effector";
 
 const LIMIT = 10;
 
@@ -10,7 +10,7 @@ export interface Tx {
   confirmed: boolean;
   error?: boolean;
 }
-let initState: Tx[] = [];
+const initState: Tx[] = [];
 const txDomain = createDomain();
 
 export const updateTxList = txDomain.createEvent<Tx[]>();

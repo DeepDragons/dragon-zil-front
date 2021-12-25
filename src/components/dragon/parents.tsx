@@ -1,13 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
-import Link from 'next/link';
+import React from "react";
+import styled from "styled-components";
+import Link from "next/link";
 
-import { Text } from 'components/text';
+import { Text } from "components/text";
 
-import { StyleFonts } from '@/config/fonts';
+import { StyleFonts } from "@/config/fonts";
 
-import { Container, TitleRow, Seporate } from './styles';
-import { Colors } from '@/config/colors';
+import { Colors } from "@/config/colors";
+import { Container, TitleRow, Seporate } from "./styles";
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,32 +27,24 @@ type Prop = {
   color: string;
 };
 
-export const ParentsSection: React.FC<Prop> = ({
+export var ParentsSection: React.FC<Prop> = function ({
   first,
   second,
-  color
-}) => {
+  color,
+}) {
   return (
     <Container color={color}>
       <TitleRow>
-        <Text
-          fontVariant={StyleFonts.FiraSansSemiBold}
-          size="24px"
-        >
+        <Text fontVariant={StyleFonts.FiraSansSemiBold} size="24px">
           Parents
         </Text>
-        <img
-          src="/icons/parents.svg"
-          alt="parents"
-        />
+        <img src="/icons/parents.svg" alt="parents" />
       </TitleRow>
       <Wrapper>
         <ImageWrapper>
-          <Text
-            fontVariant={StyleFonts.FiraSansRegular}
-            css="margin: 0 10px;"
-          >
-            #{first}
+          <Text fontVariant={StyleFonts.FiraSansRegular} css="margin: 0 10px;">
+            #
+            {first}
           </Text>
           <Link href={`/dragon/${first}`}>
             <div>
@@ -77,11 +69,9 @@ export const ParentsSection: React.FC<Prop> = ({
               />
             </div>
           </Link>
-          <Text
-            fontVariant={StyleFonts.FiraSansRegular}
-            css="margin: 0 10px;"
-          >
-            #{second}
+          <Text fontVariant={StyleFonts.FiraSansRegular} css="margin: 0 10px;">
+            #
+            {second}
           </Text>
         </ImageWrapper>
       </Wrapper>

@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { StyleFonts } from 'config/fonts';
-import { Colors } from 'config/colors';
+import styled from "styled-components";
+import { StyleFonts } from "config/fonts";
+import { Colors } from "config/colors";
 
 type Prop = {
   size?: number | string;
@@ -18,8 +18,7 @@ export const Button = styled.button`
   font-family: ${(props: Prop) => props.fontVariant};
   font-size: ${(props: Prop) => props.size};
   color: ${(props: Prop) => props.fontColors};
-  text-transform: ${(props: Prop) =>
-    props.upperCase ? 'uppercase' : 'initial'};
+  text-transform: ${(props: Prop) => (props.upperCase ? `uppercase` : `initial`)};
 
   padding: 0.8rem;
   min-width: 142px;
@@ -42,6 +41,6 @@ Button.defaultProps = {
   color: Colors.Primary,
   nowrap: false,
   upperCase: false,
-  size: '18px',
-  css: '',
+  size: `18px`,
+  css: ``,
 };

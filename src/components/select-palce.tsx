@@ -1,10 +1,10 @@
-import { Colors } from '@/config/colors';
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+import { Colors } from "@/config/colors";
 
 type ContainerProp = {
   color: string | Colors;
-}
+};
 
 const Container = styled.div`
   display: flex;
@@ -16,10 +16,10 @@ const Container = styled.div`
   cursor: copy;
 
   :hover {
-    border-color: ${(p:ContainerProp) => p.color};
+    border-color: ${(p: ContainerProp) => p.color};
 
     svg > path {
-      fill: ${(p:ContainerProp) => p.color};
+      fill: ${(p: ContainerProp) => p.color};
     }
   }
 `;
@@ -31,31 +31,23 @@ type Prop = {
   onClick?: () => void;
 };
 
-export const SelectPalce: React.FC<Prop> = ({
+export var SelectPalce: React.FC<Prop> = function ({
   color,
   width = 250,
   height = 250,
-  onClick = () => null
-}) => {
+  onClick = () => null,
+}) {
   return (
     <Container
       style={{
         width: `${width}px`,
-        height: `${height}px`
+        height: `${height}px`,
       }}
       color={color}
       onClick={onClick}
     >
-      <svg
-        width="60"
-        height="60"
-        viewBox="0 0 60 60"
-        fill="none"
-      >
-        <mask
-          id="path-1-inside-1"
-          fill="white"
-        >
+      <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+        <mask id="path-1-inside-1" fill="white">
           <path
             fillRule="evenodd"
             clipRule="evenodd"

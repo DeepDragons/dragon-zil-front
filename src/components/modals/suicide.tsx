@@ -1,21 +1,21 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useTranslation } from 'next-i18next';
+import React from "react";
+import styled from "styled-components";
+import { useTranslation } from "next-i18next";
 import Loader from "react-loader-spinner";
 
-import { Modal } from 'components/modal';
-import { Text } from 'components/text';
-import { TextSkelet } from 'components/skelet/text';
-import { ModalTitle, ButtonsWrapper, ModalButton } from './style';
+import { Modal } from "components/modal";
+import { Text } from "components/text";
+import { TextSkelet } from "components/skelet/text";
 
-import { Colors } from 'config/colors';
-import { StyleFonts } from '@/config/fonts';
-import { DragonZIL } from 'mixin/dragon-zil';
-import { GenLab } from 'mixin/gen-lab';
-import { ZIlPayToken } from 'mixin/zilpay-token';
-import { Necropolis } from 'mixin/necropolis';
-import { Contracts } from '@/config/contracts';
-import { DragonObject } from '@/lib/api';
+import { Colors } from "config/colors";
+import { DragonZIL } from "mixin/dragon-zil";
+import { GenLab } from "mixin/gen-lab";
+import { ZIlPayToken } from "mixin/zilpay-token";
+import { Necropolis } from "mixin/necropolis";
+import { StyleFonts } from "@/config/fonts";
+import { Contracts } from "@/config/contracts";
+import { DragonObject } from "@/lib/api";
+import { ModalTitle, ButtonsWrapper, ModalButton } from "./style";
 
 const Container = styled.div`
   padding: 24px;
@@ -37,56 +37,53 @@ const zIlPayToken = new ZIlPayToken();
 const genLab = new GenLab();
 const necropolis = new Necropolis();
 let load = false;
-export const SuicideModal: React.FC<Prop> = ({
+export var SuicideModal: React.FC<Prop> = function ({
   show,
   stage,
   dragon,
   id,
-  onClose
-}) => {
-  const commonLocale = useTranslation('common');
-  const dragonLocale = useTranslation('dragon');
+  onClose,
+}) {
+  const commonLocale = useTranslation(`common`);
+  const dragonLocale = useTranslation(`dragon`);
   const [loading, setLoading] = React.useState(false);
   const [approved, setApproved] = React.useState(false);
-  const [rewards, setRewards] = React.useState('0');
+  const [rewards, setRewards] = React.useState(`0`);
 
   const dragonStage = React.useMemo(
-    () => stage === 0 ? 'egg' : 'dragon',
-    [stage]
+    () => (stage === 0 ? `egg` : `dragon`),
+    [stage],
   );
   const buttonName = React.useMemo(
-    () => approved ?
-      dragonLocale.t('suicide_modal.btn', { dragonStage }) : dragonLocale.t('sale.btn_approve'),
-    [approved, id]
+    () => (approved
+      ? dragonLocale.t(`suicide_modal.btn`, { dragonStage })
+      : dragonLocale.t(`sale.btn_approve`)),
+    [approved, id],
   );
 
-  const handleUpdate = React.useCallback(async() => {
+  const handleUpdate = React.useCallback(async () => {
     if (!id || !dragon) {
       return null;
     }
     setLoading(true);
 
     try {
-      const isApproved = await dragonZIL.getTokenApprovals(id, Contracts.Necropolis);
+      const isApproved = await dragonZIL.getTokenApprovals(
+        id,
+        Contracts.Necropolis,
+      );
       setApproved(isApproved);
     } catch {
       //
     }
-    
+
     try {
-      let {
-        priceMultiplicator,
-        startPrice,
-        useCount
-      } = await genLab.getCounter(id);
+      let { priceMultiplicator, startPrice, useCount } = await genLab.getCounter(id);
       priceMultiplicator = Number(priceMultiplicator);
       useCount = Number(useCount);
       startPrice = BigInt(String(startPrice));
       const {
-        faceCurve,
-        combatCurve,
-        maxCurve,
-        supplyCurve
+        faceCurve, combatCurve, maxCurve, supplyCurve,
       } = await necropolis.getCurve();
       const totalSupplyMain = await dragonZIL.getTokenSupply();
       const zlp = await zIlPayToken.getBalance(Contracts.Necropolis);
@@ -96,10 +93,10 @@ export const SuicideModal: React.FC<Prop> = ({
         face: dragon.gen_image,
         tokenid: id,
         max: maxCurve,
-        faceCurve: faceCurve,
-        combatCurve: combatCurve,
-        supplyCurve: supplyCurve,
-        supply: totalSupplyMain
+        faceCurve,
+        combatCurve,
+        supplyCurve,
+        supply: totalSupplyMain,
       });
       const zlpAmount = Number(rewards) / Number(ZIlPayToken.decimal);
 
@@ -110,7 +107,7 @@ export const SuicideModal: React.FC<Prop> = ({
 
     setLoading(false);
   }, [id, dragon]);
-  const handleSubmit = React.useCallback(async() => {
+  const handleSubmit = React.useCallback(async () => {
     load = true;
     setLoading(true);
     try {
@@ -148,39 +145,36 @@ export const SuicideModal: React.FC<Prop> = ({
   return (
     <Modal
       title={(
-        <ModalTitle
-          fontVariant={StyleFonts.FiraSansBold}
-          size="32px"
-        >
-          {dragonLocale.t('suicide_modal.title')} #{id}
+        <ModalTitle fontVariant={StyleFonts.FiraSansBold} size="32px">
+          {dragonLocale.t(`suicide_modal.title`)}
+          {` `}
+          #
+          {id}
         </ModalTitle>
       )}
       show={show}
       onClose={hanldeClose}
     >
       <Container>
-        <Text
-          fontColors={Colors.Muted}
-          size="22px"
-          css="text-align: center;"
-        >
+        <Text fontColors={Colors.Muted} size="22px" css="text-align: center;">
           {loading
-            ? commonLocale.t('do_not_refresh') : dragonLocale.t('suicide_modal.info', { dragonStage })}
+            ? commonLocale.t(`do_not_refresh`)
+            : dragonLocale.t(`suicide_modal.info`, { dragonStage })}
         </Text>
         {load ? null : loading ? (
           <TextSkelet />
         ) : (
-          <Text
-            fontColors={Colors.Info}
-            size="32px"
-            css="text-align: center;"
-          >
-            {rewards} $ZLP
+          <Text fontColors={Colors.Info} size="32px" css="text-align: center;">
+            {rewards}
+            {` `}
+            $ZLP
           </Text>
         )}
-        <ButtonsWrapper style={{
-          width: '100%'
-        }}>
+        <ButtonsWrapper
+          style={{
+            width: `100%`,
+          }}
+        >
           <ModalButton
             color={approved ? Colors.Info : Colors.Warning}
             fontColors={approved ? Colors.White : Colors.Dark}
@@ -194,23 +188,21 @@ export const SuicideModal: React.FC<Prop> = ({
                 height={10}
                 width={40}
               />
-            ) : buttonName}
+            ) : (
+              buttonName
+            )}
           </ModalButton>
           <ModalButton
             color={Colors.Dark}
             disabled={loading}
             onClick={hanldeClose}
           >
-            {commonLocale.t('cancel')}
+            {commonLocale.t(`cancel`)}
           </ModalButton>
         </ButtonsWrapper>
         {loading && load ? null : (
-          <Text
-            fontColors={Colors.Muted}
-            size="16px"
-            css="text-align: center;"
-          >
-            {dragonLocale.t('suicide_modal.info0')}
+          <Text fontColors={Colors.Muted} size="16px" css="text-align: center;">
+            {dragonLocale.t(`suicide_modal.info0`)}
           </Text>
         )}
       </Container>

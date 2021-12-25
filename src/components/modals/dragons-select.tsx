@@ -1,24 +1,29 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useStore } from 'effector-react';
-import Link from 'next/link';
+import React from "react";
+import styled from "styled-components";
+import { useStore } from "effector-react";
+import Link from "next/link";
 import Loader from "react-loader-spinner";
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from "next-i18next";
 
-import { Text } from 'components/text';
-import { Card } from 'components/card';
-import { SkeletCard } from 'components/skelet/card';
-import { FilterBar } from 'components/filter-bar';
-import { CardContainer } from 'components/dragon/styles';
-import { ScreenModal } from 'components/screen-modal';
-import { Button } from '@/components/button';
+import { Text } from "components/text";
+import { Card } from "components/card";
+import { SkeletCard } from "components/skelet/card";
+import { FilterBar } from "components/filter-bar";
+import { CardContainer } from "components/dragon/styles";
+import { ScreenModal } from "components/screen-modal";
+import { $wallet } from "store/wallet";
+import { Colors } from "config/colors";
+import {
+  $myDragons,
+  contctDragons,
+  resetDragons,
+  updateDragons,
+} from "store/my-dragons";
+import { Button } from "@/components/button";
 
-import { $wallet } from 'store/wallet';
-import { Colors } from 'config/colors';
-import { StyleFonts } from '@/config/fonts';
-import { DragonObject, DragonAPI, QueryParams } from '@/lib/api';
-import { $myDragons, contctDragons, resetDragons, updateDragons } from 'store/my-dragons';
-import { RARITY } from '@/lib/rarity';
+import { StyleFonts } from "@/config/fonts";
+import { DragonObject, DragonAPI, QueryParams } from "@/lib/api";
+import { RARITY } from "@/lib/rarity";
 
 type Prop = {
   show: boolean;
@@ -43,26 +48,29 @@ const Wrapper = styled.div`
 const backend = new DragonAPI();
 const params: QueryParams = {
   limit: 9,
-  offset: 0
+  offset: 0,
 };
 let maxPage = 1;
-export const DragonsSelectModal: React.FC<Prop> = ({
+export var DragonsSelectModal: React.FC<Prop> = function ({
   show,
   onSelect,
-  onClose
-}) => {
-  const commonLocale = useTranslation('common');
+  onClose,
+}) {
+  const commonLocale = useTranslation(`common`);
   const address = useStore($wallet);
   const dragons = useStore($myDragons);
   const [loading, setLoading] = React.useState(false);
   const [sortItem, setSortItem] = React.useState(0);
   const [skelet, setSkelet] = React.useState(true);
 
-  const items = React.useMemo(() => [
-    commonLocale.t('all'),
-    commonLocale.t('rarity'),
-    commonLocale.t('strong')
-  ], []);
+  const items = React.useMemo(
+    () => [
+      commonLocale.t(`all`),
+      commonLocale.t(`rarity`),
+      commonLocale.t(`strong`),
+    ],
+    [],
+  );
 
   const fetchData = React.useCallback(async () => {
     const addr = $wallet.getState();
@@ -73,16 +81,16 @@ export const DragonsSelectModal: React.FC<Prop> = ({
 
     params.owner = String(addr.base16).toLowerCase();
     params.stage = 1;
-		const result = await backend.getDragons(params);
+    const result = await backend.getDragons(params);
 
     maxPage = result.pagination.pages;
 
     contctDragons(result.list);
 
-    params.offset = params.offset + 1;
+    params.offset += 1;
   }, [dragons]);
 
-  const hanldeSort = React.useCallback(async(index: number) => {
+  const hanldeSort = React.useCallback(async (index: number) => {
     setSortItem(index);
     resetDragons();
     setSkelet(true);
@@ -97,7 +105,7 @@ export const DragonsSelectModal: React.FC<Prop> = ({
       const result = await backend.getDragons(params);
 
       maxPage = result.pagination.pages;
-  
+
       updateDragons(result.list);
     } catch {
       //
@@ -106,27 +114,32 @@ export const DragonsSelectModal: React.FC<Prop> = ({
     setSkelet(false);
   }, []);
 
-  const handleScroll = React.useCallback(async(event: React.UIEvent<HTMLDivElement, UIEvent>) => {
-    if (!show) {
-      return null;
-    }
-
-    const scrollHeight = Number((event.target as HTMLDivElement).scrollHeight);
-    const scrollTop = Number((event.target as HTMLDivElement).scrollTop);
-    const scroll = Math.ceil(window.innerHeight + scrollTop) - 100;
-
-    if (scroll >= scrollHeight) {
-      setLoading(true);
-
-      try {
-        await fetchData();
-      } catch (err) {
-        console.error(err);
+  const handleScroll = React.useCallback(
+    async (event: React.UIEvent<HTMLDivElement, UIEvent>) => {
+      if (!show) {
+        return null;
       }
 
-      setLoading(false);
-    }
-  }, [show]);
+      const scrollHeight = Number(
+        (event.target as HTMLDivElement).scrollHeight,
+      );
+      const scrollTop = Number((event.target as HTMLDivElement).scrollTop);
+      const scroll = Math.ceil(window.innerHeight + scrollTop) - 100;
+
+      if (scroll >= scrollHeight) {
+        setLoading(true);
+
+        try {
+          await fetchData();
+        } catch (err) {
+          console.error(err);
+        }
+
+        setLoading(false);
+      }
+    },
+    [show],
+  );
 
   const hanldeOnSelect = React.useCallback((dragon: DragonObject) => {
     onClose();
@@ -148,13 +161,10 @@ export const DragonsSelectModal: React.FC<Prop> = ({
   }, [address, show]);
 
   return (
-    <ScreenModal
-      onClose={onClose}
-      show={show}
-    >
+    <ScreenModal onClose={onClose} show={show}>
       <Content className="modal-content">
         <FilterBar
-          title={commonLocale.t('select')}
+          title={commonLocale.t(`select`)}
           selectedSort={sortItem}
           rarity={dragons.length !== 0}
           items={items}
@@ -171,10 +181,7 @@ export const DragonsSelectModal: React.FC<Prop> = ({
           ) : (
             <>
               {dragons.map((dragon, index) => (
-                <div
-                  key={index}
-                  onClick={() => hanldeOnSelect(dragon)}
-                >
+                <div key={index} onClick={() => hanldeOnSelect(dragon)}>
                   <Card dragon={dragon}>
                     <CardContainer onClick={() => onSelect(dragon)}>
                       <Text
@@ -182,7 +189,11 @@ export const DragonsSelectModal: React.FC<Prop> = ({
                         fontColors={RARITY[dragon.rarity].color}
                         size="16px"
                       >
-                        #{dragon.id}, {RARITY[dragon.rarity].name}
+                        #
+                        {dragon.id}
+                        ,
+                        {` `}
+                        {RARITY[dragon.rarity].name}
                       </Text>
                     </CardContainer>
                   </Card>
@@ -197,12 +208,10 @@ export const DragonsSelectModal: React.FC<Prop> = ({
               fontVariant={StyleFonts.FiraSansRegular}
               css="text-align: center;max-width: 400px;"
             >
-              {commonLocale.t('no_dragons')}
+              {commonLocale.t(`no_dragons`)}
             </Text>
             <Link href="/buy">
-              <Button>
-                {commonLocale.t('buy')}
-              </Button>
+              <Button>{commonLocale.t(`buy`)}</Button>
             </Link>
           </>
         ) : null}

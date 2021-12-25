@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { Colors } from 'config/colors';
+import React from "react";
+import { Colors } from "config/colors";
 
 type Prop = {
   color?: string | Colors;
@@ -8,11 +7,11 @@ type Prop = {
   height?: number | string;
 };
 
-export const ViewIcon: React.FC<Prop> = ({
+export var ViewIcon: React.FC<Prop> = function ({
   color = Colors.Muted,
   width = 16,
-  height = 16
-}) => {
+  height = 16,
+}) {
   return (
     <svg
       width={width}

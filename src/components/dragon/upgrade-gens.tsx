@@ -1,19 +1,19 @@
-import React from 'react';
-import { useTranslation } from 'next-i18next';
-import styled from 'styled-components';
+import React from "react";
+import { useTranslation } from "next-i18next";
+import styled from "styled-components";
 
-import { Text } from 'components/text';
-import { AttackIcon } from 'components/icons/attack';
-import { DefenceIcon } from 'components/icons/defence';
-import { LinePercent } from 'components/line-percent';
-import { TitleUpgradeGens } from './upgrade-gens-title';
+import { Text } from "components/text";
+import { AttackIcon } from "components/icons/attack";
+import { DefenceIcon } from "components/icons/defence";
+import { LinePercent } from "components/line-percent";
 
-import { Colors } from 'config/colors';
-import { radar } from 'lib/radar';
-import { genParse } from 'lib/gen-parse';
+import { Colors } from "config/colors";
+import { radar } from "lib/radar";
+import { genParse } from "lib/gen-parse";
+import { chunkArray } from "@/lib/chunks";
+import { TitleUpgradeGens } from "./upgrade-gens-title";
 
-import { Container } from './styles';
-import { chunkArray } from '@/lib/chunks';
+import { Container } from "./styles";
 
 const GensContainer = styled.div`
   display: flex;
@@ -65,13 +65,9 @@ type Prop = {
   onSelect: (gen: number, value: number, name: string) => void;
 };
 
-export const UpgradeGens: React.FC<Prop> = ({
-  gens,
-  color,
-  onSelect
-}) => {
-  const mutateLocale = useTranslation('mutate');
-  const commonLocale = useTranslation('common');
+export var UpgradeGens: React.FC<Prop> = function ({ gens, color, onSelect }) {
+  const mutateLocale = useTranslation(`mutate`);
+  const commonLocale = useTranslation(`common`);
 
   const gensArray = React.useMemo(() => {
     const list = genParse(gens);
@@ -83,7 +79,7 @@ export const UpgradeGens: React.FC<Prop> = ({
 
       gensList.push({
         def,
-        atteck
+        atteck,
       });
     }
 
@@ -91,7 +87,7 @@ export const UpgradeGens: React.FC<Prop> = ({
   }, [gens]);
 
   React.useEffect(() => {
-    const ctx = document.querySelector('#combat') as HTMLCanvasElement;
+    const ctx = document.querySelector(`#combat`) as HTMLCanvasElement;
 
     try {
       if (ctx) {
@@ -100,44 +96,34 @@ export const UpgradeGens: React.FC<Prop> = ({
 
         radar(chunk, ctx);
       }
-    } catch {
-    }
+    } catch {}
   }, [gens]);
 
   return (
     <Container color={color}>
-      <TitleUpgradeGens>
-        {mutateLocale.t('form_title')}
-      </TitleUpgradeGens>
+      <TitleUpgradeGens>{mutateLocale.t(`form_title`)}</TitleUpgradeGens>
       <GensContainer>
         <div>
-          <canvas
-            id="combat"
-            height="410"
-          />
+          <canvas id="combat" height="410" />
         </div>
-        <div style={{ marginLeft: '16px' }}>
+        <div style={{ marginLeft: `16px` }}>
           <Row>
             <GenNameContainer>
               <DefenceIcon />
-              <Text>
-                {commonLocale.t('defence')}
-              </Text>
+              <Text>{commonLocale.t(`defence`)}</Text>
             </GenNameContainer>
             <GenNameContainer>
-              <Text>
-                {commonLocale.t('attack')}
-              </Text>
+              <Text>{commonLocale.t(`attack`)}</Text>
               <AttackIcon />
             </GenNameContainer>
           </Row>
           <GensWrapper>
             {gensArray.map((el, index) => (
               <Gens key={index}>
-                <NumberOfGen onClick={() => onSelect(index, el.def, commonLocale.t('defence'))}>
-                  <Text css="margin: 0;">
-                    {index + 1}
-                  </Text>
+                <NumberOfGen
+                  onClick={() => onSelect(index, el.def, commonLocale.t(`defence`))}
+                >
+                  <Text css="margin: 0;">{index + 1}</Text>
                 </NumberOfGen>
                 <LinePercent
                   max={99}
@@ -145,18 +131,12 @@ export const UpgradeGens: React.FC<Prop> = ({
                   color={Colors.Success}
                   invert
                 />
-                <Text fontColors={Colors.Muted}>
-                  {index + 1}
-                </Text>
-                <LinePercent
-                  max={99}
-                  value={el.atteck}
-                  color={Colors.Danger}
-                />
-                <NumberOfGen onClick={() => onSelect(index + 10, el.atteck, commonLocale.t('attack'))}>
-                  <Text css="margin: 0;">
-                    {index + 1}
-                  </Text>
+                <Text fontColors={Colors.Muted}>{index + 1}</Text>
+                <LinePercent max={99} value={el.atteck} color={Colors.Danger} />
+                <NumberOfGen
+                  onClick={() => onSelect(index + 10, el.atteck, commonLocale.t(`attack`))}
+                >
+                  <Text css="margin: 0;">{index + 1}</Text>
                 </NumberOfGen>
               </Gens>
             ))}

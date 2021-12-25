@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import { Colors } from 'config/colors';
+import { Colors } from "config/colors";
 
 type BarProp = {
   color: string | Colors;
@@ -10,7 +10,7 @@ type BarProp = {
 
 const Container = styled.div`
   display: inline-table;
-  background: #2A3F5A;
+  background: #2a3f5a;
   z-index: 1;
   height: 100%;
   height: 10px;
@@ -34,26 +34,26 @@ type Prop = {
   invert?: boolean;
 };
 
-export const LinePercent: React.FC<Prop> = ({
+export var LinePercent: React.FC<Prop> = function ({
   color,
   max,
   value,
   invert,
-  width = 100
-}) => {
-  const length = React.useMemo(() => {
-    return Math.round(value * 100 / max);
-  }, [max, value]);
+  width = 100,
+}) {
+  const length = React.useMemo(
+    () => Math.round((value * 100) / max),
+    [max, value],
+  );
 
   return (
-    <Container style={{
-      width: `${width}px`,
-      transform: invert ? 'rotate(180deg)' : 'rotate(0deg)'
-    }}>
-      <Bar
-        color={color}
-        length={length}
-      />
+    <Container
+      style={{
+        width: `${width}px`,
+        transform: invert ? `rotate(180deg)` : `rotate(0deg)`,
+      }}
+    >
+      <Bar color={color} length={length} />
     </Container>
   );
 };

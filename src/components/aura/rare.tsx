@@ -1,8 +1,8 @@
-import React from 'react';
-import ProgressiveImage from 'react-progressive-graceful-image';
+import React from "react";
+import ProgressiveImage from "react-progressive-graceful-image";
 
-import { EMPTY } from 'config/emty';
-import { Colors } from '@/config/colors';
+import { EMPTY } from "config/emty";
+import { Colors } from "@/config/colors";
 
 type Prop = {
   id: string;
@@ -13,23 +13,18 @@ type Prop = {
   onClick?: () => void;
 };
 
-export const RareAura: React.FC<Prop> = ({
+export var RareAura: React.FC<Prop> = function ({
   id,
   color,
   url,
   width = 250,
   height = 250,
-  onClick = () => null
-}) => {
+  onClick = () => null,
+}) {
   const [loadError, setLoadError] = React.useState(false);
 
   return (
-    <svg
-      width={width}
-      height={height}
-      viewBox="0 0 275 265"
-      fill="none"
-    >
+    <svg width={width} height={height} viewBox="0 0 275 265" fill="none">
       <path
         d="M42.6399 43.1879H226.905V227.453H42.6399V43.1879Z"
         stroke={color}
@@ -50,12 +45,7 @@ export const RareAura: React.FC<Prop> = ({
         stroke={color}
         strokeWidth="2"
       />
-      <circle
-        cx="133.862"
-        cy="135.32"
-        r="116"
-        fill={Colors.Black}
-      />
+      <circle cx="133.862" cy="135.32" r="116" fill={Colors.Black} />
       <circle
         cx="133.862"
         cy="135.32"
@@ -70,15 +60,9 @@ export const RareAura: React.FC<Prop> = ({
           width="1"
           height="1"
         >
-          <use
-            xlinkHref={`#dragon-${id}`}
-            transform="scale(0.0022)"
-          />
+          <use xlinkHref={`#dragon-${id}`} transform="scale(0.0022)" />
         </pattern>
-        <ProgressiveImage
-          src={url}
-          placeholder={url}
-        >
+        <ProgressiveImage src={url} placeholder={url}>
           {(src: string) => (
             <image
               id={`dragon-${id}`}

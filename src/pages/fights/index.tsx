@@ -1,48 +1,48 @@
-import React from 'react';
-import { useRouter } from 'next/router';
-import { NextPage, GetServerSidePropsContext } from 'next';
-import Head from 'next/head';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
-import Link from 'next/link';
-import { useStore } from 'effector-react';
+import React from "react";
+import { useRouter } from "next/router";
+import { NextPage, GetServerSidePropsContext } from "next";
+import Head from "next/head";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
+import Link from "next/link";
+import { useStore } from "effector-react";
 
-import { Navbar } from 'components/nav-bar';
-import { SkeletCard } from '@/components/skelet/card';
-import { Container } from 'components/pages/container';
-import { Wrapper } from 'components/pages/wrapper';
-import { FilterBar } from '@/components/filter-bar';
-import { Card } from '@/components/card';
-import { Text } from '@/components/text';
-import { CardText } from 'components/dragon/card-text';
-import Loader from 'react-loader-spinner';
-
-import { CardContainer } from 'components/dragon/styles';
-import { $wallet } from 'store/wallet';
+import { Navbar } from "components/nav-bar";
+import { Container } from "components/pages/container";
+import { Wrapper } from "components/pages/wrapper";
+import { CardText } from "components/dragon/card-text";
+import Loader from "react-loader-spinner";
+import { CardContainer } from "components/dragon/styles";
+import { $wallet } from "store/wallet";
 import {
   $marketDragons,
   contactMarketDragons,
-  resetMarketDragons
-} from 'store/market';
-import { RARITY } from 'lib/rarity';
-import { DragonAPI } from '@/lib/api';
-import { StyleFonts } from '@/config/fonts';
-import { Colors } from '@/config/colors';
-import { useScrollEvent } from '@/mixin/scroll';
-import { Button } from '@/components/button';
-import { FigthPlace } from 'mixin/fight-place';
-import { isMobile } from 'react-device-detect';
+  resetMarketDragons,
+} from "store/market";
+import { RARITY } from "lib/rarity";
+import { FigthPlace } from "mixin/fight-place";
+import { isMobile } from "react-device-detect";
+import { FilterBar } from "@/components/filter-bar";
+import { Card } from "@/components/card";
+import { Text } from "@/components/text";
+
+import { DragonAPI } from "@/lib/api";
+import { StyleFonts } from "@/config/fonts";
+import { Colors } from "@/config/colors";
+import { useScrollEvent } from "@/mixin/scroll";
+import { Button } from "@/components/button";
+import { SkeletCard } from "@/components/skelet/card";
 
 const limit = 9;
 let page = 0;
 let maxPage = 1;
 const backend = new DragonAPI();
 const figthPlace = new FigthPlace();
-export const FightPage: NextPage = () => {
+export var FightPage: NextPage = function () {
   const refWrapper = React.useRef<HTMLDivElement | null>();
 
-  const fightsLocale = useTranslation('fights');
-  const commonLocale = useTranslation('common');
+  const fightsLocale = useTranslation(`fights`);
+  const commonLocale = useTranslation(`common`);
 
   const router = useRouter();
   const address = useStore($wallet);
@@ -53,7 +53,7 @@ export const FightPage: NextPage = () => {
   const handleSelect = React.useCallback((dragon) => {
     router.push(`/fights/${dragon.id}`);
   }, []);
-  const handleCancel = React.useCallback(async(dragon) => {
+  const handleCancel = React.useCallback(async (dragon) => {
     await figthPlace.place(dragon.id, 0, true);
   }, []);
 
@@ -64,14 +64,14 @@ export const FightPage: NextPage = () => {
       return null;
     }
 
-		const result = await backend.getDragonsFromFight(limit, page);
+    const result = await backend.getDragonsFromFight(limit, page);
 
     maxPage = result.pagination.pages;
 
     contactMarketDragons(result.list);
 
     page += 1;
-	};
+  };
 
   React.useEffect(() => {
     setSkelet(true);
@@ -91,7 +91,7 @@ export const FightPage: NextPage = () => {
       return null;
     }
 
-		setLoading(true);
+    setLoading(true);
 
     try {
       await fetchData();
@@ -106,23 +106,26 @@ export const FightPage: NextPage = () => {
     <Container>
       <Head>
         <title>
-          {commonLocale.t('name')} | {fightsLocale.t('title')}
+          {commonLocale.t(`name`)}
+          {` `}
+          |
+          {fightsLocale.t(`title`)}
         </title>
         <meta
           property="og:title"
-          content={`${commonLocale.t('name')} | ${fightsLocale.t('title')}`}
+          content={`${commonLocale.t(`name`)} | ${fightsLocale.t(`title`)}`}
           key="title"
         />
       </Head>
       <Navbar />
-      <FilterBar title={fightsLocale.t('title')} />
-      <Wrapper ref={(n) => refWrapper.current = n}>
+      <FilterBar title={fightsLocale.t(`title`)} />
+      <Wrapper ref={(n) => (refWrapper.current = n)}>
         {skelet ? (
           <>
-          <SkeletCard />
-          <SkeletCard />
-          <SkeletCard />
-          <SkeletCard />
+            <SkeletCard />
+            <SkeletCard />
+            <SkeletCard />
+            <SkeletCard />
           </>
         ) : (
           <>
@@ -138,32 +141,36 @@ export const FightPage: NextPage = () => {
                     fontColors={RARITY[dragon.rarity].color}
                     size="16px"
                   >
-                    #{dragon.id} <span>
-                      {dragon.name ? `- ${dragon.name}` : ''}
-                    </span>
+                    #
+                    {dragon.id}
+                    {` `}
+                    <span>{dragon.name ? `- ${dragon.name}` : ``}</span>
                   </CardText>
                   <Text
                     fontVariant={StyleFonts.FiraSansSemiBold}
                     fontColors={Colors.Blue}
                     size="18px"
                   >
-                    {(Number(dragon.actions[0][1]) / 10**18).toLocaleString()} $ZLP
+                    {(Number(dragon.actions[0][1]) / 10 ** 18).toLocaleString()}
+                    {` `}
+                    $ZLP
                   </Text>
-                  {dragon.owner.toLowerCase() !== String(address?.base16).toLowerCase() ? (
+                  {dragon.owner.toLowerCase()
+                  !== String(address?.base16).toLowerCase() ? (
                     <Button
                       color={Colors.Dark}
                       onClick={() => handleSelect(dragon)}
                     >
-                      {commonLocale.t('start_fight')}
+                      {commonLocale.t(`start_fight`)}
                     </Button>
-                  ) : (
-                    <Button
-                      color={Colors.Primary}
-                      onClick={() => handleCancel(dragon)}
-                    >
-                      {commonLocale.t('get_back')}
-                    </Button>
-                  )}
+                    ) : (
+                      <Button
+                        color={Colors.Primary}
+                        onClick={() => handleCancel(dragon)}
+                      >
+                        {commonLocale.t(`get_back`)}
+                      </Button>
+                    )}
                 </CardContainer>
               </Card>
             ))}
@@ -176,33 +183,27 @@ export const FightPage: NextPage = () => {
             fontVariant={StyleFonts.FiraSansRegular}
             css="text-align: center;max-width: 400px;"
           >
-            {fightsLocale.t('no_dragons')}
+            {fightsLocale.t(`no_dragons`)}
           </Text>
           <Link href="/mydragons">
-            <Button>
-              {fightsLocale.t('place')}
-            </Button>
+            <Button>{fightsLocale.t(`place`)}</Button>
           </Link>
         </>
       ) : null}
       {loading ? (
-        <Loader
-          type="ThreeDots"
-          color={Colors.Info}
-          height={30}
-          width={100}
-        />
+        <Loader type="ThreeDots" color={Colors.Info} height={30} width={100} />
       ) : null}
     </Container>
   );
-}
-
-export const getStaticProps = async (props: GetServerSidePropsContext) => {
-  return {
-    props: {
-      ...await serverSideTranslations(props.locale || 'en', ['common', 'fights'])
-    }
-  };
 };
+
+export const getStaticProps = async (props: GetServerSidePropsContext) => ({
+  props: {
+    ...(await serverSideTranslations(props.locale || `en`, [
+      `common`,
+      `fights`,
+    ])),
+  },
+});
 
 export default FightPage;

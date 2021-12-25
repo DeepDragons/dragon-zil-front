@@ -3,5 +3,5 @@ export function getPrice(actinos?: Array<string[]>) {
     return actinos[0][1];
   }
 
-  return '0';
+  return `0`;
 }

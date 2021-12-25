@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Colors } from 'config/colors';
+import React from "react";
+import styled from "styled-components";
+import { Colors } from "config/colors";
 
 type Prop = {
   show: boolean;
@@ -45,23 +45,26 @@ const Container = styled.div`
   }
 `;
 
-export const ScreenModal: React.FC<Prop> = ({
+export var ScreenModal: React.FC<Prop> = function ({
   children,
   show,
-  onClose
-}) => {
+  onClose,
+}) {
   const node = React.useRef<HTMLDivElement | null>(null);
 
-  const onToggle = React.useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (e.target == node.current) {
-      onClose();
-    }
-  }, [node]);
+  const onToggle = React.useCallback(
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      if (e.target == node.current) {
+        onClose();
+      }
+    },
+    [node],
+  );
 
   return (
     <Container
-      ref={(n) => node.current = n}
-      className={show ? 'show-dialog' : ''}
+      ref={(n) => (node.current = n)}
+      className={show ? `show-dialog` : ``}
       onClick={onToggle}
     >
       {children}
