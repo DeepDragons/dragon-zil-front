@@ -1,14 +1,11 @@
 import React from "react";
+import Image from "next/image";
 import styled from "styled-components";
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
 
 import { Text } from "components/text";
 import { Button } from "components/button";
-
-import { BrowserView, TabletView } from "react-device-detect";
-import { Colors } from "@/config/colors";
-import { StyleFonts } from "@/config/fonts";
 
 const Container = styled.section`
   display: flex;
@@ -45,7 +42,6 @@ const TextWrapper = styled.div`
 
 export var ReferralSection: React.FC = function () {
   const mainLocale = useTranslation(`main`);
-  const commonLocale = useTranslation(`common`);
 
   return (
     <Container>
@@ -54,11 +50,11 @@ export var ReferralSection: React.FC = function () {
       </SubTitle>
       <Text>{mainLocale.t(`section_3.sub_title`)}</Text>
       <Wrapper>
-        <img height="300" src="/imgs/ic_share_large.webp" alt="ref" />
+        <Image height="300" src="/imgs/ic_share_large.webp" alt="ref" />
         <TextWrapper>
           <Text>{mainLocale.t(`section_3.link_name`)}</Text>
           <Text>{mainLocale.t(`section_3.description`)}</Text>
-          <Link href="/referral">
+          <Link href="/referral" passHref>
             <Button css="margin-top: 30px;">
               {mainLocale.t(`section_3.btn`)}
             </Button>

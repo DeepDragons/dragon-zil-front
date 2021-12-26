@@ -60,7 +60,7 @@ export var BreedPage: NextPage = function () {
       commonLocale.t(`strong`),
       commonLocale.t(`price`),
     ],
-    [],
+    [commonLocale],
   );
 
   const fetchData = async () => {
@@ -124,7 +124,7 @@ export var BreedPage: NextPage = function () {
   const handleSelect = React.useCallback((dragon) => {
     updateCache(dragon);
     router.push(`/breed/${dragon.id}`);
-  }, []);
+  }, [router]);
   const handleCancel = React.useCallback(async (dragon) => {
     try {
       await breedPlace.cancelBreed(dragon.id);

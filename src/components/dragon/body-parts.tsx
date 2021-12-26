@@ -1,4 +1,5 @@
 import React from "react";
+import Image from 'next/image';
 import { useTranslation } from "next-i18next";
 import styled from "styled-components";
 
@@ -51,7 +52,12 @@ export var BodyParts: React.FC<Prop> = function ({ color, gens }) {
         <Text fontVariant={StyleFonts.FiraSansSemiBold} size="24px">
           {dragonLocale.t(`body_parts`)}
         </Text>
-        <img src="/icons/body.svg" alt="body" />
+        <Image
+          src="/icons/body.svg"
+          width="19"
+          height="16"
+          alt="body"
+        />
       </TitleRow>
       <GensWrapper>
         <GensContainer>

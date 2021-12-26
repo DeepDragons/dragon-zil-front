@@ -1,4 +1,5 @@
 import React from "react";
+import Image from 'next/image';
 import Link from "next/link";
 import { useStore } from "effector-react";
 import { useRouter } from "next/router";
@@ -111,9 +112,9 @@ export var MobileNavigate: React.FC<Prop> = function ({
     <ScreenModal show={show} onClose={() => null}>
       <Container className="modal-content">
         <Wrapper>
-          <Link href="/">
+          <Link href="/" passHref>
             <Logo>
-              <img src="/icons/logo.png" alt="Logo" height="40" />
+              <Image src="/icons/logo.png" alt="Logo" height="40" />
               <Text
                 fontVariant={StyleFonts.FiraSansBold}
                 css="margin-left: 5px;"

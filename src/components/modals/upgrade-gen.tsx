@@ -78,20 +78,20 @@ export var UpgradeGenModal: React.FC<Prop> = function ({
     }
     load = false;
     setLoading(false);
-  }, [id, gen, needApprove]);
+  }, [id, gen, needApprove, onClose]);
   const hanldeClose = React.useCallback(() => {
     if (load) {
       return null;
     }
 
     onClose();
-  }, []);
+  }, [onClose]);
 
   React.useEffect(() => {
     if (show) {
       hanldeUpdate();
     }
-  }, [show]);
+  }, [show, hanldeUpdate]);
 
   return (
     <Modal

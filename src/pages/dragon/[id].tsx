@@ -88,7 +88,7 @@ export var Dragon: NextPage<prop> = function (props) {
     return dragon?.stage === 0
       ? dragonLocale.t(`egg`)
       : dragonLocale.t(`dragon`);
-  }, [dragon]);
+  }, [dragon, dragonLocale]);
   const rarity = React.useMemo(() => {
     if (!dragon) {
       return null;
@@ -131,7 +131,7 @@ export var Dragon: NextPage<prop> = function (props) {
     }
 
     return undefined;
-  }, [dragon]);
+  }, [dragon, currentAction]);
   const dragonName = React.useMemo(() => {
     if (!dragon || !dragon.name) {
       return ``;
@@ -145,14 +145,14 @@ export var Dragon: NextPage<prop> = function (props) {
     }
 
     return `Rarity ${rarity?.name}`;
-  }, [currentAction, price]);
+  }, [currentAction, price, commonLocale, rarity]);
 
   const hanldeMutate = React.useCallback(() => {
     if (dragon) {
       updateCache(dragon);
       router.push(`/mutate/${dragon.id}`);
     }
-  }, [dragon]);
+  }, [dragon, router]);
 
   React.useEffect(() => {
     if (router.query.id) {

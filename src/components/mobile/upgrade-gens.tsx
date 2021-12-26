@@ -31,7 +31,7 @@ type Prop = {
   onSelect: (gen: number, value: number, name: string) => void;
 };
 
-const tabElements = [<DefenceIcon />, <AttackIcon />];
+const tabElements = [<DefenceIcon key="0"/>, <AttackIcon key="1" />];
 export var MobileUpgradeGens: React.FC<Prop> = function ({
   gens,
   color,

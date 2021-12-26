@@ -210,7 +210,7 @@ export var DragonsSelectModal: React.FC<Prop> = function ({
             >
               {commonLocale.t(`no_dragons`)}
             </Text>
-            <Link href="/buy">
+            <Link href="/buy" passHref>
               <Button>{commonLocale.t(`buy`)}</Button>
             </Link>
           </>

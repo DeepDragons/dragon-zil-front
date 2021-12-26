@@ -105,7 +105,7 @@ export var PopUpButton: React.FC<Prop> = function ({ children, onApply }) {
 
   const disabled = React.useMemo(
     () => from > to || (from === 0 && to === 0),
-    [from, to, opned],
+    [from, to],
   );
 
   const handleApply = React.useCallback(
@@ -114,7 +114,7 @@ export var PopUpButton: React.FC<Prop> = function ({ children, onApply }) {
       setOpened(false);
       onApply(from, to);
     },
-    [from, to],
+    [from, to, onApply],
   );
 
   return (

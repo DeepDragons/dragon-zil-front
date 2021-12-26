@@ -1,4 +1,5 @@
 import React from "react";
+import Image from 'next/image';
 import styled from "styled-components";
 import { isBrowser } from "react-device-detect";
 import { useTranslation } from "next-i18next";
@@ -90,7 +91,12 @@ export var CombatGens: React.FC<Prop> = function ({ gens, color }) {
           <Text fontVariant={StyleFonts.FiraSansSemiBold} size="24px">
             {dragonLocale.t(`combat_gens`)}
           </Text>
-          <img src="/icons/gens.svg" alt="gens" />
+          <Image
+            src="/icons/gens.svg"
+            width="32"
+            height="32"            
+            alt="gens"
+          />
         </TitleRow>
         <TabRow>
           <TabSelector

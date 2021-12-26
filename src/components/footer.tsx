@@ -1,4 +1,5 @@
 import React from "react";
+import Image from 'next/image';
 
 import styled from "styled-components";
 import Link from "next/link";
@@ -91,7 +92,12 @@ export var Footer: React.FC = function () {
               target="_blank"
               rel="noreferrer"
             >
-              <img src="/icons/github.svg" alt="github" />
+              <Image
+                width="33"
+                height="33"
+                src="/icons/github.svg"
+                alt="github"
+              />
             </a>
           </Li>
           <Li>
@@ -100,7 +106,12 @@ export var Footer: React.FC = function () {
               target="_blank"
               rel="noreferrer"
             >
-              <img src="/icons/tg.svg" alt="Telegram" />
+              <Image
+                width="33"
+                height="33"
+                src="/icons/tg.svg"
+                alt="Telegram"
+              />
             </a>
           </Li>
           <Li>
@@ -109,7 +120,12 @@ export var Footer: React.FC = function () {
               target="_blank"
               rel="noreferrer"
             >
-              <img src="/icons/fb.svg" alt="Facebook" />
+              <Image
+                width="33"
+                height="33"
+                src="/icons/fb.svg"
+                alt="Facebook"
+              />
             </a>
           </Li>
           <Li>
@@ -118,7 +134,12 @@ export var Footer: React.FC = function () {
               target="_blank"
               rel="noreferrer"
             >
-              <img src="/icons/twitter.svg" alt="Twitter" />
+              <Image
+                width="33"
+                height="33"
+                src="/icons/twitter.svg"
+                alt="Twitter"
+              />
             </a>
           </Li>
           <Li>
@@ -127,7 +148,12 @@ export var Footer: React.FC = function () {
               target="_blank"
               rel="noreferrer"
             >
-              <img src="/icons/instagram.svg" alt="instagram" />
+              <Image
+                width="33"
+                height="33"
+                src="/icons/instagram.svg"
+                alt="instagram"
+              />
             </a>
           </Li>
         </UlList>

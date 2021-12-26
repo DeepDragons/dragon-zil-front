@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Colors } from "config/colors";
 
 type Prop = {
   show: boolean;
@@ -58,7 +57,7 @@ export var ScreenModal: React.FC<Prop> = function ({
         onClose();
       }
     },
-    [node],
+    [node, onClose],
   );
 
   return (

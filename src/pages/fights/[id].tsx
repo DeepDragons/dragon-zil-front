@@ -98,11 +98,11 @@ export var FightStart: NextPage<Prop> = function ({ defended }) {
       setWaitResult(false);
     }
     setLoading(false);
-  }, [defended, attacked, needApprove]);
+  }, [defended, attacked, needApprove, amount]);
 
   React.useEffect(() => {
     hanldeUpdate();
-  }, [wallet]);
+  }, [wallet, hanldeUpdate]);
 
   return (
     <Container>

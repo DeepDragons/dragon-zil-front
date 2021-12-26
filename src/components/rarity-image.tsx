@@ -48,6 +48,7 @@ export var RarityImage: React.FC<Prop> = function ({
       width={width}
       height={height}
       color={rarityInfo.color}
+      key={rarityInfo.name}
       onClick={onClick}
     />,
     <UncommonAura
@@ -56,6 +57,7 @@ export var RarityImage: React.FC<Prop> = function ({
       width={width}
       height={height}
       color={rarityInfo.color}
+      key={rarityInfo.name}
       onClick={onClick}
     />,
     <RareAura
@@ -64,6 +66,7 @@ export var RarityImage: React.FC<Prop> = function ({
       width={width}
       height={height}
       color={rarityInfo.color}
+      key={rarityInfo.name}
       onClick={onClick}
     />,
     <MythicalAura
@@ -72,6 +75,7 @@ export var RarityImage: React.FC<Prop> = function ({
       width={width}
       height={height}
       color={rarityInfo.color}
+      key={rarityInfo.name}
       onClick={onClick}
     />,
     <LegendaryAura
@@ -80,6 +84,7 @@ export var RarityImage: React.FC<Prop> = function ({
       width={width}
       height={height}
       color={rarityInfo.color}
+      key={rarityInfo.name}
       onClick={onClick}
     />,
     <ImmortalAura
@@ -88,6 +93,7 @@ export var RarityImage: React.FC<Prop> = function ({
       width={width}
       height={height}
       color={rarityInfo.color}
+      key={rarityInfo.name}
       onClick={onClick}
     />,
     <ArcanaAura
@@ -96,6 +102,7 @@ export var RarityImage: React.FC<Prop> = function ({
       width={width}
       height={height}
       color={rarityInfo.color}
+      key={rarityInfo.name}
       onClick={onClick}
     />,
     <AncientAura
@@ -104,6 +111,7 @@ export var RarityImage: React.FC<Prop> = function ({
       width={width}
       height={height}
       color={rarityInfo.color}
+      key={rarityInfo.name}
       onClick={onClick}
     />,
   ][rarity];

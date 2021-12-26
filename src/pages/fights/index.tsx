@@ -52,7 +52,7 @@ export var FightPage: NextPage = function () {
 
   const handleSelect = React.useCallback((dragon) => {
     router.push(`/fights/${dragon.id}`);
-  }, []);
+  }, [router]);
   const handleCancel = React.useCallback(async (dragon) => {
     await figthPlace.place(dragon.id, 0, true);
   }, []);
@@ -185,7 +185,10 @@ export var FightPage: NextPage = function () {
           >
             {fightsLocale.t(`no_dragons`)}
           </Text>
-          <Link href="/mydragons">
+          <Link
+            href="/mydragons"
+            passHref
+          >
             <Button>{fightsLocale.t(`place`)}</Button>
           </Link>
         </>

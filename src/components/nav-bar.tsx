@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { BrowserView } from "react-device-detect";
 import { useTranslation } from "next-i18next";
@@ -86,9 +87,14 @@ export var Navbar: React.FC = function () {
 
   return (
     <Container>
-      <Link href="/">
+      <Link href="/" passHref>
         <Logo>
-          <img src="/icons/logo.png" alt="Logo" height="40" />
+          <Image
+            src="/icons/logo.png"
+            alt="Logo"
+            height="40"
+            width="19"
+          />
           <Text fontVariant={StyleFonts.FiraSansBold} css="margin-left: 5px;">
             {common.t(`name`)}
           </Text>
@@ -98,7 +104,7 @@ export var Navbar: React.FC = function () {
         <Ul>
           {links.map((link, index) => (
             <Li key={index} selected={router.pathname === link.path}>
-              <Link href={link.path}>{common.t(link.name)}</Link>
+              <Link href={link.path} passHref>{common.t(link.name)}</Link>
             </Li>
           ))}
         </Ul>

@@ -67,15 +67,15 @@ type Prop = {
 
 function createIcon(index: number, color: string) {
   return [
-    <AuraIcon color={color} />,
-    <HornsIcon color={color} />,
-    <GrowthsIcon color={color} />,
-    <SpotsIcon color={color} />,
-    <TailIcon color={color} />,
-    <WingsIcon color={color} />,
-    <BodyIcon color={color} />,
-    <EyesIcon color={color} />,
-    <HeadIcon color={color} />,
+    <AuraIcon color={color} key="0"/>,
+    <HornsIcon color={color} key="1"/>,
+    <GrowthsIcon color={color} key="2"/>,
+    <SpotsIcon color={color} key="3"/>,
+    <TailIcon color={color} key="4"/>,
+    <WingsIcon color={color} key="5"/>,
+    <BodyIcon color={color} key="6"/>,
+    <EyesIcon color={color} key="7"/>,
+    <HeadIcon color={color} key="8"/>,
   ][index];
 }
 

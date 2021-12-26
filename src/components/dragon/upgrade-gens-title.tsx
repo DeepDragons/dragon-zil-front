@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import styled from "styled-components";
 
 import { Text } from "components/text";
@@ -28,7 +29,12 @@ export var TitleUpgradeGens: React.FC<Prop> = function ({
         >
           {children}
         </Text>
-        <img src={`/icons/${icon}`} alt="gens" />
+        <Image
+          src={`/icons/${icon}`}
+          alt="gens"
+          width="19"
+          height="16"
+        />
       </TitleRow>
     </TitleRow>
   );

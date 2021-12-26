@@ -1,4 +1,5 @@
 import React from "react";
+import Image from 'next/image';
 import styled from "styled-components";
 import { useStore } from "effector-react";
 import { BrowserView, MobileView } from "react-device-detect";
@@ -212,23 +213,38 @@ export var ActionBar: React.FC<Prop> = function ({
       />
       <ActionsForNotFree>
         {currentAction === 1 ? (
-          <Link href={`/fights/${dragon.id}`}>
+          <Link href={`/fights/${dragon.id}`} passHref>
             <ActionButton color={color}>
-              <img src="/icons/arena.svg" alt="action-icon" height="38" />
+              <Image
+                src="/icons/arena.svg"
+                alt="action-icon"
+                height="38"
+                width="44"
+              />
               <Text size="16px">{dragonLocale.t(`actions.fight`)}</Text>
             </ActionButton>
           </Link>
         ) : null}
         {currentAction === 2 && isOwner ? (
           <ActionButton color={color} onClick={RemoveBreed}>
-            <img src="/icons/an-egg.svg" alt="action-icon" height="38" />
+            <Image
+              src="/icons/an-egg.svg"
+              alt="action-icon"
+              height="38"
+              width="38"
+            />
             <Text size="16px">{dragonLocale.t(`actions.remove_breed`)}</Text>
           </ActionButton>
         ) : null}
         {currentAction === 2 && !isOwner ? (
-          <Link href={`/breed/${dragon.id}`}>
+          <Link href={`/breed/${dragon.id}`} passHref>
             <ActionButton color={color}>
-              <img src="/icons/an-egg.svg" alt="action-icon" height="38" />
+              <Image
+                src="/icons/an-egg.svg"
+                alt="action-icon"
+                height="38"
+                width="38"
+              />
               <Text size="16px">
                 \
                 {dragonLocale.t(`actions.bread_with`)}
@@ -241,7 +257,12 @@ export var ActionBar: React.FC<Prop> = function ({
             color={color}
             onClick={() => (isOwner ? RemoveSale() : buy())}
           >
-            <img src="/icons/sale-icon.svg" alt="action-icon" height="38" />
+            <Image
+              src="/icons/sale-icon.svg"
+              alt="action-icon"
+              height="38"
+              width="38"
+            />
             <Text size="16px">
               {isOwner
                 ? dragonLocale.t(`actions.sale_remove`)
@@ -259,10 +280,11 @@ export var ActionBar: React.FC<Prop> = function ({
                 color={color}
                 onClick={action.method}
               >
-                <img
+                <Image
                   src={`/icons/${action.icon}`}
                   alt="action-icon"
                   height="38"
+                  width="38"
                 />
                 <Text size="16px">{action.name}</Text>
               </ActionButton>
@@ -286,7 +308,7 @@ export var ActionBar: React.FC<Prop> = function ({
           <ul>
             {actionList.map((action, index) => (
               <ModalItem key={index} onClick={() => handleMobileActino(action)}>
-                <img
+                <Image
                   src={`/icons/${action.icon}`}
                   alt="action-icon"
                   height="25"

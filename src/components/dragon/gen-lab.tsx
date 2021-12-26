@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { isBrowser, isMobile } from "react-device-detect";
+import Image from 'next/image';
+import { isBrowser } from "react-device-detect";
 
 import { Text } from "components/text";
 import { AttackIcon } from "components/icons/attack";
@@ -75,7 +76,12 @@ export var GenLabUpgrade: React.FC<Prop> = function ({ gens, color }) {
           <Text fontVariant={StyleFonts.FiraSansSemiBold} size="24px">
             Combat gens
           </Text>
-          <img src="/icons/gens.svg" alt="gens" />
+          <Image
+            src="/icons/gens.svg"
+            width="32"
+            height="32"
+            alt="gens"
+          />
         </TitleRow>
         <TabRow>
           <TabSelector

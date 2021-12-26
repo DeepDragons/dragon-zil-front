@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
+import Image from 'next/image';
 
 import { Text } from "components/text";
 
@@ -38,7 +39,7 @@ export var ParentsSection: React.FC<Prop> = function ({
         <Text fontVariant={StyleFonts.FiraSansSemiBold} size="24px">
           Parents
         </Text>
-        <img src="/icons/parents.svg" alt="parents" />
+        <Image src="/icons/parents.svg" alt="parents" />
       </TitleRow>
       <Wrapper>
         <ImageWrapper>
@@ -46,7 +47,7 @@ export var ParentsSection: React.FC<Prop> = function ({
             #
             {first}
           </Text>
-          <Link href={`/dragon/${first}`}>
+          <Link href={`/dragon/${first}`} passHref>
             <div>
               <ParentImage
                 src="https://res.cloudinary.com/dragonseth/image/upload/1_6.png"
@@ -59,7 +60,7 @@ export var ParentsSection: React.FC<Prop> = function ({
         </ImageWrapper>
         <Seporate />
         <ImageWrapper>
-          <Link href={`/dragon/${first}`}>
+          <Link href={`/dragon/${first}`} passHref>
             <div>
               <ParentImage
                 src="https://res.cloudinary.com/dragonseth/image/upload/1_23.png"

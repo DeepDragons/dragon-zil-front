@@ -50,21 +50,21 @@ export var Terms: NextPage = function () {
         <Text fontColors={Colors.Muted}>
           Dragons ZIL is a distributed application that runs on the ZIlliqa
           blockchain. It uses custom developed ZIlliqa smart contracts (each, a
-          “Smart Contract”) to enable users to battle, own, breed, sire, and buy
+          "Smart Contract”) to enable users to battle, own, breed, sire, and buy
           digital and fictional dragons. These dragons can be seen and
-          visualized on a website that the user can interact with (the “Site”).
+          visualized on a website that the user can interact with (the "Site”).
           The Smart Contracts and the Site are collectively referred to in these
-          Terms as the “Dragons ZIL Application”. Upon launch of the full game,
+          Terms as the "Dragons ZIL Application”. Upon launch of the full game,
           the date of which is to be decided, of the Dragons ZIL Application,
           users will be able to view their dragons and use the Smart Contracts
           to buy eggs from the Dragons ZIL Application and/or buy, breed, and
           battle dragons with users on the Dragons ZIL Application.
         </Text>
         <Text fontColors={Colors.Muted}>
-          RIKA LLC (“RIKA LLC,” “we,” or “us”) is making the Dragons ZIL
+          RIKA LLC ("RIKA LLC," "we,” or "us”) is making the Dragons ZIL
           Application available to you. Before using the Dragons ZIL
           Application, the Smart Contracts, or the Site, you will need to agree
-          to these Terms of Use (these “Terms"). PLEASE READ THESE TERMS WITH
+          to these Terms of Use (these "Terms"). PLEASE READ THESE TERMS WITH
           CARE BEFORE YOU USE THE Dragons ZIL APPLICATION, THE SMART CONTRACTS,
           OR THE SITE. THESE TERMS GOVERN YOUR USE OF THE Dragons ZIL
           APPLICATION, THE SMART CONTRACTS, AND THE SITE, UNLESS WE HAVE
@@ -76,7 +76,7 @@ export var Terms: NextPage = function () {
           UNDERSTAND AND AGREE TO ALL OF THESE TERMS. IF YOU ARE ACCEPTING THESE
           TERMS ON BEHALF OF A COMPANY OR OTHER LEGAL ENTITY, YOU REPRESENT THAT
           YOU HAVE THE LEGAL AUTHORITY TO ACCEPT THESE TERMS ON THAT ENTITY’S
-          BEHALF, IN WHICH CASE “YOU” WILL MEAN THAT ENTITY. IF YOU DO NOT HAVE
+          BEHALF, IN WHICH CASE "YOU” WILL MEAN THAT ENTITY. IF YOU DO NOT HAVE
           SUCH AUTHORITY, OR IF YOU DO NOT ACCEPT ALL OF THE TERMS OUTLINED,
           THEN WE ARE UNWILLING TO MAKE THE Dragons ZIL APPLICATION, THE SMART
           CONTRACTS, OR THE SITE AVAILABLE TO YOU.
@@ -87,7 +87,7 @@ export var Terms: NextPage = function () {
           dragons in the Dragons ZIL Application. dragons will be available in
           the form of eggs on the launch of the Dragons ZIL Application egg
           presale. Eggs sold from the Dragons ZIL Application to users are sold
-          on a dedicated egg sale page (the “Egg Sale Page”) and will increase
+          on a dedicated egg sale page (the "Egg Sale Page”) and will increase
           in price with each egg sold from the Egg Sale Page. So each egg sold
           from the Egg Sale Page will be more expensive than the preceding egg
           sold from the Egg Sale Page. Eggs will eventually hatch digitally and
@@ -158,7 +158,7 @@ export var Terms: NextPage = function () {
           C. As between us, you will be solely responsible to pay any and all
           sales, use, value-added and other taxes, duties, and assessments
           (except taxes on our net income) now or hereafter claimed or imposed
-          by any governmental authority (collectively, “Taxes”) associated with
+          by any governmental authority (collectively, "Taxes”) associated with
           your use of the Dragons ZIL Application (including, without
           limitation, any Taxes that may become payable as the result of your
           ownership, transfer, or breeding of any of your Dragons ZIL or eggs).
@@ -180,10 +180,10 @@ export var Terms: NextPage = function () {
           elements of the Dragons ZIL Application, and all intellectual property
           rights therein. The visual interfaces, graphics (including, without
           limitation, all art and drawings associated with the dragons),
-          systems, design, mZILods, computer code, software, services, “look and
+          systems, design, mZILods, computer code, software, services, "look and
           feel”, organization, information, compilation of the content, code,
           data, and all other elements of the Dragons ZIL Application
-          (collectively, the “Nimbus Assets”) are owned by RIKA LLC, and are
+          (collectively, the "Nimbus Assets”) are owned by RIKA LLC, and are
           protected by copyright, trade dress, patent, and trademark laws,
           international conventions, other relevant intellectual property and
           proprietary rights, and applicable laws. All Nimbus Assets are the
@@ -195,7 +195,7 @@ export var Terms: NextPage = function () {
           code, data, or other materials that you may access on or through the
           Dragons ZIL Application. We reserve all rights in and to the Nimbus
           Assets not expressly granted to you in the Terms. For the sake of
-          clarity, you understand and agree: (i) that your “purchase” of an egg,
+          clarity, you understand and agree: (i) that your "purchase” of an egg,
           whZILer via the Dragons ZIL Application or otherwise, does not give
           you any rights or licenses in or to the Nimbus Assets (including,
           without limitation, our copyright in and to the art and drawings
@@ -249,7 +249,7 @@ export var Terms: NextPage = function () {
           C. You may choose to submit bug reports, comments, ideas or other
           feedback about the Dragons ZIL Application, including without
           limitation about how to improve the Dragons ZIL Application
-          (collectively, “Feedback”). By submitting any Feedback, you agree that
+          (collectively, "Feedback”). By submitting any Feedback, you agree that
           we are free to use such Feedback at our discretion and without
           additional compensation to you, and to disclose such Feedback to third
           parties (whZILer on a non-confidential basis, or otherwise). You
@@ -329,7 +329,7 @@ export var Terms: NextPage = function () {
         <Text fontColors={Colors.Primary}>9. External Websites</Text>
         <Text fontColors={Colors.Muted}>
           The Dragons ZIL Application may include hyperlinks to other websites
-          or resources (collectively, “External Websites”), which are provided
+          or resources (collectively, "External Websites”), which are provided
           solely as a convenience to our users. We have no control over any
           External Websites. You acknowledge and agree that we are not
           responsible for the availability of any External Websites, and that we
@@ -360,7 +360,7 @@ export var Terms: NextPage = function () {
         <Text fontColors={Colors.Muted}>
           We may make changes to the Terms from time to time. When we make
           changes, we will make the updated Terms available on the Dragons ZIL
-          Application and update the “Last Updated” date at the beginning of
+          Application and update the "Last Updated” date at the beginning of
           these Terms accordingly. Please check these Terms periodically for
           changes. Any changes to the Terms will apply on the date that they are
           made, and your continued access to or use of the Dragons ZIL

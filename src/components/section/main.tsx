@@ -115,7 +115,7 @@ export var MainSection: React.FC = function () {
       >
         {mainLocale.t(`description`)}
       </Text>
-      <Link href="/buy">
+      <Link href="/buy" passHref>
         <BuyButton>{mainLocale.t(`buy`)}</BuyButton>
       </Link>
     </Container>

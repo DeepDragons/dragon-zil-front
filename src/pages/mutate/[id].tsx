@@ -107,7 +107,7 @@ export var GenLabPage: NextPage<Prop> = function (props) {
     ) {
       router.push(`/dragon/${dragon.id}`);
     }
-  }, [dragon, address]);
+  }, [dragon, address, router]);
 
   React.useEffect(() => {
     if (dragon) {

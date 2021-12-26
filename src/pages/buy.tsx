@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import styled from "styled-components";
 import { useStore } from "effector-react";
 import { NextPage, GetServerSidePropsContext } from "next";
@@ -71,8 +72,18 @@ const BuyButton = styled(Button)`
 `;
 
 const tokens = [
-  <Text fontVariant={StyleFonts.FiraSansSemiBold}>ZIL</Text>,
-  <Text fontVariant={StyleFonts.FiraSansSemiBold}>ZLP</Text>,
+  <Text
+    fontVariant={StyleFonts.FiraSansSemiBold}
+    key={'ZIL'}
+  >
+    ZIL
+  </Text>,
+  <Text
+    fontVariant={StyleFonts.FiraSansSemiBold}
+    key={'ZLP'}
+  >
+      ZLP
+  </Text>,
 ];
 
 const crowdSale = new CrowdSale();
@@ -137,7 +148,12 @@ export var BuyPage: NextPage = function () {
             >
               {storeLocale.t(`title`)}
             </Text>
-            <img src="/icons/egg.svg" alt="egg" />
+            <Image
+              src="/icons/egg.svg"
+              width="19"
+              height="27"
+              alt="egg"
+            />
           </TitleWrapper>
           <Wrapper>
             <Tab elements={tokens} selected={selected} onSelected={setSelected}>

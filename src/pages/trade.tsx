@@ -63,7 +63,7 @@ export var TradePage: NextPage = function () {
       commonLocale.t(`dragons`),
       commonLocale.t(`eggs`),
     ],
-    [],
+    [commonLocale],
   );
 
   const fetchData = async () => {

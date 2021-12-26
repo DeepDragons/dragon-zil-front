@@ -64,7 +64,7 @@ export var MyDragons: NextPage = function () {
       commonLocale.t(`dragons`),
       commonLocale.t(`eggs`),
     ],
-    [],
+    [commonLocale],
   );
 
   const fetchData = async () => {
@@ -182,7 +182,11 @@ export var MyDragons: NextPage = function () {
         ) : (
           <>
             {dragons.map((dragon, index) => (
-              <Link key={index} href={`/dragon/${dragon.id}`}>
+              <Link
+                key={index}
+                href={`/dragon/${dragon.id}`}
+                passHref
+              >
                 <div>
                   <Card dragon={dragon}>
                     <CardContainer>
@@ -217,7 +221,10 @@ export var MyDragons: NextPage = function () {
           >
             {commonLocale.t(`no_dragons`)}
           </Text>
-          <Link href="/buy">
+          <Link
+            href="/buy"
+            passHref
+          >
             <Button>{commonLocale.t(`buy`)}</Button>
           </Link>
         </>

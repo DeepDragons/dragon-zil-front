@@ -1,4 +1,5 @@
 import React from "react";
+import Image from 'next/image';
 import styled from "styled-components";
 
 import { RarityImage } from "components/rarity-image";
@@ -69,7 +70,12 @@ export var ChoiceWith: React.FC<Prop> = function ({
             {dragon.id}
           </Text>
         </DragonImageWrapper>
-        <img src={`/icons/${icon}`} alt="action" />
+        <Image
+          src={`/icons/${icon}`}
+          alt="action"
+          width="53"
+          height="45"
+        />
         <DragonImageWrapper>
           {myDragon ? (
             <RarityImage

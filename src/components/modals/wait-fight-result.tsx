@@ -57,7 +57,7 @@ export var WaitFightModal: React.FC<Prop> = function ({ show, onClose }) {
     setLoading(true);
     onClose();
     load = true;
-  }, []);
+  }, [onClose]);
 
   React.useEffect(() => {
     if (arena && arena.winner) {
