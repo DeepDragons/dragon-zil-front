@@ -1,7 +1,7 @@
 export enum Contracts {
   Distributer = `0x066b88d3411c68cb56219e748ae895e1734c0f51`,
   Main = `0xb4d83becb950c096b001a3d1c7abb10f571ae75f`,
-  FightPlace = `0x21b870dc77921b21f9a98a732786bf812888193c`,
+  FightPlace = `0x11ae5629fe2384abbe18906307773b4eeb22ec22`,
   GenLab = `0x8a30485597ebcc1be49e75261de83d30e4a9d1e7`,
   ZIlPay = `0xfbd07e692543d3064b9cf570b27faabfd7948da4`,
   Breed = `0xade7886ec4a36cb0a7de2f5d18cc7bdae12e3650`,
