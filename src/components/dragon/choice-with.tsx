@@ -24,18 +24,36 @@ const Row = styled.div`
   justify-content: center;
   flex-wrap: wrap;
 
+  align-items: flex-start;
+
   div {
     margin: 10px;
   }
 
   @media (max-width: 704px) {
     flex-direction: column;
+    align-items: center;
   }
 `;
 const DragonImageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+const WoundsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  margin: 10px;
+  max-width: 200px;
+
+  span {
+    margin: 1px;
+  }
+  .wound-img {
+    border-radius: 5px;
+  }
 `;
 
 type Prop = {
@@ -60,6 +78,10 @@ export var ChoiceWith: React.FC<Prop> = function ({
 }) {
   const [isShow, setIsShow] = React.useState(false);
 
+  // TODO: add real wounds.
+  const wounds0 = [1,3,4,5,6,7];
+  const wounds1 = [8, 9, 10, 11, 12];
+
   return (
     <MainContainer color={color}>
       <Row>
@@ -69,6 +91,19 @@ export var ChoiceWith: React.FC<Prop> = function ({
             #
             {dragon.id}
           </Text>
+          <WoundsWrapper>
+            {wounds0.map((wound, index) => (
+              <span key={wound + index}>
+                <Image
+                  src={`/imgs/wounds/${wound}.jpg`}
+                  alt="wound img"
+                  className="wound-img"
+                  height="25"
+                  width="25"
+                />
+              </span>
+            ))}
+          </WoundsWrapper>
         </DragonImageWrapper>
         <Image
           src={`/icons/${icon}`}
@@ -91,6 +126,21 @@ export var ChoiceWith: React.FC<Prop> = function ({
             #
             {myDragon?.id || ``}
           </Text>
+          {myDragon ? (
+            <WoundsWrapper>
+              {wounds1.map((wound, index) => (
+                <span key={wound + index}>
+                  <Image
+                    src={`/imgs/wounds/${wound}.jpg`}
+                    alt="wound img"
+                    className="wound-img"
+                    height="25"
+                    width="25"
+                  />
+                </span>
+              ))}
+            </WoundsWrapper>
+          ) : null}
         </DragonImageWrapper>
       </Row>
       {myDragon ? (
