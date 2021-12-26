@@ -17,6 +17,8 @@ import {
   ModalTitle, ButtonsWrapper, ModalButton, Container,
 } from "./style";
 
+import { Blockchain } from 'mixin/custom-fetch';
+
 type Prop = {
   show: boolean;
   id: string;
@@ -26,6 +28,7 @@ type Prop = {
 
 const zilPayToken = new ZIlPayToken();
 const figthPlace = new FigthPlace();
+const blockchain = new Blockchain();
 let load = false;
 export var HealModal: React.FC<Prop> = function ({ show, id, wound, onClose }) {
   const commonLocale = useTranslation(`common`);
@@ -45,9 +48,9 @@ export var HealModal: React.FC<Prop> = function ({ show, id, wound, onClose }) {
   const hanldeUpdate = React.useCallback(async () => {
     setLoading(true);
     try {
-      const allow = await zilPayToken.getAllowances(Contracts.FightPlace);
-      const bigValue = BigInt(zlp.toFixed()) * BigInt(ZIlPayToken.decimal);
-      setNeedApprove(!zilPayToken.isAllow(String(bigValue), allow));
+      const { allowances, price } = await blockchain.fetchForHeal();
+      setZLP(Number((Number(price) / Number(ZIlPayToken.decimal)).toFixed()));
+      setNeedApprove(!zilPayToken.isAllow(price, allowances));
     } catch {
       ///
     }
@@ -62,7 +65,7 @@ export var HealModal: React.FC<Prop> = function ({ show, id, wound, onClose }) {
         await zilPayToken.increaseAllowance(Contracts.FightPlace);
         setNeedApprove(false);
       } else {
-        await figthPlace.addToPublicList(id, zlp);
+        await figthPlace.healWound(id, wound);
         onClose();
       }
     } catch {
@@ -70,7 +73,7 @@ export var HealModal: React.FC<Prop> = function ({ show, id, wound, onClose }) {
     }
     setLoading(false);
     load = false;
-  }, [needApprove, id, zlp]);
+  }, [needApprove, id, wound]);
 
   const hanldeClose = React.useCallback(() => {
     if (load) {

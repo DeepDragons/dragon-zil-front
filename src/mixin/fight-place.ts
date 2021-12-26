@@ -101,4 +101,36 @@ export class FigthPlace {
 
     return String(res.ID);
   }
+
+  public async healWound(tokenId: string, wound: number) {
+    const params = [
+      {
+        vname: `id`,
+        type: `Uint256`,
+        value: tokenId,
+      },
+      {
+        vname: `wound_id`,
+        type: `Uint32`,
+        value: String(wound),
+      },
+    ];
+    const transition = `ToHeal`;
+    const res = await this.zilpay.call({
+      transition,
+      params,
+      amount: `0`,
+      contractAddress: Contracts.FightPlace,
+    });
+
+    pushToList({
+      timestamp: new Date().getTime(),
+      name: `Heal a wound for Dragon #${tokenId}.`,
+      confirmed: false,
+      hash: res.ID,
+      from: res.from,
+    });
+
+    return String(res.ID);
+  }
 }
