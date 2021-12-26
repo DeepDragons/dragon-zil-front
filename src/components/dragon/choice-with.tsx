@@ -106,10 +106,10 @@ export var ChoiceWith: React.FC<Prop> = function ({
           </WoundsWrapper>
         </DragonImageWrapper>
         <Image
-          src={`/icons/${icon}`}
+          src={`/imgs/icons/${icon}`}
           alt="action"
-          width="53"
-          height="45"
+          height="38"
+          width="44"
         />
         <DragonImageWrapper>
           {myDragon ? (

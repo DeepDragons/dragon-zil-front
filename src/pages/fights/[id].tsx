@@ -161,7 +161,7 @@ export var FightStart: NextPage<Prop> = function ({ defended }) {
             myDragon={attacked}
             color={Colors.Danger}
             btnColor={needApprove ? Colors.LightBlue : Colors.Info}
-            icon="arena.svg"
+            icon="arena.webp"
             setDragon={setAttacked}
             onStart={handleStartFight}
           >

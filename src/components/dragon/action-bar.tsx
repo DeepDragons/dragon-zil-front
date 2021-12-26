@@ -151,43 +151,43 @@ export var ActionBar: React.FC<Prop> = function ({
   const actionList = React.useMemo(
     () => [
       {
-        icon: `an-egg.svg`,
+        icon: `an-egg.webp`,
         name: dragonLocale.t(`actions.hatch_egg`),
         method: hatchEgg,
         show: dragon.stage == 0,
       },
       {
-        icon: `transfer-icon.svg`,
+        icon: `transfer-icon.webp`,
         name: dragonLocale.t(`actions.transfer`),
         method: transfer,
         show: true,
       },
       {
-        icon: `sale-icon.svg`,
+        icon: `sale-icon.webp`,
         name: dragonLocale.t(`actions.sale`),
         method: sale,
         show: true,
       },
       {
-        icon: `gen-lab.svg`,
+        icon: `gen-lab.webp`,
         name: dragonLocale.t(`actions.mutate`),
         method: mutate,
         show: dragon.stage > 0,
       },
       {
-        icon: `arena.svg`,
+        icon: `arena.webp`,
         name: dragonLocale.t(`actions.arena`),
         method: fight,
         show: dragon.stage > 0,
       },
       {
-        icon: `an-egg.svg`,
+        icon: `an-egg.webp`,
         name: dragonLocale.t(`actions.breed`),
         method: breed,
         show: dragon.stage > 0,
       },
       {
-        icon: `suicide.svg`,
+        icon: `suicide.webp`,
         name: dragonLocale.t(`actions.suicide`),
         method: suicide,
         show: true,
@@ -216,7 +216,7 @@ export var ActionBar: React.FC<Prop> = function ({
           <Link href={`/fights/${dragon.id}`} passHref>
             <ActionButton color={color}>
               <Image
-                src="/icons/arena.svg"
+                src="/imgs/icons/arena.webp"
                 alt="action-icon"
                 height="38"
                 width="44"
@@ -228,7 +228,7 @@ export var ActionBar: React.FC<Prop> = function ({
         {currentAction === 2 && isOwner ? (
           <ActionButton color={color} onClick={RemoveBreed}>
             <Image
-              src="/icons/an-egg.svg"
+              src="/imgs/icons/an-egg.webp"
               alt="action-icon"
               height="38"
               width="38"
@@ -240,7 +240,7 @@ export var ActionBar: React.FC<Prop> = function ({
           <Link href={`/breed/${dragon.id}`} passHref>
             <ActionButton color={color}>
               <Image
-                src="/icons/an-egg.svg"
+                src="/imgs/icons/an-egg.webp"
                 alt="action-icon"
                 height="38"
                 width="38"
@@ -258,7 +258,7 @@ export var ActionBar: React.FC<Prop> = function ({
             onClick={() => (isOwner ? RemoveSale() : buy())}
           >
             <Image
-              src="/icons/sale-icon.svg"
+              src="/imgs/icons/sale-icon.webp"
               alt="action-icon"
               height="38"
               width="38"
@@ -281,7 +281,7 @@ export var ActionBar: React.FC<Prop> = function ({
                 onClick={action.method}
               >
                 <Image
-                  src={`/icons/${action.icon}`}
+                  src={`/imgs/icons/${action.icon}`}
                   alt="action-icon"
                   height="38"
                   width="38"
@@ -309,7 +309,7 @@ export var ActionBar: React.FC<Prop> = function ({
             {actionList.map((action, index) => (
               <ModalItem key={index} onClick={() => handleMobileActino(action)}>
                 <Image
-                  src={`/icons/${action.icon}`}
+                  src={`/imgs/icons/${action.icon}`}
                   alt="action-icon"
                   height="25"
                   width="25"
