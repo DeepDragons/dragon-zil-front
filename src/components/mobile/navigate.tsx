@@ -114,7 +114,12 @@ export var MobileNavigate: React.FC<Prop> = function ({
         <Wrapper>
           <Link href="/" passHref>
             <Logo>
-              <Image src="/icons/logo.png" alt="Logo" height="40" />
+              <Image
+                src="/icons/logo.png"
+                alt="Logo"
+                height="40"
+                width="19"
+              />
               <Text
                 fontVariant={StyleFonts.FiraSansBold}
                 css="margin-left: 5px;"

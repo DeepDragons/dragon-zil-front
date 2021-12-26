@@ -18,6 +18,8 @@ export const Container = styled.div`
 
   @media (max-width: 550px) {
     padding: 10px;
+    margin: 5px;
+    margin-block-start: 15px;
     width: calc(100vw - 20px);
   }
 `;

@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import styled from "styled-components";
 import { useTranslation } from "next-i18next";
 
@@ -77,7 +76,7 @@ export var DescriptionSection: React.FC = function () {
     <Container>
       <SubTitle size="62px">{mainLocale.t(`section_1.title`)}</SubTitle>
       <Row>
-        <Image src="/imgs/ipad.webp" alt="ipda" />
+        <img src="/imgs/ipad.webp" alt="ipda" />
         <div>
           <Wrapper>
             <Title fontVariant={StyleFonts.FiraSansBold} size="33px">

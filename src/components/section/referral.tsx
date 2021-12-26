@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import styled from "styled-components";
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
@@ -50,7 +49,7 @@ export var ReferralSection: React.FC = function () {
       </SubTitle>
       <Text>{mainLocale.t(`section_3.sub_title`)}</Text>
       <Wrapper>
-        <Image height="300" src="/imgs/ic_share_large.webp" alt="ref" />
+        <img height="300" src="/imgs/ic_share_large.webp" alt="ref" />
         <TextWrapper>
           <Text>{mainLocale.t(`section_3.link_name`)}</Text>
           <Text>{mainLocale.t(`section_3.description`)}</Text>

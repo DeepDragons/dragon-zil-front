@@ -312,6 +312,7 @@ export var ActionBar: React.FC<Prop> = function ({
                   src={`/icons/${action.icon}`}
                   alt="action-icon"
                   height="25"
+                  width="25"
                 />
                 <Text css="margin-left: 10px;">{action.name}</Text>
               </ModalItem>

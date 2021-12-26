@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import styled from "styled-components";
 import { useTranslation } from "next-i18next";
 
@@ -70,7 +69,12 @@ export var HowWorksSection: React.FC = function () {
       <CardWrapper>
         <HowCard>
           <ImageWrapper>
-            <Image width="200" src="/imgs/egg2_1.webp" alt="egg" />
+            <img
+              width="200"
+              height=""
+              src="/imgs/egg2_1.webp"
+              alt="egg"
+            />
           </ImageWrapper>
           <TextWrapper>
             <Text
@@ -107,12 +111,12 @@ export var HowWorksSection: React.FC = function () {
             </Text>
           </TextWrapper>
           <ImageWrapper>
-            <Image width="200" src="/imgs/figure.webp" alt="egg" />
+            <img width="200" src="/imgs/figure.webp" alt="egg" />
           </ImageWrapper>
         </HowCard>
         <HowCard>
           <ImageWrapper>
-            <Image width="200" src="/imgs/bottle.webp" alt="egg" />
+            <img width="200" src="/imgs/bottle.webp" alt="egg" />
           </ImageWrapper>
           <TextWrapper>
             <Text
@@ -152,7 +156,7 @@ export var HowWorksSection: React.FC = function () {
             </Text>
           </TextWrapper>
           <ImageWrapper>
-            <Image width="200" src="/imgs/egg_nest_2.webp" alt="egg" />
+            <img width="200" src="/imgs/egg_nest_2.webp" alt="egg" />
           </ImageWrapper>
         </HowCard>
       </CardWrapper>
