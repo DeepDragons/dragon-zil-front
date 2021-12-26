@@ -6,6 +6,10 @@ import { Button } from "components/button";
 
 export const ModalTitle = styled(Text)`
   padding: 20px;
+
+  .wound-img {
+    border-radius: 5px;
+  }
 `;
 export const ModalButton = styled(Button)`
   min-width: 200px;

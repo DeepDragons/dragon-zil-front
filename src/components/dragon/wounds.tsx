@@ -55,8 +55,8 @@ export var Wounds: React.FC<Prop> = function ({ list, color, onHeal }) {
               src={`/imgs/wounds/${wound}.jpg`}
               alt="wound img"
               className="wound-img"
-              height="50"
-              width="50"
+              height="40"
+              width="40"
               onClick={() => onHeal(wound)}
             />
           </WoundImageWrapper>

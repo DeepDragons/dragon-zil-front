@@ -1,6 +1,5 @@
 import Loader from "react-loader-spinner";
 import Image from 'next/image';
-import styled from "styled-components";
 import { useTranslation } from "next-i18next";
 import React from "react";
 
@@ -24,16 +23,6 @@ type Prop = {
   wound: number;
   onClose: () => void;
 };
-
-const ImageWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .wound-img {
-    border-radius: 5px;
-  }
-`;
 
 const zilPayToken = new ZIlPayToken();
 const figthPlace = new FigthPlace();
@@ -101,10 +90,15 @@ export var HealModal: React.FC<Prop> = function ({ show, id, wound, onClose }) {
     <Modal
       title={(
         <ModalTitle fontVariant={StyleFonts.FiraSansBold} size="32px">
-          {dragonLocale.t(`heal_modal.title`)}
+          <Image
+            src={`/imgs/wounds/${wound}.jpg`}
+            alt="wound img"
+            className="wound-img"
+            height="25"
+            width="25"
+          />
           {` `}
-          #
-          {id}
+          {dragonLocale.t(`heal_modal.title`)}
         </ModalTitle>
       )}
       show={show}
@@ -118,15 +112,6 @@ export var HealModal: React.FC<Prop> = function ({ show, id, wound, onClose }) {
               zlp
             })}
         </Text>
-        <ImageWrapper>
-          <Image
-            src={`/imgs/wounds/${wound}.jpg`}
-            alt="wound img"
-            className="wound-img"
-            height="50"
-            width="50"
-          />
-        </ImageWrapper>
         <ButtonsWrapper>
           <ModalButton
             color={needApprove ? Colors.Warning : Colors.Success}
