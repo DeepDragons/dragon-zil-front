@@ -6,20 +6,20 @@ import { ZIlPayToken } from "./zilpay-token";
 export class FigthPlace {
   public zilpay = new ZilPayBase();
 
-  public async startFight(id1: string, id0: string) {
+  public async startPublicFight(defended: string, attacker: string) {
     const params = [
       {
-        vname: `who_id`,
+        vname: `defender_id`,
         type: `Uint256`,
-        value: String(id0),
+        value: String(defended),
       },
       {
-        vname: `with_id`,
+        vname: `attacker_id`,
         type: `Uint256`,
-        value: String(id1),
+        value: String(attacker),
       },
     ];
-    const transition = `FightStart`;
+    const transition = `StartPublicFight`;
     const res = await this.zilpay.call({
       transition,
       params,
@@ -29,7 +29,7 @@ export class FigthPlace {
 
     pushToList({
       timestamp: new Date().getTime(),
-      name: `Fighting #${id1} with #${id0}`,
+      name: `Fighting #${attacker} with #${defended}`,
       confirmed: false,
       hash: res.ID,
       from: res.from,
@@ -38,7 +38,7 @@ export class FigthPlace {
     return String(res.ID);
   }
 
-  public async place(tokenId: string, price: number, remove: boolean) {
+  public async addToPublicList(tokenId: string, price: number) {
     const zilpay = await this.zilpay.zilpay();
     const { BN } = zilpay.utils;
     const priceBN = new BN(String(price));
@@ -46,17 +46,17 @@ export class FigthPlace {
     const value = priceBN.mul(decimal).toString();
     const params = [
       {
-        vname: `token_id`,
+        vname: `id`,
         type: `Uint256`,
         value: tokenId,
       },
       {
-        vname: `fight_price`,
+        vname: `price`,
         type: `Uint128`,
         value,
       },
     ];
-    const transition = `WaitListAddDel`;
+    const transition = `AddToPublicList`;
     const res = await this.zilpay.call({
       transition,
       params,
@@ -66,7 +66,34 @@ export class FigthPlace {
 
     pushToList({
       timestamp: new Date().getTime(),
-      name: `${remove ? `Get back` : `Place`} a dragon #${tokenId} from fight.`,
+      name: `Place a dragon #${tokenId} to public fight.`,
+      confirmed: false,
+      hash: res.ID,
+      from: res.from,
+    });
+
+    return String(res.ID);
+  }
+
+  public async cancelFromPublic(tokenId: string) {
+    const params = [
+      {
+        vname: `id`,
+        type: `Uint256`,
+        value: tokenId,
+      },
+    ];
+    const transition = `RmFromPublicList`;
+    const res = await this.zilpay.call({
+      transition,
+      params,
+      amount: `0`,
+      contractAddress: Contracts.FightPlace,
+    });
+
+    pushToList({
+      timestamp: new Date().getTime(),
+      name: `Cancel a dragon #${tokenId} from public fight.`,
       confirmed: false,
       hash: res.ID,
       from: res.from,

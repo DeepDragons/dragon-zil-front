@@ -85,7 +85,7 @@ export var FightStart: NextPage<Prop> = function ({ defended }) {
 
         setNeedApprove(false);
       } else {
-        const hash = await figthPlace.startFight(defended.id, attacked.id);
+        const hash = await figthPlace.startPublicFight(defended.id, attacked.id);
         updateArena({
           hash,
           amount,

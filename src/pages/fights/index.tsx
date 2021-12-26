@@ -54,7 +54,7 @@ export var FightPage: NextPage = function () {
     router.push(`/fights/${dragon.id}`);
   }, [router]);
   const handleCancel = React.useCallback(async (dragon) => {
-    await figthPlace.place(dragon.id, 0, true);
+    await figthPlace.cancelFromPublic(dragon.id);
   }, []);
 
   const fetchData = async () => {

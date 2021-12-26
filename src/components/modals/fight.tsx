@@ -31,7 +31,7 @@ export var FightsModal: React.FC<Prop> = function ({ show, id, onClose }) {
   const dragonLocale = useTranslation(`dragon`);
   const address = useStore($wallet);
   const [loading, setLoading] = React.useState(true);
-  const [zlp, setZLP] = React.useState(500);
+  const [zlp, setZLP] = React.useState(1);
   const [needApprove, setNeedApprove] = React.useState(true);
 
   const btnText = React.useMemo(
@@ -61,7 +61,7 @@ export var FightsModal: React.FC<Prop> = function ({ show, id, onClose }) {
         await zilPayToken.increaseAllowance(Contracts.FightPlace);
         setNeedApprove(false);
       } else {
-        await figthPlace.place(id, zlp, false);
+        await figthPlace.addToPublicList(id, zlp);
         onClose();
       }
     } catch {

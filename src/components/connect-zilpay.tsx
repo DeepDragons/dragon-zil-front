@@ -138,6 +138,7 @@ export var ConnectZIlPay: React.FC = function () {
                   if (arena?.hash === found.result.ID && arena) {
                     const [afterFightWinLose] = found.result.receipt.event_logs;
                     const [won] = afterFightWinLose.params;
+
                     updateArena({
                       ...arena,
                       winner: won.value,
