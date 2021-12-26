@@ -112,8 +112,6 @@ export var WaitFightModal: React.FC<Prop> = function ({ show, onClose }) {
                 }}
               >
                 {` `}
-                {commonLocale.t(`you`)}
-                {` `}
                 {wonAmount}
               </b>
             </Text>

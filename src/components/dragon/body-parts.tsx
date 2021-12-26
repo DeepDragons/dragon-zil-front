@@ -16,7 +16,6 @@ import { BodyIcon } from "components/icons/body";
 import { EyesIcon } from "components/icons/eyes";
 import { HeadIcon } from "components/icons/head";
 
-import { Colors } from "config/colors";
 import { StyleFonts } from "@/config/fonts";
 
 import { Container, TitleRow } from "./styles";

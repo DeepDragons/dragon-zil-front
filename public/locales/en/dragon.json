@@ -18,6 +18,7 @@
   },
   "combat_gens": "Combat genes",
   "body_parts": "Body parts",
+  "wounds": "Wounds",
   "not_found": "Not found a dragon",
   "transfer_info": "You can move your {{dragonStage}} (token) between your accounts or send it to somebody, as a gift for example.",
   "sale": {
@@ -40,7 +41,13 @@
     "info": "Put your dragon (token) on a battlefield! Other players will be able to fight with your dragon.",
     "set_price": "Set a bet in ZLP",
     "btn_approve": "Approve ZLP",
-    "btn_start": "Start fight."
+    "btn_start": "Public fight"
+  },
+  "heal_modal": {
+    "title": "Heal wound",
+    "info": "Your Dragon is Wounded and needs to recover. Pay {{zlp}} $ZLP to heal the wound",
+    "btn_approve": "Approve ZLP",
+    "btn_start": "Heal"
   },
   "breed_modal": {
     "title": "Breeding",

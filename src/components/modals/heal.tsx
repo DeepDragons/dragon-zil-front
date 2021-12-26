@@ -1,11 +1,12 @@
 import Loader from "react-loader-spinner";
+import Image from 'next/image';
+import styled from "styled-components";
 import { useTranslation } from "next-i18next";
 import React from "react";
 
 import { Modal } from "components/modal";
 import { Text } from "components/text";
 import { useStore } from "effector-react";
-import { IntInput } from "components/int-input";
 
 import { Colors } from "config/colors";
 import { ZIlPayToken } from "mixin/zilpay-token";
@@ -20,24 +21,35 @@ import {
 type Prop = {
   show: boolean;
   id: string;
+  wound: number;
   onClose: () => void;
 };
+
+const ImageWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .wound-img {
+    border-radius: 5px;
+  }
+`;
 
 const zilPayToken = new ZIlPayToken();
 const figthPlace = new FigthPlace();
 let load = false;
-export var FightsModal: React.FC<Prop> = function ({ show, id, onClose }) {
+export var HealModal: React.FC<Prop> = function ({ show, id, wound, onClose }) {
   const commonLocale = useTranslation(`common`);
   const dragonLocale = useTranslation(`dragon`);
   const address = useStore($wallet);
   const [loading, setLoading] = React.useState(true);
-  const [zlp, setZLP] = React.useState(0);
+  const [zlp, setZLP] = React.useState(10);
   const [needApprove, setNeedApprove] = React.useState(true);
 
   const btnText = React.useMemo(
     () => (needApprove
-      ? dragonLocale.t(`fights_modal.btn_approve`)
-      : dragonLocale.t(`fights_modal.btn_start`)),
+      ? dragonLocale.t(`heal_modal.btn_approve`)
+      : dragonLocale.t(`heal_modal.btn_start`)),
     [needApprove],
   );
 
@@ -89,7 +101,7 @@ export var FightsModal: React.FC<Prop> = function ({ show, id, onClose }) {
     <Modal
       title={(
         <ModalTitle fontVariant={StyleFonts.FiraSansBold} size="32px">
-          {dragonLocale.t(`fights_modal.title`)}
+          {dragonLocale.t(`heal_modal.title`)}
           {` `}
           #
           {id}
@@ -102,16 +114,22 @@ export var FightsModal: React.FC<Prop> = function ({ show, id, onClose }) {
         <Text fontColors={Colors.Muted} size="22px" css="text-align: center;">
           {loading
             ? commonLocale.t(`do_not_refresh`)
-            : dragonLocale.t(`fights_modal.info`)}
+            : dragonLocale.t(`heal_modal.info`, {
+              zlp
+            })}
         </Text>
-        {!loading ? (
-          <IntInput value={zlp} bg={Colors.Dark} onInput={setZLP}>
-            {dragonLocale.t(`fights_modal.set_price`)}
-          </IntInput>
-        ) : null}
+        <ImageWrapper>
+          <Image
+            src={`/imgs/wounds/${wound}.jpg`}
+            alt="wound img"
+            className="wound-img"
+            height="50"
+            width="50"
+          />
+        </ImageWrapper>
         <ButtonsWrapper>
           <ModalButton
-            color={needApprove ? Colors.Warning : Colors.Info}
+            color={needApprove ? Colors.Warning : Colors.Success}
             disabled={loading}
             fontColors={needApprove ? Colors.Dark : Colors.White}
             onClick={hanldeSubmit}

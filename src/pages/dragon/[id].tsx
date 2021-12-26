@@ -18,6 +18,7 @@ import { BreedModal } from "components/modals/breed";
 import { SuicideModal } from "components/modals/suicide";
 import { HatchEggModal } from "components/modals/hatch-egg";
 import { NameModal } from "components/modals/name";
+import { HealModal } from 'components/modals/heal';
 import { NoCache } from "components/no-cache";
 
 import { DragonAPI, DragonObject } from "lib/api";
@@ -34,6 +35,7 @@ import { genParse } from "@/lib/gen-parse";
 
 const RarityImage = dynamic(import(`components/rarity-image`));
 const CombatGens = dynamic(import(`components/dragon/combat-gens`));
+const Wounds = dynamic(import(`components/dragon/wounds`));
 const BodyParts = dynamic(import(`components/dragon/body-parts`));
 const ActionBar = dynamic(import(`components/dragon/action-bar`));
 
@@ -71,6 +73,8 @@ export var Dragon: NextPage<prop> = function (props) {
   const [suicide, setSuicide] = React.useState(false);
   const [hatchEgg, setHatchEgg] = React.useState(false);
   const [nameModal, setNameModal] = React.useState(false);
+  const [heal, setHeal] = React.useState(false);
+  const [wound, setWound] = React.useState(0);
   const [dragon, setDragon] = React.useState<DragonObject | null>(props.dragon);
 
   const currentAction = React.useMemo(() => {
@@ -154,28 +158,33 @@ export var Dragon: NextPage<prop> = function (props) {
     }
   }, [dragon, router]);
 
-  React.useEffect(() => {
-    if (router.query.id) {
-      backend
-        .getDragon(String(router.query.id))
-        .then((d) => {
-          if (d) {
-            setDragon(d);
-          }
+  const hanldeOnHealWound = React.useCallback((w: number) => {
+    setWound(w);
+    setHeal(true);
+  }, []);
 
-          return dragonsName.getName(String(router.query.id));
-        })
-        .then((name) => {
-          if (name && dragon) {
-            setDragon({
-              ...dragon,
-              name,
-            });
-          }
-        })
-        .catch(console.error);
-    }
-  }, [router]);
+  // React.useEffect(() => {
+  //   if (router.query.id) {
+  //     backend
+  //       .getDragon(String(router.query.id))
+  //       .then((d) => {
+  //         if (d) {
+  //           setDragon(d);
+  //         }
+
+  //         return dragonsName.getName(String(router.query.id));
+  //       })
+  //       .then((name) => {
+  //         if (name && dragon) {
+  //           setDragon({
+  //             ...dragon,
+  //             name,
+  //           });
+  //         }
+  //       })
+  //       .catch(console.error);
+  //   }
+  // }, [router]);
 
   return (
     <Container>
@@ -236,6 +245,7 @@ export var Dragon: NextPage<prop> = function (props) {
           />
           <div>
             <CombatGens gens={genes} color={rarity.color} />
+            <Wounds color={rarity.color} list={[1,3,4, 6, 7, 8, 9 , 10, 11, 12, 13]} onHeal={hanldeOnHealWound}/>
             <BodyParts gens={rarity.gensImage} color={rarity.color} />
             {/* <BattlesSection
               color={rarity.color}
@@ -262,6 +272,12 @@ export var Dragon: NextPage<prop> = function (props) {
           </Text>
         </Wrapper>
       ) : null}
+      <HealModal
+        show={heal}
+        wound={wound}
+        id={dragon?.id || ``}
+        onClose={() => setHeal(false)}
+      />
       <TransferModal
         show={transfer}
         id={dragon?.id || ``}
