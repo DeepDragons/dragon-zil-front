@@ -78,10 +78,6 @@ export var ChoiceWith: React.FC<Prop> = function ({
 }) {
   const [isShow, setIsShow] = React.useState(false);
 
-  // TODO: add real wounds.
-  const wounds0 = [1,3,4,5,6,7];
-  const wounds1 = [8, 9, 10, 11, 12];
-
   return (
     <MainContainer color={color}>
       <Row>
@@ -92,10 +88,10 @@ export var ChoiceWith: React.FC<Prop> = function ({
             {dragon.id}
           </Text>
           <WoundsWrapper>
-            {wounds0.map((wound, index) => (
+            {dragon.wounds.map((wound, index) => (
               <span key={wound + index}>
                 <Image
-                  src={`/imgs/wounds/${wound}.jpg`}
+                  src={`/imgs/wounds/${wound}.webp`}
                   alt="wound img"
                   className="wound-img"
                   height="25"
@@ -128,10 +124,10 @@ export var ChoiceWith: React.FC<Prop> = function ({
           </Text>
           {myDragon ? (
             <WoundsWrapper>
-              {wounds1.map((wound, index) => (
+              {myDragon.wounds.map((wound, index) => (
                 <span key={wound + index}>
                   <Image
-                    src={`/imgs/wounds/${wound}.jpg`}
+                    src={`/imgs/wounds/${wound}.webp`}
                     alt="wound img"
                     className="wound-img"
                     height="25"

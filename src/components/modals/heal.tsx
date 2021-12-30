@@ -94,7 +94,7 @@ export var HealModal: React.FC<Prop> = function ({ show, id, wound, onClose }) {
       title={(
         <ModalTitle fontVariant={StyleFonts.FiraSansBold} size="32px">
           <Image
-            src={`/imgs/wounds/${wound}.jpg`}
+            src={`/imgs/wounds/${wound}.webp`}
             alt="wound img"
             className="wound-img"
             height="25"

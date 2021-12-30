@@ -245,7 +245,13 @@ export var Dragon: NextPage<prop> = function (props) {
           />
           <div>
             <CombatGens gens={genes} color={rarity.color} />
-            <Wounds color={rarity.color} list={[1,3,4, 6, 7, 8, 9 , 10, 11, 12, 13]} onHeal={hanldeOnHealWound}/>
+            {dragon.wounds.length > 0 ? (
+              <Wounds
+                color={rarity.color}
+                list={dragon.wounds}
+                onHeal={hanldeOnHealWound}
+              />
+            ) : null}
             <BodyParts gens={rarity.gensImage} color={rarity.color} />
             {/* <BattlesSection
               color={rarity.color}

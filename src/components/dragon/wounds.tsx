@@ -32,7 +32,7 @@ const WoundImageWrapper = styled.div`
 `;
 
 type Prop = {
-  list: number[];
+  list: number[] | string[];
   color: string;
   onHeal: (id: number) => void;
 };
@@ -49,15 +49,15 @@ export var Wounds: React.FC<Prop> = function ({ list, color, onHeal }) {
         {list.map((wound, index) => (
           <WoundImageWrapper
             color={color}
-            key={wound + index}
+            key={Number(wound) + index}
           >
             <Image
-              src={`/imgs/wounds/${wound}.jpg`}
+              src={`/imgs/wounds/${wound}.webp`}
               alt="wound img"
               className="wound-img"
               height="40"
               width="40"
-              onClick={() => onHeal(wound)}
+              onClick={() => onHeal(Number(wound))}
             />
           </WoundImageWrapper>
         ))}

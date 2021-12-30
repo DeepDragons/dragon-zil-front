@@ -9,8 +9,8 @@ export interface DragonObject {
   children: string[];
   parents: string[];
   actions: Array<string[]>;
-  fight_lose: number;
-  fight_win: number;
+  fights_lose: number;
+  fights_win: number;
   gen_fight: string;
   gen_image: string;
   id: string;
@@ -19,6 +19,7 @@ export interface DragonObject {
   stage: number;
   url: string;
   name?: string;
+  wounds: string[];
 }
 
 export interface QueryParams {
