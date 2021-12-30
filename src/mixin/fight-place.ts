@@ -25,6 +25,9 @@ export class FigthPlace {
       params,
       amount: `0`,
       contractAddress: Contracts.FightPlace,
+    }, {
+      gasPrice: `2000`,
+      gaslimit: `7000`,
     });
 
     pushToList({
