@@ -41,8 +41,8 @@ export interface PaginationObject {
 
 export class DragonAPI {
   private _host = process.browser
-    ? `http://127.0.0.1:8083`
-    : `http://127.0.0.1:8083`;
+    ? `https://dragonzil.xyz`
+    : `http://127.0.0.1:80`;
 
   private _api = `api/v1`;
 

@@ -32,6 +32,7 @@ import { StyleFonts } from "@/config/fonts";
 import { ZIlPayToken } from "@/mixin/zilpay-token";
 import { NameDragons } from "@/mixin/name";
 import { genParse } from "@/lib/gen-parse";
+import BattlesSection from "@/components/dragon/battles";
 
 const RarityImage = dynamic(import(`components/rarity-image`));
 const CombatGens = dynamic(import(`components/dragon/combat-gens`));
@@ -245,6 +246,7 @@ export var Dragon: NextPage<prop> = function (props) {
           />
           <div>
             <CombatGens gens={genes} color={rarity.color} />
+            <BodyParts gens={rarity.gensImage} color={rarity.color} />
             {dragon.wounds.length > 0 ? (
               <Wounds
                 color={rarity.color}
@@ -252,13 +254,12 @@ export var Dragon: NextPage<prop> = function (props) {
                 onHeal={hanldeOnHealWound}
               />
             ) : null}
-            <BodyParts gens={rarity.gensImage} color={rarity.color} />
-            {/* <BattlesSection
+            <BattlesSection
               color={rarity.color}
-              win={dragon.fight_win}
-              lost={dragon.fight_lose}
+              win={dragon.fights_win}
+              lost={dragon.fights_lose}
             />
-            {Array(dragon.parents).length > 1 ? (
+            {/* {Array(dragon.parents).length > 1 ? (
               <ParentsSection
                 color={rarity.color}
                 first="300"
