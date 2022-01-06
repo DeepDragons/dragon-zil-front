@@ -254,11 +254,11 @@ export var Dragon: NextPage<prop> = function (props) {
                 onHeal={hanldeOnHealWound}
               />
             ) : null}
-            <BattlesSection
+            {/* <BattlesSection
               color={rarity.color}
               win={dragon.fights_win}
               lost={dragon.fights_lose}
-            />
+            /> */}
             {/* {Array(dragon.parents).length > 1 ? (
               <ParentsSection
                 color={rarity.color}
