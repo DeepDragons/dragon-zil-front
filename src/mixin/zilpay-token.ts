@@ -6,13 +6,15 @@ import { getKeyByValue } from "@/lib/key-by-value";
 
 export class ZIlPayToken {
   public static decimal = `1000000000000000000`;
+  public static fields = {
+    balances: 'balances'
+  };
 
   public zilpay = new ZilPayBase();
 
   public async getBalance(addr: string) {
     addr = String(addr).toLowerCase();
-    const field = `balances`;
-    const zilpay = await this.zilpay.zilpay();
+    const field = ZIlPayToken.fields.balances;
     const result = await this.zilpay.getSubState(Contracts.ZIlPay, field, [
       addr,
     ]);

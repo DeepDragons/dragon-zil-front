@@ -16,6 +16,7 @@ import { StyleFonts } from "@/config/fonts";
 import {
   ModalTitle, ButtonsWrapper, ModalButton, Container,
 } from "./style";
+import { $tokens } from "@/store/tokens";
 
 type Prop = {
   show: boolean;
@@ -29,9 +30,12 @@ let load = false;
 export var FightsModal: React.FC<Prop> = function ({ show, id, onClose }) {
   const commonLocale = useTranslation(`common`);
   const dragonLocale = useTranslation(`dragon`);
+
   const address = useStore($wallet);
+  const tokens = useStore($tokens);
+
   const [loading, setLoading] = React.useState(true);
-  const [zlp, setZLP] = React.useState(0);
+  const [zlp, setZLP] = React.useState(100);
   const [needApprove, setNeedApprove] = React.useState(true);
 
   const btnText = React.useMemo(
@@ -40,6 +44,13 @@ export var FightsModal: React.FC<Prop> = function ({ show, id, onClose }) {
       : dragonLocale.t(`fights_modal.btn_start`)),
     [needApprove],
   );
+
+  const disabled = React.useMemo(() => {
+    const blk = BigInt(tokens.amount);
+    const dicimalZLP = BigInt(zlp) * BigInt(ZIlPayToken.decimal);
+
+    return dicimalZLP > blk || loading;
+  }, [tokens, loading, zlp]);
 
   const hanldeUpdate = React.useCallback(async () => {
     setLoading(true);
@@ -112,7 +123,7 @@ export var FightsModal: React.FC<Prop> = function ({ show, id, onClose }) {
         <ButtonsWrapper>
           <ModalButton
             color={needApprove ? Colors.Warning : Colors.Info}
-            disabled={loading}
+            disabled={disabled}
             fontColors={needApprove ? Colors.Dark : Colors.White}
             onClick={hanldeSubmit}
           >

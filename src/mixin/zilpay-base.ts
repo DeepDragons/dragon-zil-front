@@ -49,6 +49,10 @@ export class ZilPayBase {
       params,
     );
 
+    if (!res) {
+      throw new Error('ZIlPay is not loaded yet');
+    }
+
     if (res.error) {
       throw new Error(res.error.message);
     }
@@ -75,6 +79,10 @@ export class ZilPayBase {
     }
     const zilPay = await this.zilpay();
     const res = await zilPay.blockchain.getSmartContractState(contract);
+
+    if (!res) {
+      throw new Error('ZIlPay is not loaded yet');
+    }
 
     if (res.error) {
       throw new Error(res.error.message);

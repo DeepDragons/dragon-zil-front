@@ -24,6 +24,7 @@ type Prop = {
   show: boolean;
   loading: boolean;
   wallet: Wallet | null;
+  balance: string;
   onConnect: () => void;
   onClose: () => void;
 };
@@ -76,6 +77,7 @@ export var MobileNavigate: React.FC<Prop> = function ({
   loading,
   onConnect,
   wallet,
+  balance,
   onClose,
 }) {
   const common = useTranslation(`common`);
@@ -144,7 +146,10 @@ export var MobileNavigate: React.FC<Prop> = function ({
           ))}
         </ul>
         <div style={{ display: showMenu ? `block` : `none` }}>
-          <AccountCard wallet={wallet} />
+          <AccountCard
+            wallet={wallet}
+            balance={balance}
+          />
           {txList.length === 0 ? (
             <Text
               fontVariant={StyleFonts.FiraSansRegular}

@@ -16,6 +16,7 @@ import { Wallet } from "@/store/wallet";
 
 type Prop = {
   show: boolean;
+  balance: string;
   address: Wallet | null;
   onClose: () => void;
 };
@@ -58,6 +59,7 @@ export var AccountModal: React.FC<Prop> = function ({
   show,
   onClose,
   address,
+  balance
 }) {
   const common = useTranslation(`common`);
   const txList = useStore($transactions);
@@ -76,7 +78,10 @@ export var AccountModal: React.FC<Prop> = function ({
       width="450px"
       onClose={onClose}
     >
-      <AccountCard wallet={address} />
+      <AccountCard
+        wallet={address}
+        balance={balance}
+      />
       <TxContainer>
         {txList.length === 0 ? (
           <Text

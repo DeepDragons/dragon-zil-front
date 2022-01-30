@@ -32,6 +32,8 @@ export var BreedModal: React.FC<Prop> = function ({
 }) {
   const commonLocale = useTranslation(`common`);
   const dragonLocale = useTranslation(`dragon`);
+  const breedLocale = useTranslation(`breed`);
+
   const [loading, setLoading] = React.useState(false);
   const [price, setPrice] = React.useState(0);
 
@@ -53,7 +55,7 @@ export var BreedModal: React.FC<Prop> = function ({
       const curve = await breedPlace.getCurve();
 
       setPrice(
-        Number((curve * BigInt(rounded)) / BigInt(ZIlPayToken.decimal)) * 0.5,
+        Number((curve * BigInt(rounded)) / BigInt(ZIlPayToken.decimal)) * 0.3,
       );
     } catch {
       ///
@@ -134,8 +136,7 @@ export var BreedModal: React.FC<Prop> = function ({
         </ButtonsWrapper>
         {load ? null : (
           <Text fontColors={Colors.Muted} size="16px" css="text-align: center;">
-            The price is based on the rarity and combat effectiveness of your
-            dragon!
+            {breedLocale.t('price')}
           </Text>
         )}
       </Container>

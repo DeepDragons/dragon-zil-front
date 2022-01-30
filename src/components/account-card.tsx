@@ -14,6 +14,8 @@ import { StyleFonts } from "@/config/fonts";
 import { trim } from "@/lib/trim";
 import { viewAddress } from "@/lib/viewblock";
 import { Wallet } from "@/store/wallet";
+import { ZIlPayToken } from "@/mixin/zilpay-token";
+import { formatNumber } from "@/filters/n-format";
 
 const AccountContainer = styled.div`
   margin: 16px;
@@ -29,6 +31,11 @@ const Row = styled.div`
 
   .second {
     margin-left: 16px;
+  }
+`;
+const CustomText = styled(Text)`
+  span {
+    color: ${Colors.Pink};
   }
 `;
 const CopyContainer = styled.a`
@@ -51,9 +58,10 @@ const CopyContainer = styled.a`
 
 type Prop = {
   wallet: Wallet | null;
+  balance: string;
 };
 
-export var AccountCard: React.FC<Prop> = function ({ wallet }) {
+export var AccountCard: React.FC<Prop> = function ({ wallet, balance = 0 }) {
   const common = useTranslation(`common`);
   const netwrok = useStore($net);
 
@@ -78,6 +86,11 @@ export var AccountCard: React.FC<Prop> = function ({ wallet }) {
       <Text fontVariant={StyleFonts.FiraSansMedium} size="20px">
         {wallet ? trim(wallet.bech32, 8) : ``}
       </Text>
+      <CustomText fontVariant={StyleFonts.FiraSansMedium} size="18px">
+        {formatNumber(Number(balance) / Number(ZIlPayToken.decimal))} <span>
+          ZLP
+        </span>
+      </CustomText>
       <Row>
         <CopyContainer onClick={() => copy(String(wallet?.bech32))}>
           <CopyIcon />

@@ -24,6 +24,9 @@ import { updateNet, $net } from "store/wallet-netwrok";
 import { Blockchain } from "mixin/custom-fetch";
 import { Block, Net } from "@/types/zil-pay";
 import { $arena, updateArena, resetArena } from "@/store/arena";
+import { $tokens, updateTokensStore } from 'store/tokens';
+import { ZIlPayToken } from "@/mixin/zilpay-token";
+import { formatNumber } from "@/filters/n-format";
 
 type ConnectZIlPayButtonProp = {
   color: Colors | string;
@@ -54,9 +57,11 @@ let observer: any = null;
 let observerNet: any = null;
 let observerBlock: any = null;
 const blockchain = new Blockchain();
+const zilpayToken = new ZIlPayToken();
 export var ConnectZIlPay: React.FC = function () {
   const address = useStore($wallet);
   const net = useStore($net);
+  const tokens = useStore($tokens);
   const transactions = useStore($transactions);
   const [loading, setLoading] = React.useState(true);
   const [showModal, setShowModal] = React.useState(false);
@@ -70,6 +75,19 @@ export var ConnectZIlPay: React.FC = function () {
     () => transactions.filter((tx) => !tx.confirmed).length === 0,
     [transactions],
   );
+
+  const hanldeUpdateTokens = React.useCallback(async() => {
+    if (!address) {
+      return;
+    }
+
+    try {
+      const balance = await zilpayToken.getBalance(address?.base16);
+      updateTokensStore(balance);
+    } catch {
+      //
+    }
+  }, [address]);
 
   const hanldeObserverState = React.useCallback(
     (zp) => {
@@ -105,6 +123,8 @@ export var ConnectZIlPay: React.FC = function () {
         if (cache) {
           updateTxList(JSON.parse(cache));
         }
+
+        hanldeUpdateTokens();
       });
 
       observerBlock = zp.wallet
@@ -156,6 +176,7 @@ export var ConnectZIlPay: React.FC = function () {
             return tx;
           });
           writeNewList(list);
+          hanldeUpdateTokens();
         });
 
       if (zp.wallet.defaultAccount) {
@@ -199,6 +220,10 @@ export var ConnectZIlPay: React.FC = function () {
   }, []);
 
   React.useEffect(() => {
+    hanldeUpdateTokens();
+  }, [address]);
+
+  React.useEffect(() => {
     const wallet = new ZilPayBase();
 
     wallet
@@ -238,6 +263,7 @@ export var ConnectZIlPay: React.FC = function () {
         </div>
         <MobileNavigate
           show={showModal}
+          balance={tokens.amount}
           loading={!isLoading}
           wallet={address}
           onConnect={handleConnect}
@@ -250,21 +276,26 @@ export var ConnectZIlPay: React.FC = function () {
   return (
     <>
       {address ? (
-        <ConnectZIlPayButton
-          color={btnColor}
-          onClick={() => setShowModal(true)}
-        >
-          {isLoading ? (
-            trim(address.bech32)
-          ) : (
-            <>
-              <Loader type="Puff" color={Colors.White} height={10} width={10} />
-              <Text size="16px" css="text-indent: 5px;margin: 0;">
-                Pending...
-              </Text>
-            </>
-          )}
-        </ConnectZIlPayButton>
+        <React.Fragment>
+          <ConnectZIlPayButton
+            color={btnColor}
+            onClick={() => setShowModal(true)}
+          >
+            {isLoading ? (
+              trim(address.bech32)
+            ) : (
+              <>
+                <Loader type="Puff" color={Colors.White} height={10} width={10} />
+                <Text size="16px" css="text-indent: 5px;margin: 0;">
+                  Pending...
+                </Text>
+              </>
+            )}
+          </ConnectZIlPayButton>
+          <ConnectZIlPayButton color={btnColor}>
+            {formatNumber(Number(tokens.amount) / Number(ZIlPayToken.decimal))} ZLP
+          </ConnectZIlPayButton>
+        </React.Fragment>
       ) : (
         <ConnectZIlPayButton color={btnColor} onClick={handleConnect}>
           {loading ? (
@@ -276,6 +307,7 @@ export var ConnectZIlPay: React.FC = function () {
       )}
       <AccountModal
         show={showModal}
+        balance={tokens.amount}
         address={address}
         onClose={() => setShowModal(false)}
       />
