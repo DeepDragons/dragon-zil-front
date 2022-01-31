@@ -55,7 +55,7 @@ export var BreedModal: React.FC<Prop> = function ({
       const curve = await breedPlace.getCurve();
 
       setPrice(
-        Number((curve * BigInt(rounded)) / BigInt(ZIlPayToken.decimal)) * 0.3,
+        Number((curve * BigInt(rounded)) / BigInt(ZIlPayToken.decimal)) * 0.6,
       );
     } catch {
       ///
