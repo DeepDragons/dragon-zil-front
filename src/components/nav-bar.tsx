@@ -73,7 +73,7 @@ export const links = [
   },
   {
     path: `/breed`,
-    name: `breed`,
+    name: `breed❤️`,
   },
   {
     path: `/trade`,
