@@ -162,7 +162,7 @@ export var BreedStart: NextPage<Prop> = function ({ lover }) {
             myDragon={myDragon}
             color={Colors.Primary}
             btnColor={needApprove ? Colors.LightBlue : Colors.Primary}
-            icon="heart.svg"
+            icon="heart.webp"
             setDragon={setMyDragon}
             onStart={handleStartBreed}
           >
