@@ -61,7 +61,7 @@ export const Li = styled.li`
 export const links = [
   {
     path: `/buy`,
-    name: `store`,
+    name: `Store 🏪`,
   },
   {
     path: `/mydragons`,
