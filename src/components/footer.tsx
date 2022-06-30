@@ -130,7 +130,7 @@ export var Footer: React.FC = function () {
           </Li>
           <Li>
             <a
-              href="https://twitter.com/dragons_eth"
+              href="https://twitter.com/ZilDragons"
               target="_blank"
               rel="noreferrer"
             >
